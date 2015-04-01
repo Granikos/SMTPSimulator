@@ -1,31 +1,75 @@
+using System;
+using System.Collections.Generic;
 using HydraCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using HydraCore.CommandHandlers;
+using HydraCore.Fakes;
+using Microsoft.QualityTools.Testing.Fakes;
+using Xunit;
 
 namespace HydraTest
 {
-    [TestClass]
-    public class TestHELO : MailBaseTest
+    public class TestHELO
     {
-        [TestMethod]
+        [Fact]
         public void TestSuccess()
         {
-            Server.Greet = "Test Greet";
+            const string greet = "Test Greet";
 
-            var response = ExecuteCommand("HELO", "test-domain.com");
+            using (ShimsContext.Create())
+            {
+                var handler = new HELOHandler();
 
-            Assert.AreEqual(SMTPStatusCode.Okay, response.Code);
-            Assert.AreEqual(1, response.Args.Length);
-            Assert.AreEqual(Server.Greet, response.Args[0]);
-            Assert.AreEqual("test-domain.com", Transaction.ClientIdentifier);
-            Assert.IsTrue(Transaction.Initialized);
+                var init = false;
+                string clientId = null;
+                var reset = false;
+
+                var server = new ShimSMTPCore
+                {
+                    GreetGet = () => greet
+                };
+
+                var transaction = new ShimSMTPTransaction
+                {
+                    InitializeString = s =>
+                    {
+                        init = true;
+                        clientId = s;
+                    },
+                    Reset = () =>
+                    {
+                        reset = true;
+                    }
+                };
+
+                handler.Initialize(server);
+
+                var response = handler.Execute(transaction, "test");
+
+                Assert.Equal(SMTPStatusCode.Okay, response.Code);
+                Assert.Equal(1, response.Args.Length);
+                Assert.Equal(greet, response.Args[0]);
+                Assert.Equal("test", clientId);
+                Assert.True(init);
+                Assert.True(reset);
+            }
         }
 
-        [TestMethod]
-        public void TestErrorWithNoParams()
+        [Fact]
+        public void TestFail()
         {
-            var response = ExecuteCommand("HELO");
+            using (ShimsContext.Create())
+            {
+                var handler = new HELOHandler();
 
-            Assert.AreEqual(SMTPStatusCode.SyntaxError, response.Code);
+                var server = new ShimSMTPCore();
+                var transaction = new ShimSMTPTransaction();
+
+                handler.Initialize(server);
+
+                var response = handler.Execute(transaction, "");
+
+                Assert.Equal(SMTPStatusCode.SyntaxError, response.Code);
+            }
         }
     }
 }
