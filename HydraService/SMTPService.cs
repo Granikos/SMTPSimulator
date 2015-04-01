@@ -22,8 +22,6 @@ namespace HydraService
             _core.ServerName = "localhost";
             _core.Banner = "This is the banner text!";
 
-            DefaultHandlers.AddToServer(_core);
-
             _server = new SMTPServer(new IPEndPoint(ip, port), _core);
         }
 

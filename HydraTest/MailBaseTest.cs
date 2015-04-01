@@ -27,7 +27,6 @@ namespace HydraTest
 
             SMTPResponse response;
             Transaction = Server.StartTransaction(ip, out response);
-            DefaultHandlers.AddToServer(Server);
         }
 
         public SMTPCore Server { get; set; }

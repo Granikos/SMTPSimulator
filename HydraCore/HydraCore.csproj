@@ -78,6 +78,7 @@
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -86,7 +87,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DefaultHandlers.cs" />
+    <Compile Include="CommandHandlers\DATAHandler.cs" />
+    <Compile Include="CommandHandlers\EHLOHandler.cs" />
+    <Compile Include="CommandHandlers\HELOHandler.cs" />
+    <Compile Include="CommandHandlers\ICommandHandler.cs" />
+    <Compile Include="CommandHandlers\MAILHandler.cs" />
+    <Compile Include="CommandHandlers\NOOPHandler.cs" />
+    <Compile Include="CommandHandlers\QUITHandler.cs" />
+    <Compile Include="CommandHandlers\RCPTHandler.cs" />
+    <Compile Include="CommandHandlers\RSETHandler.cs" />
+    <Compile Include="CommandHandlers\VRFYHandler.cs" />
     <Compile Include="IPSubnet.cs" />
     <Compile Include="Mailbox.cs" />
     <Compile Include="SMTPResponse.cs" />

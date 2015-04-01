@@ -1,9 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
+using System.ComponentModel.Composition.Primitives;
 using System.Data.SqlClient;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net;
+using System.Reflection;
+using HydraCore.CommandHandlers;
 
 namespace HydraCore
 {
@@ -19,6 +24,28 @@ namespace HydraCore
         private readonly ICollection<Mailbox> _mailBoxes = new HashSet<Mailbox>();
 
         private readonly ICollection<IPSubnet> _allowedSubnets = new HashSet<IPSubnet>();
+
+        private readonly Dictionary<string, ICommandHandler> _handlers = new Dictionary<string, ICommandHandler>();
+
+        public SMTPCore()
+        {
+            var catalog = new AssemblyCatalog(Assembly.GetExecutingAssembly());
+            var container = new CompositionContainer(catalog);
+
+            foreach (ComposablePartDefinition partDefinition in container.Catalog.Parts)
+            {
+                ComposablePart part = partDefinition.CreatePart();
+                foreach (ExportDefinition exportDefinition in partDefinition.ExportDefinitions)
+                {
+                    var handler = (ICommandHandler)part.GetExportedValue(exportDefinition);
+                    var command = exportDefinition.Metadata["Command"].ToString();
+
+                    _handlers.Add(command, handler);
+                }
+            }
+
+            container.Dispose();
+        }
 
         public void AddMailBox(Mailbox mb)
         {
@@ -54,23 +81,6 @@ namespace HydraCore
 
         public string ServerName { get; set; }
 
-        private readonly IDictionary<string, CommandHandler> _handlers = new Dictionary<string, CommandHandler>();
-        private readonly IDictionary<string, CommandArgMode> _commandArgModes = new Dictionary<string, CommandArgMode>(); // TODO: Make this nicer
-
-        public void AddHandler(string command, CommandHandler handler, CommandArgMode hasArgs = CommandArgMode.Optional)
-        {
-            _handlers.Add(command, handler);
-            _commandArgModes.Add(command, hasArgs);
-        }
-
-        public CommandArgMode GetCommandArgMode(SMTPCommand command)
-        {
-            Contract.Requires<ArgumentNullException>(command != null);
-            CommandArgMode mode;
-            _commandArgModes.TryGetValue(command.Command, out mode);
-            return mode;
-        }
-
         public IEnumerable<Mailbox> Mailboxes
         {
             get
@@ -88,7 +98,7 @@ namespace HydraCore
             if (!IsAllowedIP(address))
             {
                 response = new SMTPResponse(SMTPStatusCode.TransactionFailed);
-                transaction.Closed = true;
+                transaction.Close();
             }
             else
             {
@@ -106,10 +116,10 @@ namespace HydraCore
             if (OnNewMessage != null) OnNewMessage(transaction, sender, recipients, body);
         }
 
-        public CommandHandler GetHandler(SMTPCommand command)
+        public ICommandHandler GetHandler(SMTPCommand command)
         {
             Contract.Requires<ArgumentNullException>(command != null);
-            CommandHandler handler;
+            ICommandHandler handler;
             _handlers.TryGetValue(command.Command, out handler);
             return handler;
         }
