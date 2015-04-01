@@ -6,11 +6,11 @@ namespace HydraCore.CommandHandlers
 {
     [ExportMetadata("Command", "MAIL")]
     [Export(typeof(ICommandHandler))]
-    public class MAILHandler : ICommandHandler
+    public class MAILHandler : CommandHandlerBase
     {
         readonly Regex _fromRegex = new Regex("^FROM:<(\\w*@\\w*(?:\\.\\w*)*)?>$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        public SMTPResponse Execute(SMTPTransaction transaction, string parameters)
+        public override SMTPResponse Execute(SMTPTransaction transaction, string parameters)
         {
             if (transaction.GetProperty<bool>("MailInProgress"))
             {

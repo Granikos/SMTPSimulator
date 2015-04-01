@@ -5,9 +5,9 @@ namespace HydraCore.CommandHandlers
 {
     [ExportMetadata("Command", "RSET")]
     [Export(typeof(ICommandHandler))]
-    public class RSETHandler : ICommandHandler
+    public class RSETHandler : CommandHandlerBase
     {
-        public SMTPResponse Execute(SMTPTransaction transaction, string parameters)
+        public override SMTPResponse Execute(SMTPTransaction transaction, string parameters)
         {
             if (!String.IsNullOrWhiteSpace(parameters))
             {

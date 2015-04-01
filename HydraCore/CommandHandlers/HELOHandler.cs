@@ -5,9 +5,9 @@ namespace HydraCore.CommandHandlers
 {
     [ExportMetadata("Command", "HELO")]
     [Export(typeof(ICommandHandler))]
-    public class HELOHandler : ICommandHandler
+    public class HELOHandler : CommandHandlerBase
     {
-        public SMTPResponse Execute(SMTPTransaction transaction, string parameters)
+        public override SMTPResponse Execute(SMTPTransaction transaction, string parameters)
         {
             if (String.IsNullOrWhiteSpace(parameters))
             {
@@ -17,7 +17,7 @@ namespace HydraCore.CommandHandlers
             transaction.Reset();
             transaction.Initialize(parameters);
 
-            return new SMTPResponse(SMTPStatusCode.Okay, transaction.Server.Greet);
+            return new SMTPResponse(SMTPStatusCode.Okay, Server.Greet);
         }
     }
 }

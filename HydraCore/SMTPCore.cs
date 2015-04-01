@@ -43,6 +43,7 @@ namespace HydraCore
                     {
                         var command = exportDefinition.Metadata["Command"].ToString();
 
+                        handler.Initialize(this);
                         _handlers.Add(command, handler);
                     }
                 }

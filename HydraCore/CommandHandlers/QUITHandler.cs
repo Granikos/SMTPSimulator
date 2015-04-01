@@ -5,9 +5,9 @@ namespace HydraCore.CommandHandlers
 {
     [ExportMetadata("Command", "QUIT")]
     [Export(typeof(ICommandHandler))]
-    public class QUITHandler : ICommandHandler
+    public class QUITHandler : CommandHandlerBase
     {
-        public SMTPResponse Execute(SMTPTransaction transaction, string parameters)
+        public override SMTPResponse Execute(SMTPTransaction transaction, string parameters)
         {
             if (!String.IsNullOrWhiteSpace(parameters))
             {

@@ -8,9 +8,9 @@ namespace HydraCore.CommandHandlers
 {
     [ExportMetadata("Command", "DATA")]
     [Export(typeof(ICommandHandler))]
-    public class DATAHandler : ICommandHandler
+    public class DATAHandler : CommandHandlerBase
     {
-        public SMTPResponse Execute(SMTPTransaction transaction, string parameters)
+        public override SMTPResponse Execute(SMTPTransaction transaction, string parameters)
         {
             if (!String.IsNullOrWhiteSpace(parameters))
             {

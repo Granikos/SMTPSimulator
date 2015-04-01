@@ -7,11 +7,11 @@ namespace HydraCore.CommandHandlers
 {
     [ExportMetadata("Command", "RCPT")]
     [Export(typeof(ICommandHandler))]
-    public class RCPTHandler : ICommandHandler
+    public class RCPTHandler : CommandHandlerBase
     {
         readonly Regex _toRegex = new Regex("^TO:<(\\w*@\\w*(?:\\.\\w*)*)>$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        public SMTPResponse Execute(SMTPTransaction transaction, string parameters)
+        public override SMTPResponse Execute(SMTPTransaction transaction, string parameters)
         {
             if (!transaction.GetProperty<bool>("MailInProgress"))
             {
