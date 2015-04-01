@@ -1,31 +1,52 @@
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using HydraCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using HydraCore.CommandHandlers;
+using Microsoft.QualityTools.Testing.Fakes;
+using Xunit;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace HydraTest
 {
-    [TestClass]
-    public class TestEHLO : MailBaseTest
+    public class TestEHLO
     {
-        [TestMethod]
-        public void TestSuccess()
+        [Theory]
+        [InlineData("test")]
+        public void TestSuccess(string parameters)
         {
-            Server.Greet = "Test Greet";
+            const string greet = "Test Greet";
 
-            var response = ExecuteCommand("EHLO", "test-domain.com");
+            using (ShimsContext.Create())
+            {
+                var handler = new MAILHandler();
 
-            Assert.AreEqual(SMTPStatusCode.Okay, response.Code);
-            Assert.AreEqual(1, response.Args.Length);
-            Assert.AreEqual(Server.Greet, response.Args[0]);
-            Assert.AreEqual("test-domain.com", Transaction.ClientIdentifier);
-            Assert.IsTrue(Transaction.Initialized);
-        }
+                var init = false;
+                string clientId = null;
 
-        [TestMethod]
-        public void TestErrorWithNoParams()
-        {
-            var response = ExecuteCommand("EHLO");
+                var server = new HydraCore.Fakes.ShimSMTPCore
+                {
+                    GreetGet = () => greet
+                };
 
-            Assert.AreEqual(SMTPStatusCode.SyntaxError, response.Code);
+                var transaction = new HydraCore.Fakes.ShimSMTPTransaction
+                {
+                    InitializeString = s =>
+                    {
+                        init = true;
+                        clientId = s;
+                    }
+                };
+
+                handler.Initialize(server);
+
+                var response = handler.Execute(transaction, parameters);
+
+                Assert.Equals(SMTPStatusCode.Okay, response.Code);
+                Assert.AreEqual(1, response.Args.Length);
+                Assert.AreEqual(greet, response.Args[0]);
+                Assert.AreEqual(parameters, clientId);
+                Assert.IsTrue(init);
+            }
         }
     }
 }

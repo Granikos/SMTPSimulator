@@ -105,6 +105,7 @@
     <Compile Include="SMTPCommand.cs" />
     <Compile Include="SMTPCore.cs" />
     <Compile Include="SMTPTransaction.cs" />
+    <Compile Include="ValidationHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
