@@ -72,6 +72,11 @@ namespace HydraService
             SMTPResponse response;
             var transaction = _core.StartTransaction(ip, out response);
 
+            transaction.OnClose += smtpTransaction =>
+            {
+                Console.WriteLine("Client " + ip + " disconnected");
+            };
+
             var writer = new StreamWriter(clientStream, Encoding.ASCII, 1000, true) { NewLine = "\r\n" };
             var reader = new StreamReader(clientStream, Encoding.ASCII, false, 1000, true);
 
@@ -81,6 +86,7 @@ namespace HydraService
             while(!reader.EndOfStream && !transaction.Closed)
             {
                 var line = await reader.ReadLineAsync();
+                Console.WriteLine("[{0}] > {1}", ip, line);
                 var parts = line.Split(new [] {' '}, 2);
 
                 var verb = parts[0].ToUpperInvariant();
@@ -90,21 +96,20 @@ namespace HydraService
                 await writer.WriteLineAsync(response.ToString());
                 writer.Flush();
 
+                foreach (var l in response.ToString().Split(new [] {"\r\n"}, StringSplitOptions.None))
+                {
+                    Console.WriteLine("[{0}] < {1}", ip, l);
+                }
+
                 while (transaction.InDataMode)
                 {
                     var data = new StringBuilder();
-                    var first = true;
 
-                    while(true)
+                    do
                     {
                         line = await reader.ReadLineAsync();
-
-                        if (line.Equals(".")) break;
-                        if (line.StartsWith(".")) line = line.Substring(1);
-
-                        data.Append((first? "" : "\r\n") + line);
-                        first = false;
-                    }
+                        Console.WriteLine("[{0}] > {1}", ip, line);
+                    } while (transaction.HandleDataLine(line, data));
 
                     response = transaction.HandleData(data.ToString());
                     await writer.WriteLineAsync(response.ToString());

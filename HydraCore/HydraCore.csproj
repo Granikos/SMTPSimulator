@@ -87,6 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandHandlers\AUTHHandler.cs" />
     <Compile Include="CommandHandlers\DATAHandler.cs" />
     <Compile Include="CommandHandlers\EHLOHandler.cs" />
     <Compile Include="CommandHandlers\HELOHandler.cs" />

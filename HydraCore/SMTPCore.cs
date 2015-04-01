@@ -12,13 +12,6 @@ using HydraCore.CommandHandlers;
 
 namespace HydraCore
 {
-    using CommandHandler = Func<SMTPTransaction, SMTPCommand, string, SMTPResponse>;
-
-    public enum CommandArgMode
-    {
-        Forbidden, Required, Optional
-    }
-
     public class SMTPCore
     {
         private readonly ICollection<Mailbox> _mailBoxes = new HashSet<Mailbox>();
@@ -26,6 +19,47 @@ namespace HydraCore
         private readonly ICollection<IPSubnet> _allowedSubnets = new HashSet<IPSubnet>();
 
         private readonly Dictionary<string, ICommandHandler> _handlers = new Dictionary<string, ICommandHandler>();
+
+
+        private readonly IDictionary<string, object> _properties = new Dictionary<string, object>();
+
+        public T GetProperty<T>(string name)
+        {
+            object obj;
+            _properties.TryGetValue(name, out obj);
+
+            return obj != null ? (T)obj : default(T);
+        }
+
+        public IList<T> GetListProperty<T>(string name)
+        {
+            Contract.Requires<ArgumentNullException>(name != null);
+            object obj;
+            _properties.TryGetValue(name, out obj);
+
+            if (obj != null) return (IList<T>) obj;
+
+            var list = new List<T>();
+            _properties.Add(name, list);
+            return list;
+        }
+
+        public bool HasProperty(string name)
+        {
+            return _properties.ContainsKey(name);
+        }
+
+        public void SetProperty(string name, object value)
+        {
+            if (_properties.ContainsKey(name))
+            {
+                _properties[name] = value;
+            }
+            else
+            {
+                _properties.Add(name, value);
+            }
+        }
 
         public SMTPCore()
         {

@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
+using System.Text;
 
 namespace HydraCore
 {
@@ -64,8 +65,11 @@ namespace HydraCore
 
         private Func<string, SMTPResponse> _dataHandler;
 
-        public void StartDataMode(Func<string,SMTPResponse> dataHandler)
+        private Func<string, StringBuilder, bool> _dataLineHandler;
+
+        public void StartDataMode(Func<string, StringBuilder, bool> dataLineHandler, Func<string,SMTPResponse> dataHandler)
         {
+            _dataLineHandler = dataLineHandler;
             _dataHandler = dataHandler;
         }
 
@@ -73,6 +77,7 @@ namespace HydraCore
         {
             _properties.Clear();
             _dataHandler = null;
+            _dataLineHandler = null;
         }
 
         public void Close()
@@ -102,13 +107,18 @@ namespace HydraCore
             return handler.Execute(this, command.Parameters);
         }
 
+        public bool HandleDataLine(string line, StringBuilder builder)
+        {
+            return _dataLineHandler(line, builder);
+        }
+
         public SMTPResponse HandleData(string data)
         {
-            var response = _dataHandler(data);
-
+            var handler = _dataHandler;
             _dataHandler = null;
+            _dataLineHandler = null;
 
-            return response;
+            return handler(data);
         }
     }
 }
