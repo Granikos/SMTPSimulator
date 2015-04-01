@@ -12,7 +12,7 @@ namespace HydraTest
             return Transaction.ExecuteCommand(new SMTPCommand(cmd, parameters));
         }
 
-        public SMTPResponse HandleData(string cmd, string data)
+        public SMTPResponse HandleData(string data)
         {
             return Transaction.HandleData(data);
         }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Diagnostics.Contracts;
 using System.Linq;
@@ -16,14 +17,16 @@ namespace HydraCore.CommandHandlers
                 return new SMTPResponse(SMTPStatusCode.SyntaxError);
             }
 
-            if (!transaction.MailInProgress || !transaction.ForwardPath.Any())
+            var forwardPath = transaction.GetProperty<List<string>>("ForwardPath");
+
+            if (!transaction.GetProperty<bool>("MailInProgress") || forwardPath == null || !forwardPath.Any())
             {
                 return new SMTPResponse(SMTPStatusCode.BadSequence);
             }
 
             transaction.StartDataMode(data =>
             {
-                transaction.Server.TriggerNewMessage(transaction, transaction.ReversePath, transaction.ForwardPath.ToArray(), data);
+                transaction.Server.TriggerNewMessage(transaction, transaction.GetProperty<string>("ReversePath"), forwardPath.ToArray(), data);
 
                 transaction.Reset();
 

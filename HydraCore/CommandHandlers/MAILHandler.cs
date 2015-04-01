@@ -12,7 +12,7 @@ namespace HydraCore.CommandHandlers
 
         public SMTPResponse Execute(SMTPTransaction transaction, string parameters)
         {
-            if (transaction.MailInProgress)
+            if (transaction.GetProperty<bool>("MailInProgress"))
             {
                 return new SMTPResponse(SMTPStatusCode.BadSequence);
             }
@@ -33,8 +33,8 @@ namespace HydraCore.CommandHandlers
 
             var sender = match.Groups[1].Value;
 
-            transaction.ReversePath = sender;
-            transaction.MailInProgress = true;
+            transaction.SetProperty("ReversePath", sender);
+            transaction.SetProperty("MailInProgress", true);
 
             return new SMTPResponse(SMTPStatusCode.Okay);
         }

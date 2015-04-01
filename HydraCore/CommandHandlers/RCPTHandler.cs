@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -12,7 +13,7 @@ namespace HydraCore.CommandHandlers
 
         public SMTPResponse Execute(SMTPTransaction transaction, string parameters)
         {
-            if (!transaction.MailInProgress)
+            if (!transaction.GetProperty<bool>("MailInProgress"))
             {
                 return new SMTPResponse(SMTPStatusCode.BadSequence);
             }
@@ -33,7 +34,12 @@ namespace HydraCore.CommandHandlers
 
             var recipient = match.Groups[1].Value;
 
-            transaction.ForwardPath.Add(recipient);
+            if (!transaction.HasProperty("ForwardPath"))
+            {
+                transaction.SetProperty("ForwardPath", new List<string>());
+            }
+
+            transaction.GetProperty<List<string>>("ForwardPath").Add(recipient);
 
             return new SMTPResponse(SMTPStatusCode.Okay);
         }

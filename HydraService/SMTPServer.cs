@@ -90,7 +90,7 @@ namespace HydraService
                 await writer.WriteLineAsync(response.ToString());
                 writer.Flush();
 
-                while (transaction.DataMode)
+                while (transaction.InDataMode)
                 {
                     var data = new StringBuilder();
                     var first = true;

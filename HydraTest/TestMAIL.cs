@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using HydraCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,18 +13,18 @@ namespace HydraTest
         {
             var response = ExecuteCommand("MAIL", "FROM:<tester@domain.com>");
             Assert.AreEqual(SMTPStatusCode.Okay, response.Code);
-            Assert.AreEqual("tester@domain.com", Transaction.ReversePath);
-            Assert.IsTrue(Transaction.MailInProgress);
+            Assert.AreEqual("tester@domain.com", Transaction.GetProperty<string>("ReversePath"));
+            Assert.IsTrue(Transaction.GetProperty<bool>("MailInProgress"));
 
             response = ExecuteCommand("RCPT", "TO:<tester2@domain.com>");
             Assert.AreEqual(SMTPStatusCode.Okay, response.Code);
-            CollectionAssert.Contains(Transaction.ForwardPath, "tester2@domain.com");
-            Assert.IsTrue(Transaction.MailInProgress);
+            CollectionAssert.Contains(Transaction.GetProperty<List<string>>("ForwardPath"), "tester2@domain.com");
+            Assert.IsTrue(Transaction.GetProperty<bool>("MailInProgress"));
 
             response = ExecuteCommand("DATA");
             Assert.AreEqual(SMTPStatusCode.StartMailInput, response.Code);
-            Assert.IsTrue(Transaction.MailInProgress);
-            Assert.IsTrue(Transaction.DataMode);
+            Assert.IsTrue(Transaction.GetProperty<bool>("MailInProgress"));
+            Assert.IsTrue(Transaction.InDataMode);
 
             string sender = null;
             string[] recipients = new string[0];
@@ -36,10 +37,10 @@ namespace HydraTest
                 body = b;
             };
 
-            response = HandleData("DATA", "Test Mail Content...");
+            response = HandleData("Test Mail Content...");
             Assert.AreEqual(SMTPStatusCode.Okay, response.Code);
-            Assert.IsFalse(Transaction.MailInProgress);
-            Assert.IsFalse(Transaction.DataMode);
+            Assert.IsFalse(Transaction.GetProperty<bool>("MailInProgress"));
+            Assert.IsFalse(Transaction.InDataMode);
 
             Assert.AreEqual("tester@domain.com", sender);
             Assert.AreEqual(1, recipients.Length);

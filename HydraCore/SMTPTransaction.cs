@@ -1,13 +1,8 @@
 ﻿using System;
-using System.CodeDom;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel.Design;
-using System.Data.SqlClient;
+using System.ComponentModel;
 using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text.RegularExpressions;
-using HydraCore.CommandHandlers;
 
 namespace HydraCore
 {
@@ -23,18 +18,45 @@ namespace HydraCore
 
         public bool Closed { get; private set; }
 
-        public bool MailInProgress { get; internal set; }
-
-        public string ReversePath { get; internal set; }
-
-        public List<string> ForwardPath { get; private set; }
-
-        public bool DataMode { get; private set; }
+        public bool InDataMode { get { return _dataHandler != null; } }
 
         public SMTPTransaction(SMTPCore server)
         {
             Server = server;
-            ForwardPath = new List<string>();
+        }
+
+        private readonly IDictionary<string, object> _properties = new Dictionary<string, object>();
+        private readonly IDictionary<string, object> _permanentProperties = new Dictionary<string, object>();
+
+        public T GetProperty<T>(string name)
+        {
+            object obj;
+            if (!_properties.TryGetValue(name, out obj))
+            {
+                _permanentProperties.TryGetValue(name, out obj);
+            }
+
+            return obj != null? (T) obj : default(T);
+        }
+
+        public bool HasProperty(string name)
+        {
+            return _properties.ContainsKey(name) || _permanentProperties.ContainsKey(name);
+        }
+
+        public void SetProperty(string name, object value, bool permanent = false)
+        {
+            var target = permanent ? _permanentProperties : _properties;
+
+
+                if (target.ContainsKey(name))
+                {
+                    target[name] = value;
+                }
+                else
+                {
+                    target.Add(name, value);
+              }
         }
 
         public delegate void CloseAction(SMTPTransaction transaction);
@@ -44,16 +66,12 @@ namespace HydraCore
 
         public void StartDataMode(Func<string,SMTPResponse> dataHandler)
         {
-            DataMode = true;
             _dataHandler = dataHandler;
         }
 
         public void Reset()
         {
-            DataMode = false;
-            MailInProgress = false;
-            ReversePath = null;
-            ForwardPath.Clear();
+            _properties.Clear();
             _dataHandler = null;
         }
 
@@ -89,7 +107,6 @@ namespace HydraCore
             var response = _dataHandler(data);
 
             _dataHandler = null;
-            DataMode = false;
 
             return response;
         }
