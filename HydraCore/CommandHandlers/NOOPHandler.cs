@@ -6,7 +6,7 @@ namespace HydraCore.CommandHandlers
     [Export(typeof(ICommandHandler))]
     public class NOOPHandler : ICommandHandler
     {
-        public SMTPResponse Execute(SMTPTransaction transaction, string parameters, string data)
+        public SMTPResponse Execute(SMTPTransaction transaction, string parameters)
         {
             return new SMTPResponse(SMTPStatusCode.Okay);
         }

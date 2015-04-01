@@ -10,7 +10,7 @@ namespace HydraCore.CommandHandlers
     {
         readonly Regex _fromRegex = new Regex("^FROM:<(\\w*@\\w*(?:\\.\\w*)*)?>$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        public SMTPResponse Execute(SMTPTransaction transaction, string parameters, string data)
+        public SMTPResponse Execute(SMTPTransaction transaction, string parameters)
         {
             if (transaction.MailInProgress)
             {

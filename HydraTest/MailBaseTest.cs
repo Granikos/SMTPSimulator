@@ -11,9 +11,10 @@ namespace HydraTest
         {
             return Transaction.ExecuteCommand(new SMTPCommand(cmd, parameters));
         }
+
         public SMTPResponse HandleData(string cmd, string data)
         {
-            return Transaction.HandleData(new SMTPCommand(cmd), data);
+            return Transaction.HandleData(data);
         }
 
         [TestInitialize]

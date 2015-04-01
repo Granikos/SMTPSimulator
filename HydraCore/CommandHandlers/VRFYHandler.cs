@@ -8,7 +8,7 @@ namespace HydraCore.CommandHandlers
     [Export(typeof(ICommandHandler))]
     public class VRFYHandler : ICommandHandler
     {
-        public SMTPResponse Execute(SMTPTransaction transaction, string parameters, string data)
+        public SMTPResponse Execute(SMTPTransaction transaction, string parameters)
         {
             if (String.IsNullOrWhiteSpace(parameters))
             {

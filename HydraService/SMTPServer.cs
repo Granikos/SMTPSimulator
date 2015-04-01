@@ -106,7 +106,7 @@ namespace HydraService
                         first = false;
                     }
 
-                    response = transaction.HandleData(command, data.ToString());
+                    response = transaction.HandleData(data.ToString());
                     await writer.WriteLineAsync(response.ToString());
                     writer.Flush();
                 }

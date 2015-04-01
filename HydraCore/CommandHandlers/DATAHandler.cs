@@ -9,7 +9,7 @@ namespace HydraCore.CommandHandlers
     [Export(typeof(ICommandHandler))]
     public class DATAHandler : ICommandHandler
     {
-        public SMTPResponse Execute(SMTPTransaction transaction, string parameters, string data)
+        public SMTPResponse Execute(SMTPTransaction transaction, string parameters)
         {
             if (!String.IsNullOrWhiteSpace(parameters))
             {
@@ -21,16 +21,15 @@ namespace HydraCore.CommandHandlers
                 return new SMTPResponse(SMTPStatusCode.BadSequence);
             }
 
-            if (data != null)
+            transaction.StartDataMode(data =>
             {
                 transaction.Server.TriggerNewMessage(transaction, transaction.ReversePath, transaction.ForwardPath.ToArray(), data);
 
                 transaction.Reset();
 
                 return new SMTPResponse(SMTPStatusCode.Okay);
-            }
+            });
 
-            transaction.DataMode = true;
             return new SMTPResponse(SMTPStatusCode.StartMailInput);
         }
     }

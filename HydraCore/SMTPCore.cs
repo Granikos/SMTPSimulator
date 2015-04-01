@@ -37,10 +37,14 @@ namespace HydraCore
                 ComposablePart part = partDefinition.CreatePart();
                 foreach (ExportDefinition exportDefinition in partDefinition.ExportDefinitions)
                 {
-                    var handler = (ICommandHandler)part.GetExportedValue(exportDefinition);
-                    var command = exportDefinition.Metadata["Command"].ToString();
+                    var handler = part.GetExportedValue(exportDefinition) as ICommandHandler;
 
-                    _handlers.Add(command, handler);
+                    if (handler != null)
+                    {
+                        var command = exportDefinition.Metadata["Command"].ToString();
+
+                        _handlers.Add(command, handler);
+                    }
                 }
             }
 

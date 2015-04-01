@@ -2,6 +2,6 @@
 {
     public interface ICommandHandler
     {
-        SMTPResponse Execute(SMTPTransaction transaction, string parameters, string data);
+        SMTPResponse Execute(SMTPTransaction transaction, string parameters);
     }
 }

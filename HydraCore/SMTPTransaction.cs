@@ -29,7 +29,7 @@ namespace HydraCore
 
         public List<string> ForwardPath { get; private set; }
 
-        public bool DataMode { get; set; }
+        public bool DataMode { get; private set; }
 
         public SMTPTransaction(SMTPCore server)
         {
@@ -39,7 +39,14 @@ namespace HydraCore
 
         public delegate void CloseAction(SMTPTransaction transaction);
         public event CloseAction OnClose;
-        private ICommandHandler _handler;
+
+        private Func<string, SMTPResponse> _dataHandler;
+
+        public void StartDataMode(Func<string,SMTPResponse> dataHandler)
+        {
+            DataMode = true;
+            _dataHandler = dataHandler;
+        }
 
         public void Reset()
         {
@@ -47,6 +54,7 @@ namespace HydraCore
             MailInProgress = false;
             ReversePath = null;
             ForwardPath.Clear();
+            _dataHandler = null;
         }
 
         public void Close()
@@ -65,14 +73,25 @@ namespace HydraCore
         public SMTPResponse ExecuteCommand(SMTPCommand command)
         {
             Contract.Requires<ArgumentNullException>(command != null);
-            _handler = Server.GetHandler(command);
 
-            return _handler.Execute(this, command.Parameters, null);
+            var handler = Server.GetHandler(command);
+
+            if (handler == null)
+            {
+                return new SMTPResponse(SMTPStatusCode.SyntaxError);
+            }
+
+            return handler.Execute(this, command.Parameters);
         }
 
-        public SMTPResponse HandleData(SMTPCommand command, string data)
+        public SMTPResponse HandleData(string data)
         {
-            return _handler.Execute(this, command.Parameters, data);
+            var response = _dataHandler(data);
+
+            _dataHandler = null;
+            DataMode = false;
+
+            return response;
         }
     }
 }
