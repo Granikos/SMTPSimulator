@@ -110,13 +110,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="MailBaseTest.cs" />
+    <Compile Include="CommandHandlers\DATATest.cs" />
+    <Compile Include="CommandHandlers\NOOPTest.cs" />
+    <Compile Include="CommandHandlers\QUITTest.cs" />
+    <Compile Include="CommandHandlers\RCPTTest.cs" />
+    <Compile Include="CommandHandlers\RSETTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestEHLO.cs" />
-    <Compile Include="TestHELO.cs" />
-    <Compile Include="TestMAIL.cs" />
-    <Compile Include="TestVRFY.cs" />
-    <Compile Include="IPAddressTest.cs" />
+    <Compile Include="CommandHandlers\EHLOTest.cs" />
+    <Compile Include="CommandHandlers\HELOTest.cs" />
+    <Compile Include="CommandHandlers\MAILTest.cs" />
+    <Compile Include="CommandHandlers\VRFYTest.cs" />
+    <Compile Include="IPSubnetTest.cs" />
     <Compile Include="ValidationHelperTest.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,9 +6,9 @@ using HydraCore.Fakes;
 using Microsoft.QualityTools.Testing.Fakes;
 using Xunit;
 
-namespace HydraTest
+namespace HydraTest.CommandHandlers
 {
-    public class TestEHLO
+    public class EHLOTest
     {
         [Theory]
         [InlineData("test", new string[0])]

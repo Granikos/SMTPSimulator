@@ -1,19 +1,17 @@
 using System;
-using System.Collections.Generic;
 using HydraCore;
 using HydraCore.CommandHandlers;
 using Microsoft.QualityTools.Testing.Fakes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Xunit;
-using Assert = Xunit.Assert;
 
-namespace HydraTest
+namespace HydraTest.CommandHandlers
 {
-    public class TestMAIL
+    public class MAILTest
     {
         [Theory]
+        // TODO: More cases
         [InlineData("")]
-        [InlineData("postmaster")]
+        [InlineData("\"fubar\"@test.de")]
         [InlineData("test@test.de")]
         public void TestSuccess(string email)
         {
@@ -32,7 +30,7 @@ namespace HydraTest
                         case "MailInProgress":
                             return false;
                         default:
-                            throw new AssertFailedException("The name is invalid...");
+                            throw new InvalidOperationException("The name is invalid...");
                     }
                 });
 
@@ -50,7 +48,7 @@ namespace HydraTest
                             inProgress = (bool)value;
                             break;
                         default:
-                            throw new AssertFailedException("The name is invalid...");
+                            throw new InvalidOperationException("The name is invalid...");
                     }
                 };
 

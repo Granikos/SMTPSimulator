@@ -1,14 +1,12 @@
-using System;
-using System.Collections.Generic;
 using HydraCore;
 using HydraCore.CommandHandlers;
 using HydraCore.Fakes;
 using Microsoft.QualityTools.Testing.Fakes;
 using Xunit;
 
-namespace HydraTest
+namespace HydraTest.CommandHandlers
 {
-    public class TestHELO
+    public class HELOTest
     {
         [Fact]
         public void TestSuccess()

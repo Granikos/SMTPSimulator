@@ -40,6 +40,22 @@ namespace HydraCore
             return obj != null? (T) obj : default(T);
         }
 
+        public IList<T> GetListProperty<T>(string name, bool permanent = false)
+        {
+            Contract.Requires<ArgumentNullException>(name != null);
+
+            var target = permanent ? _permanentProperties : _properties;
+
+            object obj;
+            target.TryGetValue(name, out obj);
+
+            if (obj != null) return (IList<T>)obj;
+
+            var list = new List<T>();
+            target.Add(name, list);
+            return list;
+        }
+
         public bool HasProperty(string name)
         {
             return _properties.ContainsKey(name) || _permanentProperties.ContainsKey(name);
