@@ -98,8 +98,11 @@
     <Compile Include="CommandHandlers\RCPTHandler.cs" />
     <Compile Include="CommandHandlers\RSETHandler.cs" />
     <Compile Include="CommandHandlers\VRFYHandler.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="IPSubnet.cs" />
     <Compile Include="Mailbox.cs" />
+    <Compile Include="Path.cs" />
+    <Compile Include="RegularExpressions.cs" />
     <Compile Include="SMTPResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SMTPCommand.cs" />

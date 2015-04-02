@@ -115,6 +115,8 @@
     <Compile Include="CommandHandlers\QUITTest.cs" />
     <Compile Include="CommandHandlers\RCPTTest.cs" />
     <Compile Include="CommandHandlers\RSETTest.cs" />
+    <Compile Include="HelperTest.cs" />
+    <Compile Include="PathTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommandHandlers\EHLOTest.cs" />
     <Compile Include="CommandHandlers\HELOTest.cs" />
