@@ -47,6 +47,12 @@ namespace HydraTest
         }
 
         [Fact]
+        public void TestToStringEmpty()
+        {
+            Assert.Equal("<>", Path.Empty.ToString());
+        }
+
+        [Fact]
         public void TestEquals()
         {
             var path1 = new Path("tester", "test.de");

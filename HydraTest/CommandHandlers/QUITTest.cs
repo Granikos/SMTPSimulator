@@ -1,34 +1,24 @@
 using HydraCore;
 using HydraCore.CommandHandlers;
-using HydraCore.Fakes;
-using Microsoft.QualityTools.Testing.Fakes;
 using Xunit;
 
 namespace HydraTest.CommandHandlers
 {
-    public class QUITTest
+    public class QUITTest : TestBase
     {
         [Fact]
         public void TestSuccess()
         {
-            using (ShimsContext.Create())
-            {
-                var handler = new QUITHandler();
+            var handler = new QUITHandler();
 
-                var closed = false;
+            var closed = false;
+            Transaction.Close = () => closed = true;
 
-                var server = new ShimSMTPCore();
-                var transaction = new ShimSMTPTransaction()
-                {
-                    Close = () => closed = true
-                };
+            handler.Initialize(Core);
 
-                handler.Initialize(server);
-
-                var response = handler.Execute(transaction, null);
-                Assert.Equal(SMTPStatusCode.Closing, response.Code);
-                Assert.True(closed);
-            }
+            var response = handler.Execute(Transaction, null);
+            Assert.Equal(SMTPStatusCode.Closing, response.Code);
+            Assert.True(closed);
         }
     }
 }

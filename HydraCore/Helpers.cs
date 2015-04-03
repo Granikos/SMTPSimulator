@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics.Contracts;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace HydraCore
 {
@@ -10,6 +8,7 @@ namespace HydraCore
     {
         public static string ToSMTPString(this string str)
         {
+            Contract.Requires<ArgumentNullException>(str != null);
             if (RegularExpressions.DotStringRegex.IsMatch(str)) return str;
 
             StringBuilder sb = new StringBuilder(str.Length + 2);
@@ -33,6 +32,7 @@ namespace HydraCore
         // No validation done!
         public static string FromSMTPString(this string str)
         {
+            Contract.Requires<ArgumentNullException>(str != null);
             if (!str.StartsWith("\"")) return str;
 
             StringBuilder sb = new StringBuilder(str.Length - 2);

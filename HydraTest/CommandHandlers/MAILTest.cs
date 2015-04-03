@@ -1,106 +1,108 @@
 using System;
 using HydraCore;
 using HydraCore.CommandHandlers;
-using Microsoft.QualityTools.Testing.Fakes;
 using Xunit;
 
 namespace HydraTest.CommandHandlers
 {
-    public class MAILTest
+    public class MAILTest : TestBase
     {
         [Theory]
         // TODO: More cases
-        [InlineData("")]
-        [InlineData("\"fubar\"@test.de")]
-        [InlineData("test@test.de")]
-        public void TestSuccess(string email)
+        [InlineData("", "", "")]
+        [InlineData("\"fubar\"@test.de", "fubar", "test.de")]
+        [InlineData("test@test.de", "test", "test.de")]
+        public void TestSuccess(string email, string localPart, string domain)
         {
-            const string greet = "Test Greet";
-
-            using (ShimsContext.Create())
+            Transaction.GetPropertyOf1String(name =>
             {
-                var server = new HydraCore.Fakes.ShimSMTPCore();
-                server.GreetGet = () => greet;
-
-                var transaction = new HydraCore.Fakes.ShimSMTPTransaction();
-                transaction.GetPropertyOf1String(name =>
+                switch (name)
                 {
-                    switch (name)
-                    {
-                        case "MailInProgress":
-                            return false;
-                        default:
-                            throw new InvalidOperationException("The name is invalid...");
-                    }
-                });
+                    case "MailInProgress":
+                        return false;
+                    default:
+                        throw new InvalidOperationException("The name is invalid...");
+                }
+            });
 
-                bool inProgress = false;
-                string reversePath = null;
+            bool inProgress = false;
+            Path reversePath = null;
 
-                transaction.SetPropertyStringObjectBoolean = (name, value, _) =>
-                {
-                    switch (name)
-                    {
-                        case "ReversePath":
-                            reversePath = (string)value;
-                            break;
-                        case "MailInProgress":
-                            inProgress = (bool)value;
-                            break;
-                        default:
-                            throw new InvalidOperationException("The name is invalid...");
-                    }
-                };
-
-                var handler = new MAILHandler();
-                var response = handler.Execute(transaction, String.Format("FROM:<{0}>", email));
-
-                Assert.Equal(SMTPStatusCode.Okay, response.Code);
-                Assert.Equal(email, reversePath);
-                Assert.True(inProgress);
-            }
-        }
-
-        /*
-        [TestMethod]
-        public void TestMail()
-        {
-            var response = ExecuteCommand("MAIL", "FROM:<tester@domain.com>");
-            Assert.AreEqual(SMTPStatusCode.Okay, response.Code);
-            Assert.AreEqual("tester@domain.com", Transaction.GetProperty<string>("ReversePath"));
-            Assert.IsTrue(Transaction.GetProperty<bool>("MailInProgress"));
-
-            response = ExecuteCommand("RCPT", "TO:<tester2@domain.com>");
-            Assert.AreEqual(SMTPStatusCode.Okay, response.Code);
-            CollectionAssert.Contains(Transaction.GetProperty<List<string>>("ForwardPath"), "tester2@domain.com");
-            Assert.IsTrue(Transaction.GetProperty<bool>("MailInProgress"));
-
-            response = ExecuteCommand("DATA");
-            Assert.AreEqual(SMTPStatusCode.StartMailInput, response.Code);
-            Assert.IsTrue(Transaction.GetProperty<bool>("MailInProgress"));
-            Assert.IsTrue(Transaction.InDataMode);
-
-            string sender = null;
-            string[] recipients = new string[0];
-            string body = null;
-
-            Server.OnNewMessage += (t, s, r, b) =>
+            Transaction.SetPropertyStringObjectBoolean = (name, value, _) =>
             {
-                sender = s;
-                recipients = r;
-                body = b;
+                switch (name)
+                {
+                    case "ReversePath":
+                        reversePath = (Path)value;
+                        break;
+                    case "MailInProgress":
+                        inProgress = (bool)value;
+                        break;
+                    default:
+                        throw new InvalidOperationException("The name is invalid...");
+                }
             };
 
-            response = HandleData("Test Mail Content...");
-            Assert.AreEqual(SMTPStatusCode.Okay, response.Code);
-            Assert.IsFalse(Transaction.GetProperty<bool>("MailInProgress"));
-            Assert.IsFalse(Transaction.InDataMode);
+            var handler = new MAILHandler();
+            handler.Initialize(Core);
 
-            Assert.AreEqual("tester@domain.com", sender);
-            Assert.AreEqual(1, recipients.Length);
-            Assert.AreEqual("tester2@domain.com", recipients[0]);
-            Assert.AreEqual("Test Mail Content...", body);
+            var response = handler.Execute(Transaction, String.Format("FROM:<{0}>", email));
+
+            Assert.Equal(SMTPStatusCode.Okay, response.Code);
+            Assert.NotNull(reversePath);
+            Assert.Equal(localPart, reversePath.LocalPart);
+            Assert.Equal(domain, reversePath.Domain);
+            Assert.True(inProgress);
         }
-        */
+
+        [Fact]
+        public void TestBadSequence()
+        {
+            Transaction.GetPropertyOf1String(name =>
+            {
+                switch (name)
+                {
+                    case "MailInProgress":
+                        return true;
+                    default:
+                        throw new InvalidOperationException("The name is invalid...");
+                }
+            });
+
+            var handler = new MAILHandler();
+            handler.Initialize(Core);
+
+            var response = handler.Execute(Transaction, "FROM:<tester@test.de>");
+
+            Assert.Equal(SMTPStatusCode.BadSequence, response.Code);
+        }
+
+        [Theory]
+        [InlineData("fubar@test.de")]
+        [InlineData("FROM:tester@test.de")]
+        [InlineData("")]
+        [InlineData("<>")]
+        [InlineData("<fubar@test.de>")]
+        [InlineData("FROM:<tester@test.de>fubar")]
+        public void TestSyntaxError(string parameters)
+        {
+            Transaction.GetPropertyOf1String(name =>
+            {
+                switch (name)
+                {
+                    case "MailInProgress":
+                        return false;
+                    default:
+                        throw new InvalidOperationException("The name is invalid...");
+                }
+            });
+
+            var handler = new MAILHandler();
+            handler.Initialize(Core);
+
+            var response = handler.Execute(Transaction, parameters);
+
+            Assert.Equal(SMTPStatusCode.SyntaxError, response.Code);
+        }
     }
 }

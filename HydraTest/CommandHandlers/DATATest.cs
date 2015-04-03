@@ -6,23 +6,17 @@ using Xunit;
 
 namespace HydraTest.CommandHandlers
 {
-    public class DATATest
+    public class DATATest : TestBase
     {
         [Fact]
         public void TestSuccess()
         {
-            using (ShimsContext.Create())
-            {
-                var handler = new DATAHandler();
+            var handler = new DATAHandler();
 
-                var server = new ShimSMTPCore();
-                var transaction = new ShimSMTPTransaction();
+            handler.Initialize(Core);
 
-                handler.Initialize(server);
-
-                var response = handler.Execute(transaction, null);
-                Assert.Equal(SMTPStatusCode.Okay, response.Code);
-            }
+            var response = handler.Execute(Transaction, null);
+            Assert.Equal(SMTPStatusCode.Okay, response.Code);
         }
     }
 }

@@ -3,12 +3,11 @@ using System.Linq;
 using HydraCore;
 using HydraCore.CommandHandlers;
 using HydraCore.Fakes;
-using Microsoft.QualityTools.Testing.Fakes;
 using Xunit;
 
 namespace HydraTest.CommandHandlers
 {
-    public class VRFYTest
+    public class VRFYTest : TestBase
     {
         [Theory]
         [InlineData("test", new[] { "test@test.de" }, new[] { true })]
@@ -16,40 +15,32 @@ namespace HydraTest.CommandHandlers
         [InlineData("test", new[] { "test@test.de", "fubar@fubar.de" }, new[] { true, false })]
         public void TestSuccess(string search, string[] emails, bool[] found)
         {
-            using (ShimsContext.Create())
+            var mailboxes = emails.Select(e => (Mailbox)new ShimMailbox
             {
-                var mailboxes = emails.Select(e => (Mailbox)new ShimMailbox
+                ToString = () => e
+            }).ToList();
+
+            var handler = new VRFYHandler();
+
+            Core.MailboxesGet = () => mailboxes;
+
+            handler.Initialize(Core);
+
+            var response = handler.Execute(Transaction, search);
+            var foundCount = found.Count(f => f);
+
+            Assert.Equal(foundCount > 1 ? SMTPStatusCode.MailboxNameNotAllowed : SMTPStatusCode.Okay, response.Code);
+            Assert.Equal(response.Args.Length, foundCount);
+
+            for (int i = 0; i < emails.Length; i++)
+            {
+                if (found[i])
                 {
-                    ToString = () => e
-                }).ToList();
-
-                var handler = new VRFYHandler();
-
-                var server = new ShimSMTPCore
+                    Assert.Contains(emails[i], response.Args);
+                }
+                else
                 {
-                    MailboxesGet = () => mailboxes
-                };
-
-                var transaction = new ShimSMTPTransaction();
-
-                handler.Initialize(server);
-
-                var response = handler.Execute(transaction, search);
-                var foundCount = found.Count(f => f);
-
-                Assert.Equal(foundCount > 1? SMTPStatusCode.MailboxNameNotAllowed : SMTPStatusCode.Okay, response.Code);
-                Assert.Equal(response.Args.Length, foundCount);
-
-                for (int i = 0; i < emails.Length; i++)
-                {
-                    if (found[i])
-                    {
-                        Assert.Contains(emails[i], response.Args);
-                    }
-                    else
-                    {
-                        Assert.DoesNotContain(emails[i], response.Args);
-                    }
+                    Assert.DoesNotContain(emails[i], response.Args);
                 }
             }
         }
@@ -57,39 +48,25 @@ namespace HydraTest.CommandHandlers
         [Fact]
         public void TestNotFound()
         {
-            using (ShimsContext.Create())
-            {
-                var handler = new VRFYHandler();
+            var handler = new VRFYHandler();
 
-                var server = new ShimSMTPCore
-                {
-                    MailboxesGet = () => new List<Mailbox>()
-                };
+            Core.MailboxesGet = () => new List<Mailbox>();
 
-                var transaction = new ShimSMTPTransaction();
+            handler.Initialize(Core);
 
-                handler.Initialize(server);
-
-                var response = handler.Execute(transaction, "test@test.de");
-                Assert.Equal(SMTPStatusCode.MailboxUnavailiableError, response.Code);
-            }
+            var response = handler.Execute(Transaction, "test@test.de");
+            Assert.Equal(SMTPStatusCode.MailboxUnavailiableError, response.Code);
         }
 
         [Fact]
         public void TestErrorWithNoParams()
         {
-            using (ShimsContext.Create())
-            {
-                var handler = new VRFYHandler();
+            var handler = new VRFYHandler();
 
-                var server = new ShimSMTPCore();
-                var transaction = new ShimSMTPTransaction();
+            handler.Initialize(Core);
 
-                handler.Initialize(server);
-
-                var response = handler.Execute(transaction, "");
-                Assert.Equal(SMTPStatusCode.SyntaxError, response.Code);
-            }
+            var response = handler.Execute(Transaction, "");
+            Assert.Equal(SMTPStatusCode.SyntaxError, response.Code);
         }
     }
 }

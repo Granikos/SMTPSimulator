@@ -1,28 +1,20 @@
 using HydraCore;
 using HydraCore.CommandHandlers;
-using HydraCore.Fakes;
-using Microsoft.QualityTools.Testing.Fakes;
 using Xunit;
 
 namespace HydraTest.CommandHandlers
 {
-    public class NOOPTest
+    public class NOOPTest : TestBase
     {
         [Fact]
         public void TestSuccess()
         {
-            using (ShimsContext.Create())
-            {
-                var handler = new NOOPHandler();
+            var handler = new NOOPHandler();
 
-                var server = new ShimSMTPCore();
-                var transaction = new ShimSMTPTransaction();
+            handler.Initialize(Core);
 
-                handler.Initialize(server);
-
-                var response = handler.Execute(transaction, null);
-                Assert.Equal(SMTPStatusCode.Okay, response.Code);
-            }
+            var response = handler.Execute(Transaction, null);
+            Assert.Equal(SMTPStatusCode.Okay, response.Code);
         }
     }
 }

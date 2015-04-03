@@ -5,18 +5,29 @@ using System.Text.RegularExpressions;
 
 namespace HydraCore
 {
-    public struct Path
+    public sealed class Path
     {
         public Path(string localPart, string domain, params string[] atDomains)
         {
             Contract.Requires<ArgumentNullException>(localPart != null);
             Contract.Requires<ArgumentNullException>(domain != null);
             Contract.Requires<ArgumentNullException>(atDomains != null);
+            Contract.Requires<ArgumentException>(!String.IsNullOrEmpty(localPart));
+            Contract.Requires<ArgumentException>(!String.IsNullOrEmpty(domain));
 
             LocalPart = localPart;
             Domain = domain;
             AtDomains = atDomains;
         }
+
+        private Path()
+        {
+            LocalPart = "";
+            Domain = "";
+            AtDomains = new string[0];
+        }
+
+        public static readonly Path Empty = new Path();
 
         public readonly string LocalPart;
         public readonly string Domain;
@@ -24,6 +35,7 @@ namespace HydraCore
 
         public override string ToString()
         {
+            if (String.IsNullOrEmpty(Domain)) return "<>";
             if (!AtDomains.Any()) return String.Format("<{0}@{1}>", LocalPart.ToSMTPString(), Domain);
 
             var ad = String.Join(",", AtDomains.Select(d => "@" + d));
@@ -33,6 +45,8 @@ namespace HydraCore
 
         public bool Equals(Path other)
         {
+            if (ReferenceEquals(null, other)) return false;
+
             return string.Equals(LocalPart, other.LocalPart, StringComparison.InvariantCultureIgnoreCase)
                 && string.Equals(Domain, other.Domain, StringComparison.InvariantCultureIgnoreCase);
         }
