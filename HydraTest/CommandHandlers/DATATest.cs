@@ -14,28 +14,8 @@ namespace HydraTest.CommandHandlers
         [Fact]
         public void TestSuccess()
         {
-
-            Transaction.GetPropertyOf1String(name =>
-            {
-                switch (name)
-                {
-                    case "MailInProgress":
-                        return true;
-                    default:
-                        throw new InvalidOperationException("The name is invalid.");
-                }
-            });
-
-            Transaction.GetListPropertyOf1StringBoolean((name, _) =>
-            {
-                switch (name)
-                {
-                    case "ForwardPath":
-                        return new List<Path> { new Path("fubar", "fubar.de") };
-                    default:
-                        throw new InvalidOperationException("The name is invalid.");
-                }
-            });
+            AddTransactionProperty("MailInProgress", true);
+            AddTransactionListProperty("ForwardPath", new List<Path> { new Path("fubar", "fubar.de") });
 
             bool dataMode = false;
             bool dataHandlerCalled = false;
@@ -91,27 +71,8 @@ namespace HydraTest.CommandHandlers
         [Fact]
         public void TestBadSequenceBecauseNotMailing()
         {
-            Transaction.GetPropertyOf1String(name =>
-            {
-                switch (name)
-                {
-                    case "MailInProgress":
-                        return false;
-                    default:
-                        throw new InvalidOperationException("The name is invalid...");
-                }
-            });
-
-            Transaction.GetListPropertyOf1StringBoolean((name, _) =>
-            {
-                switch (name)
-                {
-                    case "ForwardPath":
-                        return new List<Path> { new Path("test", "test.de") };
-                    default:
-                        throw new InvalidOperationException("The name is invalid.");
-                }
-            });
+            AddTransactionProperty("MailInProgress", false);
+            AddTransactionListProperty("ForwardPath", new List<Path> { new Path("fubar", "fubar.de") });
 
             var handler = new DATAHandler();
             handler.Initialize(Core);
@@ -124,28 +85,8 @@ namespace HydraTest.CommandHandlers
         [Fact]
         public void TestBadSequenceBecauseNoRecipients()
         {
-            Transaction.GetPropertyOf1String(name =>
-            {
-                switch (name)
-                {
-                    case "MailInProgress":
-                        return true;
-                    default:
-                        throw new InvalidOperationException("The name is invalid...");
-                }
-            });
-
-
-            Transaction.GetListPropertyOf1StringBoolean((name, _) =>
-            {
-                switch (name)
-                {
-                    case "ForwardPath":
-                        return new List<Path>();
-                    default:
-                        throw new InvalidOperationException("The name is invalid.");
-                }
-            });
+            AddTransactionProperty("MailInProgress", true);
+            AddTransactionListProperty("ForwardPath", new List<Path>());
 
             var handler = new DATAHandler();
             handler.Initialize(Core);
@@ -162,28 +103,8 @@ namespace HydraTest.CommandHandlers
             var expectedRecipients = new List<Path> { new Path("tester", "fubar.de") };
             var expectedBody = "Body";
 
-            Transaction.GetPropertyOf1String(name =>
-            {
-                switch (name)
-                {
-                    case "ReversePath":
-                        return expectedSender;
-                    default:
-                        throw new InvalidOperationException("The name is invalid...");
-                }
-            });
-
-
-            Transaction.GetListPropertyOf1StringBoolean((name, _) =>
-            {
-                switch (name)
-                {
-                    case "ForwardPath":
-                        return expectedRecipients;
-                    default:
-                        throw new InvalidOperationException("The name is invalid.");
-                }
-            });
+            AddTransactionProperty("ReversePath", () => expectedSender);
+            AddTransactionListProperty("ForwardPath", () => expectedRecipients);
 
             bool reset = false;
 

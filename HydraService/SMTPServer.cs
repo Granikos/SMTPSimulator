@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -23,7 +24,7 @@ namespace HydraService
             {
                 Console.WriteLine("--------------------------------------");
                 Console.WriteLine("New message from <" + sender + ">");
-                Console.WriteLine("Recipients: " + String.Join(", ", recipients));
+                Console.WriteLine("Recipients: " + String.Join(", ", recipients.Select(r => r.ToString())));
                 Console.WriteLine();
                 Console.WriteLine(body);
                 Console.WriteLine("--------------------------------------");

@@ -11,34 +11,13 @@ namespace HydraTest.CommandHandlers
         [Fact]
         public void TestSuccess()
         {
-            var handler = new RCPTHandler();
-
             var paths = new List<Path>();
             var permanent = false;
 
-            Transaction.GetPropertyOf1String(name =>
-            {
-                switch (name)
-                {
-                    case "MailInProgress":
-                        return true;
-                    default:
-                        throw new InvalidOperationException("Invalid name.");
-                }
-            });
+            AddTransactionProperty("MailInProgress", true);
+            AddTransactionListProperty("ForwardPath", () => paths, b => permanent = b);
 
-            Transaction.GetListPropertyOf1StringBoolean((name, p) =>
-            {
-                switch (name)
-                {
-                    case "ForwardPath":
-                        permanent = p;
-                        return paths;
-                    default:
-                        throw new InvalidOperationException("Invalid name.");
-                }
-            });
-
+            var handler = new RCPTHandler();
             handler.Initialize(Core);
 
             var response = handler.Execute(Transaction, "TO:<test@test.de>");
@@ -49,34 +28,13 @@ namespace HydraTest.CommandHandlers
         [Fact]
         public void TestSuccessWithPostmaster()
         {
-            var handler = new RCPTHandler();
-
             var paths = new List<Path>();
             var permanent = false;
 
-            Transaction.GetPropertyOf1String(name =>
-            {
-                switch (name)
-                {
-                    case "MailInProgress":
-                        return true;
-                    default:
-                        throw new InvalidOperationException("Invalid name.");
-                }
-            });
+            AddTransactionProperty("MailInProgress", true);
+            AddTransactionListProperty("ForwardPath", () => paths, b => permanent = b);
 
-            Transaction.GetListPropertyOf1StringBoolean((name, p) =>
-            {
-                switch (name)
-                {
-                    case "ForwardPath":
-                        permanent = p;
-                        return paths;
-                    default:
-                        throw new InvalidOperationException("Invalid name.");
-                }
-            });
-
+            var handler = new RCPTHandler();
             handler.Initialize(Core);
 
             var response = handler.Execute(Transaction, "TO:<postmaster>");
@@ -88,18 +46,9 @@ namespace HydraTest.CommandHandlers
         [Fact]
         public void TestSequenceError()
         {
-            var handler = new RCPTHandler();
-            Transaction.GetPropertyOf1String(name =>
-            {
-                switch (name)
-                {
-                    case "MailInProgress":
-                        return false;
-                    default:
-                        throw new InvalidOperationException("Invalid name.");
-                }
-            });
+            AddTransactionProperty("MailInProgress", false);
 
+            var handler = new RCPTHandler();
             handler.Initialize(Core);
 
             var response = handler.Execute(Transaction, "TO:<test@test.de>");
@@ -109,19 +58,9 @@ namespace HydraTest.CommandHandlers
         [Fact]
         public void TestNoParamError()
         {
+            AddTransactionProperty("MailInProgress", true);
+
             var handler = new RCPTHandler();
-
-            Transaction.GetPropertyOf1String(name =>
-            {
-                switch (name)
-                {
-                    case "MailInProgress":
-                        return true;
-                    default:
-                        throw new InvalidOperationException("Invalid name.");
-                }
-            });
-
             handler.Initialize(Core);
 
             var response = handler.Execute(Transaction, "");
@@ -131,19 +70,9 @@ namespace HydraTest.CommandHandlers
         [Fact]
         public void TestBadParamError()
         {
+            AddTransactionProperty("MailInProgress", true);
+
             var handler = new RCPTHandler();
-
-            Transaction.GetPropertyOf1String(name =>
-            {
-                switch (name)
-                {
-                    case "MailInProgress":
-                        return true;
-                    default:
-                        throw new InvalidOperationException("Invalid name.");
-                }
-            });
-
             handler.Initialize(Core);
 
             var response = handler.Execute(Transaction, "fubar");

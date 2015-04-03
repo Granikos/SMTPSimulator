@@ -3,7 +3,7 @@ using Xunit;
 
 namespace HydraTest
 {
-    public class HelperTest
+    public class HelpersTest
     {
         [Theory]
         [InlineData("foo.bar", "foo.bar")]

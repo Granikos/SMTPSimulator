@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using HydraCore;
 using HydraCore.CommandHandlers;
@@ -24,16 +23,7 @@ namespace HydraTest.CommandHandlers
 
             Core.GreetGet = () => greet;
 
-            Core.GetListPropertyOf1String(s =>
-            {
-                switch (s)
-                {
-                    case "EHLOLines":
-                        return new List<string>(lines);
-                    default:
-                        throw new InvalidOperationException("Invalid name.");
-                }
-            });
+            AddCoreListProperty("EHLOLines", () => new List<string>(lines));
 
             Transaction.InitializeString = s =>
             {

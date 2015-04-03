@@ -20,5 +20,14 @@ namespace HydraTest.CommandHandlers
             Assert.Equal(SMTPStatusCode.Closing, response.Code);
             Assert.True(closed);
         }
+
+        [Fact]
+        public void TestError()
+        {
+            var handler = new QUITHandler();
+
+            var response = handler.Execute(Transaction, "fubar");
+            Assert.Equal(SMTPStatusCode.SyntaxError, response.Code);
+        }
     }
 }

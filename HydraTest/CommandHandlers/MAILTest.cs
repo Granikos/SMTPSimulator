@@ -14,16 +14,7 @@ namespace HydraTest.CommandHandlers
         [InlineData("test@test.de", "test", "test.de")]
         public void TestSuccess(string email, string localPart, string domain)
         {
-            Transaction.GetPropertyOf1String(name =>
-            {
-                switch (name)
-                {
-                    case "MailInProgress":
-                        return false;
-                    default:
-                        throw new InvalidOperationException("The name is invalid...");
-                }
-            });
+            AddTransactionProperty("MailInProgress", false);
 
             bool inProgress = false;
             Path reversePath = null;
@@ -58,16 +49,7 @@ namespace HydraTest.CommandHandlers
         [Fact]
         public void TestBadSequence()
         {
-            Transaction.GetPropertyOf1String(name =>
-            {
-                switch (name)
-                {
-                    case "MailInProgress":
-                        return true;
-                    default:
-                        throw new InvalidOperationException("The name is invalid...");
-                }
-            });
+            AddTransactionProperty("MailInProgress", true);
 
             var handler = new MAILHandler();
             handler.Initialize(Core);
@@ -86,16 +68,7 @@ namespace HydraTest.CommandHandlers
         [InlineData("FROM:<tester@test.de>fubar")]
         public void TestSyntaxError(string parameters)
         {
-            Transaction.GetPropertyOf1String(name =>
-            {
-                switch (name)
-                {
-                    case "MailInProgress":
-                        return false;
-                    default:
-                        throw new InvalidOperationException("The name is invalid...");
-                }
-            });
+            AddTransactionProperty("MailInProgress", false);
 
             var handler = new MAILHandler();
             handler.Initialize(Core);
