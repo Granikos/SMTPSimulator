@@ -5,10 +5,12 @@ using System.Text.RegularExpressions;
 namespace HydraCore.CommandHandlers
 {
     [ExportMetadata("Command", "RCPT")]
-    [Export(typeof(ICommandHandler))]
+    [Export(typeof (ICommandHandler))]
     public class RCPTHandler : CommandHandlerBase
     {
-        static readonly Regex ToRegex = new Regex("^TO:(" + RegularExpressions.PathPattern + "|<postmaster>)(?: (?<Params>.*))?$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        private static readonly Regex ToRegex =
+            new Regex("^TO:(" + RegularExpressions.PathPattern + "|<postmaster>)(?: (?<Params>.*))?$",
+                RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         public override SMTPResponse Execute(SMTPTransaction transaction, string parameters)
         {

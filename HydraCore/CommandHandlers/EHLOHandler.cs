@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
 
 namespace HydraCore.CommandHandlers
 {
     [ExportMetadata("Command", "EHLO")]
-    [Export(typeof(ICommandHandler))]
+    [Export(typeof (ICommandHandler))]
     public class EHLOHandler : CommandHandlerBase
     {
         private string[] _lines;
@@ -17,7 +16,7 @@ namespace HydraCore.CommandHandlers
             {
                 if (_lines == null)
                 {
-                    var l = new List<string> { Server.Greet};
+                    var l = new List<string> {Server.Greet};
                     l.AddRange(Server.GetListProperty<string>("EHLOLines"));
                     _lines = l.ToArray();
                 }

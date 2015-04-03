@@ -33,14 +33,14 @@ namespace HydraCore
 
     public sealed class SMTPResponse
     {
+        public string[] Args;
+        public SMTPStatusCode Code;
+
         public SMTPResponse(SMTPStatusCode code, params string[] args)
         {
             Code = code;
             Args = args ?? new string[0];
         }
-
-        public SMTPStatusCode Code;
-        public string[] Args;
 
         public override string ToString()
         {
@@ -55,7 +55,7 @@ namespace HydraCore
                 return response;
             }
 
-            return String.Format("{0} {1}", (int)Code, Args.Length > 0 ? Args[0] : Code.ToString());
+            return String.Format("{0} {1}", (int) Code, Args.Length > 0 ? Args[0] : Code.ToString());
         }
     }
 }

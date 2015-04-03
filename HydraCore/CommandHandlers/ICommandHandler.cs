@@ -1,11 +1,8 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace HydraCore.CommandHandlers
+﻿namespace HydraCore.CommandHandlers
 {
     public interface ICommandHandler
     {
         void Initialize(SMTPCore core);
-
         SMTPResponse Execute(SMTPTransaction transaction, string parameters);
     }
 

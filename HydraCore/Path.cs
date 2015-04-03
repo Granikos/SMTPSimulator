@@ -7,6 +7,12 @@ namespace HydraCore
 {
     public sealed class Path
     {
+        public static readonly Path Empty = new Path("");
+        public static readonly Path Postmaster = new Path("postmaster");
+        public readonly string[] AtDomains;
+        public readonly string Domain;
+        public readonly string LocalPart;
+
         public Path(string localPart, string domain, params string[] atDomains)
         {
             Contract.Requires<ArgumentNullException>(localPart != null);
@@ -27,13 +33,6 @@ namespace HydraCore
             AtDomains = new string[0];
         }
 
-        public static readonly Path Empty = new Path("");
-        public static readonly Path Postmaster = new Path("postmaster");
-
-        public readonly string LocalPart;
-        public readonly string Domain;
-        public readonly string[] AtDomains;
-
         public override string ToString()
         {
             if (String.IsNullOrEmpty(Domain)) return String.Format("<{0}>", LocalPart);
@@ -49,7 +48,7 @@ namespace HydraCore
             if (ReferenceEquals(null, other)) return false;
 
             return string.Equals(LocalPart, other.LocalPart, StringComparison.InvariantCultureIgnoreCase)
-                && string.Equals(Domain, other.Domain, StringComparison.InvariantCultureIgnoreCase);
+                   && string.Equals(Domain, other.Domain, StringComparison.InvariantCultureIgnoreCase);
         }
 
         public override bool Equals(object obj)

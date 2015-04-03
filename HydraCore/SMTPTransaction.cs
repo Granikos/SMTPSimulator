@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Text;
 
@@ -11,23 +9,27 @@ namespace HydraCore
 
     public class SMTPTransaction
     {
-        public SMTPCore Server { get; private set; }
+        public delegate void CloseAction(SMTPTransaction transaction);
 
-        public string ClientIdentifier { get; private set; }
-
-        public bool Initialized { get; private set; }
-
-        public bool Closed { get; private set; }
-
-        public bool InDataMode { get { return _dataHandler != null; } }
+        private readonly IDictionary<string, object> _permanentProperties = new Dictionary<string, object>();
+        private readonly IDictionary<string, object> _properties = new Dictionary<string, object>();
+        private Func<string, SMTPResponse> _dataHandler;
+        private Func<string, StringBuilder, bool> _dataLineHandler;
 
         public SMTPTransaction(SMTPCore server)
         {
             Server = server;
         }
 
-        private readonly IDictionary<string, object> _properties = new Dictionary<string, object>();
-        private readonly IDictionary<string, object> _permanentProperties = new Dictionary<string, object>();
+        public SMTPCore Server { get; private set; }
+        public string ClientIdentifier { get; private set; }
+        public bool Initialized { get; private set; }
+        public bool Closed { get; private set; }
+
+        public bool InDataMode
+        {
+            get { return _dataHandler != null; }
+        }
 
         public T GetProperty<T>(string name)
         {
@@ -37,7 +39,7 @@ namespace HydraCore
                 _permanentProperties.TryGetValue(name, out obj);
             }
 
-            return obj != null? (T) obj : default(T);
+            return obj != null ? (T) obj : default(T);
         }
 
         public IList<T> GetListProperty<T>(string name, bool permanent = false)
@@ -49,7 +51,7 @@ namespace HydraCore
             object obj;
             target.TryGetValue(name, out obj);
 
-            if (obj != null) return (IList<T>)obj;
+            if (obj != null) return (IList<T>) obj;
 
             var list = new List<T>();
             target.Add(name, list);
@@ -66,24 +68,20 @@ namespace HydraCore
             var target = permanent ? _permanentProperties : _properties;
 
 
-                if (target.ContainsKey(name))
-                {
-                    target[name] = value;
-                }
-                else
-                {
-                    target.Add(name, value);
-              }
+            if (target.ContainsKey(name))
+            {
+                target[name] = value;
+            }
+            else
+            {
+                target.Add(name, value);
+            }
         }
 
-        public delegate void CloseAction(SMTPTransaction transaction);
         public event CloseAction OnClose;
 
-        private Func<string, SMTPResponse> _dataHandler;
-
-        private Func<string, StringBuilder, bool> _dataLineHandler;
-
-        public void StartDataMode(Func<string, StringBuilder, bool> dataLineHandler, Func<string,SMTPResponse> dataHandler)
+        public void StartDataMode(Func<string, StringBuilder, bool> dataLineHandler,
+            Func<string, SMTPResponse> dataHandler)
         {
             _dataLineHandler = dataLineHandler;
             _dataHandler = dataHandler;

@@ -11,7 +11,7 @@ namespace HydraCore
             Contract.Requires<ArgumentNullException>(str != null);
             if (RegularExpressions.DotStringRegex.IsMatch(str)) return str;
 
-            StringBuilder sb = new StringBuilder(str.Length + 2);
+            var sb = new StringBuilder(str.Length + 2);
 
             sb.Append('"');
 
@@ -35,7 +35,7 @@ namespace HydraCore
             Contract.Requires<ArgumentNullException>(str != null);
             if (!str.StartsWith("\"")) return str;
 
-            StringBuilder sb = new StringBuilder(str.Length - 2);
+            var sb = new StringBuilder(str.Length - 2);
 
             var escaped = false;
             foreach (var chr in str.Substring(1, str.Length - 2))

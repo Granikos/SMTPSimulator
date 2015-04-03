@@ -5,7 +5,7 @@ using System.Linq;
 namespace HydraCore.CommandHandlers
 {
     [ExportMetadata("Command", "VRFY")]
-    [Export(typeof(ICommandHandler))]
+    [Export(typeof (ICommandHandler))]
     public class VRFYHandler : CommandHandlerBase
     {
         public override SMTPResponse Execute(SMTPTransaction transaction, string parameters)

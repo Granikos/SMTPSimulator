@@ -4,10 +4,12 @@ using System.Text.RegularExpressions;
 namespace HydraCore.CommandHandlers
 {
     [ExportMetadata("Command", "MAIL")]
-    [Export(typeof(ICommandHandler))]
+    [Export(typeof (ICommandHandler))]
     public class MAILHandler : CommandHandlerBase
     {
-        static readonly Regex FromRegex = new Regex("^FROM:("+RegularExpressions.PathPattern+"|<>)(?: (?<Params>.*))?$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        private static readonly Regex FromRegex =
+            new Regex("^FROM:(" + RegularExpressions.PathPattern + "|<>)(?: (?<Params>.*))?$",
+                RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         public override SMTPResponse Execute(SMTPTransaction transaction, string parameters)
         {

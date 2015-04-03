@@ -6,7 +6,7 @@ using System.Text;
 namespace HydraCore.CommandHandlers
 {
     [ExportMetadata("Command", "DATA")]
-    [Export(typeof(ICommandHandler))]
+    [Export(typeof (ICommandHandler))]
     public class DATAHandler : CommandHandlerBase
     {
         public override SMTPResponse Execute(SMTPTransaction transaction, string parameters)

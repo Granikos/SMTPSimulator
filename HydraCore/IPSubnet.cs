@@ -59,6 +59,7 @@ namespace HydraCore
             //TODO : Improve
             return NetworkAddress.GetHashCode() & Subnet.GetHashCode();
         }
+
         public static IPAddress CreateSubnetMaskByNetBitLength(int length)
         {
             Contract.Requires<ArgumentException>(length >= 2 && length < 32, "Network size must at least be 2.");
@@ -91,7 +92,7 @@ namespace HydraCore
             var broadcastAddress = new byte[ipAdressBytes.Length];
             for (var i = 0; i < broadcastAddress.Length; i++)
             {
-                broadcastAddress[i] = (byte)(ipAdressBytes[i] & (subnetMaskBytes[i]));
+                broadcastAddress[i] = (byte) (ipAdressBytes[i] & (subnetMaskBytes[i]));
             }
             return new IPAddress(broadcastAddress);
         }

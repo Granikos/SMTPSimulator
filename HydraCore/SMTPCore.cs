@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.ComponentModel.Composition.Primitives;
-using System.Data.SqlClient;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net;
@@ -14,21 +11,59 @@ namespace HydraCore
 {
     public class SMTPCore
     {
-        private readonly ICollection<Mailbox> _mailBoxes = new HashSet<Mailbox>();
+        public delegate void NewMessageAction(SMTPTransaction transaction, Path sender, Path[] recipients, string body);
 
         private readonly ICollection<IPSubnet> _allowedSubnets = new HashSet<IPSubnet>();
-
         private readonly Dictionary<string, ICommandHandler> _handlers = new Dictionary<string, ICommandHandler>();
-
-
+        private readonly ICollection<Mailbox> _mailBoxes = new HashSet<Mailbox>();
         private readonly IDictionary<string, object> _properties = new Dictionary<string, object>();
+
+        public SMTPCore()
+        {
+            var catalog = new AssemblyCatalog(Assembly.GetExecutingAssembly());
+            var container = new CompositionContainer(catalog);
+
+            foreach (var partDefinition in container.Catalog.Parts)
+            {
+                var part = partDefinition.CreatePart();
+                foreach (var exportDefinition in partDefinition.ExportDefinitions)
+                {
+                    var handler = part.GetExportedValue(exportDefinition) as ICommandHandler;
+
+                    if (handler != null)
+                    {
+                        var command = exportDefinition.Metadata["Command"].ToString();
+
+                        handler.Initialize(this);
+                        _handlers.Add(command, handler);
+                    }
+                }
+            }
+
+            container.Dispose();
+        }
+
+        public string Banner { get; set; }
+        public string Greet { get; set; }
+        public string ServerName { get; set; }
+
+        public IEnumerable<Mailbox> Mailboxes
+        {
+            get
+            {
+                foreach (var mailbox in _mailBoxes)
+                {
+                    yield return mailbox;
+                }
+            }
+        }
 
         public T GetProperty<T>(string name)
         {
             object obj;
             _properties.TryGetValue(name, out obj);
 
-            return obj != null ? (T)obj : default(T);
+            return obj != null ? (T) obj : default(T);
         }
 
         public IList<T> GetListProperty<T>(string name)
@@ -61,31 +96,6 @@ namespace HydraCore
             }
         }
 
-        public SMTPCore()
-        {
-            var catalog = new AssemblyCatalog(Assembly.GetExecutingAssembly());
-            var container = new CompositionContainer(catalog);
-
-            foreach (ComposablePartDefinition partDefinition in container.Catalog.Parts)
-            {
-                ComposablePart part = partDefinition.CreatePart();
-                foreach (ExportDefinition exportDefinition in partDefinition.ExportDefinitions)
-                {
-                    var handler = part.GetExportedValue(exportDefinition) as ICommandHandler;
-
-                    if (handler != null)
-                    {
-                        var command = exportDefinition.Metadata["Command"].ToString();
-
-                        handler.Initialize(this);
-                        _handlers.Add(command, handler);
-                    }
-                }
-            }
-
-            container.Dispose();
-        }
-
         public void AddMailBox(Mailbox mb)
         {
             _mailBoxes.Add(mb);
@@ -105,30 +115,15 @@ namespace HydraCore
         {
             _allowedSubnets.Add(subnet);
         }
+
         public void RemoveSubnet(IPSubnet subnet)
         {
             _allowedSubnets.Remove(subnet);
         }
+
         public bool IsAllowedIP(IPAddress address)
         {
             return _allowedSubnets.Any(s => s.Contains(address));
-        }
-
-        public string Banner { get; set; }
-
-        public string Greet { get; set; }
-
-        public string ServerName { get; set; }
-
-        public IEnumerable<Mailbox> Mailboxes
-        {
-            get
-            {
-                foreach (var mailbox in _mailBoxes)
-                {
-                    yield return mailbox;
-                }
-            }
         }
 
         public SMTPTransaction StartTransaction(IPAddress address, out SMTPResponse response)
@@ -147,7 +142,6 @@ namespace HydraCore
             return transaction;
         }
 
-        public delegate void NewMessageAction(SMTPTransaction transaction, Path sender, Path[] recipients, string body);
         public event NewMessageAction OnNewMessage;
 
         internal void TriggerNewMessage(SMTPTransaction transaction, Path sender, Path[] recipients, string body)

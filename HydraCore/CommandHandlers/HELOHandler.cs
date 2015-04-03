@@ -4,7 +4,7 @@ using System.ComponentModel.Composition;
 namespace HydraCore.CommandHandlers
 {
     [ExportMetadata("Command", "HELO")]
-    [Export(typeof(ICommandHandler))]
+    [Export(typeof (ICommandHandler))]
     public class HELOHandler : CommandHandlerBase
     {
         public override SMTPResponse Execute(SMTPTransaction transaction, string parameters)

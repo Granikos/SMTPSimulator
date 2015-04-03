@@ -4,7 +4,7 @@ using System.ComponentModel.Composition;
 namespace HydraCore.CommandHandlers
 {
     [ExportMetadata("Command", "QUIT")]
-    [Export(typeof(ICommandHandler))]
+    [Export(typeof (ICommandHandler))]
     public class QUITHandler : CommandHandlerBase
     {
         public override SMTPResponse Execute(SMTPTransaction transaction, string parameters)
