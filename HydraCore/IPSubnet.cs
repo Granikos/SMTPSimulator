@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Net;
 
@@ -54,6 +55,7 @@ namespace HydraCore
             return Equals(NetworkAddress, other.NetworkAddress) && Equals(Subnet, other.Subnet);
         }
 
+        [ExcludeFromCodeCoverage]
         public override int GetHashCode()
         {
             //TODO : Improve
@@ -62,7 +64,8 @@ namespace HydraCore
 
         public static IPAddress CreateSubnetMaskByNetBitLength(int length)
         {
-            Contract.Requires<ArgumentException>(length >= 2 && length < 32, "Network size must at least be 2.");
+            Contract.Requires<ArgumentException>(length >= 2, "Network size must at least be 2.");
+            Contract.Requires<ArgumentException>(length < 32, "Network size must at most be 31.");
 
             const long mask = 0xFFFFFFFF;
             long sizeMask = (1 << (32 - length)) - 1;

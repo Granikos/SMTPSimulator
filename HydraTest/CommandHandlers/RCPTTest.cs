@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using HydraCore;
 using HydraCore.CommandHandlers;
@@ -25,6 +24,7 @@ namespace HydraTest.CommandHandlers
             Assert.Contains(new Path("test", "test.de"), paths);
             Assert.False(permanent);
         }
+
         [Fact]
         public void TestSuccessWithPostmaster()
         {

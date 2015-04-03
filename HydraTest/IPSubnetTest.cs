@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using HydraCore;
 using Xunit;
 
@@ -42,20 +41,29 @@ namespace HydraTest
             var ip1 = IPAddress.Parse("192.168.0.1");
             var ip2 = IPAddress.Parse("192.168.0.25");
             var subnetMask1 = IPAddress.Parse("255.255.255.0");
-            var subnetMask2 = IPAddress.Parse("255.255.127.0");
+            var subnetMask2 = IPAddress.Parse("255.255.128.0");
+            var subnetMask3 = IPAddress.Parse("255.255.255.248");
 
             var subnet1 = new IPSubnet(ip1, subnetMask1);
             var subnet2 = new IPSubnet(ip2, subnetMask1);
             var subnet3 = new IPSubnet(ip1, subnetMask2);
             var subnet4 = new IPSubnet(ip2, subnetMask2);
+            var subnet5 = new IPSubnet(ip1, subnetMask3);
+            var subnet6 = new IPSubnet(ip2, subnetMask3);
 
             Assert.False(subnet1.Equals(null));
+            Assert.False(subnet1.Equals(new object()));
+            Assert.True(subnet1.Equals((object)subnet1));
             Assert.Equal(subnet1, subnet2);
             Assert.NotEqual(subnet1, subnet3);
             Assert.NotEqual(subnet2, subnet3);
             Assert.NotEqual(subnet1, subnet4);
             Assert.NotEqual(subnet2, subnet4);
             Assert.Equal(subnet3, subnet4);
+            Assert.NotEqual(subnet1, subnet5);
+            Assert.NotEqual(subnet1, subnet6);
+            Assert.NotEqual(subnet2, subnet6);
+            Assert.NotEqual(subnet2, subnet5);
         }
     }
 }

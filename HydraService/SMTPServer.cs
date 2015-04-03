@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -9,16 +10,25 @@ using HydraCore;
 
 namespace HydraService
 {
-    class SMTPServer
+    internal class SMTPServer
     {
+        private readonly ICollection<IPSubnet> _allowedSubnets = new HashSet<IPSubnet>();
+        private readonly SMTPCore _core;
         private readonly TcpListener _tcpListener;
         private Thread _listenThread;
-        private SMTPCore _core;
 
         public SMTPServer(IPEndPoint endPoint, SMTPCore core)
         {
             _tcpListener = new TcpListener(endPoint);
             _core = core;
+
+            _core.OnConnect += (transaction, connect) =>
+            {
+                if (!IsAllowedIP(connect.IP))
+                {
+                    connect.Cancel = true;
+                }
+            };
 
             _core.OnNewMessage += (transaction, sender, recipients, body) =>
             {
@@ -29,6 +39,21 @@ namespace HydraService
                 Console.WriteLine(body);
                 Console.WriteLine("--------------------------------------");
             };
+        }
+
+        public void AddSubnet(IPSubnet subnet)
+        {
+            _allowedSubnets.Add(subnet);
+        }
+
+        public void RemoveSubnet(IPSubnet subnet)
+        {
+            _allowedSubnets.Remove(subnet);
+        }
+
+        public bool IsAllowedIP(IPAddress address)
+        {
+            return _allowedSubnets.Any(s => s.Contains(address));
         }
 
         public void Start()
@@ -56,48 +81,46 @@ namespace HydraService
 
             while (true)
             {
-                TcpClient client = _tcpListener.AcceptTcpClient();
+                var client = _tcpListener.AcceptTcpClient();
 
-                Thread clientThread = new Thread(HandleClientConnection);
+                var clientThread = new Thread(HandleClientConnection);
                 clientThread.Start(client);
             }
         }
+
         private async void HandleClientConnection(object client)
         {
-            TcpClient tcpClient = (TcpClient)client;
-            NetworkStream clientStream = tcpClient.GetStream();
-            var ip = ((IPEndPoint)tcpClient.Client.RemoteEndPoint).Address;
+            var tcpClient = (TcpClient) client;
+            var clientStream = tcpClient.GetStream();
+            var ip = ((IPEndPoint) tcpClient.Client.RemoteEndPoint).Address;
 
             Console.WriteLine("New client: " + ip);
 
             SMTPResponse response;
             var transaction = _core.StartTransaction(ip, out response);
 
-            transaction.OnClose += smtpTransaction =>
-            {
-                Console.WriteLine("Client " + ip + " disconnected");
-            };
+            transaction.OnClose += smtpTransaction => { Console.WriteLine("Client " + ip + " disconnected"); };
 
-            var writer = new StreamWriter(clientStream, Encoding.ASCII, 1000, true) { NewLine = "\r\n" };
+            var writer = new StreamWriter(clientStream, Encoding.ASCII, 1000, true) {NewLine = "\r\n"};
             var reader = new StreamReader(clientStream, Encoding.ASCII, false, 1000, true);
 
             await writer.WriteLineAsync(response.ToString());
             writer.Flush();
 
-            while(!reader.EndOfStream && !transaction.Closed)
+            while (!reader.EndOfStream && !transaction.Closed)
             {
                 var line = await reader.ReadLineAsync();
                 Console.WriteLine("[{0}] > {1}", ip, line);
-                var parts = line.Split(new [] {' '}, 2);
+                var parts = line.Split(new[] {' '}, 2);
 
                 var verb = parts[0].ToUpperInvariant();
-                var command = parts.Length > 1? new SMTPCommand(verb, parts[1]) : new SMTPCommand(verb);
+                var command = parts.Length > 1 ? new SMTPCommand(verb, parts[1]) : new SMTPCommand(verb);
 
                 response = transaction.ExecuteCommand(command);
                 await writer.WriteLineAsync(response.ToString());
                 writer.Flush();
 
-                foreach (var l in response.ToString().Split(new [] {"\r\n"}, StringSplitOptions.None))
+                foreach (var l in response.ToString().Split(new[] {"\r\n"}, StringSplitOptions.None))
                 {
                     Console.WriteLine("[{0}] < {1}", ip, l);
                 }

@@ -9,8 +9,8 @@ namespace HydraTest.CommandHandlers
     {
         [Theory]
         [InlineData("test", new string[0])]
-        [InlineData("test", new[] { "test2" })]
-        [InlineData("test", new[] { "test2", "test3" })]
+        [InlineData("test", new[] {"test2"})]
+        [InlineData("test", new[] {"test2", "test3"})]
         public void TestSuccess(string parameters, string[] lines)
         {
             const string greet = "Test Greet";
@@ -30,10 +30,7 @@ namespace HydraTest.CommandHandlers
                 init = true;
                 clientId = s;
             };
-            Transaction.Reset = () =>
-            {
-                reset = true;
-            };
+            Transaction.Reset = () => { reset = true; };
 
             handler.Initialize(Core);
 
@@ -42,7 +39,7 @@ namespace HydraTest.CommandHandlers
             Assert.Equal(SMTPStatusCode.Okay, response.Code);
             Assert.Equal(1 + lines.Length, response.Args.Length);
             Assert.Equal(greet, response.Args[0]);
-            for (int i = 0; i < lines.Length; i++)
+            for (var i = 0; i < lines.Length; i++)
             {
                 Assert.Equal(lines[i], response.Args[i + 1]);
             }

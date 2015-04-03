@@ -98,6 +98,7 @@
     <Compile Include="CommandHandlers\RCPTHandler.cs" />
     <Compile Include="CommandHandlers\RSETHandler.cs" />
     <Compile Include="CommandHandlers\VRFYHandler.cs" />
+    <Compile Include="DefaultHandlerLoader.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="IPSubnet.cs" />
     <Compile Include="Mailbox.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SMTPCommand.cs" />
     <Compile Include="SMTPCore.cs" />
+    <Compile Include="SMTPStatusCode.cs" />
     <Compile Include="SMTPTransaction.cs" />
     <Compile Include="ValidationHelpers.cs" />
   </ItemGroup>

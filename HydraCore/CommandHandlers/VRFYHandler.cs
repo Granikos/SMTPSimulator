@@ -15,7 +15,8 @@ namespace HydraCore.CommandHandlers
                 return new SMTPResponse(SMTPStatusCode.SyntaxError);
             }
 
-            var boxes = Server.Mailboxes.Where(mb => mb.ToString().Contains(parameters)).ToArray();
+            var mailboxes = Server.GetListProperty<Mailbox>("Mailboxes");
+            var boxes = mailboxes.Where(mb => mb.ToString().Contains(parameters)).ToArray();
 
             if (!boxes.Any())
             {

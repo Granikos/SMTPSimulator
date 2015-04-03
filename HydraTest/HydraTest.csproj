@@ -87,6 +87,7 @@
     </Reference>
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="xunit.abstractions">
       <HintPath>..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
     </Reference>
@@ -116,7 +117,10 @@
     <Compile Include="CommandHandlers\RCPTTest.cs" />
     <Compile Include="CommandHandlers\RSETTest.cs" />
     <Compile Include="CommandHandlers\TestBase.cs" />
-    <Compile Include="HelperTest.cs" />
+    <Compile Include="CoreTest.cs" />
+    <Compile Include="DefaultHandlerLoaderTest.cs" />
+    <Compile Include="HelpersTest.cs" />
+    <Compile Include="MailboxTest.cs" />
     <Compile Include="PathTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommandHandlers\EHLOTest.cs" />
@@ -124,6 +128,8 @@
     <Compile Include="CommandHandlers\MAILTest.cs" />
     <Compile Include="CommandHandlers\VRFYTest.cs" />
     <Compile Include="IPSubnetTest.cs" />
+    <Compile Include="ResponseTest.cs" />
+    <Compile Include="TransactionTest.cs" />
     <Compile Include="ValidationHelperTest.cs" />
   </ItemGroup>
   <ItemGroup>

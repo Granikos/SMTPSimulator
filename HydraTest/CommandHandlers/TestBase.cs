@@ -7,6 +7,19 @@ namespace HydraTest.CommandHandlers
 {
     public class TestBase : IDisposable
     {
+        private readonly IDisposable _context;
+        private readonly Dictionary<string, Func<object>> _coreListProperties = new Dictionary<string, Func<object>>();
+        private readonly Dictionary<string, Func<object>> _coreProperties = new Dictionary<string, Func<object>>();
+
+        private readonly Dictionary<string, Func<object>> _transactionListProperties =
+            new Dictionary<string, Func<object>>();
+
+        private readonly Dictionary<string, Action<bool>> _transactionListValidators =
+            new Dictionary<string, Action<bool>>();
+
+        private readonly Dictionary<string, Func<object>> _transactionProperties =
+            new Dictionary<string, Func<object>>();
+
         public TestBase()
         {
             _context = ShimsContext.Create();
@@ -20,17 +33,12 @@ namespace HydraTest.CommandHandlers
         }
 
         protected ShimSMTPCore Core { get; set; }
-
         protected ShimSMTPTransaction Transaction { get; set; }
-
-        private readonly IDisposable _context;
 
         public void Dispose()
         {
             _context.Dispose();
         }
-
-        readonly Dictionary<string, Func<object>> _transactionProperties = new Dictionary<string, Func<object>>();
 
         protected void AddTransactionProperty<T>(string name, T value)
         {
@@ -43,15 +51,13 @@ namespace HydraTest.CommandHandlers
             {
                 if (_transactionProperties.ContainsKey(s))
                 {
-                    return (T)_transactionProperties[s]();
+                    return (T) _transactionProperties[s]();
                 }
                 throw new InvalidOperationException("The name is invalid.");
             });
 
             _transactionProperties.Add(name, () => value());
         }
-
-        readonly Dictionary<string, Func<object>> _coreProperties = new Dictionary<string, Func<object>>();
 
         protected void AddCoreProperty<T>(string name, T value)
         {
@@ -64,16 +70,13 @@ namespace HydraTest.CommandHandlers
             {
                 if (_coreProperties.ContainsKey(s))
                 {
-                    return (T)_coreProperties[s]();
+                    return (T) _coreProperties[s]();
                 }
                 throw new InvalidOperationException("The name is invalid.");
             });
 
             _coreProperties.Add(name, () => value());
         }
-
-        readonly Dictionary<string, Func<object>> _transactionListProperties = new Dictionary<string, Func<object>>();
-        readonly Dictionary<string, Action<bool>> _transactionListValidators = new Dictionary<string, Action<bool>>();
 
         protected void AddTransactionListProperty<T>(string name, IList<T> value, Action<bool> validator = null)
         {
@@ -91,7 +94,7 @@ namespace HydraTest.CommandHandlers
                         _transactionListValidators[s](b);
                     }
 
-                    return (IList<T>)_transactionListProperties[s]();
+                    return (IList<T>) _transactionListProperties[s]();
                 }
                 throw new InvalidOperationException("The name is invalid.");
             });
@@ -99,8 +102,6 @@ namespace HydraTest.CommandHandlers
             _transactionListProperties.Add(name, () => value());
             if (validator != null) _transactionListValidators.Add(name, validator);
         }
-
-        readonly Dictionary<string, Func<object>> _coreListProperties = new Dictionary<string, Func<object>>();
 
         protected void AddCoreListProperty<T>(string name, IList<T> value)
         {
@@ -113,7 +114,7 @@ namespace HydraTest.CommandHandlers
             {
                 if (_coreListProperties.ContainsKey(s))
                 {
-                    return (IList<T>)_coreListProperties[s]();
+                    return (IList<T>) _coreListProperties[s]();
                 }
                 throw new InvalidOperationException("The name is invalid.");
             });

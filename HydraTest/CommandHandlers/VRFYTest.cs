@@ -10,20 +10,19 @@ namespace HydraTest.CommandHandlers
     public class VRFYTest : TestBase
     {
         [Theory]
-        [InlineData("test", new[] { "test@test.de" }, new[] { true })]
-        [InlineData("test", new[] { "test@test.de", "test2@test.de" }, new[] { true, true })]
-        [InlineData("test", new[] { "test@test.de", "fubar@fubar.de" }, new[] { true, false })]
+        [InlineData("test", new[] {"test@test.de"}, new[] {true})]
+        [InlineData("test", new[] {"test@test.de", "test2@test.de"}, new[] {true, true})]
+        [InlineData("test", new[] {"test@test.de", "fubar@fubar.de"}, new[] {true, false})]
         public void TestSuccess(string search, string[] emails, bool[] found)
         {
-            var mailboxes = emails.Select(e => (Mailbox)new ShimMailbox
+            var mailboxes = emails.Select(e => (Mailbox) new ShimMailbox
             {
                 ToString = () => e
             }).ToList();
 
+            AddCoreListProperty("Mailboxes", () => mailboxes);
+
             var handler = new VRFYHandler();
-
-            Core.MailboxesGet = () => mailboxes;
-
             handler.Initialize(Core);
 
             var response = handler.Execute(Transaction, search);
@@ -32,7 +31,7 @@ namespace HydraTest.CommandHandlers
             Assert.Equal(foundCount > 1 ? SMTPStatusCode.MailboxNameNotAllowed : SMTPStatusCode.Okay, response.Code);
             Assert.Equal(response.Args.Length, foundCount);
 
-            for (int i = 0; i < emails.Length; i++)
+            for (var i = 0; i < emails.Length; i++)
             {
                 if (found[i])
                 {
@@ -49,10 +48,9 @@ namespace HydraTest.CommandHandlers
         public void TestNotFound()
         {
             var handler = new VRFYHandler();
-
-            Core.MailboxesGet = () => new List<Mailbox>();
-
             handler.Initialize(Core);
+
+            AddCoreListProperty("Mailboxes", new List<Mailbox>());
 
             var response = handler.Execute(Transaction, "test@test.de");
             Assert.Equal(SMTPStatusCode.MailboxUnavailiableError, response.Code);
@@ -62,7 +60,6 @@ namespace HydraTest.CommandHandlers
         public void TestErrorWithNoParams()
         {
             var handler = new VRFYHandler();
-
             handler.Initialize(Core);
 
             var response = handler.Execute(Transaction, "");

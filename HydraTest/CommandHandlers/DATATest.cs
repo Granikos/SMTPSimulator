@@ -15,11 +15,11 @@ namespace HydraTest.CommandHandlers
         public void TestSuccess()
         {
             AddTransactionProperty("MailInProgress", true);
-            AddTransactionListProperty("ForwardPath", new List<Path> { new Path("fubar", "fubar.de") });
+            AddTransactionListProperty("ForwardPath", new List<Path> {new Path("fubar", "fubar.de")});
 
-            bool dataMode = false;
-            bool dataHandlerCalled = false;
-            bool dataLineHandlerCalled = false;
+            var dataMode = false;
+            var dataHandlerCalled = false;
+            var dataLineHandlerCalled = false;
             Func<string, StringBuilder, bool> dataLineHandler = null;
             Func<string, SMTPResponse> dataHandler = null;
 
@@ -72,7 +72,7 @@ namespace HydraTest.CommandHandlers
         public void TestBadSequenceBecauseNotMailing()
         {
             AddTransactionProperty("MailInProgress", false);
-            AddTransactionListProperty("ForwardPath", new List<Path> { new Path("fubar", "fubar.de") });
+            AddTransactionListProperty("ForwardPath", new List<Path> {new Path("fubar", "fubar.de")});
 
             var handler = new DATAHandler();
             handler.Initialize(Core);
@@ -100,18 +100,15 @@ namespace HydraTest.CommandHandlers
         public void TestDataHandler()
         {
             var expectedSender = new Path("tester", "test.de");
-            var expectedRecipients = new List<Path> { new Path("tester", "fubar.de") };
+            var expectedRecipients = new List<Path> {new Path("tester", "fubar.de")};
             var expectedBody = "Body";
 
             AddTransactionProperty("ReversePath", () => expectedSender);
             AddTransactionListProperty("ForwardPath", () => expectedRecipients);
 
-            bool reset = false;
+            var reset = false;
 
-            Transaction.Reset = () =>
-            {
-                reset = true;
-            };
+            Transaction.Reset = () => { reset = true; };
 
             Path actualSender = null;
             List<Path> actualRecipients = null;

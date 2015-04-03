@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -28,7 +29,7 @@ namespace HydraCore
 
         private Path(string localPart)
         {
-            LocalPart = "";
+            LocalPart = localPart;
             Domain = "";
             AtDomains = new string[0];
         }
@@ -54,9 +55,11 @@ namespace HydraCore
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
             return obj is Path && Equals((Path) obj);
         }
 
+        [ExcludeFromCodeCoverage]
         public override int GetHashCode()
         {
             unchecked

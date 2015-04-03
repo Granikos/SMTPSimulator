@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 
 namespace HydraCore
@@ -26,6 +27,7 @@ namespace HydraCore
                 : String.Format("{2} <{0}@{1}>", LocalPart, Domain, Name);
         }
 
+        [ExcludeFromCodeCoverage]
         public override int GetHashCode()
         {
             return ToString().GetHashCode();
@@ -38,10 +40,11 @@ namespace HydraCore
             return obj is Mailbox && Equals((Mailbox) obj);
         }
 
-        private bool Equals(Mailbox other)
+        public bool Equals(Mailbox other)
         {
-            return string.Equals(Name, other.Name) && string.Equals(LocalPart, other.LocalPart) &&
-                   string.Equals(Domain, other.Domain);
+            if (ReferenceEquals(null, other)) return false;
+            return string.Equals(LocalPart, other.LocalPart, StringComparison.InvariantCultureIgnoreCase) &&
+                   string.Equals(Domain, other.Domain, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

@@ -10,9 +10,7 @@ namespace HydraCore
 
         public SMTPCommand(string command, string parameters = null)
         {
-            Contract.Requires<ArgumentNullException>(command != null);
-            Contract.Requires<ArgumentException>(command.Equals(command.ToUpperInvariant()),
-                "All SMTP Commands must be upper case");
+            Contract.Requires<ArgumentNullException>(!String.IsNullOrEmpty(command));
 
             Command = command;
             Parameters = parameters;

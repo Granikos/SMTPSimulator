@@ -24,10 +24,7 @@ namespace HydraTest.CommandHandlers
                 init = true;
                 clientId = s;
             };
-            Transaction.Reset = () =>
-            {
-                reset = true;
-            };
+            Transaction.Reset = () => { reset = true; };
 
             handler.Initialize(Core);
 

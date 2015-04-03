@@ -5,8 +5,6 @@ using System.Text;
 
 namespace HydraCore
 {
-    using CommandHandler = Func<SMTPTransaction, SMTPCommand, string, SMTPResponse>;
-
     public class SMTPTransaction
     {
         public delegate void CloseAction(SMTPTransaction transaction);
@@ -46,12 +44,14 @@ namespace HydraCore
         {
             Contract.Requires<ArgumentNullException>(name != null);
 
+            var property = GetProperty<IList<T>>(name);
+
+            if (property != null)
+            {
+                return property;
+            }
+
             var target = permanent ? _permanentProperties : _properties;
-
-            object obj;
-            target.TryGetValue(name, out obj);
-
-            if (obj != null) return (IList<T>) obj;
 
             var list = new List<T>();
             target.Add(name, list);
@@ -67,14 +67,20 @@ namespace HydraCore
         {
             var target = permanent ? _permanentProperties : _properties;
 
-
-            if (target.ContainsKey(name))
+            if (value != null)
             {
-                target[name] = value;
+                if (target.ContainsKey(name))
+                {
+                    target[name] = value;
+                }
+                else
+                {
+                    target.Add(name, value);
+                }
             }
-            else
+            else if (target.ContainsKey(name))
             {
-                target.Add(name, value);
+                target.Remove(name);
             }
         }
 
@@ -83,6 +89,9 @@ namespace HydraCore
         public void StartDataMode(Func<string, StringBuilder, bool> dataLineHandler,
             Func<string, SMTPResponse> dataHandler)
         {
+            Contract.Requires<ArgumentNullException>(dataLineHandler != null);
+            Contract.Requires<ArgumentNullException>(dataHandler != null);
+
             _dataLineHandler = dataLineHandler;
             _dataHandler = dataHandler;
         }
@@ -111,7 +120,7 @@ namespace HydraCore
         {
             Contract.Requires<ArgumentNullException>(command != null);
 
-            var handler = Server.GetHandler(command);
+            var handler = Server.GetHandler(command.Command);
 
             if (handler == null)
             {
@@ -123,11 +132,13 @@ namespace HydraCore
 
         public bool HandleDataLine(string line, StringBuilder builder)
         {
+            if (_dataLineHandler == null) throw new InvalidOperationException("Not in data mode!");
             return _dataLineHandler(line, builder);
         }
 
         public SMTPResponse HandleData(string data)
         {
+            if (_dataHandler == null) throw new InvalidOperationException("Not in data mode!");
             var handler = _dataHandler;
             _dataHandler = null;
             _dataLineHandler = null;
