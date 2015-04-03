@@ -8,9 +8,11 @@ namespace HydraTest.CommandHandlers
     {
         public TestBase()
         {
-            Context = ShimsContext.Create();
+            _context = ShimsContext.Create();
             Transaction = new ShimSMTPTransaction();
             Core = new ShimSMTPCore();
+
+            Transaction.ServerGet = () => Core;
 
             ShimSMTPTransaction.BehaveAsNotImplemented();
             ShimSMTPCore.BehaveAsNotImplemented();
@@ -20,11 +22,11 @@ namespace HydraTest.CommandHandlers
 
         protected ShimSMTPTransaction Transaction { get; set; }
 
-        private IDisposable Context { get; set; }
+        private readonly IDisposable _context;
 
         public void Dispose()
         {
-            Context.Dispose();
+            _context.Dispose();
         }
     }
 }

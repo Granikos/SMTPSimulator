@@ -32,11 +32,11 @@ namespace HydraTest.CommandHandlers
             {
                 switch (name)
                 {
-                    case "ReversePath":
-                        reversePath = (Path)value;
-                        break;
                     case "MailInProgress":
                         inProgress = (bool)value;
+                        break;
+                    case "ReversePath":
+                        reversePath = (Path)value;
                         break;
                     default:
                         throw new InvalidOperationException("The name is invalid...");

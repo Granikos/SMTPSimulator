@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.Composition;
 using System.Text.RegularExpressions;
 
@@ -7,7 +8,7 @@ namespace HydraCore.CommandHandlers
     [Export(typeof(ICommandHandler))]
     public class RCPTHandler : CommandHandlerBase
     {
-        static readonly Regex ToRegex = new Regex("^TO:<(\\w*@\\w*(?:\\.\\w*)*)>$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        static readonly Regex ToRegex = new Regex("^TO:(" + RegularExpressions.PathPattern + "|<postmaster>)(?: (?<Params>.*))?$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         public override SMTPResponse Execute(SMTPTransaction transaction, string parameters)
         {
@@ -16,22 +17,18 @@ namespace HydraCore.CommandHandlers
                 return new SMTPResponse(SMTPStatusCode.BadSequence);
             }
 
-            if (string.IsNullOrWhiteSpace(parameters))
-            {
-                return new SMTPResponse(SMTPStatusCode.SyntaxError);
-            }
-
-            var parts = parameters.Split(' ');
-            var match = ToRegex.Match(parts[0]);
+            var match = ToRegex.Match(parameters);
 
             if (!match.Success)
             {
                 return new SMTPResponse(SMTPStatusCode.SyntaxError);
             }
 
-            var recipient = match.Groups[1].Value;
+            var path = match.Groups[1].Value.Equals("<postmaster>", StringComparison.InvariantCultureIgnoreCase)
+                ? Path.Postmaster
+                : Path.FromMatch(match);
 
-            transaction.GetListProperty<string>("ForwardPath").Add(recipient);
+            transaction.GetListProperty<Path>("ForwardPath").Add(path);
 
             return new SMTPResponse(SMTPStatusCode.Okay);
         }

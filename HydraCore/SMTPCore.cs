@@ -147,10 +147,10 @@ namespace HydraCore
             return transaction;
         }
 
-        public delegate void NewMessageAction(SMTPTransaction transaction, string sender, string[] recipients, string body);
+        public delegate void NewMessageAction(SMTPTransaction transaction, Path sender, Path[] recipients, string body);
         public event NewMessageAction OnNewMessage;
 
-        internal void TriggerNewMessage(SMTPTransaction transaction, string sender, string[] recipients, string body)
+        internal void TriggerNewMessage(SMTPTransaction transaction, Path sender, Path[] recipients, string body)
         {
             if (OnNewMessage != null) OnNewMessage(transaction, sender, recipients, body);
         }

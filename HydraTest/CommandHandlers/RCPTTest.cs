@@ -13,7 +13,7 @@ namespace HydraTest.CommandHandlers
         {
             var handler = new RCPTHandler();
 
-            var paths = new List<string>();
+            var paths = new List<Path>();
             var permanent = false;
 
             Transaction.GetPropertyOf1String(name =>
@@ -43,7 +43,45 @@ namespace HydraTest.CommandHandlers
 
             var response = handler.Execute(Transaction, "TO:<test@test.de>");
             Assert.Equal(SMTPStatusCode.Okay, response.Code);
-            Assert.Contains("test@test.de", paths);
+            Assert.Contains(new Path("test", "test.de"), paths);
+            Assert.False(permanent);
+        }
+        [Fact]
+        public void TestSuccessWithPostmaster()
+        {
+            var handler = new RCPTHandler();
+
+            var paths = new List<Path>();
+            var permanent = false;
+
+            Transaction.GetPropertyOf1String(name =>
+            {
+                switch (name)
+                {
+                    case "MailInProgress":
+                        return true;
+                    default:
+                        throw new InvalidOperationException("Invalid name.");
+                }
+            });
+
+            Transaction.GetListPropertyOf1StringBoolean((name, p) =>
+            {
+                switch (name)
+                {
+                    case "ForwardPath":
+                        permanent = p;
+                        return paths;
+                    default:
+                        throw new InvalidOperationException("Invalid name.");
+                }
+            });
+
+            handler.Initialize(Core);
+
+            var response = handler.Execute(Transaction, "TO:<postmaster>");
+            Assert.Equal(SMTPStatusCode.Okay, response.Code);
+            Assert.Contains(Path.Postmaster, paths);
             Assert.False(permanent);
         }
 

@@ -11,7 +11,7 @@ namespace HydraCore
 
     public class SMTPTransaction
     {
-        public readonly SMTPCore Server;
+        public SMTPCore Server { get; private set; }
 
         public string ClientIdentifier { get; private set; }
 

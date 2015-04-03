@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 
@@ -13,12 +11,12 @@ namespace HydraCore.CommandHandlers
     {
         public override SMTPResponse Execute(SMTPTransaction transaction, string parameters)
         {
-            if (!String.IsNullOrWhiteSpace(parameters))
+            if (!String.IsNullOrEmpty(parameters))
             {
                 return new SMTPResponse(SMTPStatusCode.SyntaxError);
             }
 
-            var forwardPath = transaction.GetProperty<List<string>>("ForwardPath");
+            var forwardPath = transaction.GetListProperty<Path>("ForwardPath");
 
             if (!transaction.GetProperty<bool>("MailInProgress") || forwardPath == null || !forwardPath.Any())
             {
@@ -30,7 +28,7 @@ namespace HydraCore.CommandHandlers
             return new SMTPResponse(SMTPStatusCode.StartMailInput);
         }
 
-        private bool DataLineHandler(string line, StringBuilder builder)
+        public static bool DataLineHandler(string line, StringBuilder builder)
         {
             if (line.Equals(".")) return false;
             if (line.StartsWith(".")) line = line.Substring(1);
@@ -42,10 +40,10 @@ namespace HydraCore.CommandHandlers
             return true;
         }
 
-        private SMTPResponse DataHandler(SMTPTransaction transaction, string data)
+        public static SMTPResponse DataHandler(SMTPTransaction transaction, string data)
         {
-            transaction.Server.TriggerNewMessage(transaction, transaction.GetProperty<string>("ReversePath"),
-                transaction.GetProperty<List<string>>("ForwardPath").ToArray(), data);
+            transaction.Server.TriggerNewMessage(transaction, transaction.GetProperty<Path>("ReversePath"),
+                transaction.GetListProperty<Path>("ForwardPath").ToArray(), data);
 
             transaction.Reset();
 

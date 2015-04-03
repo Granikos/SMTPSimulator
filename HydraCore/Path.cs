@@ -20,14 +20,15 @@ namespace HydraCore
             AtDomains = atDomains;
         }
 
-        private Path()
+        private Path(string localPart)
         {
             LocalPart = "";
             Domain = "";
             AtDomains = new string[0];
         }
 
-        public static readonly Path Empty = new Path();
+        public static readonly Path Empty = new Path("");
+        public static readonly Path Postmaster = new Path("postmaster");
 
         public readonly string LocalPart;
         public readonly string Domain;
@@ -35,7 +36,7 @@ namespace HydraCore
 
         public override string ToString()
         {
-            if (String.IsNullOrEmpty(Domain)) return "<>";
+            if (String.IsNullOrEmpty(Domain)) return String.Format("<{0}>", LocalPart);
             if (!AtDomains.Any()) return String.Format("<{0}@{1}>", LocalPart.ToSMTPString(), Domain);
 
             var ad = String.Join(",", AtDomains.Select(d => "@" + d));
