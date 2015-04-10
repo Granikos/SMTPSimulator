@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Net;
+using bbv.Common.EventBroker;
 using HydraCore.CommandHandlers;
 
 namespace HydraCore
@@ -16,12 +17,16 @@ namespace HydraCore
         private readonly Dictionary<string, ICommandHandler> _handlers = new Dictionary<string, ICommandHandler>();
         private readonly IDictionary<string, object> _properties = new Dictionary<string, object>();
 
-        public SMTPCore(IHandlerLoader loader)
+        public EventBroker EventBroker { get; private set; }
+
+        public SMTPCore(ICommandHandlerLoader loader)
         {
-            foreach (var handler in loader.GetHandlers())
+            EventBroker = new EventBroker();
+            foreach (var handler in loader.GetModules())
             {
                 _handlers.Add(handler.Item1, handler.Item2);
                 handler.Item2.Initialize(this);
+                EventBroker.Register(handler.Item2);
             }
         }
 

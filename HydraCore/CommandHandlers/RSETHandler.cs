@@ -7,7 +7,7 @@ namespace HydraCore.CommandHandlers
     [Export(typeof (ICommandHandler))]
     public class RSETHandler : CommandHandlerBase
     {
-        public override SMTPResponse Execute(SMTPTransaction transaction, string parameters)
+        public override SMTPResponse DoExecute(SMTPTransaction transaction, string parameters)
         {
             if (!String.IsNullOrWhiteSpace(parameters))
             {

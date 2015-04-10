@@ -10,7 +10,7 @@ namespace HydraCore
 
         public SMTPCommand(string command, string parameters = null)
         {
-            Contract.Requires<ArgumentNullException>(!String.IsNullOrEmpty(command));
+            Contract.Requires<ArgumentNullException>(command != null);
 
             Command = command;
             Parameters = parameters;

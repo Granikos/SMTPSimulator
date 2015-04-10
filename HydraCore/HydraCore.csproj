@@ -87,19 +87,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthMethods\AuthMethodLoader.cs" />
+    <Compile Include="CommandHandlers\CommandExecuteEventArgs.cs" />
+    <Compile Include="CommandHandlers\CommandHandlerAttribute.cs" />
+    <Compile Include="CommandHandlers\CommandHandlerBase.cs" />
+    <Compile Include="CommandHandlers\CommandHandlerLoader.cs" />
     <Compile Include="CommandHandlers\AUTHHandler.cs" />
     <Compile Include="CommandHandlers\DATAHandler.cs" />
     <Compile Include="CommandHandlers\EHLOHandler.cs" />
     <Compile Include="CommandHandlers\HELOHandler.cs" />
+    <Compile Include="AuthMethods\IAuthMethod.cs" />
     <Compile Include="CommandHandlers\ICommandHandler.cs" />
+    <Compile Include="AuthMethods\LoginAuthMethod.cs" />
     <Compile Include="CommandHandlers\MAILHandler.cs" />
     <Compile Include="CommandHandlers\NOOPHandler.cs" />
+    <Compile Include="AuthMethods\PlainAuthMethod.cs" />
     <Compile Include="CommandHandlers\QUITHandler.cs" />
     <Compile Include="CommandHandlers\RCPTHandler.cs" />
     <Compile Include="CommandHandlers\RSETHandler.cs" />
     <Compile Include="CommandHandlers\VRFYHandler.cs" />
-    <Compile Include="DefaultHandlerLoader.cs" />
+    <Compile Include="DefaultModuleLoader.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="CommandHandlers\ICommandHandlerLoader.cs" />
+    <Compile Include="AuthMethods\IAuthMethodLoader.cs" />
+    <Compile Include="IModuleLoader.cs" />
     <Compile Include="IPSubnet.cs" />
     <Compile Include="Mailbox.cs" />
     <Compile Include="Path.cs" />
@@ -113,7 +124,14 @@
     <Compile Include="ValidationHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EventBroker\bbv.Common.EventBroker.csproj">
+      <Project>{81de807d-d637-4b10-8ae1-13ea5ac1a80d}</Project>
+      <Name>bbv.Common.EventBroker</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

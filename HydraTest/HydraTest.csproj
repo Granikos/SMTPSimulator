@@ -111,6 +111,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CommandHandlers\AuthTest.cs" />
     <Compile Include="CommandHandlers\DATATest.cs" />
     <Compile Include="CommandHandlers\NOOPTest.cs" />
     <Compile Include="CommandHandlers\QUITTest.cs" />
@@ -142,6 +143,7 @@
     <Fakes Include="Fakes\HydraCore.fakes" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>

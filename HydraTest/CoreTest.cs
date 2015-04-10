@@ -27,9 +27,9 @@ namespace HydraTest
                 }
             };
 
-            var loader = new StubIHandlerLoader
+            var loader = new StubICommandHandlerLoader
             {
-                GetHandlers = () => new List<Tuple<string, ICommandHandler>>
+                GetModules = () => new List<Tuple<string, ICommandHandler>>
                 {
                     new Tuple<string, ICommandHandler>("Test", handler)
                 }
@@ -83,11 +83,11 @@ namespace HydraTest
             Assert.Equal(expectedBody, actualBody);
         }
 
-        public IHandlerLoader DefaultLoader()
+        public ICommandHandlerLoader DefaultLoader()
         {
-            return new StubIHandlerLoader
+            return new StubICommandHandlerLoader
             {
-                GetHandlers = () => new List<Tuple<string, ICommandHandler>>()
+                GetModules = () => new List<Tuple<string, ICommandHandler>>()
             };
         }
 

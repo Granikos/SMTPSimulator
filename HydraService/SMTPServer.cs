@@ -33,7 +33,7 @@ namespace HydraService
             _core.OnNewMessage += (transaction, sender, recipients, body) =>
             {
                 Console.WriteLine("--------------------------------------");
-                Console.WriteLine("New message from <" + sender + ">");
+                Console.WriteLine("New message from " + sender);
                 Console.WriteLine("Recipients: " + String.Join(", ", recipients.Select(r => r.ToString())));
                 Console.WriteLine();
                 Console.WriteLine(body);

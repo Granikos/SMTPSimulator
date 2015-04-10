@@ -3,6 +3,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.Net;
 using System.ServiceProcess;
 using HydraCore;
+using HydraCore.CommandHandlers;
 
 namespace HydraService
 {
@@ -19,7 +20,7 @@ namespace HydraService
             SMTPCore core;
             using (var catalog = new AssemblyCatalog(typeof(SMTPCore).Assembly)) // TODO: Use Dependency Injection
             {
-                var loader = new DefaultHandlerLoader(catalog);
+                var loader = new CommandHandlerLoader(catalog);
                 core = new SMTPCore(loader);
             }
 

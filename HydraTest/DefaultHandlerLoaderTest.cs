@@ -2,7 +2,6 @@
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using HydraCore;
-using HydraCore.CommandHandlers;
 using Microsoft.QualityTools.Testing.Fakes;
 using Xunit;
 
@@ -10,19 +9,15 @@ namespace HydraTest
 {
     public class DefaultHandlerLoaderTest
     {
-        [ExportMetadata("Command", "Test")]
-        [Export(typeof(ICommandHandler))]
-        class TestHandler : ICommandHandler
+        interface IModule
         {
-            public void Initialize(SMTPCore core)
-            {
-                throw new System.NotImplementedException();
-            }
+            
+        }
 
-            public SMTPResponse Execute(SMTPTransaction transaction, string parameters)
-            {
-                throw new System.NotImplementedException();
-            }
+        [ExportMetadata("Fu", "Bar")]
+        [Export(typeof(IModule))]
+        class TestHandler : IModule
+        {
         }
 
         [Fact]
@@ -32,16 +27,14 @@ namespace HydraTest
             {
                 using (var cc = new TypeCatalog(typeof(TestHandler)))
                 {
-                    var loader = new DefaultHandlerLoader(cc);
-                    var handlers = loader.GetHandlers().ToList();
-                    Assert.Equal(1, handlers.Count());
+                    var loader = new DefaultModuleLoader<IModule>(cc, "Fu");
+                    var modules = loader.GetModules().ToList();
+                    Assert.Equal(1, modules.Count());
 
-                    var handler = handlers.First();
-                    Assert.Equal("Test", handler.Item1);
-                    Assert.True(handler.Item2 is TestHandler);
-                    
+                    var module = modules.First();
+                    Assert.Equal("Bar", module.Item1);
+                    Assert.True(module.Item2 is TestHandler);
                 }
-
             }
         }
     }

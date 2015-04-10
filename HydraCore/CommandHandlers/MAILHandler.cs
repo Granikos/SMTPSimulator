@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace HydraCore.CommandHandlers
 {
+    [RequiresAuth]
     [ExportMetadata("Command", "MAIL")]
     [Export(typeof (ICommandHandler))]
     public class MAILHandler : CommandHandlerBase
@@ -11,7 +12,8 @@ namespace HydraCore.CommandHandlers
             new Regex("^FROM:(" + RegularExpressions.PathPattern + "|<>)(?: (?<Params>.*))?$",
                 RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        public override SMTPResponse Execute(SMTPTransaction transaction, string parameters)
+
+        public override SMTPResponse DoExecute(SMTPTransaction transaction, string parameters)
         {
             if (transaction.GetProperty<bool>("MailInProgress"))
             {

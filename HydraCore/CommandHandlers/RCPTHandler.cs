@@ -12,7 +12,7 @@ namespace HydraCore.CommandHandlers
             new Regex("^TO:(" + RegularExpressions.PathPattern + "|<postmaster>)(?: (?<Params>.*))?$",
                 RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        public override SMTPResponse Execute(SMTPTransaction transaction, string parameters)
+        public override SMTPResponse DoExecute(SMTPTransaction transaction, string parameters)
         {
             if (!transaction.GetProperty<bool>("MailInProgress"))
             {
