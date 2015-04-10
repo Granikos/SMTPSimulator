@@ -24,6 +24,12 @@ namespace HydraCore
         ExceededStorage = 552,
         MailboxNameNotAllowed = 553,
         StartMailInput = 354,
-        TransactionFailed = 554
+        TransactionFailed = 554,
+
+        AuthTooWeak = 534,
+        AuthEncryptionRequired = 538,
+        AuthRequired = 530,
+        AuthFailed = 535,
+        AuthSuccess = 235
     }
 }
