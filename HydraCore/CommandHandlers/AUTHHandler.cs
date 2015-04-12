@@ -13,14 +13,20 @@ namespace HydraCore.CommandHandlers
     [AttributeUsage(AttributeTargets.Class)]
     public class RequiresAuthAttribute : Attribute
     {
-        
+
     }
 
     [CommandHandler(Command = "AUTH")]
     public class AUTHHandler : CommandHandlerBase
     {
-        [Import]
-        public IAuthMethodLoader Loader; // TODO: Find a way to initialize through constructor with MEF
+        private readonly IAuthMethodLoader _loader;
+
+        [ImportingConstructor]
+        public AUTHHandler([Import] IAuthMethodLoader loader)
+        {
+            Contract.Requires<ArgumentNullException>(loader != null);
+            _loader = loader;
+        }
 
         [EventSubscription("CommandExecution", typeof(Publisher))]
         public void OnCommandExecute(object sender, CommandExecuteEventArgs args)
@@ -40,7 +46,7 @@ namespace HydraCore.CommandHandlers
         {
             base.Initialize(core);
 
-            foreach (var method in Loader.GetModules())
+            foreach (var method in _loader.GetModules())
             {
                 _authMethods.Add(method.Item1.ToUpperInvariant(), method.Item2);
             }
@@ -97,25 +103,29 @@ namespace HydraCore.CommandHandlers
             return HandleResponse(transaction, initialResponse, method);
         }
 
-        protected string Base64Encode(string str)
+        protected static string Base64Encode(string str)
         {
             Contract.Requires<ArgumentNullException>(str != null);
             return Convert.ToBase64String(Encoding.ASCII.GetBytes(str));
         }
-        protected string Base64Decode(string str)
+        protected static string Base64Decode(string str)
         {
             Contract.Requires<ArgumentNullException>(str != null);
             return Encoding.ASCII.GetString(Convert.FromBase64String(str));
         }
 
-        private bool DataLineHandler(string line, StringBuilder builder)
+        public static bool DataLineHandler(string line, StringBuilder builder)
         {
             builder.Append(line);
             return false;
         }
 
-        private SMTPResponse DataHandler(SMTPTransaction transaction, string reponse, IAuthMethod method)
+        public static SMTPResponse DataHandler(SMTPTransaction transaction, string reponse, IAuthMethod method)
         {
+            Contract.Requires<ArgumentNullException>(transaction != null);
+            Contract.Requires<ArgumentNullException>(reponse != null);
+            Contract.Requires<ArgumentNullException>(method != null);
+
             if (reponse.Equals("*"))
             {
                 method.Abort(transaction);
@@ -135,7 +145,7 @@ namespace HydraCore.CommandHandlers
             return HandleResponse(transaction, decoded, method);
         }
 
-        private SMTPResponse HandleResponse(SMTPTransaction transaction, string decodedReponse, IAuthMethod method)
+        public static SMTPResponse HandleResponse(SMTPTransaction transaction, string decodedReponse, IAuthMethod method)
         {
             string challenge;
             if (!method.ProcessResponse(transaction, decodedReponse, out challenge))

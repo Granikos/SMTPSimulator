@@ -32,7 +32,11 @@ namespace HydraCore.AuthMethods
 
             challenge = null;
 
-            return username.Equals("hans") && password.Equals("schnitzelmitkartoffelsalat");
+            // TODO
+            // var password = response;
+            // var username = transaction.GetProperty<string>("Username");
+
+            return true;
         }
 
         public void Abort(SMTPTransaction transaction)

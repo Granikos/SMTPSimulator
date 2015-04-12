@@ -22,11 +22,12 @@ namespace HydraCore.AuthMethods
                 return true;
             }
 
-            var password = response;
-            var username = transaction.GetProperty<string>("Username");
-
             transaction.SetProperty("Password", response, true);
             challenge = null;
+
+            // TODO
+            // var password = response;
+            // var username = transaction.GetProperty<string>("Username");
 
             return true;
         }
