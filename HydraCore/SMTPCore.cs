@@ -17,8 +17,6 @@ namespace HydraCore
         private readonly Dictionary<string, ICommandHandler> _handlers = new Dictionary<string, ICommandHandler>();
         private readonly IDictionary<string, object> _properties = new Dictionary<string, object>();
 
-        public EventBroker EventBroker { get; private set; }
-
         public SMTPCore(ICommandHandlerLoader loader)
         {
             EventBroker = new EventBroker();
@@ -30,6 +28,7 @@ namespace HydraCore
             }
         }
 
+        public EventBroker EventBroker { get; private set; }
         public string Banner { get; set; }
         public string Greet { get; set; }
         public string ServerName { get; set; }

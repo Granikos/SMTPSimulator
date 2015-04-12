@@ -13,26 +13,29 @@ namespace HydraCore.CommandHandlers
     [AttributeUsage(AttributeTargets.Class)]
     public class RequiresAuthAttribute : Attribute
     {
-
     }
 
     [CommandHandler(Command = "AUTH")]
     public class AUTHHandler : CommandHandlerBase
     {
-        private readonly IAuthMethodLoader _loader;
+        private readonly Dictionary<string, IAuthMethod> _authMethods = new Dictionary<string, IAuthMethod>();
 
         [ImportingConstructor]
         public AUTHHandler([Import] IAuthMethodLoader loader)
         {
             Contract.Requires<ArgumentNullException>(loader != null);
-            _loader = loader;
+
+            foreach (var method in loader.GetModules())
+            {
+                _authMethods.Add(method.Item1.ToUpperInvariant(), method.Item2);
+            }
         }
 
-        [EventSubscription("CommandExecution", typeof(Publisher))]
+        [EventSubscription("CommandExecution", typeof (Publisher))]
         public void OnCommandExecute(object sender, CommandExecuteEventArgs args)
         {
             var type = args.Handler.GetType();
-            var requiresAuth = type.GetCustomAttributes(typeof(RequiresAuthAttribute), false).Any();
+            var requiresAuth = type.GetCustomAttributes(typeof (RequiresAuthAttribute), false).Any();
 
             if (requiresAuth && !args.Transaction.GetProperty<bool>("Authenticated"))
             {
@@ -40,16 +43,9 @@ namespace HydraCore.CommandHandlers
             }
         }
 
-        private readonly Dictionary<string, IAuthMethod> _authMethods = new Dictionary<string, IAuthMethod>();
-
         public override void Initialize(SMTPCore core)
         {
             base.Initialize(core);
-
-            foreach (var method in _loader.GetModules())
-            {
-                _authMethods.Add(method.Item1.ToUpperInvariant(), method.Item2);
-            }
 
             if (_authMethods.Any())
             {
@@ -108,6 +104,7 @@ namespace HydraCore.CommandHandlers
             Contract.Requires<ArgumentNullException>(str != null);
             return Convert.ToBase64String(Encoding.ASCII.GetBytes(str));
         }
+
         protected static string Base64Decode(string str)
         {
             Contract.Requires<ArgumentNullException>(str != null);
@@ -150,7 +147,7 @@ namespace HydraCore.CommandHandlers
             string challenge;
             if (!method.ProcessResponse(transaction, decodedReponse, out challenge))
             {
-                return new SMTPResponse(SMTPStatusCode.AuthFailed, challenge != null ? new[] { challenge } : new string[0]);
+                return new SMTPResponse(SMTPStatusCode.AuthFailed, challenge != null ? new[] {challenge} : new string[0]);
             }
 
             if (challenge != null)

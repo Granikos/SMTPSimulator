@@ -7,9 +7,6 @@ namespace HydraCore.CommandHandlers
     {
         public SMTPCore Server { get; private set; }
 
-        [EventPublication("CommandExecution")]
-        public event EventHandler<CommandExecuteEventArgs> OnExecute;
-
         public virtual void Initialize(SMTPCore core)
         {
             Server = core;
@@ -28,6 +25,9 @@ namespace HydraCore.CommandHandlers
 
             return DoExecute(transaction, parameters);
         }
+
+        [EventPublication("CommandExecution")]
+        public event EventHandler<CommandExecuteEventArgs> OnExecute;
 
         public abstract SMTPResponse DoExecute(SMTPTransaction transaction, string parameters);
     }

@@ -37,7 +37,7 @@ namespace HydraTest.AuthMethods
             };
 
             string username = null;
-            bool permanent = false;
+            var permanent = false;
 
             Transaction.SetPropertyStringObjectBoolean = (s, v, p) =>
             {
@@ -79,14 +79,14 @@ namespace HydraTest.AuthMethods
             };
 
             string password = null;
-            bool permanent = false;
+            var permanent = false;
 
             Transaction.SetPropertyStringObjectBoolean = (s, v, p) =>
             {
                 switch (s)
                 {
                     case "Password":
-                        password = (string)v;
+                        password = (string) v;
                         permanent = p;
                         break;
                     default:
@@ -108,8 +108,8 @@ namespace HydraTest.AuthMethods
         {
             var method = new LoginAuthMethod();
 
-            bool usernameReset = false;
-            bool passwordReset = false;
+            var usernameReset = false;
+            var passwordReset = false;
 
             Transaction.SetPropertyStringObjectBoolean = (s, v, p) =>
             {

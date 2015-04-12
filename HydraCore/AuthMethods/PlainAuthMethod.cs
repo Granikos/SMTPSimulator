@@ -1,11 +1,10 @@
 using System;
 using System.ComponentModel.Composition;
-using HydraCore.CommandHandlers;
 
 namespace HydraCore.AuthMethods
 {
     [ExportMetadata("Name", "PLAIN")]
-    [Export(typeof(IAuthMethod))]
+    [Export(typeof (IAuthMethod))]
     public class PlainAuthMethod : IAuthMethod
     {
         public bool ProcessResponse(SMTPTransaction transaction, string response, out string challenge)

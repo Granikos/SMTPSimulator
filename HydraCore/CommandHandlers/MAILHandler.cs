@@ -12,7 +12,6 @@ namespace HydraCore.CommandHandlers
             new Regex("^FROM:(" + RegularExpressions.PathPattern + "|<>)(?: (?<Params>.*))?$",
                 RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-
         public override SMTPResponse DoExecute(SMTPTransaction transaction, string parameters)
         {
             if (transaction.GetProperty<bool>("MailInProgress"))

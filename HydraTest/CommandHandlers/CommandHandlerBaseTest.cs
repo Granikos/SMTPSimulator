@@ -17,7 +17,7 @@ namespace HydraTest.CommandHandlers
             string actualParams = null;
             var responseA = new SMTPResponse(SMTPStatusCode.Okay);
             var responseB = new SMTPResponse(SMTPStatusCode.TransactionFailed);
-            SMTPResponse expectedResponse = overwriteReponse? responseB : responseA;
+            var expectedResponse = overwriteReponse ? responseB : responseA;
 
             var handler = new StubCommandHandlerBase
             {

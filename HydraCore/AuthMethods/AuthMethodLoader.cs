@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace HydraCore.AuthMethods
 {
-    [Export(typeof(IAuthMethodLoader))]
+    [Export(typeof (IAuthMethodLoader))]
     public class AuthMethodLoader : DefaultModuleLoader<IAuthMethod>, IAuthMethodLoader
     {
         [ExcludeFromCodeCoverage]

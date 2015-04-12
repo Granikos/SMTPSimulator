@@ -26,7 +26,7 @@ namespace HydraTest.CommandHandlers
                     GetModules = () => new List<Tuple<string, IAuthMethod>>
                     {
                         new Tuple<string, IAuthMethod>("Test", new StubIAuthMethod()),
-                        new Tuple<string, IAuthMethod>("Something", new StubIAuthMethod()),
+                        new Tuple<string, IAuthMethod>("Something", new StubIAuthMethod())
                     }
                 };
                 var handler = new AUTHHandler(loader);
@@ -36,25 +36,11 @@ namespace HydraTest.CommandHandlers
             }
         }
 
-        [RequiresAuth]
-        class HandlerWithRequiresAuth : ICommandHandler
-        {
-            public void Initialize(SMTPCore core)
-            {
-                throw new NotImplementedException();
-            }
-
-            public SMTPResponse Execute(SMTPTransaction transaction, string parameters)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         private IAuthMethodLoader GetDefaulLoader()
         {
             return new StubIAuthMethodLoader
             {
-                GetModules = () => new List<Tuple<string,IAuthMethod>>()
+                GetModules = () => new List<Tuple<string, IAuthMethod>>()
             };
         }
 
@@ -70,7 +56,9 @@ namespace HydraTest.CommandHandlers
                 AddTransactionProperty("Authenticated", autheticated);
 
                 var handler = new AUTHHandler(GetDefaulLoader());
-                var otherHandler = requiresAuth ? (ICommandHandler) new HandlerWithRequiresAuth() : new StubICommandHandler();
+                var otherHandler = requiresAuth
+                    ? (ICommandHandler) new HandlerWithRequiresAuth()
+                    : new StubICommandHandler();
                 var args = new CommandExecuteEventArgs(Transaction, otherHandler, "");
                 handler.OnCommandExecute(otherHandler, args);
 
@@ -93,7 +81,7 @@ namespace HydraTest.CommandHandlers
         {
             using (ShimsContext.Create())
             {
-                StringBuilder sb = new StringBuilder();
+                var sb = new StringBuilder();
                 var readMore = AUTHHandler.DataLineHandler(line, sb);
 
                 Assert.False(readMore);
@@ -144,7 +132,7 @@ namespace HydraTest.CommandHandlers
                 var aborted = false;
                 SMTPTransaction actualTransaction = null;
 
-                var authMethod = new StubIAuthMethod()
+                var authMethod = new StubIAuthMethod
                 {
                     AbortSMTPTransaction = transaction =>
                     {
@@ -222,13 +210,12 @@ namespace HydraTest.CommandHandlers
 
             using (ShimsContext.Create())
             {
-
                 Transaction.SetPropertyStringObjectBoolean = (name, value, p) =>
                 {
                     switch (name)
                     {
                         case "Authenticated":
-                            authenticated = (bool)value;
+                            authenticated = (bool) value;
                             permanent = p;
                             break;
                         default:
@@ -273,7 +260,8 @@ namespace HydraTest.CommandHandlers
                 var method = new StubIAuthMethod();
                 var loader = new StubIAuthMethodLoader
                 {
-                    GetModules = () => new List<Tuple<string, IAuthMethod>> { new Tuple<string, IAuthMethod>("TEST", method) }
+                    GetModules =
+                        () => new List<Tuple<string, IAuthMethod>> {new Tuple<string, IAuthMethod>("TEST", method)}
                 };
 
                 var handler = new AUTHHandler(loader);
@@ -340,7 +328,8 @@ namespace HydraTest.CommandHandlers
                 var method = new StubIAuthMethod();
                 var loader = new StubIAuthMethodLoader
                 {
-                    GetModules = () => new List<Tuple<string,IAuthMethod>> { new Tuple<string, IAuthMethod>("TEST", method) }
+                    GetModules =
+                        () => new List<Tuple<string, IAuthMethod>> {new Tuple<string, IAuthMethod>("TEST", method)}
                 };
 
                 var handler = new AUTHHandler(loader);
@@ -376,7 +365,7 @@ namespace HydraTest.CommandHandlers
                     dataHandler = func1;
                 };
 
-                ShimAUTHHandler.DataHandlerSMTPTransactionStringIAuthMethod = (transaction, s, arg3) => 
+                ShimAUTHHandler.DataHandlerSMTPTransactionStringIAuthMethod = (transaction, s, arg3) =>
                 {
                     dataHandlerCalled = true;
                     return null;
@@ -415,6 +404,20 @@ namespace HydraTest.CommandHandlers
                 Assert.True(dataMode);
                 Assert.True(dataHandlerCalled);
                 Assert.True(dataLineHandlerCalled);
+            }
+        }
+
+        [RequiresAuth]
+        private class HandlerWithRequiresAuth : ICommandHandler
+        {
+            public void Initialize(SMTPCore core)
+            {
+                throw new NotImplementedException();
+            }
+
+            public SMTPResponse Execute(SMTPTransaction transaction, string parameters)
+            {
+                throw new NotImplementedException();
             }
         }
     }

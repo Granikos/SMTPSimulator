@@ -9,23 +9,12 @@ namespace HydraTest
 {
     public class DefaultHandlerLoaderTest
     {
-        interface IModule
-        {
-            
-        }
-
-        [ExportMetadata("Fu", "Bar")]
-        [Export(typeof(IModule))]
-        class TestHandler : IModule
-        {
-        }
-
         [Fact]
         public void Test()
         {
             using (ShimsContext.Create())
             {
-                using (var cc = new TypeCatalog(typeof(TestHandler)))
+                using (var cc = new TypeCatalog(typeof (TestHandler)))
                 {
                     var loader = new DefaultModuleLoader<IModule>(cc, "Fu");
                     var modules = loader.GetModules().ToList();
@@ -36,6 +25,16 @@ namespace HydraTest
                     Assert.True(module.Item2 is TestHandler);
                 }
             }
+        }
+
+        private interface IModule
+        {
+        }
+
+        [ExportMetadata("Fu", "Bar")]
+        [Export(typeof (IModule))]
+        private class TestHandler : IModule
+        {
         }
     }
 }

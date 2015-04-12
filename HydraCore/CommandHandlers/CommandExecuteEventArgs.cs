@@ -12,11 +12,8 @@ namespace HydraCore.CommandHandlers
         }
 
         public SMTPTransaction Transaction { get; private set; }
-
         public ICommandHandler Handler { get; private set; }
-
         public string Parameters { get; private set; }
-
         public SMTPResponse Response { get; set; }
     }
 }

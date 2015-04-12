@@ -4,6 +4,5 @@ namespace HydraCore.AuthMethods
     {
         bool ProcessResponse(SMTPTransaction transaction, string response, out string challenge);
         void Abort(SMTPTransaction transaction);
-
     }
 }

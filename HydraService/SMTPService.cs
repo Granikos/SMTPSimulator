@@ -18,7 +18,7 @@ namespace HydraService
             var port = 1337;
 
             SMTPCore core;
-            using (var catalog = new AssemblyCatalog(typeof(SMTPCore).Assembly)) // TODO: Use Dependency Injection
+            using (var catalog = new AssemblyCatalog(typeof (SMTPCore).Assembly)) // TODO: Use Dependency Injection
             {
                 var loader = new CommandHandlerLoader(catalog);
                 core = new SMTPCore(loader);

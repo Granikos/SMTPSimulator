@@ -8,9 +8,9 @@ using System.Linq;
 
 namespace HydraCore
 {
-    [Export(typeof(IModuleLoader<>))]
+    [Export(typeof (IModuleLoader<>))]
     public class DefaultModuleLoader<T> : IModuleLoader<T>
-            where T : class 
+        where T : class
     {
         private readonly ComposablePartCatalog _catalog;
         private readonly string _nameAttribute;
@@ -28,8 +28,9 @@ namespace HydraCore
             var container = new CompositionContainer(_catalog);
             container.ComposeExportedValue(_catalog);
 
-            var exports = container.GetExports<T, Dictionary<string,object>>().ToList();
-            var modules = exports.Select(export => new Tuple<string, T>(export.Metadata[_nameAttribute].ToString(), export.Value));
+            var exports = container.GetExports<T, Dictionary<string, object>>().ToList();
+            var modules =
+                exports.Select(export => new Tuple<string, T>(export.Metadata[_nameAttribute].ToString(), export.Value));
 
             return modules;
         }

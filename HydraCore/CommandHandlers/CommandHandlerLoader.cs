@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace HydraCore.CommandHandlers
 {
-    [Export(typeof(ICommandHandlerLoader))]
+    [Export(typeof (ICommandHandlerLoader))]
     public class CommandHandlerLoader : DefaultModuleLoader<ICommandHandler>, ICommandHandlerLoader
     {
         [ExcludeFromCodeCoverage]

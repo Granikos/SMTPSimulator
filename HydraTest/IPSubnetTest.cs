@@ -53,7 +53,7 @@ namespace HydraTest
 
             Assert.False(subnet1.Equals(null));
             Assert.False(subnet1.Equals(new object()));
-            Assert.True(subnet1.Equals((object)subnet1));
+            Assert.True(subnet1.Equals((object) subnet1));
             Assert.Equal(subnet1, subnet2);
             Assert.NotEqual(subnet1, subnet3);
             Assert.NotEqual(subnet2, subnet3);

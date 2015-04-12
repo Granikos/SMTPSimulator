@@ -5,11 +5,13 @@ using System.Diagnostics.CodeAnalysis;
 namespace HydraCore.CommandHandlers
 {
     [MetadataAttribute]
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class)]
     public class CommandHandlerAttribute : ExportAttribute
     {
         [ExcludeFromCodeCoverage]
-        public CommandHandlerAttribute() : base(typeof(ICommandHandler)) { }
+        public CommandHandlerAttribute() : base(typeof (ICommandHandler))
+        {
+        }
 
         public string Command { get; set; }
     }
