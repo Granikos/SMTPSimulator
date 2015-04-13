@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using HydraCore;
 using HydraCore.AuthMethods;
@@ -18,7 +19,7 @@ namespace HydraTest.CommandHandlers
         {
             using (ShimsContext.Create())
             {
-                var ehloLines = new List<string>();
+                var ehloLines = new List<Func<SMTPTransaction, string>>();
                 AddCoreListProperty("EHLOLines", () => ehloLines);
 
                 var loader = new StubIAuthMethodLoader
@@ -32,7 +33,7 @@ namespace HydraTest.CommandHandlers
                 var handler = new AUTHHandler(loader);
                 handler.Initialize(Core);
 
-                Assert.Contains("AUTH TEST SOMETHING", ehloLines);
+                Assert.Contains("AUTH TEST SOMETHING", ehloLines.Select(e => e(Transaction)));
             }
         }
 
@@ -255,7 +256,7 @@ namespace HydraTest.CommandHandlers
             using (ShimsContext.Create())
             {
                 AddTransactionProperty("Authenticated", false);
-                AddCoreListProperty("EHLOLines", new List<string>());
+                AddCoreListProperty("EHLOLines", new List<Func<SMTPTransaction,string>>());
 
                 var method = new StubIAuthMethod();
                 var loader = new StubIAuthMethodLoader
@@ -309,7 +310,7 @@ namespace HydraTest.CommandHandlers
             using (ShimsContext.Create())
             {
                 AddTransactionProperty("Authenticated", false);
-                AddCoreListProperty("EHLOLines", new List<string>());
+                AddCoreListProperty("EHLOLines", new List<Func<SMTPTransaction, string>>());
 
                 SMTPTransaction actualTransaction = null;
                 string decodedReponse = null;
@@ -396,7 +397,7 @@ namespace HydraTest.CommandHandlers
                 if (dataHandler != null) dataHandler(null);
                 if (dataLineHandler != null) dataLineHandler(null, null);
 
-                Assert.Equal(SMTPStatusCode.StartMailInput, response.Code);
+                Assert.Equal(SMTPStatusCode.AuthContinue, response.Code);
                 Assert.Equal(1, response.Args.Length);
                 Assert.Equal(encodedChallenge, response.Args[0]);
                 Assert.Equal(Transaction, actualTransaction);

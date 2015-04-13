@@ -3,6 +3,7 @@ using System.ComponentModel.Composition;
 
 namespace HydraCore.CommandHandlers
 {
+    [UnsecureAllowed]
     [ExportMetadata("Command", "RSET")]
     [Export(typeof (ICommandHandler))]
     public class RSETHandler : CommandHandlerBase

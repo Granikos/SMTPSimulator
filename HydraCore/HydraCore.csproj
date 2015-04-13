@@ -105,6 +105,7 @@
     <Compile Include="CommandHandlers\QUITHandler.cs" />
     <Compile Include="CommandHandlers\RCPTHandler.cs" />
     <Compile Include="CommandHandlers\RSETHandler.cs" />
+    <Compile Include="CommandHandlers\STARTTLSHandler.cs" />
     <Compile Include="CommandHandlers\VRFYHandler.cs" />
     <Compile Include="DefaultModuleLoader.cs" />
     <Compile Include="Helpers.cs" />

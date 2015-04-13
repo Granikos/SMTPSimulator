@@ -51,7 +51,7 @@ namespace HydraCore.CommandHandlers
             {
                 var methods = String.Join(" ", _authMethods.Keys);
 
-                core.GetListProperty<string>("EHLOLines").Add("AUTH " + methods);
+                core.GetListProperty<Func<SMTPTransaction, string>>("EHLOLines").Add(transaction => "AUTH " + methods);
             }
         }
 
@@ -154,7 +154,7 @@ namespace HydraCore.CommandHandlers
             {
                 transaction.StartDataMode(DataLineHandler, s => DataHandler(transaction, s, method));
 
-                return new SMTPResponse(SMTPStatusCode.StartMailInput, Base64Encode(challenge));
+                return new SMTPResponse(SMTPStatusCode.AuthContinue, Base64Encode(challenge));
             }
 
             transaction.SetProperty("Authenticated", true, true);

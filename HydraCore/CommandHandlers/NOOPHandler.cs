@@ -2,6 +2,7 @@ using System.ComponentModel.Composition;
 
 namespace HydraCore.CommandHandlers
 {
+    [UnsecureAllowed]
     [ExportMetadata("Command", "NOOP")]
     [Export(typeof (ICommandHandler))]
     public class NOOPHandler : CommandHandlerBase

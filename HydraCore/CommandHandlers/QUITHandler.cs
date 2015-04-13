@@ -3,6 +3,7 @@ using System.ComponentModel.Composition;
 
 namespace HydraCore.CommandHandlers
 {
+    [UnsecureAllowed]
     [ExportMetadata("Command", "QUIT")]
     [Export(typeof (ICommandHandler))]
     public class QUITHandler : CommandHandlerBase

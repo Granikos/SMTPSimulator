@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using HydraCore;
 using HydraCore.CommandHandlers;
 using Xunit;
@@ -9,7 +11,9 @@ namespace HydraTest.CommandHandlers
     {
         [Theory]
         [InlineData("test", new string[0])]
-        [InlineData("test", new[] {"test2"})]
+        [InlineData("test", new[] { "test2" })]
+        [InlineData("test", new[] { "test2", "" })]
+        [InlineData("test", new[] { "test2", null })]
         [InlineData("test", new[] {"test2", "test3"})]
         public void TestSuccess(string parameters, string[] lines)
         {
@@ -23,7 +27,9 @@ namespace HydraTest.CommandHandlers
 
             Core.GreetGet = () => greet;
 
-            AddCoreListProperty("EHLOLines", () => new List<string>(lines));
+            var lines2 = lines.Select<string,Func<SMTPTransaction, string>>(l => t => l);
+
+            AddCoreListProperty("EHLOLines", () => new List<Func<SMTPTransaction, string>>(lines2));
 
             Transaction.InitializeString = s =>
             {
@@ -36,16 +42,53 @@ namespace HydraTest.CommandHandlers
 
             var response = handler.Execute(Transaction, parameters);
 
+            var expectedLines = lines.Where(l => !string.IsNullOrEmpty(l)).ToArray();
+
             Assert.Equal(SMTPStatusCode.Okay, response.Code);
-            Assert.Equal(1 + lines.Length, response.Args.Length);
+            Assert.Equal(1 + expectedLines.Length, response.Args.Length);
             Assert.Equal(greet, response.Args[0]);
-            for (var i = 0; i < lines.Length; i++)
+            foreach (var line in expectedLines)
             {
-                Assert.Equal(lines[i], response.Args[i + 1]);
+                Assert.Contains(line, response.Args);
             }
             Assert.Equal(parameters, clientId);
             Assert.True(init);
             Assert.True(reset);
+        }
+
+        [Fact]
+        public void TestLineCallback()
+        {
+            const string greet = "Test Greet";
+            const string expectedLine = "fubar";
+
+            var handler = new EHLOHandler();
+
+            SMTPTransaction actualTransaction = null;
+
+            Core.GreetGet = () => greet;
+
+            AddCoreListProperty("EHLOLines", () => new List<Func<SMTPTransaction, string>>
+            {
+                t =>
+                {
+                    actualTransaction = t;
+                    return expectedLine;
+                }
+            });
+
+            Transaction.InitializeString = s => {};
+            Transaction.Reset = () => { };
+
+            handler.Initialize(Core);
+
+            var response = handler.Execute(Transaction, "test");
+
+            Assert.Equal(SMTPStatusCode.Okay, response.Code);
+            Assert.Equal(2, response.Args.Length);
+            Assert.Equal(greet, response.Args[0]);
+            Assert.Equal(expectedLine, response.Args[1]);
+            Assert.Equal(Transaction, actualTransaction);
         }
 
         [Fact]

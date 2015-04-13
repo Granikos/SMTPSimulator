@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Security;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
+using System.Security.Authentication;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using HydraCore;
@@ -16,11 +20,17 @@ namespace HydraService
         private readonly SMTPCore _core;
         private readonly TcpListener _tcpListener;
         private Thread _listenThread;
+        private X509Certificate2 _cert;
 
         public SMTPServer(IPEndPoint endPoint, SMTPCore core)
         {
             _tcpListener = new TcpListener(endPoint);
             _core = core;
+
+            var store = new X509Store("Personal", StoreLocation.LocalMachine);
+            var certs = store.Certificates.Find(X509FindType.FindBySubjectName, "localhost", true);
+
+            _cert = new X509Certificate2("cert.pfx", "tester"); // TODO: make configurable
 
             _core.OnConnect += (transaction, connect) =>
             {
@@ -40,6 +50,8 @@ namespace HydraService
                 Console.WriteLine("--------------------------------------");
             };
         }
+
+        public bool UseSsl { get; set; }
 
         public void AddSubnet(IPSubnet subnet)
         {
@@ -91,7 +103,11 @@ namespace HydraService
         private async void HandleClientConnection(object client)
         {
             var tcpClient = (TcpClient) client;
-            var clientStream = tcpClient.GetStream();
+            SslStream sslStream = null;
+            Stream clientStream = tcpClient.GetStream();
+
+            var starttls = false;
+
             var ip = ((IPEndPoint) tcpClient.Client.RemoteEndPoint).Address;
 
             Console.WriteLine("New client: " + ip);
@@ -99,10 +115,25 @@ namespace HydraService
             SMTPResponse response;
             var transaction = _core.StartTransaction(ip, out response);
 
-            transaction.OnClose += smtpTransaction => { Console.WriteLine("Client " + ip + " disconnected"); };
+            if (UseSsl)
+            {
+                sslStream = new SslStream(clientStream);
 
-            var writer = new StreamWriter(clientStream, Encoding.ASCII, 1000, true) {NewLine = "\r\n"};
-            var reader = new StreamReader(clientStream, Encoding.ASCII, false, 1000, true);
+                await sslStream.AuthenticateAsServerAsync(_cert, false, SslProtocols.Ssl2, false);
+
+                transaction.TLSEnabled = true;
+            }
+
+            SMTPTransaction.CloseAction onCloseHandler = smtpTransaction => { Console.WriteLine("Client " + ip + " disconnected"); };
+
+            var writer = new StreamWriter(sslStream ?? clientStream, Encoding.ASCII, 1000, true) { NewLine = "\r\n" };
+            var reader = new StreamReader(sslStream ?? clientStream, Encoding.ASCII, false, 1000, true);
+
+            transaction.OnStartTLS += (sender, args) =>
+            {
+                starttls = true;
+            };
+            transaction.OnClose += onCloseHandler;
 
             await writer.WriteLineAsync(response.ToString());
             writer.Flush();
@@ -139,10 +170,35 @@ namespace HydraService
                     await writer.WriteLineAsync(response.ToString());
                     writer.Flush();
                 }
+
+                if (starttls)
+                {
+                    sslStream = new SslStream(clientStream);
+
+                    sslStream.AuthenticateAsServer(_cert, false, SslProtocols.Tls, false);
+
+                    Console.WriteLine("[{0}] Established TLS Layer", ip);
+
+                    writer.Close();
+                    reader.Close();
+
+                    writer = new StreamWriter(sslStream, Encoding.ASCII, 1000, true) { NewLine = "\r\n" };
+                    reader = new StreamReader(sslStream, Encoding.ASCII, false, 1000, true);
+
+                    transaction.OnClose -= onCloseHandler;
+                    transaction.Close();
+                    transaction = _core.StartTransaction(ip, out response);
+                    transaction.TLSEnabled = true;
+
+                    starttls = false;
+                }
             }
 
             writer.Close();
             reader.Close();
+
+            clientStream.Close();
+            if (sslStream != null) sslStream.Close();
 
             tcpClient.Close();
         }

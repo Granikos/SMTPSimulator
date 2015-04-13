@@ -102,8 +102,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="cert.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EventBroker\bbv.Common.EventBroker.csproj">
+      <Project>{81DE807D-D637-4B10-8AE1-13EA5AC1A80D}</Project>
+      <Name>bbv.Common.EventBroker</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HydraCore\HydraCore.csproj">
       <Project>{1109925f-690b-4e73-99f8-dc1fce96ca97}</Project>
       <Name>HydraCore</Name>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Text;
 
@@ -23,6 +24,7 @@ namespace HydraCore
         public string ClientIdentifier { get; private set; }
         public bool Initialized { get; private set; }
         public bool Closed { get; private set; }
+        public bool TLSEnabled { get; set; }
 
         public bool InDataMode
         {
@@ -84,6 +86,8 @@ namespace HydraCore
             }
         }
 
+        public event EventHandler<CancelEventArgs> OnStartTLS;
+
         public event CloseAction OnClose;
 
         public void StartDataMode(Func<string, StringBuilder, bool> dataLineHandler,
@@ -144,6 +148,12 @@ namespace HydraCore
             _dataLineHandler = null;
 
             return handler(data);
+        }
+
+        public void StartTLS(CancelEventArgs e)
+        {
+            var handler = OnStartTLS;
+            if (handler != null) handler(this, e);
         }
     }
 }
