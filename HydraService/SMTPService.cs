@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition.Hosting;
 using System.Net;
+using System.ServiceModel;
 using System.ServiceProcess;
 using HydraCore;
 using HydraCore.CommandHandlers;
@@ -11,6 +12,8 @@ namespace HydraService
     {
         private readonly SMTPServer _server;
         private readonly SMTPServer _server2;
+
+        private ServiceHost _host;
 
         public SMTPService()
         {
@@ -48,12 +51,28 @@ namespace HydraService
         {
             _server.Start();
             _server2.Start();
+
+            if (_host != null)
+            {
+                _host.Close();
+            }
+
+            // http://localhost:1339/service.svc
+            _host = new ServiceHost(typeof(ConfigurationService));
+
+            _host.Open();
         }
 
         protected override void OnStop()
         {
             _server.Stop();
             _server2.Start();
+
+            if (_host != null)
+            {
+                _host.Close();
+                _host = null;
+            }
         }
     }
 }

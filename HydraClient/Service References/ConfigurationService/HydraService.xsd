@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/HydraService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/HydraService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/System.Net" />
+  <xs:complexType name="ArrayOfServerBindingConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ServerBindingConfiguration" nillable="true" type="tns:ServerBindingConfiguration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfServerBindingConfiguration" nillable="true" type="tns:ArrayOfServerBindingConfiguration" />
+  <xs:complexType name="ServerBindingConfiguration">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System.Net" minOccurs="0" name="Address" nillable="true" type="q1:IPAddress" />
+      <xs:element minOccurs="0" name="EnableSsl" type="xs:boolean" />
+      <xs:element minOccurs="0" name="EnforceTLS" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Port" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServerBindingConfiguration" nillable="true" type="tns:ServerBindingConfiguration" />
+</xs:schema>
