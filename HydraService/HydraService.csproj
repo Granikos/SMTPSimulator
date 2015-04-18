@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="ConfigurationService.cs" />
     <Compile Include="IConfigurationService.cs" />
+    <Compile Include="LocalUser.cs" />
     <Compile Include="ServerBindingConfiguration.cs" />
     <Compile Include="SMTPServer.cs" />
     <Compile Include="SMTPService.cs">

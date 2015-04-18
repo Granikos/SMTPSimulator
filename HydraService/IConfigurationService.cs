@@ -11,5 +11,20 @@ namespace HydraService
 
         [OperationContract]
         IList<ServerBindingConfiguration> GetServerBindings();
+
+        [OperationContract]
+        IList<LocalUser> GetLocalUsers();
+
+        [OperationContract]
+        LocalUser GetLocalUser(int id);
+
+        [OperationContract]
+        LocalUser AddLocalUser(LocalUser user);
+
+        [OperationContract]
+        LocalUser UpdateLocalUser(LocalUser user);
+
+        [OperationContract]
+        bool DeleteLocalUser(int id);
     }
 }

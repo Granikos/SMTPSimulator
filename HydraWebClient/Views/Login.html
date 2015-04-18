@@ -1,0 +1,16 @@
+﻿<form name="form" ng-submit="form.$valid && login()" novalidate>
+    <label for="emailAddress">Email Address:</label>
+    <input type="email" ng-model="loginForm.emailAddress" id="emailAddress" required />
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" ng-model="loginForm.password" required />
+
+    <label for="rememberMe">Remember Me:</label>
+    <input type="checkbox" id="rememberMe" ng-model="loginForm.rememberMe" />
+
+    <button type="submit" ng-disabled="!form.$valid">Login</button>
+</form>
+
+<div ng-if="loginForm.loginFailure">
+    Login failed!
+</div>

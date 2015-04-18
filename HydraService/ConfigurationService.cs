@@ -31,5 +31,50 @@ namespace HydraService
                 }
             };
         }
+
+        public IList<LocalUser> GetLocalUsers()
+        {
+            return new List<LocalUser>
+            {
+                new LocalUser
+                {
+                    Id = 1,
+                    FirstName = "Bernd",
+                    LastName = "Müller",
+                    Mailbox = "bernd.mueller@test.de"
+                },
+                new LocalUser
+                {
+                    Id = 2,
+                    FirstName = "Eva",
+                    LastName = "Schmidt",
+                    Mailbox = "eva.schmidt@test.de"
+                }
+            };
+        }
+
+        private static int _id = 2;
+
+        public LocalUser GetLocalUser(int id)
+        {
+            return null;
+        }
+
+        public LocalUser AddLocalUser(LocalUser user)
+        {
+            user.Id = ++_id;
+
+            return user;
+        }
+
+        public LocalUser UpdateLocalUser(LocalUser user)
+        {
+            return user;
+        }
+
+        public bool DeleteLocalUser(int id)
+        {
+            return true;
+        }
     }
 }
