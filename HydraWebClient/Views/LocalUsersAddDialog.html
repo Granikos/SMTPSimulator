@@ -1,0 +1,21 @@
+﻿<div class="modal-header">
+    <h4 class="modal-title"><span class="glyphicon glyphicon-plus-sign"></span> Add Local User</h4>
+</div>
+
+<div class="modal-body clearfix">
+    <form role="form" name="addUserForm" ng-submit="addUserForm.$valid && submit()">
+        <div class="form-group">
+            <label for="firstName">First name</label>
+            <input type="text" class="form-control" id="firstName" placeholder="Enter first name" ng-model="user.FirstName" required />
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last name</label>
+            <input type="text" class="form-control" id="lastName" placeholder="Enter last name" ng-model="user.LastName" required />
+        </div>
+        <div class="form-group">
+            <label for="mailbox">Mailbox</label>
+            <input type="email" class="form-control" id="mailbox" placeholder="Enter mailbox" ng-model="user.Mailbox" required />
+        </div>
+        <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-plus-sign"></i> Add</button>
+    </form>
+</div>

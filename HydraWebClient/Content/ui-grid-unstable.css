@@ -528,8 +528,8 @@ input[type="text"].ui-grid-filter-input:hover {
 }
 @font-face {
   font-family: 'ui-grid';
-  src: url('ui-grid.eot');
-  src: url('ui-grid.eot#iefix') format('embedded-opentype'), url('ui-grid.woff') format('woff'), url('ui-grid.ttf?') format('truetype'), url('ui-grid.svg?#ui-grid') format('svg');
+  src: url('../fonts/ui-grid.eot');
+  src: url('../fonts/ui-grid.eot#iefix') format('embedded-opentype'), url('../fonts/ui-grid.woff') format('woff'), url('../fonts/ui-grid.ttf?') format('truetype'), url('../fonts/ui-grid.svg?#ui-grid') format('svg');
   font-weight: normal;
   font-style: normal;
 }

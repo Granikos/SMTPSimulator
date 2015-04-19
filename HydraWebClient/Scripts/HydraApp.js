@@ -1,18 +1,19 @@
-﻿(function() {
+﻿(function () {
     angular.module('Hydra', ['ngRoute', 'ui.bootstrap', 'LocalUsers', 'Register', 'Login'])
-
         .config([
             '$routeProvider', '$httpProvider', '$locationProvider', function($routeProvider, $httpProvider, $locationProvider) {
                 $locationProvider.hashPrefix('!').html5Mode(true);
 
                 $routeProvider
                     .when('/Server', {
+                    
                     })
                     .when('/LocalUsers', {
                         templateUrl: 'Views/LocalUsers.html',
                         controller: 'LocalUsersController'
                     })
                     .when('/ExternalUsers', {
+                    
                     })
                     .when('/login', {
                         templateUrl: '/Views/Login.html',
@@ -27,22 +28,22 @@
                 $httpProvider.interceptors.push('AuthHttpResponseInterceptor');
             }
         ])
-
-        .run(['$rootScope', '$location', function ($rootScope, $location) {
-            $rootScope.$on('$locationChangeSuccess', function () {
-                var url = $location.url();
-                $('nav a:not(.navbar-brand)').each(function (i, el) {
-                    $e = $(el); $e.parent('li').toggleClass('active', url.indexOf($e.attr('href')) === 0);
+        .run([
+            '$rootScope', '$location', function($rootScope, $location) {
+                $rootScope.$on('$locationChangeSuccess', function() {
+                    var url = $location.url();
+                    $('nav a:not(.navbar-brand)').each(function(i, el) {
+                        $e = $(el);
+                        $e.parent('li').toggleClass('active', url.indexOf($e.attr('href')) === 0);
+                    });
                 });
-            });
-        }])
-
+            }
+        ])
         .controller('LandingPageController', [
             '$scope', function($scope) {
                 $scope.test = 'Fubar';
             }
         ])
-
         .directive('validateCell', function(uiGridEditConstants) {
             return {
                 restrict: 'A',
@@ -56,8 +57,7 @@
                 }
             };
         })
-
-        .directive('ngTab', function (uiGridEditConstants) {
+        .directive('ngTab', function(uiGridEditConstants) {
             return {
                 restrict: 'A',
                 scope: false,
@@ -65,19 +65,12 @@
                 compile: function compile(tElement, tAttrs, transclude) {
                     return {
                         pre: function preLink(scope, iElement, iAttrs, controller) {
-                            
                             var link = iElement.find('a').attr('href');
 
                             iElement.attr('ng-class', "{ active: '$location.url().indexOf(\\'" + link + "\\') === 0 }");
                         }
                     }
-                },
-                /*
-                link: function (scope, element, attrs) {
-                    var link = element.find('a').attr('href');
-
-                    element.attr('ng-class', "{ active: '$location.url().indexOf(\\'" + link + "\\') === 0 }");
-                }*/
+                }
             };
         });
 })();

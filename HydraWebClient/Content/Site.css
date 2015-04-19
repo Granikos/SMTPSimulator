@@ -5,3 +5,7 @@
 input.ng-valid.ng-dirty {
     border: 1px solid green;
 }
+
+.ui-grid-render-container-body {
+    float: none !important;
+}

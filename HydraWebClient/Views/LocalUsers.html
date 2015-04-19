@@ -1,3 +1,10 @@
-﻿<div ui-grid="gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-selection style="width: 800px">
+﻿
+<div class="container-fluid">
+    <div ui-grid="gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-selection ui-grid-auto-resize>
 
+    </div>
+    <div class="btn-group pull-right" style="margin: 5px;">
+        <button class="btn btn-success" ng-click="addDialog()"><i class="glyphicon glyphicon-plus-sign"></i> Add</button>
+        <button class="btn btn-danger" ng-click="deleteSelected()"><i class="glyphicon glyphicon-remove-sign"></i> Remove</button>
+    </div>
 </div>
