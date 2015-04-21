@@ -1,0 +1,16 @@
+﻿<div class="modal-header">
+    <h4 class="modal-title"><span class="glyphicon glyphicon-upload"></span> Importing...</h4>
+</div>
+
+<div class="modal-body clearfix">
+    <progressbar value="( importCurrent * 1000 ) / importMax" max="1000"><b style="white-space: nowrap;">{{importCurrent}} / {{importMax}}</b></progressbar>
+
+    <div ng-show="importErrors.length > 0" style="max-height: 400px; overflow: auto;">
+        <div class="alert alert-danger" role="alert" ng-repeat="error in importErrors">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Error:</strong> {{error.message}}
+        </div>
+    </div>
+
+    <button class="btn btn-default pull-right" ng-show="!importRunning" ng-click="!importRunning && $close()" style="margin-top: 10px">Close</button>
+</div>

@@ -37,7 +37,7 @@ namespace HydraWebClient.Controllers
 
             if (added == null)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Could not update user.");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Could not add user.");
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, added);

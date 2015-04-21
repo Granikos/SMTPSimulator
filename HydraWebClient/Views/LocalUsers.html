@@ -4,13 +4,13 @@
 
     </div>
     <div class="btn-group pull-right" style="margin-top: 10px;">
-        <button class="btn btn-default">
+        <button class="btn btn-default" ng-click="export()">
             <i class="glyphicon glyphicon-download"></i> Export
         </button>
         <label class="btn btn-default" for="importfile">
             <i class="glyphicon glyphicon-upload"></i> Import
         </label>
-        <input id="importfile" type="file" on-read-file="readFile($fileName, $fileContent)" style="position: absolute; clip: rect(0px 0px 0px 0px)" />
+        <input id="importfile" type="file" on-read-file="import($fileName, $fileContent)" style="position: absolute; clip: rect(0px 0px 0px 0px)" />
         <button class="btn btn-success" ng-click="addDialog()">
             <i class="glyphicon glyphicon-plus-sign"></i> Add
         </button>
