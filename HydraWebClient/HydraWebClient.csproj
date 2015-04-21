@@ -993,6 +993,7 @@
     <Content Include="Scripts\ngDialog.js" />
     <Content Include="Scripts\ngDialog.min.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\papaparse.min.js" />
     <Content Include="Scripts\ui-grid-unstable.js" />
     <Content Include="Scripts\ui-grid-unstable.min.js" />
     <Content Include="Scripts\_references.js" />
