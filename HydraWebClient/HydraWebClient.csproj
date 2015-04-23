@@ -235,6 +235,12 @@
     <Content Include="Scripts\bootstrap-dialog.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Controllers\Recieve.js" />
+    <Content Include="Scripts\Controllers\Send.js" />
+    <Content Include="Scripts\Controllers\Timer.js" />
+    <Content Include="Scripts\Controllers\Logging.js" />
+    <Content Include="Scripts\Controllers\Server.js" />
+    <Content Include="Scripts\Controllers\ExternalUsers.js" />
     <Content Include="Scripts\Controllers\LocalUsers.js" />
     <Content Include="Scripts\Controllers\Login.js" />
     <Content Include="Scripts\Controllers\Register.js" />
@@ -1016,11 +1022,17 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Views\ExternalUsers\Index.html" />
     <Content Include="Views\LocalUsers\GenerateDialog.html" />
     <Content Include="Views\LocalUsers\ImportDialog.html" />
     <Content Include="Views\LocalUsers\AddDialog.html" />
     <Content Include="Views\LocalUsers\Index.html" />
+    <Content Include="Views\Logging\Index.html" />
+    <Content Include="Views\Recieve\Index.html" />
     <Content Include="Views\Register.html" />
+    <Content Include="Views\Send\Index.html" />
+    <Content Include="Views\Server\Index.html" />
+    <Content Include="Views\Timer\Index.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

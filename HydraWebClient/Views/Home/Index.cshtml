@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html ng-app="Hydra" ng-controller="LandingPageController">
+<html ng-app="Hydra" ng-controller="LandingPageController" ng-init="auth.user = '@ViewBag.Username'">
 <head>
     <base href="/">
     <title>Hydra</title>
@@ -20,20 +20,22 @@
 <body style="max-width: 1000px;">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-                <ul class="nav navbar-nav navbar-left">
-                    <li><a class="navbar-brand" href="/">Hydra</a></li>
-                    <li><a href="/Server">Server</a></li>
-                    <li><a href="/LocalUsers">Local Users</a></li>
-                    <li><a href="/ExternalUsers">External Users</a></li>
-                    <li><a href="/Send">Send</a></li>
-                    <li><a href="/Recieve">Recieve</a></li>
-                    <li><a href="/Timer">Timer</a></li>
-                    <li><a href="/Logging">Logging</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/register">Register</a></li>
-                </ul>
+            <ul class="nav navbar-nav navbar-left">
+                <li><a class="navbar-brand" href="/">Hydra</a></li>
+                <li><a href="/Server">Server</a></li>
+                <li><a href="/LocalUsers">Local Users</a></li>
+                <li><a href="/ExternalUsers">External Users</a></li>
+                <li><a href="/Send">Send</a></li>
+                <li><a href="/Recieve">Recieve</a></li>
+                <li><a href="/Timer">Timer</a></li>
+                <li><a href="/Logging">Logging</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-show="auth.user"><a href="/logout">Logout</a></li>
+                <li ng-show="!auth.user"><a href="/login">Login</a></li>
+                <li ng-show="!auth.user"><a href="/register">Register</a></li>
+            </ul>
+            <p class="navbar-text navbar-right" ng-show="auth.user">Signed in as {{auth.user}}</p>
         </div>
     </nav>
 

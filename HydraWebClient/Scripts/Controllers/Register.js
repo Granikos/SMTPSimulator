@@ -31,7 +31,7 @@
         ])
 
         .controller('RegisterController', [
-            '$scope', '$location', 'RegistrationFactory', function($scope, $location, RegistrationFactory) {
+            '$scope', '$rootScope', '$location', 'RegistrationFactory', function ($scope, $rootScope, $location, RegistrationFactory) {
                 $scope.registerForm = {
                     emailAddress: '',
                     password: '',
@@ -41,7 +41,8 @@
 
                 $scope.register = function() {
                     var result = RegistrationFactory($scope.registerForm.emailAddress, $scope.registerForm.password, $scope.registerForm.confirmPassword);
-                    result.then(function(result) {
+                    result.then(function (result) {
+                        $rootScope.auth.user = $scope.registerForm.emailAddress;
                         if (result.success) {
                             $location.path('/');
                         } else {

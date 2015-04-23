@@ -1,7 +1,7 @@
 ﻿(function () {
     angular.module('LocalUsers', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.selection', 'ui.bootstrap.modal'])
 
-        .service('LocalUserService', ['$http', DataService('api/LocalUsers')])
+        .service('LocalUsersService', ['$http', DataService('api/LocalUsers')])
 
         .service('UserTemplateService', ['$http', '$q', function ($http, $q) {
             this.locales = ['en', 'de'];
@@ -62,7 +62,7 @@
         }])
 
         .controller('LocalUsersController', [
-            '$scope', '$modal', '$q', 'LocalUserService', 'UserTemplateService', function ($scope, $modal, $q, LocalUserService, UserTemplateService) {
+            '$scope', '$modal', '$q', 'LocalUsersService', 'UserTemplateService', function ($scope, $modal, $q, LocalUserService, UserTemplateService) {
                 $scope.users = [];
                 $scope.templates = UserTemplateService.templates;
 

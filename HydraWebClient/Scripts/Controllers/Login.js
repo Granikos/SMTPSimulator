@@ -13,7 +13,8 @@
                     responseError: function (rejection) {
                         if (rejection.status === 401) {
                             console.log("Response Error 401", rejection);
-                            $location.path('/login').search('returnUrl', $location.path());
+                            var path = $location.path();
+                            $location.path('/login').search('returnUrl', path);
                         }
                         return $q.reject(rejection);
                     }
@@ -50,7 +51,7 @@
         ])
 
         .controller('LoginController', [
-            '$scope', '$routeParams', '$location', 'LoginFactory', function ($scope, $routeParams, $location, LoginFactory) {
+            '$scope', '$rootScope', '$routeParams', '$location', 'LoginFactory', function ($scope, $rootScope, $routeParams, $location, LoginFactory) {
                 $scope.loginForm = {
                     emailAddress: '',
                     password: '',
@@ -63,6 +64,7 @@
                     var result = LoginFactory($scope.loginForm.emailAddress, $scope.loginForm.password, $scope.loginForm.rememberMe);
                     result.then(function (result) {
                         if (result.success) {
+                            $rootScope.auth.user = $scope.loginForm.emailAddress;
                             if ($scope.loginForm.returnUrl !== undefined) {
                                 $location.path($scope.loginForm.returnUrl);
                             } else {
@@ -73,6 +75,26 @@
                         }
                     });
                 }
+            }
+        ])
+
+        .controller('LogoutController', [
+            '$rootScope', '$http', '$routeParams', '$location', function ($rootScope, $http, $routeParams, $location) {
+
+                $http.delete('/api/Account').
+                    success(function (data) {
+                        if (data) {
+                            $rootScope.auth.user = null;
+                        }
+                        if ($routeParams.returnUrl !== undefined) {
+                            $location.path($routeParams.returnUrl);
+                        } else {
+                            $location.path('/');
+                        }
+                    }).
+                    error(function () {
+                        // TODO
+                    });
             }
         ]);
 })();

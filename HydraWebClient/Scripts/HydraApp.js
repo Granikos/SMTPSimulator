@@ -1,35 +1,45 @@
 ﻿(function () {
-    angular.module('Hydra', ['ngRoute', 'ui.bootstrap', 'LocalUsers', 'Register', 'Login'])
+    angular.module('Hydra', ['ngRoute', 'ui.bootstrap', 'Server', 'LocalUsers', 'ExternalUsers', 'Send', 'Recieve', 'Timer', 'Logging', 'Register', 'Login'])
         .config([
             '$routeProvider', '$httpProvider', '$locationProvider', function($routeProvider, $httpProvider, $locationProvider) {
                 $locationProvider.hashPrefix('!').html5Mode(true);
 
                 $routeProvider
                     .when('/Server', {
-                    
+                        templateUrl: 'Views/Server/Index.html',
+                        controller: 'ServerController'
                     })
                     .when('/LocalUsers', {
                         templateUrl: 'Views/LocalUsers/Index.html',
                         controller: 'LocalUsersController'
                     })
                     .when('/ExternalUsers', {
-                    
+                        templateUrl: 'Views/ExternalUsers/Index.html',
+                        controller: 'ExternalUsersController'
                     })
                     .when('/Send', {
-
+                        templateUrl: 'Views/Send/Index.html',
+                        controller: 'SendController'
                     })
                     .when('/Recieve', {
-
+                        templateUrl: 'Views/Recieve/Index.html',
+                        controller: 'RecieveController'
                     })
                     .when('/Timer', {
-
+                        templateUrl: 'Views/Timer/Index.html',
+                        controller: 'TimerController'
                     })
                     .when('/Logging', {
-
+                        templateUrl: 'Views/Logging/Index.html',
+                        controller: 'LoggingController'
                     })
                     .when('/login', {
                         templateUrl: '/Views/Login.html',
                         controller: 'LoginController'
+                    })
+                    .when('/logout', {
+                        template: '',
+                        controller: 'LogoutController'
                     })
                     .when('/register', {
                         templateUrl: '/Views/Register.html',
@@ -41,7 +51,9 @@
             }
         ])
         .run([
-            '$rootScope', '$location', function($rootScope, $location) {
+            '$rootScope', '$location', function ($rootScope, $location) {
+                $rootScope.auth = {};
+
                 $rootScope.$on('$locationChangeSuccess', function() {
                     var url = $location.url();
                     $('nav a:not(.navbar-brand)').each(function(i, el) {

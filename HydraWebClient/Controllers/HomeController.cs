@@ -10,6 +10,8 @@ namespace HydraWebClient.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.Username = User.Identity.Name;
+
             return View();
         }
     }

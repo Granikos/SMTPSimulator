@@ -1,8 +1,10 @@
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
 using System.Web;
 using System.Web.Http;
 using HydraWebClient.Models;
+using Microsoft.Owin.Security;
 
 namespace HydraWebClient.Controllers
 {
@@ -11,13 +13,15 @@ namespace HydraWebClient.Controllers
     {
         private ApplicationUserManager _userManager;
         private ApplicationSignInManager _signInManager;
+        private IAuthenticationManager _authManager;
 
         public AccountController() { }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAuthenticationManager authManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            AuthenticationManager = authManager;
         }
 
         public ApplicationUserManager UserManager
@@ -30,6 +34,19 @@ namespace HydraWebClient.Controllers
         {
             get { return _signInManager ?? HttpContext.Current.GetOwinContext().Get<ApplicationSignInManager>(); }
             private set { _signInManager = value; }
+        }
+
+        public IAuthenticationManager AuthenticationManager
+        {
+            get { return _authManager ?? HttpContext.Current.GetOwinContext().Authentication; }
+            private set { _authManager = value; }
+        }
+
+        public bool Delete()
+        {
+            AuthenticationManager.SignOut();
+
+            return true;
         }
 
         [AllowAnonymous]
