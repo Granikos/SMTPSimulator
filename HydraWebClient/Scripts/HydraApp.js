@@ -9,11 +9,23 @@
                     
                     })
                     .when('/LocalUsers', {
-                        templateUrl: 'Views/LocalUsers.html',
+                        templateUrl: 'Views/LocalUsers/Index.html',
                         controller: 'LocalUsersController'
                     })
                     .when('/ExternalUsers', {
                     
+                    })
+                    .when('/Send', {
+
+                    })
+                    .when('/Recieve', {
+
+                    })
+                    .when('/Timer', {
+
+                    })
+                    .when('/Logging', {
+
                     })
                     .when('/login', {
                         templateUrl: '/Views/Login.html',

@@ -11,6 +11,14 @@
             <i class="glyphicon glyphicon-upload"></i> Import
         </label>
         <input id="importfile" type="file" on-read-file="import($fileName, $fileContent)" style="position: absolute; clip: rect(0px 0px 0px 0px)" />
+        <div class="btn-group">
+            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <i class="glyphicon glyphicon-wrench"></i> Generate <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-repeat="template in templates"><a href="#" ng-click="generate(template)">{{template.name}}</a></li>
+            </ul>
+        </div>
         <button class="btn btn-success" ng-click="addDialog()">
             <i class="glyphicon glyphicon-plus-sign"></i> Add
         </button>

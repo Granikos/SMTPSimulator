@@ -1,9 +1,70 @@
 ﻿(function () {
     angular.module('LocalUsers', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.selection', 'ui.bootstrap.modal'])
+
         .service('LocalUserService', ['$http', DataService('api/LocalUsers')])
+
+        .service('UserTemplateService', ['$http', '$q', function ($http, $q) {
+            this.locales = ['en', 'de'];
+
+            function technicalGenerator(n, d) {
+                var deferred = $q.defer();
+                setTimeout(function () {
+                    for (var i = 1; i <= n; i++) {
+                        deferred.notify({
+                            FirstName: 'User ' +i,
+                            LastName: 'Test',
+                            Mailbox: 'test' + i + '@' + d
+                        });
+                    }
+                    deferred.resolve();
+                }, 0);
+                return deferred.promise;
+            }
+
+            function randomGenerator(l) {
+                return function(n, d) {
+                    var deferred = $q.defer();
+                    $http.get('/Scripts/UserTemplates/' + l + '.json').
+                        success(function(data, status, headers, config) {
+                            var mailboxes = [''];
+                            for (var i = 0; i < n; i++) {
+                                var givenname, surname, mailbox = '';
+                                while (mailboxes.indexOf(mailbox) >= 0) {
+                                    givenname = data.givennames[Math.floor(Math.random() * data.givennames.length)];
+                                    surname = data.surnames[Math.floor(Math.random() * data.surnames.length)];
+                                    mailbox = (givenname + '.' + surname).toLowerCase() + '@' + d;
+                                }
+                                deferred.notify({
+                                    FirstName: givenname,
+                                    LastName: surname,
+                                    Mailbox: mailbox
+                                });
+                            }
+                            deferred.resolve();
+                        }).
+                        error(function(data, status, headers, config) {
+                            deferred.reject(data);
+                        });
+                    return deferred.promise;
+                };
+            }
+
+            this.templates = [
+                {
+                    name: 'Technical',
+                    generator: technicalGenerator
+                },
+                {
+                    name: 'Random Names (en)',
+                    generator: randomGenerator('en')
+                }
+            ];
+        }])
+
         .controller('LocalUsersController', [
-            '$scope', '$modal', '$q', 'LocalUserService', function ($scope, $modal, $q, LocalUserService) {
+            '$scope', '$modal', '$q', 'LocalUserService', 'UserTemplateService', function ($scope, $modal, $q, LocalUserService, UserTemplateService) {
                 $scope.users = [];
+                $scope.templates = UserTemplateService.templates;
 
                 var columnDefs = [
                     { name: 'firstName', field: 'FirstName', editableCellTemplate: simpleTemplate('required') },
@@ -24,7 +85,7 @@
 
                     var modal = $modal
                         .open({
-                            templateUrl: 'Views/LocalUsersImportDialog.html',
+                            templateUrl: 'Views/LocalUsers/ImportDialog.html',
                             backdrop: 'static',
                             keyboard: false,
                             scope: $scope
@@ -58,6 +119,62 @@
                     });
                 };
 
+                $scope.generate = function(template) {
+                    $scope.generate = {
+                        current: 0,
+                        max: 0,
+                        errors: [],
+                        started: false,
+                        done: false,
+                        numberOfUsers: 1,
+                        domain: ''
+                    };
+
+                    var modal = $modal
+                        .open({
+                            templateUrl: 'Views/LocalUsers/GenerateDialog.html',
+                            backdrop: 'static',
+                            keyboard: false,
+                            scope: $scope
+                        });
+
+                    $scope.startGeneration = function () {
+                        $scope.generate.max = $scope.generate.numberOfUsers;
+                        $scope.generate.started = true;
+
+                        template.generator($scope.generate.numberOfUsers, $scope.generate.domain)
+                            .then(function() {
+                                $scope.generate.done = true;
+                            }, function(e) {
+                                $scope.generate.done = true;
+                                $scope.generate.errors.push({
+                                    i: $scope.generate.current,
+                                    message: 'An error occured.'
+                                });
+                            }, function(user) {
+                                $scope.generate.current++;
+                                $scope.add(user).error(function(e) {
+                                    $scope.generate.errors.push({
+                                        i: $scope.generate.current,
+                                        message: e.Message + ' (' + args.item.Mailbox + ')'
+                                    });
+                                });
+                            });
+                    };
+                };
+
+                $scope.export = function () {
+                    var rows = [['First Name', 'Last Name', 'Mailbox']];
+
+                    for (var i = 0; i < $scope.users.length; i++) {
+                        var user = $scope.users[i];
+
+                        rows.push([user.FirstName, user.LastName, user.Mailbox]);
+                    }
+
+                    exportToCsv('LocalUsers.csv', rows);
+                };
+
                 LocalUserService.all()
                     .success(function (users) {
                         $scope.users = users;
@@ -71,7 +188,7 @@
                 $scope.addDialog = function () {
                     $modal
                         .open({
-                            templateUrl: 'Views/LocalUsersAddDialog.html',
+                            templateUrl: 'Views/LocalUsers/AddDialog.html',
                             controller: 'LocalUsersAddDialogController'
                         })
                         .result.then(function (user) {
