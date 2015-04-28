@@ -21,7 +21,7 @@ namespace HydraCore.CommandHandlers
             transaction.Initialize(parameters);
 
             var ehlos = Server.GetListProperty<Func<SMTPTransaction, string>>("EHLOLines");
-            var l = new List<string> { Server.Greet };
+            var l = new List<string> { Server.Config.Greet };
             l.AddRange(ehlos.Select(e => e(transaction)).Where(e => !string.IsNullOrEmpty(e)));
 
             return new SMTPResponse(SMTPStatusCode.Okay, l.ToArray());

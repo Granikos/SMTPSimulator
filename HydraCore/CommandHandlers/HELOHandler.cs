@@ -18,7 +18,7 @@ namespace HydraCore.CommandHandlers
             transaction.Reset();
             transaction.Initialize(parameters);
 
-            return new SMTPResponse(SMTPStatusCode.Okay, Server.Greet);
+            return new SMTPResponse(SMTPStatusCode.Okay, Server.Config.Greet);
         }
     }
 }

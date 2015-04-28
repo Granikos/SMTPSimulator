@@ -16,6 +16,7 @@ namespace HydraCore
 
         private readonly Dictionary<string, ICommandHandler> _handlers = new Dictionary<string, ICommandHandler>();
         private readonly IDictionary<string, object> _properties = new Dictionary<string, object>();
+        private ServerConfig _config;
 
         public SMTPCore(ICommandHandlerLoader loader)
         {
@@ -29,9 +30,12 @@ namespace HydraCore
         }
 
         public EventBroker EventBroker { get; private set; }
-        public string Banner { get; set; }
-        public string Greet { get; set; }
-        public string ServerName { get; set; }
+
+        public ServerConfig Config
+        {
+            get { return _config ?? (_config = new ServerConfig()); }
+            set { _config = value; }
+        }
 
         public T GetProperty<T>(string name)
         {
@@ -96,7 +100,7 @@ namespace HydraCore
                 }
             }
 
-            response = new SMTPResponse(SMTPStatusCode.Ready, String.Format("{0} {1}", ServerName, Banner));
+            response = new SMTPResponse(SMTPStatusCode.Ready, string.Format("{0} {1}", Config.ServerName, Config.Banner));
 
             return transaction;
         }

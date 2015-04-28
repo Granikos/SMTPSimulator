@@ -14,6 +14,7 @@ namespace HydraService
         private readonly SMTPServer _server2;
 
         private ServiceHost _host;
+        private SMTPCore core;
 
         public SMTPService()
         {
@@ -21,16 +22,18 @@ namespace HydraService
             var ip = IPAddress.Parse("127.0.0.1");
             var port = 1337;
 
-            SMTPCore core;
             using (var catalog = new AssemblyCatalog(typeof (SMTPCore).Assembly)) // TODO: Use Dependency Injection
             {
                 var loader = new CommandHandlerLoader(catalog);
                 core = new SMTPCore(loader);
             }
 
-            core.Greet = "Test Greet";
-            core.ServerName = "localhost";
-            core.Banner = "This is the banner text!";
+            core.Config = new ServerConfig
+            {
+                Greet = "Test Greet",
+                ServerName = "localhost",
+                Banner = "This is the banner text!"
+            };
 
             _server = new SMTPServer(new IPEndPoint(ip, port), core);
             _server.AddSubnet(new IPSubnet("127.0.0.1/24"));
@@ -58,7 +61,8 @@ namespace HydraService
             }
 
             // http://localhost:1339/service.svc
-            _host = new ServiceHost(typeof(ConfigurationService));
+            // _host = new ServiceHost(typeof(ConfigurationService));
+            _host = new ServiceHost(new ConfigurationService(core));
 
             _host.Open();
         }

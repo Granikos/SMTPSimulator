@@ -18,6 +18,7 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Net" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Net.Sockets" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/HydraCore" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IConfigurationService_SetProperty_InputMessage">
@@ -62,6 +63,18 @@
   <wsdl:message name="IConfigurationService_DeleteLocalUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteLocalUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetServerConfig_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetServerConfig" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetServerConfig_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetServerConfigResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_SetServerConfig_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetServerConfig" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_SetServerConfig_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetServerConfigResponse" />
+  </wsdl:message>
   <wsdl:portType name="IConfigurationService">
     <wsdl:operation name="SetProperty">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/SetProperty" message="tns:IConfigurationService_SetProperty_InputMessage" />
@@ -90,6 +103,14 @@
     <wsdl:operation name="DeleteLocalUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DeleteLocalUser" message="tns:IConfigurationService_DeleteLocalUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DeleteLocalUserResponse" message="tns:IConfigurationService_DeleteLocalUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServerConfig">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetServerConfig" message="tns:IConfigurationService_GetServerConfig_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetServerConfigResponse" message="tns:IConfigurationService_GetServerConfig_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetServerConfig">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/SetServerConfig" message="tns:IConfigurationService_SetServerConfig_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/SetServerConfigResponse" message="tns:IConfigurationService_SetServerConfig_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IConfigurationService" type="tns:IConfigurationService">
@@ -152,6 +173,24 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteLocalUser">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/DeleteLocalUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServerConfig">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetServerConfig" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetServerConfig">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/SetServerConfig" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -199,6 +199,83 @@ namespace HydraWebClient.HydraConfigurationService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServerConfig", Namespace="http://schemas.datacontract.org/2004/07/HydraCore")]
+    [System.SerializableAttribute()]
+    public partial class ServerConfig : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BannerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string GreetField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ServerNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Banner {
+            get {
+                return this.BannerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BannerField, value) != true)) {
+                    this.BannerField = value;
+                    this.RaisePropertyChanged("Banner");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Greet {
+            get {
+                return this.GreetField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GreetField, value) != true)) {
+                    this.GreetField = value;
+                    this.RaisePropertyChanged("Greet");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ServerName {
+            get {
+                return this.ServerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ServerNameField, value) != true)) {
+                    this.ServerNameField = value;
+                    this.RaisePropertyChanged("ServerName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="HydraConfigurationService.IConfigurationService")]
     public interface IConfigurationService {
@@ -244,6 +321,18 @@ namespace HydraWebClient.HydraConfigurationService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteLocalUser", ReplyAction="http://tempuri.org/IConfigurationService/DeleteLocalUserResponse")]
         System.Threading.Tasks.Task<bool> DeleteLocalUserAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetServerConfig", ReplyAction="http://tempuri.org/IConfigurationService/GetServerConfigResponse")]
+        HydraWebClient.HydraConfigurationService.ServerConfig GetServerConfig();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetServerConfig", ReplyAction="http://tempuri.org/IConfigurationService/GetServerConfigResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerConfig> GetServerConfigAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/SetServerConfig", ReplyAction="http://tempuri.org/IConfigurationService/SetServerConfigResponse")]
+        bool SetServerConfig(HydraWebClient.HydraConfigurationService.ServerConfig config);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/SetServerConfig", ReplyAction="http://tempuri.org/IConfigurationService/SetServerConfigResponse")]
+        System.Threading.Tasks.Task<bool> SetServerConfigAsync(HydraWebClient.HydraConfigurationService.ServerConfig config);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -327,6 +416,22 @@ namespace HydraWebClient.HydraConfigurationService {
         
         public System.Threading.Tasks.Task<bool> DeleteLocalUserAsync(int id) {
             return base.Channel.DeleteLocalUserAsync(id);
+        }
+        
+        public HydraWebClient.HydraConfigurationService.ServerConfig GetServerConfig() {
+            return base.Channel.GetServerConfig();
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerConfig> GetServerConfigAsync() {
+            return base.Channel.GetServerConfigAsync();
+        }
+        
+        public bool SetServerConfig(HydraWebClient.HydraConfigurationService.ServerConfig config) {
+            return base.Channel.SetServerConfig(config);
+        }
+        
+        public System.Threading.Tasks.Task<bool> SetServerConfigAsync(HydraWebClient.HydraConfigurationService.ServerConfig config) {
+            return base.Channel.SetServerConfigAsync(config);
         }
     }
 }

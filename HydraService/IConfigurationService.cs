@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ServiceModel;
+using HydraCore;
 
 namespace HydraService
 {
@@ -26,5 +27,11 @@ namespace HydraService
 
         [OperationContract]
         bool DeleteLocalUser(int id);
+
+        [OperationContract]
+        ServerConfig GetServerConfig();
+
+        [OperationContract]
+        bool SetServerConfig(ServerConfig config);
     }
 }

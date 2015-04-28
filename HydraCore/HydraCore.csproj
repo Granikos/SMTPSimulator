@@ -79,6 +79,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
@@ -117,6 +118,7 @@
     <Compile Include="Mailbox.cs" />
     <Compile Include="Path.cs" />
     <Compile Include="RegularExpressions.cs" />
+    <Compile Include="ServerConfig.cs" />
     <Compile Include="SMTPResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SMTPCommand.cs" />
