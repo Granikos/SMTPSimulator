@@ -8,11 +8,6 @@ namespace HydraWebClient
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap")
-                .Include("~/Scripts/bootstrap.js"));
-            bundles.Add(new StyleBundle("~/Content/bootstrap/css")
-                .Include("~/Content/bootstrap.css")); 
-
             bundles.Add(new ScriptBundle("~/Scripts/Hydra")
                 .Include("~/Scripts/helpers.js")
                 .IncludeDirectory("~/Scripts/Controllers", "*.js")
