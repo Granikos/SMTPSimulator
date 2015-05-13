@@ -198,3 +198,6 @@ FakesAssemblies/
 # Visual Studio 6 workspace options file
 *.opt
 
+/HydraWebClient/Content/dist
+/HydraWebClient/Scripts/maps
+/HydraWebClient/Scripts/*.min.js

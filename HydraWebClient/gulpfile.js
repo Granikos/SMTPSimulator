@@ -6,6 +6,7 @@ var minifyCSS = require('gulp-minify-css');
 var copy = require('gulp-copy');
 var bower = require('gulp-bower');
 var sourcemaps = require('gulp-sourcemaps');
+// var rewriteCSS = require('gulp-rewrite-css');
 
 var config = {
     jquerysrc: [
@@ -20,12 +21,13 @@ var config = {
     bootstrapbundle: 'Scripts/bootstrap-bundle.min.js',
 
     angularsrc: [
-        'bower_components/angular/angular.min.js',
-        'bower_components/angular-aria/angular-aria.min.js',
-        'bower_components/angular-route/angular-route.min.js',
-        'bower_components/angular-ui/build/angular-ui.min.js',
-        'bower_components/angular-ui-grid/ui-grid.min.js',
-        'bower_components/angular-bootstrap/ui-bootstrap.min.js'
+        'bower_components/angular/angular.js',
+        'bower_components/angular-aria/angular-aria.js',
+        'bower_components/angular-route/angular-route.js',
+        'bower_components/angular-ui/build/angular-ui.js',
+        'bower_components/angular-ui-grid/ui-grid.js',
+        'bower_components/angular-bootstrap/ui-bootstrap.js',
+        'bower_components/angular-bootstrap/ui-bootstrap-tpls.js'
     ],
     angularbundle: 'Scripts/angular-bundle.min.js',
 
@@ -41,6 +43,12 @@ var config = {
     angularuicss: [
         'bower_components/angular-ui/build/angular-ui.min.css',
         'bower_components/angular-ui-grid/ui-grid.min.css'
+    ],
+    angularuifonts: [
+        'bower_components/angular-ui-grid/ui-grid.eot',
+        'bower_components/angular-ui-grid/ui-grid.svg',
+        'bower_components/angular-ui-grid/ui-grid.ttf',
+        'bower_components/angular-ui-grid/ui-grid.woff'
     ],
 
     appcss: 'Content/Site.css',
@@ -110,6 +118,7 @@ gulp.task('bootstrap-css', ['clean-styles', 'bower-restore'], function () {
 
 gulp.task('angular-ui-css', ['clean-styles', 'bower-restore'], function () {
     return gulp.src(config.angularuicss)
+     // .pipe(rewriteCSS({ destination: config.fontsout }))
      .pipe(concat('angular-ui.css'))
      .pipe(gulp.dest(config.cssout))
      .pipe(minifyCSS())
@@ -132,8 +141,13 @@ gulp.task('css', ['bootstrap-css', 'angular-ui-css', 'app-css'], function () {
 });
 
 gulp.task('fonts', ['clean-styles', 'bower-restore'], function () {
-    return gulp.src(config.boostrapfonts)
+
+    // return gulp.src([].concat(config.boostrapfonts, config.angularuifonts))
+    //     .pipe(gulp.dest(config.fontsout));
+    gulp.src(config.boostrapfonts)
         .pipe(gulp.dest(config.fontsout));
+    return gulp.src(config.angularuifonts)
+        .pipe(gulp.dest(config.cssout));
 });
 
 // Combine and minify css files and output fonts
