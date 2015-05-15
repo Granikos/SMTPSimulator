@@ -32,6 +32,9 @@ namespace HydraWebClient.HydraConfigurationService {
         private bool EnforceTLSField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int PortField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -84,6 +87,19 @@ namespace HydraWebClient.HydraConfigurationService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int Port {
             get {
                 return this.PortField;
@@ -92,6 +108,83 @@ namespace HydraWebClient.HydraConfigurationService {
                 if ((this.PortField.Equals(value) != true)) {
                     this.PortField = value;
                     this.RaisePropertyChanged("Port");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServerSubnetConfiguration", Namespace="http://schemas.datacontract.org/2004/07/HydraService")]
+    [System.SerializableAttribute()]
+    public partial class ServerSubnetConfiguration : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Net.IPAddress AddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int SizeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Net.IPAddress Address {
+            get {
+                return this.AddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AddressField, value) != true)) {
+                    this.AddressField = value;
+                    this.RaisePropertyChanged("Address");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Size {
+            get {
+                return this.SizeField;
+            }
+            set {
+                if ((this.SizeField.Equals(value) != true)) {
+                    this.SizeField = value;
+                    this.RaisePropertyChanged("Size");
                 }
             }
         }
@@ -292,6 +385,60 @@ namespace HydraWebClient.HydraConfigurationService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetServerBindings", ReplyAction="http://tempuri.org/IConfigurationService/GetServerBindingsResponse")]
         System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerBindingConfiguration[]> GetServerBindingsAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/GetServerBindingResponse")]
+        HydraWebClient.HydraConfigurationService.ServerBindingConfiguration GetServerBinding(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/GetServerBindingResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerBindingConfiguration> GetServerBindingAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/AddServerBindingResponse")]
+        HydraWebClient.HydraConfigurationService.ServerBindingConfiguration AddServerBinding(HydraWebClient.HydraConfigurationService.ServerBindingConfiguration binding);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/AddServerBindingResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerBindingConfiguration> AddServerBindingAsync(HydraWebClient.HydraConfigurationService.ServerBindingConfiguration binding);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/UpdateServerBindingResponse")]
+        HydraWebClient.HydraConfigurationService.ServerBindingConfiguration UpdateServerBinding(HydraWebClient.HydraConfigurationService.ServerBindingConfiguration binding);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/UpdateServerBindingResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerBindingConfiguration> UpdateServerBindingAsync(HydraWebClient.HydraConfigurationService.ServerBindingConfiguration binding);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/DeleteServerBindingResponse")]
+        bool DeleteServerBinding(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/DeleteServerBindingResponse")]
+        System.Threading.Tasks.Task<bool> DeleteServerBindingAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetSubnets", ReplyAction="http://tempuri.org/IConfigurationService/GetSubnetsResponse")]
+        HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration[] GetSubnets();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetSubnets", ReplyAction="http://tempuri.org/IConfigurationService/GetSubnetsResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration[]> GetSubnetsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetSubnet", ReplyAction="http://tempuri.org/IConfigurationService/GetSubnetResponse")]
+        HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration GetSubnet(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetSubnet", ReplyAction="http://tempuri.org/IConfigurationService/GetSubnetResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration> GetSubnetAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddSubnet", ReplyAction="http://tempuri.org/IConfigurationService/AddSubnetResponse")]
+        HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration AddSubnet(HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration subnet);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddSubnet", ReplyAction="http://tempuri.org/IConfigurationService/AddSubnetResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration> AddSubnetAsync(HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration subnet);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateSubnet", ReplyAction="http://tempuri.org/IConfigurationService/UpdateSubnetResponse")]
+        HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration UpdateSubnet(HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration subnet);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateSubnet", ReplyAction="http://tempuri.org/IConfigurationService/UpdateSubnetResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration> UpdateSubnetAsync(HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration subnet);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteSubnet", ReplyAction="http://tempuri.org/IConfigurationService/DeleteSubnetResponse")]
+        bool DeleteSubnet(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteSubnet", ReplyAction="http://tempuri.org/IConfigurationService/DeleteSubnetResponse")]
+        System.Threading.Tasks.Task<bool> DeleteSubnetAsync(int id);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/GetLocalUsersResponse")]
         HydraWebClient.HydraConfigurationService.LocalUser[] GetLocalUsers();
         
@@ -376,6 +523,78 @@ namespace HydraWebClient.HydraConfigurationService {
         
         public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerBindingConfiguration[]> GetServerBindingsAsync() {
             return base.Channel.GetServerBindingsAsync();
+        }
+        
+        public HydraWebClient.HydraConfigurationService.ServerBindingConfiguration GetServerBinding(int id) {
+            return base.Channel.GetServerBinding(id);
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerBindingConfiguration> GetServerBindingAsync(int id) {
+            return base.Channel.GetServerBindingAsync(id);
+        }
+        
+        public HydraWebClient.HydraConfigurationService.ServerBindingConfiguration AddServerBinding(HydraWebClient.HydraConfigurationService.ServerBindingConfiguration binding) {
+            return base.Channel.AddServerBinding(binding);
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerBindingConfiguration> AddServerBindingAsync(HydraWebClient.HydraConfigurationService.ServerBindingConfiguration binding) {
+            return base.Channel.AddServerBindingAsync(binding);
+        }
+        
+        public HydraWebClient.HydraConfigurationService.ServerBindingConfiguration UpdateServerBinding(HydraWebClient.HydraConfigurationService.ServerBindingConfiguration binding) {
+            return base.Channel.UpdateServerBinding(binding);
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerBindingConfiguration> UpdateServerBindingAsync(HydraWebClient.HydraConfigurationService.ServerBindingConfiguration binding) {
+            return base.Channel.UpdateServerBindingAsync(binding);
+        }
+        
+        public bool DeleteServerBinding(int id) {
+            return base.Channel.DeleteServerBinding(id);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteServerBindingAsync(int id) {
+            return base.Channel.DeleteServerBindingAsync(id);
+        }
+        
+        public HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration[] GetSubnets() {
+            return base.Channel.GetSubnets();
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration[]> GetSubnetsAsync() {
+            return base.Channel.GetSubnetsAsync();
+        }
+        
+        public HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration GetSubnet(int id) {
+            return base.Channel.GetSubnet(id);
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration> GetSubnetAsync(int id) {
+            return base.Channel.GetSubnetAsync(id);
+        }
+        
+        public HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration AddSubnet(HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration subnet) {
+            return base.Channel.AddSubnet(subnet);
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration> AddSubnetAsync(HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration subnet) {
+            return base.Channel.AddSubnetAsync(subnet);
+        }
+        
+        public HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration UpdateSubnet(HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration subnet) {
+            return base.Channel.UpdateSubnet(subnet);
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration> UpdateSubnetAsync(HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration subnet) {
+            return base.Channel.UpdateSubnetAsync(subnet);
+        }
+        
+        public bool DeleteSubnet(int id) {
+            return base.Channel.DeleteSubnet(id);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteSubnetAsync(int id) {
+            return base.Channel.DeleteSubnetAsync(id);
         }
         
         public HydraWebClient.HydraConfigurationService.LocalUser[] GetLocalUsers() {

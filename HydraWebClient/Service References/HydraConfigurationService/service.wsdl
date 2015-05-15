@@ -33,6 +33,60 @@
   <wsdl:message name="IConfigurationService_GetServerBindings_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetServerBindingsResponse" />
   </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetServerBinding_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetServerBinding" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetServerBinding_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetServerBindingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_AddServerBinding_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddServerBinding" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_AddServerBinding_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddServerBindingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_UpdateServerBinding_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateServerBinding" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_UpdateServerBinding_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateServerBindingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_DeleteServerBinding_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteServerBinding" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_DeleteServerBinding_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteServerBindingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetSubnets_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSubnets" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetSubnets_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSubnetsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetSubnet_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSubnet" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetSubnet_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSubnetResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_AddSubnet_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddSubnet" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_AddSubnet_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddSubnetResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_UpdateSubnet_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateSubnet" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_UpdateSubnet_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateSubnetResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_DeleteSubnet_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteSubnet" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_DeleteSubnet_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteSubnetResponse" />
+  </wsdl:message>
   <wsdl:message name="IConfigurationService_GetLocalUsers_InputMessage">
     <wsdl:part name="parameters" element="tns:GetLocalUsers" />
   </wsdl:message>
@@ -84,6 +138,42 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetServerBindings" message="tns:IConfigurationService_GetServerBindings_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetServerBindingsResponse" message="tns:IConfigurationService_GetServerBindings_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetServerBinding">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetServerBinding" message="tns:IConfigurationService_GetServerBinding_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetServerBindingResponse" message="tns:IConfigurationService_GetServerBinding_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddServerBinding">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/AddServerBinding" message="tns:IConfigurationService_AddServerBinding_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/AddServerBindingResponse" message="tns:IConfigurationService_AddServerBinding_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateServerBinding">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/UpdateServerBinding" message="tns:IConfigurationService_UpdateServerBinding_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/UpdateServerBindingResponse" message="tns:IConfigurationService_UpdateServerBinding_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteServerBinding">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DeleteServerBinding" message="tns:IConfigurationService_DeleteServerBinding_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DeleteServerBindingResponse" message="tns:IConfigurationService_DeleteServerBinding_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSubnets">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetSubnets" message="tns:IConfigurationService_GetSubnets_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetSubnetsResponse" message="tns:IConfigurationService_GetSubnets_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSubnet">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetSubnet" message="tns:IConfigurationService_GetSubnet_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetSubnetResponse" message="tns:IConfigurationService_GetSubnet_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSubnet">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/AddSubnet" message="tns:IConfigurationService_AddSubnet_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/AddSubnetResponse" message="tns:IConfigurationService_AddSubnet_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSubnet">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/UpdateSubnet" message="tns:IConfigurationService_UpdateSubnet_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/UpdateSubnetResponse" message="tns:IConfigurationService_UpdateSubnet_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSubnet">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DeleteSubnet" message="tns:IConfigurationService_DeleteSubnet_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DeleteSubnetResponse" message="tns:IConfigurationService_DeleteSubnet_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetLocalUsers">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetLocalUsers" message="tns:IConfigurationService_GetLocalUsers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetLocalUsersResponse" message="tns:IConfigurationService_GetLocalUsers_OutputMessage" />
@@ -128,6 +218,87 @@
     </wsdl:operation>
     <wsdl:operation name="GetServerBindings">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetServerBindings" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServerBinding">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetServerBinding" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddServerBinding">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/AddServerBinding" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateServerBinding">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/UpdateServerBinding" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteServerBinding">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/DeleteServerBinding" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubnets">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetSubnets" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubnet">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetSubnet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSubnet">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/AddSubnet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSubnet">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/UpdateSubnet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSubnet">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/DeleteSubnet" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

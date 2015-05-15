@@ -40,12 +40,17 @@
 
         .controller("ServerBindingsController", [
             "$scope", "$modal", "$q", "BindingService", function ($scope, $modal, $q, BindingService) {
-                $scope.bindings = [{IP: '127.0.0.1'}];
+                $scope.bindings = [];
+
+                BindingService.all()
+                    .success(function (bindings) {
+                        $scope.bindings = bindings;
+                    });
 
                 var columnDefs = [
-                    { displayName: 'IP', field: 'IP', editableCellTemplate: simpleTemplate('required') },
+                    { displayName: 'IP', field: 'Address', editableCellTemplate: simpleTemplate('required') },
                     { displayName: 'Port', field: 'Port', editableCellTemplate: simpleTemplate('required', 'number'), type: 'number' },
-                    { displayName: 'Enable SSL?', field: 'EnableSsl', type: 'bool' },
+                    { displayName: 'Enable SSL?', field: 'EnableSsl', type: 'bool', editableCellTemplate: simpleTemplate('', 'checkbox') },
                     { displayName: 'Enforce TLS?', field: 'EnforceTLS', type: 'bool' }
                 ];
 
@@ -57,7 +62,7 @@
                 $scope.deleteSelected = function () {
                     angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
                         BindingService.delete(data.Id).success(function () {
-                            $scope.users.splice($scope.users.lastIndexOf(data), 1);
+                            $scope.bindings.splice($scope.bindings.lastIndexOf(data), 1);
                         });
                     });
                 };
@@ -82,11 +87,16 @@
 
         .controller("ServerSubnetsController", [
             "$scope", "$modal", "$q", "SubnetService", function ($scope, $modal, $q, SubnetService) {
-                $scope.subnets = [{}];
+                $scope.subnets = [];
+
+                SubnetService.all()
+                    .success(function (subnets) {
+                        $scope.subnets = subnets;
+                    });
 
                 var columnDefs = [
-                    { displayName: 'Network IP', field: 'IP', editableCellTemplate: simpleTemplate('required') },
-                    { displayName: 'Size', field: 'Port', editableCellTemplate: simpleTemplate('required', 'number'), type: 'number' }
+                    { displayName: 'Network IP', field: 'Address', editableCellTemplate: simpleTemplate('required') },
+                    { displayName: 'Size', field: 'Size', editableCellTemplate: simpleTemplate('required', 'number'), type: 'number' }
                 ];
 
                 $scope.saveRow = function (rowEntity) {
@@ -97,7 +107,7 @@
                 $scope.deleteSelected = function () {
                     angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
                         SubnetService.delete(data.Id).success(function () {
-                            $scope.users.splice($scope.users.lastIndexOf(data), 1);
+                            $scope.subnets.splice($scope.subnets.lastIndexOf(data), 1);
                         });
                     });
                 };

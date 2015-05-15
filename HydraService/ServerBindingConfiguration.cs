@@ -7,6 +7,9 @@ namespace HydraService
     public class ServerBindingConfiguration
     {
         [DataMember]
+        public int Id { get; set; }
+
+        [DataMember]
         public IPAddress Address { get; set; }
         
         [DataMember]

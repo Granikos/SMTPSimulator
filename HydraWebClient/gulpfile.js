@@ -1,3 +1,4 @@
+/// <vs BeforeBuild='default' />
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
@@ -64,13 +65,13 @@ gulp.task('clean-vendor-scripts', function (cb) {
          config.papaparsebundle], cb);
 });
 
-gulp.task('jquery-bundle', ['clean-vendor-scripts', 'bower-restore'], function () {
+gulp.task('jquery-bundle', ['bower-restore'], function () {
     return gulp.src(config.jquerysrc)
      .pipe(concat('jquery-bundle.min.js'))
      .pipe(gulp.dest('Scripts'));
 });
 
-gulp.task('bootstrap-bundle', ['clean-vendor-scripts', 'bower-restore'], function () {
+gulp.task('bootstrap-bundle', ['bower-restore'], function () {
     return gulp.src(config.bootstrapsrc)
      .pipe(sourcemaps.init())
      .pipe(concat('bootstrap-bundle.min.js'))
@@ -78,7 +79,7 @@ gulp.task('bootstrap-bundle', ['clean-vendor-scripts', 'bower-restore'], functio
      .pipe(gulp.dest('Scripts'));
 });
 
-gulp.task('angular-bundle', ['clean-vendor-scripts', 'bower-restore'], function () {
+gulp.task('angular-bundle', ['bower-restore'], function () {
     return gulp.src(config.angularsrc)
         .pipe(sourcemaps.init())
         .pipe(uglify())
@@ -87,7 +88,7 @@ gulp.task('angular-bundle', ['clean-vendor-scripts', 'bower-restore'], function 
         .pipe(gulp.dest('Scripts'));
 });
 
-gulp.task('papaparse', ['clean-vendor-scripts', 'bower-restore'], function () {
+gulp.task('papaparse', ['bower-restore'], function () {
     return gulp.src(config.papaparsesrc)
         .pipe(sourcemaps.init())
         .pipe(uglify())
@@ -107,7 +108,7 @@ gulp.task('clean-styles', function (cb) {
               config.cssout],cb);
 });
 
-gulp.task('bootstrap-css', ['clean-styles', 'bower-restore'], function () {
+gulp.task('bootstrap-css', ['bower-restore'], function () {
     return gulp.src(config.bootstrapcss)
      .pipe(concat('bootstrap.css'))
      .pipe(gulp.dest(config.cssout))
@@ -116,7 +117,7 @@ gulp.task('bootstrap-css', ['clean-styles', 'bower-restore'], function () {
      .pipe(gulp.dest(config.cssout));
 });
 
-gulp.task('angular-ui-css', ['clean-styles', 'bower-restore'], function () {
+gulp.task('angular-ui-css', ['bower-restore'], function () {
     return gulp.src(config.angularuicss)
      // .pipe(rewriteCSS({ destination: config.fontsout }))
      .pipe(concat('angular-ui.css'))
@@ -126,7 +127,7 @@ gulp.task('angular-ui-css', ['clean-styles', 'bower-restore'], function () {
      .pipe(gulp.dest(config.cssout));
 });
 
-gulp.task('app-css', ['clean-styles', 'bower-restore'], function () {
+gulp.task('app-css', ['bower-restore'], function () {
     return gulp.src(config.appcss)
      .pipe(concat('app.css'))
      .pipe(gulp.dest(config.cssout))
@@ -140,7 +141,7 @@ gulp.task('css', ['bootstrap-css', 'angular-ui-css', 'app-css'], function () {
 
 });
 
-gulp.task('fonts', ['clean-styles', 'bower-restore'], function () {
+gulp.task('fonts', ['bower-restore'], function () {
 
     // return gulp.src([].concat(config.boostrapfonts, config.angularuifonts))
     //     .pipe(gulp.dest(config.fontsout));
@@ -158,6 +159,12 @@ gulp.task('styles', ['css', 'fonts'], function () {
 //Restore all bower packages
 gulp.task('bower-restore', function() {
     return bower();
+});
+
+
+//Set a default tasks
+gulp.task('clean', ['clean-vendor-scripts', 'clean-styles'], function () {
+
 });
 
 //Set a default tasks

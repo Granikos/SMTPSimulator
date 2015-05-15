@@ -173,8 +173,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ServerBindingsController.cs" />
     <Compile Include="Controllers\ServerController.cs" />
     <Compile Include="Controllers\LocalUsersController.cs" />
+    <Compile Include="Controllers\ServerSubnetsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -220,6 +222,9 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.ServerConfig.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Service References\HydraConfigurationService\Reference.svcmap">
