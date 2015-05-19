@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Net;
+using System.Reflection;
 using System.ServiceModel;
 using System.ServiceProcess;
 using HydraCore;
@@ -60,11 +62,19 @@ namespace HydraService
                 _host.Close();
             }
 
-            // http://localhost:1339/service.svc
-            // _host = new ServiceHost(typeof(ConfigurationService));
-            _host = new ServiceHost(new ConfigurationService(core));
+            using (var catalog = new AssemblyCatalog(typeof(ConfigurationService).Assembly)) // TODO: Use Dependency Injection
+            using (var container = new CompositionContainer(catalog))
+            {
+                var service = new ConfigurationService(core);
+                container.ComposeParts(service);
 
-            _host.Open();
+                // http://localhost:1339/service.svc
+                // _host = new ServiceHost(typeof(ConfigurationService));
+                _host = new ServiceHost(service);
+
+                _host.Open();
+            }
+
         }
 
         protected override void OnStop()

@@ -22,8 +22,12 @@
     };
 }
 
-function simpleTemplate(add, type) {
+function simpleEditTemplate(add, type) {
     return "<div><form name=\"inputForm\"><input type=\"" + (type || "INPUT_TYPE") + "\" ng- class=\"'colt' + col.uid\" ui-grid-editor ng-model=\"MODEL_COL_FIELD\"" + (add || "") + " validate-cell></form></div>";
+}
+
+function checkboxTemplate() {
+    return '<div class="ngCellText" ng-class="col.colIndex()"><span ng-cell-text><input type="checkbox" ng-checked="row.entity[col.field]" disabled="disabled" /></span></div>';
 }
 
 function showError(error) {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Diagnostics.Contracts;
 using System.Net;
 using System.ServiceModel;
@@ -11,8 +12,10 @@ namespace HydraService
     public class ConfigurationService : IConfigurationService
     {
         private static int _userId = 2;
-        private static int _bindingId = 2;
         private static int _subnetId = 1;
+
+        [Import(typeof (IServerBindingsProvider))]
+        private IServerBindingsProvider _serverBindings;
 
         public ConfigurationService(SMTPCore core)
         {
@@ -29,47 +32,27 @@ namespace HydraService
 
         public IList<ServerBindingConfiguration> GetServerBindings()
         {
-            return new List<ServerBindingConfiguration>
-            {
-                new ServerBindingConfiguration
-                {
-                    Id = 0,
-                    Address = IPAddress.Parse("127.0.0.1"),
-                    Port = 25,
-                    EnableSsl = false,
-                    EnforceTLS = true
-                },
-                new ServerBindingConfiguration
-                {
-                    Id = 1,
-                    Address = IPAddress.Parse("127.0.0.1"),
-                    Port = 465,
-                    EnableSsl = true,
-                    EnforceTLS = true
-                }
-            };
+            return _serverBindings.All();
         }
 
         public ServerBindingConfiguration GetServerBinding(int id)
         {
-            throw new NotImplementedException();
+            return _serverBindings.Get(id);
         }
 
         public ServerBindingConfiguration AddServerBinding(ServerBindingConfiguration binding)
         {
-            binding.Id = _bindingId++;
-
-            return binding;
+            return _serverBindings.Add(binding);
         }
 
         public ServerBindingConfiguration UpdateServerBinding(ServerBindingConfiguration binding)
         {
-            return binding;
+            return _serverBindings.Update(binding);
         }
 
         public bool DeleteServerBinding(int id)
         {
-            return true;
+            return _serverBindings.Delete(id);
         }
 
         public IList<ServerSubnetConfiguration> GetSubnets()

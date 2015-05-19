@@ -67,9 +67,9 @@
                 $scope.templates = UserTemplateService.templates;
 
                 var columnDefs = [
-                    { name: 'firstName', field: 'FirstName', editableCellTemplate: simpleTemplate('required') },
-                    { name: 'lastName', field: 'LastName', editableCellTemplate: simpleTemplate('required') },
-                    { name: 'mailbox', field: 'Mailbox', editableCellTemplate: simpleTemplate('required', 'email'), type: 'email' }
+                    { name: 'firstName', field: 'FirstName', editableCellTemplate: simpleEditTemplate('required') },
+                    { name: 'lastName', field: 'LastName', editableCellTemplate: simpleEditTemplate('required') },
+                    { name: 'mailbox', field: 'Mailbox', editableCellTemplate: simpleEditTemplate('required', 'email'), type: 'email' }
                 ];
 
                 $scope.import = function (name, content) {

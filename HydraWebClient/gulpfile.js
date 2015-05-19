@@ -1,4 +1,4 @@
-/// <vs BeforeBuild='default' />
+/// <vs BeforeBuild='default' Clean='clean' />
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');

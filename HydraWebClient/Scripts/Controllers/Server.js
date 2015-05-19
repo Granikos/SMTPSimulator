@@ -48,10 +48,10 @@
                     });
 
                 var columnDefs = [
-                    { displayName: 'IP', field: 'Address', editableCellTemplate: simpleTemplate('required') },
-                    { displayName: 'Port', field: 'Port', editableCellTemplate: simpleTemplate('required', 'number'), type: 'number' },
-                    { displayName: 'Enable SSL?', field: 'EnableSsl', type: 'bool', editableCellTemplate: simpleTemplate('', 'checkbox') },
-                    { displayName: 'Enforce TLS?', field: 'EnforceTLS', type: 'bool' }
+                    { displayName: 'IP', field: 'Address', editableCellTemplate: simpleEditTemplate('required') },
+                    { displayName: 'Port', field: 'Port', editableCellTemplate: simpleEditTemplate('required', 'number'), type: 'number' },
+                    { displayName: 'Enable SSL?', field: 'EnableSsl', type: 'bool', editableCellTemplate: simpleEditTemplate('', 'checkbox'), cellTemplate: checkboxTemplate() },
+                    { displayName: 'Enforce TLS?', field: 'EnforceTLS', type: 'bool', editableCellTemplate: simpleEditTemplate('', 'checkbox'), cellTemplate: checkboxTemplate() }
                 ];
 
                 $scope.saveRow = function (rowEntity) {
@@ -95,8 +95,8 @@
                     });
 
                 var columnDefs = [
-                    { displayName: 'Network IP', field: 'Address', editableCellTemplate: simpleTemplate('required') },
-                    { displayName: 'Size', field: 'Size', editableCellTemplate: simpleTemplate('required', 'number'), type: 'number' }
+                    { displayName: 'Network IP', field: 'Address', editableCellTemplate: simpleEditTemplate('required') },
+                    { displayName: 'Size', field: 'Size', editableCellTemplate: simpleEditTemplate('required', 'number'), type: 'number' }
                 ];
 
                 $scope.saveRow = function (rowEntity) {
