@@ -15,7 +15,7 @@ namespace HydraWebClient.HydraConfigurationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ServerBindingConfiguration", Namespace="http://schemas.datacontract.org/2004/07/HydraService")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServerBindingConfiguration", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
     [System.SerializableAttribute()]
     public partial class ServerBindingConfiguration : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -124,7 +124,7 @@ namespace HydraWebClient.HydraConfigurationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ServerSubnetConfiguration", Namespace="http://schemas.datacontract.org/2004/07/HydraService")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServerSubnetConfiguration", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
     [System.SerializableAttribute()]
     public partial class ServerSubnetConfiguration : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -201,7 +201,7 @@ namespace HydraWebClient.HydraConfigurationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="LocalUser", Namespace="http://schemas.datacontract.org/2004/07/HydraService")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LocalUser", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
     [System.SerializableAttribute()]
     public partial class LocalUser : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         

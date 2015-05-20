@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import namespace="http://schemas.datacontract.org/2004/07/HydraService" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/HydraService.Models" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/HydraCore" />
   <xs:element name="SetProperty">
     <xs:complexType>
@@ -23,7 +23,7 @@
   <xs:element name="GetServerBindingsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="GetServerBindingsResult" nillable="true" type="q1:ArrayOfServerBindingConfiguration" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="GetServerBindingsResult" nillable="true" type="q1:ArrayOfServerBindingConfiguration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -37,35 +37,35 @@
   <xs:element name="GetServerBindingResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="GetServerBindingResult" nillable="true" type="q2:ServerBindingConfiguration" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="GetServerBindingResult" nillable="true" type="q2:ServerBindingConfiguration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddServerBinding">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="binding" nillable="true" type="q3:ServerBindingConfiguration" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="binding" nillable="true" type="q3:ServerBindingConfiguration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddServerBindingResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="AddServerBindingResult" nillable="true" type="q4:ServerBindingConfiguration" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="AddServerBindingResult" nillable="true" type="q4:ServerBindingConfiguration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateServerBinding">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="binding" nillable="true" type="q5:ServerBindingConfiguration" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="binding" nillable="true" type="q5:ServerBindingConfiguration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateServerBindingResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="UpdateServerBindingResult" nillable="true" type="q6:ServerBindingConfiguration" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="UpdateServerBindingResult" nillable="true" type="q6:ServerBindingConfiguration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -91,7 +91,7 @@
   <xs:element name="GetSubnetsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="GetSubnetsResult" nillable="true" type="q7:ArrayOfServerSubnetConfiguration" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="GetSubnetsResult" nillable="true" type="q7:ArrayOfServerSubnetConfiguration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -105,35 +105,35 @@
   <xs:element name="GetSubnetResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="GetSubnetResult" nillable="true" type="q8:ServerSubnetConfiguration" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="GetSubnetResult" nillable="true" type="q8:ServerSubnetConfiguration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddSubnet">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="subnet" nillable="true" type="q9:ServerSubnetConfiguration" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="subnet" nillable="true" type="q9:ServerSubnetConfiguration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddSubnetResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="AddSubnetResult" nillable="true" type="q10:ServerSubnetConfiguration" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="AddSubnetResult" nillable="true" type="q10:ServerSubnetConfiguration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateSubnet">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="subnet" nillable="true" type="q11:ServerSubnetConfiguration" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="subnet" nillable="true" type="q11:ServerSubnetConfiguration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateSubnetResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="UpdateSubnetResult" nillable="true" type="q12:ServerSubnetConfiguration" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="UpdateSubnetResult" nillable="true" type="q12:ServerSubnetConfiguration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -159,7 +159,7 @@
   <xs:element name="GetLocalUsersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="GetLocalUsersResult" nillable="true" type="q13:ArrayOfLocalUser" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="GetLocalUsersResult" nillable="true" type="q13:ArrayOfLocalUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -173,35 +173,35 @@
   <xs:element name="GetLocalUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="GetLocalUserResult" nillable="true" type="q14:LocalUser" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="GetLocalUserResult" nillable="true" type="q14:LocalUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddLocalUser">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="user" nillable="true" type="q15:LocalUser" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="user" nillable="true" type="q15:LocalUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddLocalUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="AddLocalUserResult" nillable="true" type="q16:LocalUser" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="AddLocalUserResult" nillable="true" type="q16:LocalUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateLocalUser">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="user" nillable="true" type="q17:LocalUser" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="user" nillable="true" type="q17:LocalUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateLocalUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/HydraService" minOccurs="0" name="UpdateLocalUserResult" nillable="true" type="q18:LocalUser" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="UpdateLocalUserResult" nillable="true" type="q18:LocalUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

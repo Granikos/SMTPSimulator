@@ -96,11 +96,18 @@
   <ItemGroup>
     <Compile Include="ConfigurationService.cs" />
     <Compile Include="IConfigurationService.cs" />
-    <Compile Include="IDataProvider.cs" />
-    <Compile Include="IServerBindingsProvider.cs" />
-    <Compile Include="LocalUser.cs" />
-    <Compile Include="ServerBindingConfiguration.cs" />
-    <Compile Include="ServerSubnetConfiguration.cs" />
+    <Compile Include="Providers\IDataProvider.cs" />
+    <Compile Include="Models\IEntity.cs" />
+    <Compile Include="Providers\ILocalUserProvider.cs" />
+    <Compile Include="Providers\InMemoryProvider.cs" />
+    <Compile Include="Providers\IServerBindingsProvider.cs" />
+    <Compile Include="Models\LocalUser.cs" />
+    <Compile Include="Models\ServerBindingConfiguration.cs" />
+    <Compile Include="Providers\IServerSubnetProvider.cs" />
+    <Compile Include="Providers\LocalUserProvider.cs" />
+    <Compile Include="Providers\ServerBindingsProvider.cs" />
+    <Compile Include="Models\ServerSubnetConfiguration.cs" />
+    <Compile Include="Providers\ServerSubnetProvider.cs" />
     <Compile Include="SMTPServer.cs" />
     <Compile Include="SMTPService.cs">
       <SubType>Component</SubType>
@@ -127,6 +134,7 @@
       <Name>HydraCore</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using HydraCore;
+using HydraService.Models;
 
 namespace HydraService
 {
@@ -17,7 +18,7 @@ namespace HydraService
             UriTemplate = "ServerBindings",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        IList<ServerBindingConfiguration> GetServerBindings();
+        IEnumerable<ServerBindingConfiguration> GetServerBindings();
 
         [OperationContract]
         [WebGet(
@@ -51,7 +52,7 @@ namespace HydraService
         bool DeleteServerBinding(int id);
 
         [OperationContract]
-        IList<ServerSubnetConfiguration> GetSubnets();
+        IEnumerable<ServerSubnetConfiguration> GetSubnets();
 
         [OperationContract]
         ServerSubnetConfiguration GetSubnet(int id);
@@ -66,7 +67,7 @@ namespace HydraService
         bool DeleteSubnet(int id);
 
         [OperationContract]
-        IList<LocalUser> GetLocalUsers();
+        IEnumerable<LocalUser> GetLocalUsers();
 
         [OperationContract]
         LocalUser GetLocalUser(int id);

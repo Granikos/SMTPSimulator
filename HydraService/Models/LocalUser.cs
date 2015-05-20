@@ -1,9 +1,9 @@
 using System.Runtime.Serialization;
 
-namespace HydraService
+namespace HydraService.Models
 {
     [DataContract]
-    public class LocalUser
+    public class LocalUser : IEntity
     {
         [DataMember]
         public int Id { get; set; }

@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Runtime.Serialization;
 
-namespace HydraService
+namespace HydraService.Models
 {
     [DataContract]
-    public class ServerBindingConfiguration
+    public class ServerBindingConfiguration : IEntity
     {
         [DataMember]
         public int Id { get; set; }

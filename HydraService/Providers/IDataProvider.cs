@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 
-namespace HydraService
+namespace HydraService.Providers
 {
     public interface IDataProvider<TEntity>
     {
-        IList<TEntity> All();
+        IEnumerable<TEntity> All();
 
         TEntity Get(int id);
 

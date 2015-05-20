@@ -5,6 +5,8 @@ using System.Diagnostics.Contracts;
 using System.Net;
 using System.ServiceModel;
 using HydraCore;
+using HydraService.Models;
+using HydraService.Providers;
 
 namespace HydraService
 {
@@ -16,6 +18,12 @@ namespace HydraService
 
         [Import(typeof (IServerBindingsProvider))]
         private IServerBindingsProvider _serverBindings;
+
+        [Import(typeof(IServerSubnetProvider))]
+        private IServerSubnetProvider _serverSubnets;
+
+        [Import(typeof(ILocalUserProvider))]
+        private ILocalUserProvider _localUsers;
 
         public ConfigurationService(SMTPCore core)
         {
@@ -30,7 +38,7 @@ namespace HydraService
             throw new NotImplementedException();
         }
 
-        public IList<ServerBindingConfiguration> GetServerBindings()
+        public IEnumerable<ServerBindingConfiguration> GetServerBindings()
         {
             return _serverBindings.All();
         }
@@ -55,81 +63,54 @@ namespace HydraService
             return _serverBindings.Delete(id);
         }
 
-        public IList<ServerSubnetConfiguration> GetSubnets()
+        public IEnumerable<ServerSubnetConfiguration> GetSubnets()
         {
-            return new List<ServerSubnetConfiguration>
-            {
-                new ServerSubnetConfiguration
-                {
-                    Id = 0,
-                    Address = IPAddress.Parse("127.0.0.1"),
-                    Size = 24
-                }
-            };
+            return _serverSubnets.All();
         }
 
         public ServerSubnetConfiguration GetSubnet(int id)
         {
-            throw new NotImplementedException();
+            return _serverSubnets.Get(id);
         }
 
-        public ServerSubnetConfiguration AddSubnet(ServerSubnetConfiguration subnet)
+        public ServerSubnetConfiguration AddSubnet(ServerSubnetConfiguration binding)
         {
-            subnet.Id = _subnetId++;
-            return subnet;
+            return _serverSubnets.Add(binding);
         }
 
-        public ServerSubnetConfiguration UpdateSubnet(ServerSubnetConfiguration subnet)
+        public ServerSubnetConfiguration UpdateSubnet(ServerSubnetConfiguration binding)
         {
-            return subnet;
+            return _serverSubnets.Update(binding);
         }
 
         public bool DeleteSubnet(int id)
         {
-            return true;
+            return _serverSubnets.Delete(id);
         }
 
-        public IList<LocalUser> GetLocalUsers()
+        public IEnumerable<LocalUser> GetLocalUsers()
         {
-            return new List<LocalUser>
-            {
-                new LocalUser
-                {
-                    Id = 1,
-                    FirstName = "Bernd",
-                    LastName = "Müller",
-                    Mailbox = "bernd.mueller@test.de"
-                },
-                new LocalUser
-                {
-                    Id = 2,
-                    FirstName = "Eva",
-                    LastName = "Schmidt",
-                    Mailbox = "eva.schmidt@test.de"
-                }
-            };
+            return _localUsers.All();
         }
 
         public LocalUser GetLocalUser(int id)
         {
-            return null;
+            return _localUsers.Get(id);
         }
 
-        public LocalUser AddLocalUser(LocalUser user)
+        public LocalUser AddLocalUser(LocalUser binding)
         {
-            user.Id = ++_userId;
-
-            return user;
+            return _localUsers.Add(binding);
         }
 
-        public LocalUser UpdateLocalUser(LocalUser user)
+        public LocalUser UpdateLocalUser(LocalUser binding)
         {
-            return user;
+            return _localUsers.Update(binding);
         }
 
         public bool DeleteLocalUser(int id)
         {
-            return true;
+            return _localUsers.Delete(id);
         }
 
         public ServerConfig GetServerConfig()

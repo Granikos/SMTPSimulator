@@ -28,7 +28,7 @@
     <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="97c9dcc8-561a-4fd0-8adb-cc5ed63b554d" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
     <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="b7459ff1-0d1f-400b-a4de-1184a1d1f3bd" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
     <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="8284a6a0-7f31-4041-b55e-a01ab3b028a0" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
-    <MetadataFile FileName="HydraService.xsd" MetadataType="Schema" ID="b4100ad0-95ac-42e4-b3ee-091a857bc586" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
+    <MetadataFile FileName="HydraService.Models.xsd" MetadataType="Schema" ID="b44eb9de-3326-45f3-b47a-dc6b6970ad33" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
     <MetadataFile FileName="System.Net.xsd" MetadataType="Schema" ID="c6f77c17-5cad-4563-a400-0c66259d73a4" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
     <MetadataFile FileName="System.Net.Sockets.xsd" MetadataType="Schema" ID="44da2695-947d-4b9c-b20e-d4937c07b3e5" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
     <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="21077e2f-596a-4688-beca-8e532c10f450" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
