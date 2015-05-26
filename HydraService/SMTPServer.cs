@@ -34,7 +34,7 @@ namespace HydraService
 
             _core.OnConnect += (transaction, connect) =>
             {
-                if (!IsAllowedIP(connect.IP))
+                if (_allowedSubnets.Any() && !IsAllowedIP(connect.IP))
                 {
                     connect.Cancel = true;
                 }

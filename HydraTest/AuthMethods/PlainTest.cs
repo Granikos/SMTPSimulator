@@ -37,8 +37,9 @@ namespace HydraTest.AuthMethods
                 }
             };
 
+            var token = string.Format("\0{0}\0{1}", expectedUsername, expectedPassword);
             string challenge;
-            var result = method.ProcessResponse(Transaction, expectedUsername + " " + expectedPassword, out challenge);
+            var result = method.ProcessResponse(Transaction, token, out challenge);
 
             Assert.True(result);
             Assert.Null(challenge);

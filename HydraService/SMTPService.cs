@@ -22,7 +22,7 @@ namespace HydraService
         {
             InitializeComponent();
             var ip = IPAddress.Parse("127.0.0.1");
-            var port = 1337;
+            var port = 25;
 
             using (var catalog = new AssemblyCatalog(typeof (SMTPCore).Assembly)) // TODO: Use Dependency Injection
             {
@@ -38,11 +38,13 @@ namespace HydraService
             };
 
             _server = new SMTPServer(new IPEndPoint(ip, port), core);
-            _server.AddSubnet(new IPSubnet("127.0.0.1/24"));
+            // _server.AddSubnet(new IPSubnet("127.0.0.1/24"));
 
+            /*
             _server2 = new SMTPServer(new IPEndPoint(ip, 1338), core);
             _server2.UseSsl = true;
             _server2.AddSubnet(new IPSubnet("127.0.0.1/24"));
+             * */
         }
 
         internal void TestStartupAndStop(string[] args)
@@ -54,8 +56,8 @@ namespace HydraService
 
         protected override void OnStart(string[] args)
         {
-            _server.Start();
-            _server2.Start();
+            if (_server != null) _server.Start();
+            if (_server2 != null) _server2.Start();
 
             if (_host != null)
             {
@@ -79,8 +81,8 @@ namespace HydraService
 
         protected override void OnStop()
         {
-            _server.Stop();
-            _server2.Start();
+            if (_server != null) _server.Stop();
+            if (_server2 != null) _server2.Start();
 
             if (_host != null)
             {

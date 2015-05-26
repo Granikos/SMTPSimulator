@@ -1,5 +1,6 @@
 using HydraCore;
 using HydraCore.CommandHandlers;
+using HydraCore.Fakes;
 using Xunit;
 
 namespace HydraTest.CommandHandlers
@@ -17,7 +18,10 @@ namespace HydraTest.CommandHandlers
             string clientId = null;
             var reset = false;
 
-            Core.GreetGet = () => greet;
+            Core.ConfigGet = () => new ShimServerConfig
+            {
+                GreetGet = () => greet
+            };
 
             Transaction.InitializeString = s =>
             {

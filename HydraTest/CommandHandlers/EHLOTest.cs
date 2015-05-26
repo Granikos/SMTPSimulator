@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HydraCore;
 using HydraCore.CommandHandlers;
+using HydraCore.Fakes;
 using Xunit;
 
 namespace HydraTest.CommandHandlers
@@ -25,7 +26,10 @@ namespace HydraTest.CommandHandlers
             string clientId = null;
             var reset = false;
 
-            Core.GreetGet = () => greet;
+            Core.ConfigGet = () => new ShimServerConfig
+            {
+                GreetGet = () => greet
+            };
 
             var lines2 = lines.Select<string,Func<SMTPTransaction, string>>(l => t => l);
 
@@ -66,7 +70,10 @@ namespace HydraTest.CommandHandlers
 
             SMTPTransaction actualTransaction = null;
 
-            Core.GreetGet = () => greet;
+            Core.ConfigGet = () => new ShimServerConfig
+            {
+                GreetGet = () => greet
+            };
 
             AddCoreListProperty("EHLOLines", () => new List<Func<SMTPTransaction, string>>
             {

@@ -174,16 +174,18 @@ namespace HydraTest
             const string serverName = "Server Name";
             var expectedGreeting = String.Format("{0} {1}", serverName, banner);
 
-            var core = new SMTPCore(DefaultLoader())
-            {
-                Banner = banner,
-                ServerName = serverName
-            };
+            var core = new SMTPCore(DefaultLoader());
 
             var ip = IPAddress.Parse("127.0.0.1");
 
             using (ShimsContext.Create())
             {
+                core.Config = new ShimServerConfig
+                {
+                    BannerGet = () => banner,
+                    ServerNameGet = () => serverName,
+                };
+
                 SMTPCore actualCore = null;
 
                 ShimSMTPTransaction.ConstructorSMTPCore = (smtpTransaction, smtpCore) => { actualCore = smtpCore; };

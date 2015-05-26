@@ -15,16 +15,16 @@ namespace HydraCore.AuthMethods
                 return false;
             }
 
-            var parts = response.Split(' ');
+            var parts = response.Split('\0');
 
-            if (parts.Length != 2)
+            if (parts.Length != 3)
             {
                 challenge = null;
                 return false;
             }
 
-            var username = parts[0];
-            var password = parts[1];
+            var username = parts[1];
+            var password = parts[2];
 
             transaction.SetProperty("Username", username, true);
             transaction.SetProperty("Password", password, true);
