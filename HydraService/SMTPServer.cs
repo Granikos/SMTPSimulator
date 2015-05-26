@@ -45,8 +45,8 @@ namespace HydraService
                 Console.WriteLine("--------------------------------------");
                 Console.WriteLine("New message from " + sender);
                 Console.WriteLine("Recipients: " + String.Join(", ", recipients.Select(r => r.ToString())));
-                Console.WriteLine();
-                Console.WriteLine(body);
+                // Console.WriteLine();
+                // Console.WriteLine(body);
                 Console.WriteLine("--------------------------------------");
             };
         }
@@ -124,7 +124,9 @@ namespace HydraService
                 transaction.TLSEnabled = true;
             }
 
-            SMTPTransaction.CloseAction onCloseHandler = smtpTransaction => { Console.WriteLine("Client " + ip + " disconnected"); };
+            SMTPTransaction.CloseAction onCloseHandler = smtpTransaction => {
+                Console.WriteLine("Client " + ip + " disconnected");
+            };
 
             var writer = new StreamWriter(sslStream ?? clientStream, Encoding.ASCII, 1000, true) { NewLine = "\r\n" };
             var reader = new StreamReader(sslStream ?? clientStream, Encoding.ASCII, false, 1000, true);
@@ -138,69 +140,79 @@ namespace HydraService
             await writer.WriteLineAsync(response.ToString());
             writer.Flush();
 
-            while (!reader.EndOfStream && !transaction.Closed)
+            try
             {
-                var line = await reader.ReadLineAsync();
-                Console.WriteLine("[{0}] > {1}", ip, line);
-                var parts = line.Split(new[] {' '}, 2);
-
-                var verb = parts[0].ToUpperInvariant();
-                var command = parts.Length > 1 ? new SMTPCommand(verb, parts[1]) : new SMTPCommand(verb);
-
-                response = transaction.ExecuteCommand(command);
-                await writer.WriteLineAsync(response.ToString());
-                writer.Flush();
-
-                foreach (var l in response.ToString().Split(new[] {"\r\n"}, StringSplitOptions.None))
+                while (!reader.EndOfStream && !transaction.Closed)
                 {
-                    Console.WriteLine("[{0}] < {1}", ip, l);
-                }
+                    var line = await reader.ReadLineAsync();
+                    Console.WriteLine("[{0}] > {1}", ip, line);
+                    var parts = line.Split(new[] { ' ' }, 2);
 
-                while (transaction.InDataMode)
-                {
-                    var data = new StringBuilder();
+                    var verb = parts[0].ToUpperInvariant();
+                    var command = parts.Length > 1 ? new SMTPCommand(verb, parts[1]) : new SMTPCommand(verb);
 
-                    do
+                    response = transaction.ExecuteCommand(command);
+                    foreach (var l in response.ToString().Split(new[] { "\r\n" }, StringSplitOptions.None))
                     {
-                        line = await reader.ReadLineAsync();
-                        Console.WriteLine("[{0}] > {1}", ip, line);
-                    } while (transaction.HandleDataLine(line, data));
-
-                    response = transaction.HandleData(data.ToString());
+                        Console.WriteLine("[{0}] < {1}", ip, l);
+                    }
                     await writer.WriteLineAsync(response.ToString());
                     writer.Flush();
-                }
 
-                if (starttls)
-                {
-                    sslStream = new SslStream(clientStream);
 
-                    sslStream.AuthenticateAsServer(_cert, false, SslProtocols.Tls, false);
+                    while (transaction.InDataMode)
+                    {
+                        var data = new StringBuilder();
 
-                    Console.WriteLine("[{0}] Established TLS Layer", ip);
+                        do
+                        {
+                            line = await reader.ReadLineAsync();
+                            // Console.WriteLine("[{0}] > {1}", ip, line);
+                        } while (transaction.HandleDataLine(line, data));
 
-                    writer.Close();
-                    reader.Close();
+                        response = transaction.HandleData(data.ToString());
+                        await writer.WriteLineAsync(response.ToString());
+                        writer.Flush();
+                    }
 
-                    writer = new StreamWriter(sslStream, Encoding.ASCII, 1000, true) { NewLine = "\r\n" };
-                    reader = new StreamReader(sslStream, Encoding.ASCII, false, 1000, true);
+                    if (starttls)
+                    {
+                        sslStream = new SslStream(clientStream);
 
-                    transaction.OnClose -= onCloseHandler;
-                    transaction.Close();
-                    transaction = _core.StartTransaction(ip, out response);
-                    transaction.TLSEnabled = true;
+                        sslStream.AuthenticateAsServer(_cert, false, SslProtocols.Tls, false);
 
-                    starttls = false;
+                        Console.WriteLine("[{0}] Established TLS Layer", ip);
+
+                        writer.Close();
+                        reader.Close();
+
+                        writer = new StreamWriter(sslStream, Encoding.ASCII, 1000, true) { NewLine = "\r\n" };
+                        reader = new StreamReader(sslStream, Encoding.ASCII, false, 1000, true);
+
+                        transaction.OnClose -= onCloseHandler;
+                        transaction.Close();
+                        transaction = _core.StartTransaction(ip, out response);
+                        transaction.TLSEnabled = true;
+                        transaction.OnClose += onCloseHandler;
+
+                        starttls = false;
+                    }
                 }
             }
+            catch (IOException)
+            {
+            }
+            finally
+            {
+                transaction.Close();
+                writer.Close();
+                reader.Close();
 
-            writer.Close();
-            reader.Close();
+                clientStream.Close();
+                if (sslStream != null) sslStream.Close();
 
-            clientStream.Close();
-            if (sslStream != null) sslStream.Close();
-
-            tcpClient.Close();
+                tcpClient.Close();
+            }
         }
     }
 }

@@ -37,6 +37,9 @@ namespace HydraCore.CommandHandlers
             var type = args.Handler.GetType();
             var requiresAuth = type.GetCustomAttributes(typeof (RequiresAuthAttribute), false).Any();
 
+            // TODO: Callback validation
+            return;
+
             if (requiresAuth && !args.Transaction.GetProperty<bool>("Authenticated"))
             {
                 args.Response = new SMTPResponse(SMTPStatusCode.AuthRequired);

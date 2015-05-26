@@ -21,7 +21,7 @@ namespace HydraService
         public SMTPService()
         {
             InitializeComponent();
-            var ip = IPAddress.Parse("127.0.0.1");
+            var ip = IPAddress.Parse("0.0.0.0");
             var port = 25;
 
             using (var catalog = new AssemblyCatalog(typeof (SMTPCore).Assembly)) // TODO: Use Dependency Injection
