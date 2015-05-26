@@ -10,51 +10,79 @@ namespace HydraService.Providers
     {
         private int _id = 1;
 
-        private readonly Dictionary<int, TEntity> _bindings = new Dictionary<int, TEntity>();
+        private readonly Dictionary<int, TEntity> _entities = new Dictionary<int, TEntity>();
 
         public IEnumerable<TEntity> All()
         {
-            return _bindings.Values.ToList();
+            return _entities.Values.ToList();
         }
 
         public TEntity Get(int id)
         {
             TEntity binding;
 
-            _bindings.TryGetValue(id, out binding);
+            _entities.TryGetValue(id, out binding);
 
             return binding;
         }
 
-        public TEntity Add(TEntity binding)
+        public delegate void OnAddHandler(TEntity entity);
+
+        public event OnAddHandler OnAdd;
+
+        public delegate void OnRemoveHandler(TEntity entity);
+
+        public event OnRemoveHandler OnRemove;
+
+        public TEntity Add(TEntity entity)
         {
-            binding.Id = _id++;
+            entity.Id = _id++;
 
-            _bindings.Add(binding.Id, binding);
+            _entities.Add(entity.Id, entity);
 
-            return binding;
-        }
-
-        public TEntity Update(TEntity binding)
-        {
-            if (!_bindings.ContainsKey(binding.Id))
+            if (OnAdd != null)
             {
-                throw new ArgumentException(String.Format("The {1} with the id {0} does not exist.", binding.Id, typeof(TEntity).Name));
+                OnAdd(entity);
             }
 
-            _bindings[binding.Id] = binding;
+            return entity;
+        }
 
-            return binding;
+        public TEntity Update(TEntity entity)
+        {
+            if (!_entities.ContainsKey(entity.Id))
+            {
+                throw new ArgumentException(String.Format("The {1} with the id {0} does not exist.", entity.Id, typeof(TEntity).Name));
+            }
+
+            if (OnRemove != null)
+            {
+                OnRemove(_entities[entity.Id]);
+            }
+
+            _entities[entity.Id] = entity;
+
+            if (OnAdd != null)
+            {
+                OnAdd(entity);
+            }
+
+            return entity;
         }
 
         public bool Delete(int id)
         {
-            if (!_bindings.ContainsKey(id))
+            if (!_entities.ContainsKey(id))
             {
                 throw new ArgumentException(String.Format("The {1} with the id {0} does not exist.", id, typeof(TEntity).Name));
             }
 
-            _bindings.Remove(id);
+            if (OnRemove != null)
+            {
+                OnRemove(_entities[id]);
+            }
+
+            _entities.Remove(id);
 
             return true;
         }

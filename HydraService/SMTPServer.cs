@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Net.Security;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
@@ -20,7 +21,10 @@ namespace HydraService
         private readonly SMTPCore _core;
         private readonly TcpListener _tcpListener;
         private Thread _listenThread;
+        private Thread _processThread;
         private X509Certificate2 _cert;
+
+        MessageSender _sender = new MessageSender();
 
         public SMTPServer(IPEndPoint endPoint, SMTPCore core)
         {
@@ -42,6 +46,16 @@ namespace HydraService
 
             _core.OnNewMessage += (transaction, sender, recipients, body) =>
             {
+                var mm = new MailMessage(sender.ToString(), recipients.First().ToString());
+
+                foreach (var recipient in recipients.Skip(1))
+                {
+                    mm.To.Add(recipient.ToString());
+                }
+                mm.Body = body;
+
+                _sender.Enqueue(mm);
+
                 Console.WriteLine("--------------------------------------");
                 Console.WriteLine("New message from " + sender);
                 Console.WriteLine("Recipients: " + String.Join(", ", recipients.Select(r => r.ToString())));
@@ -75,6 +89,12 @@ namespace HydraService
                 _listenThread = new Thread(ListenForClients);
                 _listenThread.Start();
             }
+
+            if (_processThread == null)
+            {
+                _processThread = new Thread(ProcessMail);
+                _processThread.Start();
+            }
         }
 
         public void Stop()
@@ -84,6 +104,13 @@ namespace HydraService
             {
                 _listenThread.Abort();
                 _listenThread = null;
+            }
+
+            // TODO: Cleaner solution
+            if (_processThread != null)
+            {
+                _processThread.Abort();
+                _processThread = null;
             }
         }
 
@@ -97,6 +124,14 @@ namespace HydraService
 
                 var clientThread = new Thread(HandleClientConnection);
                 clientThread.Start(client);
+            }
+        }
+
+        private void ProcessMail()
+        {
+            while (true)
+            {
+                _sender.ProcessMail();
             }
         }
 
