@@ -1,10 +1,8 @@
-﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
-using System.Threading.Tasks;
 using HydraCore;
 using HydraService.Providers;
 using Path = System.IO.Path;
@@ -15,7 +13,7 @@ namespace HydraService
     {
         public string Diretory { get; set; }
 
-        private readonly Queue<MailMessage> _mails = new Queue<MailMessage>();
+        private readonly Queue<Mail> _mails = new Queue<Mail>();
 
         [Import]
         private ILocalUserProvider _localUsers;
@@ -23,7 +21,7 @@ namespace HydraService
         [Import]
         private IExternalUserProvider _externalUsers;
 
-        public void Enqueue(MailMessage mail)
+        public void Enqueue(Mail mail)
         {
             _mails.Enqueue(mail);
         }
@@ -37,7 +35,7 @@ namespace HydraService
                 var mail = _mails.Dequeue();
                 var badMailAdresses = new List<MailAddress>();
 
-                foreach (var recipientGroup in mail.To.GroupBy(r => r.Host))
+                foreach (var recipientGroup in mail.Recipients.GroupBy(r => r.Host))
                 {
                     List<MailAddress> externalMails = new List<MailAddress>();
 
@@ -47,9 +45,12 @@ namespace HydraService
 
                         if (local != null)
                         {
-                            var emlFile = File.Create(Path.Combine(Diretory, local.Id.ToString(), (_id++) + ".eml"));
-
-                            mail.WriteToStream(emlFile);
+                            using (var emlFile = File.Create(Path.Combine(Diretory, local.Id.ToString(), (_id++) + ".eml")))
+                            using (var writer = new StreamWriter(emlFile))
+                            {
+                                writer.Write(mail.ToString());
+                                writer.Flush();
+                            }
                         }
                         else
                         {
@@ -72,7 +73,7 @@ namespace HydraService
 
                         var success = client.Connect();
                         success &= client.SendMail(mail.From.ToString(), externalMails.Select(m => m.Address).ToArray(),
-                            mail.ToRaw());
+                            mail.ToString());
                         client.Close();
 
                         if (!success)
@@ -89,8 +90,9 @@ namespace HydraService
             }
         }
 
-        private MailMessage CreateErrorMail(MailMessage original, IEnumerable<MailAddress> errorAddresses)
+        private Mail CreateErrorMail(Mail original, IEnumerable<MailAddress> errorAddresses)
         {
+            // TODO
             return original;
         }
     }

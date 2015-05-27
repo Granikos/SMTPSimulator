@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using HydraCore;
 using HydraCore.CommandHandlers;
@@ -60,27 +61,23 @@ namespace HydraTest
             var expectedBody = "Test";
 
             SMTPTransaction actualTransaction = null;
-            Path actualSender = null;
-            Path[] actualRecipients = null;
-            string actualBody = null;
+            Mail actualMail = null;
             var triggered = false;
 
-            core.OnNewMessage += (transaction, sender, recipients, body) =>
+            core.OnNewMessage += (transaction, mail) =>
             {
                 triggered = true;
                 actualTransaction = transaction;
-                actualSender = sender;
-                actualRecipients = recipients;
-                actualBody = body;
+                actualMail = mail;
             };
 
             core.TriggerNewMessage(expectedTransaction, expectedSender, expectedRecipients, expectedBody);
 
             Assert.True(triggered);
             Assert.Equal(expectedTransaction, actualTransaction);
-            Assert.Equal(expectedSender, actualSender);
-            Assert.Equal(expectedRecipients, actualRecipients);
-            Assert.Equal(expectedBody, actualBody);
+            Assert.Equal(expectedSender.ToMailAdress(), actualMail.From);
+            Assert.Equal(expectedRecipients.Select(r => r.ToString()), actualMail.Recipients.Select(r => r.ToString()));
+            Assert.Equal(expectedBody, actualMail.Body);
         }
 
         public ICommandHandlerLoader DefaultLoader()

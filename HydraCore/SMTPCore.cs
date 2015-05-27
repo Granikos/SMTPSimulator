@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Net;
 using bbv.Common.EventBroker;
 using HydraCore.CommandHandlers;
@@ -12,7 +13,7 @@ namespace HydraCore
     {
         public delegate void ConnectValidator(SMTPTransaction transaction, ConnectEventArgs connect);
 
-        public delegate void NewMessageAction(SMTPTransaction transaction, Path sender, Path[] recipients, string body);
+        public delegate void NewMessageAction(SMTPTransaction transaction, Mail mail); 
 
         private readonly Dictionary<string, ICommandHandler> _handlers = new Dictionary<string, ICommandHandler>();
         private readonly IDictionary<string, object> _properties = new Dictionary<string, object>();
@@ -109,7 +110,8 @@ namespace HydraCore
 
         public void TriggerNewMessage(SMTPTransaction transaction, Path sender, Path[] recipients, string body)
         {
-            if (OnNewMessage != null) OnNewMessage(transaction, sender, recipients, body);
+            var mail = new Mail(sender.ToMailAdress(), recipients.Select(r => r.ToMailAdress()), body);
+            if (OnNewMessage != null) OnNewMessage(transaction, mail);
         }
 
         public ICommandHandler GetHandler(string command)

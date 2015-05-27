@@ -44,21 +44,13 @@ namespace HydraService
                 }
             };
 
-            _core.OnNewMessage += (transaction, sender, recipients, body) =>
+            _core.OnNewMessage += (transaction, mail) =>
             {
-                var mm = new MailMessage(sender.ToString(), recipients.First().ToString());
-
-                foreach (var recipient in recipients.Skip(1))
-                {
-                    mm.To.Add(recipient.ToString());
-                }
-                mm.Body = body;
-
-                _sender.Enqueue(mm);
+                _sender.Enqueue(mail);
 
                 Console.WriteLine("--------------------------------------");
-                Console.WriteLine("New message from " + sender);
-                Console.WriteLine("Recipients: " + String.Join(", ", recipients.Select(r => r.ToString())));
+                Console.WriteLine("New message from " + mail.From);
+                Console.WriteLine("Recipients: " + String.Join(", ", mail.Recipients.Select(r => r.ToString())));
                 // Console.WriteLine();
                 // Console.WriteLine(body);
                 Console.WriteLine("--------------------------------------");

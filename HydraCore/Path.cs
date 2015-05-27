@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Net.Mail;
 using System.Text.RegularExpressions;
 
 namespace HydraCore
@@ -57,6 +58,11 @@ namespace HydraCore
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             return obj is Path && Equals((Path) obj);
+        }
+
+        public MailAddress ToMailAdress()
+        {
+            return new MailAddress(LocalPart + "@" + Domain);
         }
 
         [ExcludeFromCodeCoverage]

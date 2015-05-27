@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using HydraService.Models;
@@ -10,7 +11,7 @@ namespace HydraService.Providers
     {
         private int _id = 1;
 
-        private readonly Dictionary<int, TEntity> _entities = new Dictionary<int, TEntity>();
+        private readonly ConcurrentDictionary<int, TEntity> _entities = new ConcurrentDictionary<int, TEntity>();
 
         public IEnumerable<TEntity> All()
         {
@@ -38,7 +39,10 @@ namespace HydraService.Providers
         {
             entity.Id = _id++;
 
-            _entities.Add(entity.Id, entity);
+            if (!_entities.TryAdd(entity.Id, entity))
+            {
+                return null;
+            }
 
             if (OnAdd != null)
             {
@@ -77,12 +81,14 @@ namespace HydraService.Providers
                 throw new ArgumentException(String.Format("The {1} with the id {0} does not exist.", id, typeof(TEntity).Name));
             }
 
+            TEntity entity;
+
+            if (!_entities.TryRemove(id, out entity)) return false;
+
             if (OnRemove != null)
             {
-                OnRemove(_entities[id]);
+                OnRemove(entity);
             }
-
-            _entities.Remove(id);
 
             return true;
         }

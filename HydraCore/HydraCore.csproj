@@ -158,6 +158,7 @@
     <Compile Include="AuthMethods\IAuthMethodLoader.cs" />
     <Compile Include="IModuleLoader.cs" />
     <Compile Include="IPSubnet.cs" />
+    <Compile Include="Mail.cs" />
     <Compile Include="Mailbox.cs" />
     <Compile Include="Path.cs" />
     <Compile Include="RegularExpressions.cs" />
