@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -26,7 +28,7 @@ namespace HydraService
 
         MessageSender _sender = new MessageSender();
 
-        public SMTPServer(IPEndPoint endPoint, SMTPCore core)
+        public SMTPServer(IPEndPoint endPoint, SMTPCore core, CompositionContainer container)
         {
             _tcpListener = new TcpListener(endPoint);
             _core = core;
@@ -55,6 +57,8 @@ namespace HydraService
                 // Console.WriteLine(body);
                 Console.WriteLine("--------------------------------------");
             };
+
+            container.SatisfyImportsOnce(_sender);
         }
 
         public bool UseSsl { get; set; }

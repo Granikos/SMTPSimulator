@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.ComponentModel.Composition.Primitives;
 using System.Net;
 using System.Reflection;
 using System.ServiceModel;
@@ -18,26 +19,32 @@ namespace HydraService
         private ServiceHost _host;
         private SMTPCore core;
 
+        private ComposablePartCatalog _catalog;
+
         public SMTPService()
         {
             InitializeComponent();
             var ip = IPAddress.Parse("0.0.0.0");
             var port = 25;
 
-            using (var catalog = new AssemblyCatalog(typeof (SMTPCore).Assembly)) // TODO: Use Dependency Injection
+            _catalog = new AggregateCatalog(new AssemblyCatalog(typeof (SMTPCore).Assembly),
+                new AssemblyCatalog(typeof (ConfigurationService).Assembly)); // TODO: Use Dependency Injection
+
+            using (var container = new CompositionContainer(_catalog))
             {
-                var loader = new CommandHandlerLoader(catalog);
+                var loader = new CommandHandlerLoader(_catalog);
                 core = new SMTPCore(loader);
+
+                core.Config = new ServerConfig
+                {
+                    Greet = "Test Greet",
+                    ServerName = "localhost",
+                    Banner = "This is the banner text!"
+                };
+
+                _server = new SMTPServer(new IPEndPoint(ip, port), core, container);
+                container.SatisfyImportsOnce(_server);
             }
-
-            core.Config = new ServerConfig
-            {
-                Greet = "Test Greet",
-                ServerName = "localhost",
-                Banner = "This is the banner text!"
-            };
-
-            _server = new SMTPServer(new IPEndPoint(ip, port), core);
             // _server.AddSubnet(new IPSubnet("127.0.0.1/24"));
 
             /*
@@ -64,8 +71,7 @@ namespace HydraService
                 _host.Close();
             }
 
-            using (var catalog = new AssemblyCatalog(typeof(ConfigurationService).Assembly)) // TODO: Use Dependency Injection
-            using (var container = new CompositionContainer(catalog))
+            using (var container = new CompositionContainer(_catalog))
             {
                 var service = new ConfigurationService(core);
                 container.ComposeParts(service);

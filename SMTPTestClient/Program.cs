@@ -82,7 +82,8 @@ namespace SMTPTestClient
 
             // var client = new SMTPClient("localhost", 1337)
             // var client = new SMTPClient("test.smtp.org")
-            var client = new SMTPClient("mailtrap.io", 2525)
+            // var client = new SMTPClient("mailtrap.io", 2525)
+            var client = new SMTPClient("localhost", 25)
             {
                 Credentials = new NetworkCredential("357045ceeeb05fa28", "07db3fc0f21e46")
             };

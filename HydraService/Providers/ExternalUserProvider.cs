@@ -33,7 +33,9 @@ namespace HydraService.Providers
 
         public ExternalUser GetByEmail(string email)
         {
-            return _usersByEmail[email];
+            ExternalUser user;
+            _usersByEmail.TryGetValue(email, out user);
+            return user;
         }
     }
 }

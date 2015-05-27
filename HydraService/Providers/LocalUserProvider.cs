@@ -37,7 +37,9 @@ namespace HydraService.Providers
 
         public LocalUser GetByEmail(string email)
         {
-            return _usersByEmail[email];
+            LocalUser user;
+            _usersByEmail.TryGetValue(email, out user);
+            return user;
         }
     }
 }
