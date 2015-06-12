@@ -1,22 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Net;
 using System.Net.Security;
 using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using HydraCore.Logging;
 
 namespace HydraCore
 {
     public class SMTPClient
     {
-        public SMTPClient(string host, int port = 25)
+        public static SMTPClient Create(CompositionContainer container, string host, int port = 25)
+        {
+            var client = new SMTPClient(host, port);
+
+            container.SatisfyImportsOnce(client);
+
+            return client;
+        }
+
+        protected SMTPClient(string host, int port = 25)
         {
             Contract.Requires<ArgumentNullException>(host != null);
 
@@ -32,6 +43,9 @@ namespace HydraCore
             set { _clientName = value; }
         }
 
+        [ImportMany]
+        private IEnumerable<ISMTPLogger> _loggers;
+
         public int Port { get; set; }
 
         public bool EnableSsl { get; set; }
@@ -46,17 +60,36 @@ namespace HydraCore
         private StreamReader _reader;
         private string _clientName;
         private string[] _authMethods;
+        private string _session;
+        private IPEndPoint _localEndpoint;
+        private IPEndPoint _remoteEndpoint;
+
+        private void Log(LogEventType type, string data = null)
+        {
+            if (_session == null)
+            {
+                _session = Guid.NewGuid().ToString("N").Substring(0, 10);
+                _localEndpoint  = (IPEndPoint)_client.Client.LocalEndPoint;
+                _remoteEndpoint = (IPEndPoint)_client.Client.RemoteEndPoint;
+            }
+            foreach (var logger in _loggers)
+            {
+                logger.Log(ClientName, _session, _localEndpoint, _remoteEndpoint, LogPartType.Client, type, data);
+            }
+        }
 
         public bool Connect()
         {
             _client = new TcpClient(Host, Port);
             _stream = _client.GetStream();
 
+            Log(LogEventType.Connect);
+
             if (EnableSsl)
             {
                 var sslStream = new SslStream(_stream, false, UserCertificateValidationCallback, UserCertificateSelectionCallback, EncryptionPolicy.RequireEncryption);
 
-                sslStream.AuthenticateAsClient(Host, Certificates, SslProtocols.Ssl2, true);
+                sslStream.AuthenticateAsClient(Host, Certificates, SslProtocols.Default, true);
 
                 _stream = sslStream;
             }
@@ -197,7 +230,7 @@ namespace HydraCore
             _writer.WriteLine(command, args);
             _writer.Flush();
 
-            Debug.WriteLine("> " + command, args);
+            Log(LogEventType.Outgoing, string.Format(command, args));
         }
 
         private void RefreshWriter()
@@ -214,8 +247,7 @@ namespace HydraCore
 
         private bool StartTLS()
         {
-            _writer.WriteLine("STARTTLS");
-            _writer.Flush();
+            Write("STARTTLS");
 
             var reponse = ReadResponse();
 
@@ -226,7 +258,7 @@ namespace HydraCore
 
             var sslStream = new SslStream(_stream, false, UserCertificateValidationCallback, UserCertificateSelectionCallback, EncryptionPolicy.RequireEncryption);
 
-            sslStream.AuthenticateAsClient(Host, Certificates, SslProtocols.Tls, true);
+            sslStream.AuthenticateAsClient(Host, Certificates, SslProtocols.Default, true);
 
             _stream = sslStream;
 
@@ -311,14 +343,22 @@ namespace HydraCore
 
         private SMTPResponse ReadResponse()
         {
-            var line = _reader.ReadLine();
+            string line;
+            try
+            {
+                line = _reader.ReadLine();
+            }
+            catch (IOException)
+            {
+                return null;
+            }
 
             SMTPStatusCode? code = null;
             var args = new List<string>();
 
             while (line != null)
             {
-                Debug.WriteLine("< " + line);
+                Log(LogEventType.Incoming, line);
 
                 if (line.Length < 4) throw new Exception("Unexpected reply by server");
                 var newCode = (SMTPStatusCode)int.Parse(line.Substring(0, 3));
@@ -353,14 +393,16 @@ namespace HydraCore
         {
             if (_stream != null && _stream.CanWrite && _writer != null)
             {
-                _writer.WriteLine("QUIT");
-                _writer.Flush();
+                Write("QUIT");
 
-                var reponse = ReadResponse();
-
-                if (reponse.Code != SMTPStatusCode.Closing)
+                if (_client.Connected)
                 {
-                    throw new Exception("Server did not respond correctly to QUIT command.");
+                    var reponse = ReadResponse();
+
+                    if (reponse != null && reponse.Code != SMTPStatusCode.Closing)
+                    {
+                        throw new Exception("Server did not respond correctly to QUIT command.");
+                    }
                 }
             }
 
@@ -382,11 +424,13 @@ namespace HydraCore
                 _stream = null;
             }
 
-            if (_client != null && _client.Connected)
+            if (_client != null)
             {
                 _client.Close();
                 _client = null;
             }
+
+            Log(LogEventType.Disconnect);
         }
 
         private X509Certificate UserCertificateSelectionCallback(object sender, string targetHost, X509CertificateCollection localCertificates, X509Certificate remoteCertificate, string[] acceptableIssuers)

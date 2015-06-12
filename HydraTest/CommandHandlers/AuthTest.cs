@@ -7,6 +7,7 @@ using HydraCore.AuthMethods;
 using HydraCore.AuthMethods.Fakes;
 using HydraCore.CommandHandlers;
 using HydraCore.CommandHandlers.Fakes;
+using HydraCore.Fakes;
 using Microsoft.QualityTools.Testing.Fakes;
 using Xunit;
 
@@ -46,24 +47,33 @@ namespace HydraTest.CommandHandlers
         }
 
         [Theory]
-        [InlineData(true, true)]
-        [InlineData(true, false)]
-        [InlineData(false, true)]
-        [InlineData(false, false)]
-        public void TestHandlerRequiresAuth(bool requiresAuth, bool autheticated)
+        [InlineData(true, true, true)]
+        [InlineData(true, true, false)]
+        [InlineData(false, true, true)]
+        [InlineData(false, true, false)]
+        [InlineData(true, false, true)]
+        [InlineData(true, false, false)]
+        [InlineData(false, false, true)]
+        [InlineData(false, false, false)]
+        public void TestHandlerRequiresAuth(bool actionRequiresAuth, bool transactionRequiresAuth, bool authenticated)
         {
             using (ShimsContext.Create())
             {
-                AddTransactionProperty("Authenticated", autheticated);
+                Transaction.SettingsGet = () => new StubISettings
+                {
+                    RequireAuthGet = () => transactionRequiresAuth
+                };
+
+                AddTransactionProperty("Authenticated", authenticated);
 
                 var handler = new AUTHHandler(GetDefaulLoader());
-                var otherHandler = requiresAuth
+                var otherHandler = actionRequiresAuth
                     ? (ICommandHandler) new HandlerWithRequiresAuth()
                     : new StubICommandHandler();
                 var args = new CommandExecuteEventArgs(Transaction, otherHandler, "");
                 handler.OnCommandExecute(otherHandler, args);
 
-                if (requiresAuth && !autheticated)
+                if (actionRequiresAuth && transactionRequiresAuth && !authenticated)
                 {
                     Assert.NotNull(args.Response);
                     Assert.Equal(SMTPStatusCode.AuthRequired, args.Response.Code);

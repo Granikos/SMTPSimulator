@@ -3,11 +3,11 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition.Primitives;
 using System.Net;
-using System.Reflection;
 using System.ServiceModel;
 using System.ServiceProcess;
 using HydraCore;
 using HydraCore.CommandHandlers;
+using HydraService.Models;
 
 namespace HydraService
 {
@@ -17,9 +17,10 @@ namespace HydraService
         private readonly SMTPServer _server2;
 
         private ServiceHost _host;
-        private SMTPCore core;
+        private readonly SMTPCore _core;
 
-        private ComposablePartCatalog _catalog;
+        private readonly ComposablePartCatalog _catalog;
+        private readonly CompositionContainer _container;
 
         public SMTPService()
         {
@@ -27,24 +28,30 @@ namespace HydraService
             var ip = IPAddress.Parse("0.0.0.0");
             var port = 25;
 
-            _catalog = new AggregateCatalog(new AssemblyCatalog(typeof (SMTPCore).Assembly),
-                new AssemblyCatalog(typeof (ConfigurationService).Assembly)); // TODO: Use Dependency Injection
+            _catalog = new AggregateCatalog(new AssemblyCatalog(typeof(SMTPCore).Assembly),
+                new AssemblyCatalog(typeof(ConfigurationService).Assembly)); // TODO: Use Dependency Injection
 
-            using (var container = new CompositionContainer(_catalog))
+            _container = new CompositionContainer(_catalog);
+
+            var loader = new CommandHandlerLoader(_catalog);
+            _core = new SMTPCore(loader);
+
+            var recieve = new RecieveConnector
             {
-                var loader = new CommandHandlerLoader(_catalog);
-                core = new SMTPCore(loader);
-
-                core.Config = new ServerConfig
+                Banner = "This is the banner text!",
+                Address = ip,
+                Port = port,
+                TLSSettings = new TLSSettings
                 {
-                    Greet = "Test Greet",
-                    ServerName = "localhost",
-                    Banner = "This is the banner text!"
-                };
+                    CertificateName = "cert.pfx",
+                    CertificatePassword = "tester",
+                    IsFilesystemCertificate = true
+                }
+            };
 
-                _server = new SMTPServer(new IPEndPoint(ip, port), core, container);
-                container.SatisfyImportsOnce(_server);
-            }
+            _server = new SMTPServer(recieve, _core, _container);
+            _container.SatisfyImportsOnce(_server);
+
             // _server.AddSubnet(new IPSubnet("127.0.0.1/24"));
 
             /*
@@ -73,7 +80,7 @@ namespace HydraService
 
             using (var container = new CompositionContainer(_catalog))
             {
-                var service = new ConfigurationService(core);
+                var service = new ConfigurationService(_core);
                 container.ComposeParts(service);
 
                 // http://localhost:1339/service.svc

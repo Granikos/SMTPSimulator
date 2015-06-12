@@ -12,7 +12,7 @@ namespace HydraCore
         {
             Contract.Requires<ArgumentNullException>(command != null);
 
-            Command = command;
+            Command = command.ToUpperInvariant();
             Parameters = parameters;
         }
     }

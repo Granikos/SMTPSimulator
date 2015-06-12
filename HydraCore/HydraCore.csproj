@@ -117,6 +117,9 @@
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ARSoft.Tools.Net">
+      <HintPath>..\packages\ARSoft.Tools.Net.2.1.1\lib\net45\ARSoft.Tools.Net.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
@@ -157,7 +160,13 @@
     <Compile Include="CommandHandlers\ICommandHandlerLoader.cs" />
     <Compile Include="AuthMethods\IAuthMethodLoader.cs" />
     <Compile Include="IModuleLoader.cs" />
+    <Compile Include="IPRange.cs" />
     <Compile Include="IPSubnet.cs" />
+    <Compile Include="ISettings.cs" />
+    <Compile Include="Logging\ConsoleLogger.cs" />
+    <Compile Include="Logging\ISMTPLogger.cs" />
+    <Compile Include="Logging\LogEventType.cs" />
+    <Compile Include="Logging\LogPartType.cs" />
     <Compile Include="Mail.cs" />
     <Compile Include="Mailbox.cs" />
     <Compile Include="Path.cs" />

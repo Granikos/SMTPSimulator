@@ -18,14 +18,14 @@ namespace HydraService
             UriTemplate = "ServerBindings",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        IEnumerable<ServerBindingConfiguration> GetServerBindings();
+        IEnumerable<RecieveConnector> GetServerBindings();
 
         [OperationContract]
         [WebGet(
             UriTemplate = "ServerBindings/{id}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        ServerBindingConfiguration GetServerBinding(int id);
+        RecieveConnector GetServerBinding(int id);
 
         [OperationContract]
         [WebInvoke(
@@ -33,7 +33,7 @@ namespace HydraService
             Method = "PUT",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        ServerBindingConfiguration AddServerBinding(ServerBindingConfiguration binding);
+        RecieveConnector AddServerBinding(RecieveConnector binding);
 
         [OperationContract]
         [WebInvoke(
@@ -41,7 +41,7 @@ namespace HydraService
             Method = "POST",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        ServerBindingConfiguration UpdateServerBinding(ServerBindingConfiguration binding);
+        RecieveConnector UpdateServerBinding(RecieveConnector binding);
 
         [OperationContract]
         [WebInvoke(
@@ -80,11 +80,5 @@ namespace HydraService
 
         [OperationContract]
         bool DeleteLocalUser(int id);
-
-        [OperationContract]
-        ServerConfig GetServerConfig();
-
-        [OperationContract]
-        bool SetServerConfig(ServerConfig config);
     }
 }

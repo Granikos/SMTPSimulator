@@ -54,10 +54,11 @@ namespace HydraTest
         public void TestTriggerNewMessage()
         {
             var core = new SMTPCore(DefaultLoader());
+            var settings = new StubISettings();
 
-            var expectedTransaction = new StubSMTPTransaction(core);
-            var expectedSender = Path.Empty;
-            var expectedRecipients = new[] {Path.Postmaster};
+            var expectedTransaction = new StubSMTPTransaction(core, settings);
+            var expectedSender = new Path("tester", "test.de");
+            var expectedRecipients = new[] { new Path("fubar", "fu.com") };
             var expectedBody = "Test";
 
             SMTPTransaction actualTransaction = null;
@@ -73,10 +74,12 @@ namespace HydraTest
 
             core.TriggerNewMessage(expectedTransaction, expectedSender, expectedRecipients, expectedBody);
 
+            // TODO: Remove dependencies of test
+
             Assert.True(triggered);
             Assert.Equal(expectedTransaction, actualTransaction);
             Assert.Equal(expectedSender.ToMailAdress(), actualMail.From);
-            Assert.Equal(expectedRecipients.Select(r => r.ToString()), actualMail.Recipients.Select(r => r.ToString()));
+            Assert.Equal(expectedRecipients.Select(r => r.ToMailAdress().ToString()).ToArray(), actualMail.Recipients.Select(r => r.ToString()).ToArray());
             Assert.Equal(expectedBody, actualMail.Body);
         }
 
@@ -168,8 +171,7 @@ namespace HydraTest
         public void TestStartTransaction()
         {
             const string banner = "Test Banner";
-            const string serverName = "Server Name";
-            var expectedGreeting = String.Format("{0} {1}", serverName, banner);
+            ISettings actualSettings = null;
 
             var core = new SMTPCore(DefaultLoader());
 
@@ -177,22 +179,26 @@ namespace HydraTest
 
             using (ShimsContext.Create())
             {
-                core.Config = new ShimServerConfig
+                var expectedSettings = new StubISettings
                 {
-                    BannerGet = () => banner,
-                    ServerNameGet = () => serverName,
+                    BannerGet = () => banner
                 };
 
                 SMTPCore actualCore = null;
 
-                ShimSMTPTransaction.ConstructorSMTPCore = (smtpTransaction, smtpCore) => { actualCore = smtpCore; };
+                ShimSMTPTransaction.ConstructorSMTPCoreISettings = (transaction, smtpCore, settings) =>
+                {
+                    actualSettings = settings;
+                    actualCore = smtpCore;
+                };
 
                 SMTPResponse reponse;
-                core.StartTransaction(ip, out reponse);
+                core.StartTransaction(ip, expectedSettings, out reponse);
 
                 Assert.Equal(SMTPStatusCode.Ready, reponse.Code);
-                Assert.Equal(expectedGreeting, reponse.Args[0]);
+                Assert.Equal(banner, reponse.Args[0]);
                 Assert.Same(core, actualCore);
+                Assert.Same(expectedSettings, actualSettings);
             }
         }
 
@@ -211,8 +217,14 @@ namespace HydraTest
                 actualIP = args.IP;
             };
 
+            SMTPTransaction expectedTransaction;
             SMTPResponse reponse;
-            var expectedTransaction = core.StartTransaction(ip, out reponse);
+            using (ShimsContext.Create())
+            {
+                var settings = new StubISettings();
+
+                expectedTransaction = core.StartTransaction(ip, settings, out reponse);
+            }
 
             Assert.Equal(SMTPStatusCode.Ready, reponse.Code);
             Assert.Same(expectedTransaction, actualTransaction);
@@ -234,7 +246,12 @@ namespace HydraTest
                 core.OnConnect += (transaction, args) => { args.Cancel = true; };
 
                 SMTPResponse reponse;
-                core.StartTransaction(ip, out reponse);
+                using (ShimsContext.Create())
+                {
+                    var settings = new StubISettings();
+
+                    core.StartTransaction(ip, settings, out reponse);
+                }
 
                 Assert.Equal(SMTPStatusCode.TransactionFailed, reponse.Code);
                 Assert.True(closed);

@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
+using System.Threading.Tasks.Dataflow;
+using ARSoft.Tools.Net.Dns;
 using HydraCore;
 using HydraService.Providers;
 using Path = System.IO.Path;
@@ -13,9 +16,18 @@ namespace HydraService
 {
     class MessageSender
     {
+        private readonly CompositionContainer _container;
+
+        public MessageSender(CompositionContainer container)
+        {
+            _container = container;
+
+            container.SatisfyImportsOnce(this);
+        }
+
         public string Diretory { get; set; }
 
-        private readonly Queue<Mail> _mails = new Queue<Mail>();
+        private readonly BufferBlock<Mail> _mails = new BufferBlock<Mail>();
 
         [Import]
         private ILocalUserProvider _localUsers;
@@ -25,23 +37,14 @@ namespace HydraService
 
         public void Enqueue(Mail mail)
         {
-            lock (_mails)
-            {
-                _mails.Enqueue(mail);
-            }
+            _mails.Post(mail);
         }
 
         private int _id = 1;
 
-        public void ProcessMail()
+        public async void ProcessMail()
         {
-            Mail mail;
-
-            lock (_mails)
-            {
-                if (_mails.Count == 0) return;
-                mail = _mails.Dequeue();
-            }
+            var mail = await _mails.ReceiveAsync();
 
             var badMailAdresses = new List<MailAddress>();
 
@@ -79,7 +82,11 @@ namespace HydraService
 
                 if (externalMails.Any())
                 {
-                    var client = new SMTPClient(recipientGroup.Key);
+                    var response = await DnsClient.Default.ResolveAsync(recipientGroup.Key, RecordType.Mx);
+                    var records = response.AnswerRecords.OfType<MxRecord>();
+                    var domain = records.OrderBy(record => record.Preference).First().ExchangeDomainName;
+
+                    var client = SMTPClient.Create(_container, domain);
 
                     var success = client.Connect();
                     success &= client.SendMail(mail.From.ToString(), externalMails.Select(m => m.Address).ToArray(),

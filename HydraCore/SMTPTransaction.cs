@@ -8,15 +8,26 @@ namespace HydraCore
 {
     public class SMTPTransaction
     {
+        private readonly ISettings _settings;
+
+        public ISettings Settings
+        {
+            get { return _settings; }
+        }
+
         public delegate void CloseAction(SMTPTransaction transaction);
 
         private readonly IDictionary<string, object> _permanentProperties = new Dictionary<string, object>();
         private readonly IDictionary<string, object> _properties = new Dictionary<string, object>();
         private Func<string, SMTPResponse> _dataHandler;
         private Func<string, StringBuilder, bool> _dataLineHandler;
-
-        public SMTPTransaction(SMTPCore server)
+         
+        public SMTPTransaction(SMTPCore server, ISettings settings)
         {
+            Contract.Requires<ArgumentNullException>(server != null);
+            Contract.Requires<ArgumentNullException>(settings != null);
+
+            _settings = settings;
             Server = server;
         }
 

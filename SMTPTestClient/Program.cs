@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
@@ -80,13 +81,14 @@ namespace SMTPTestClient
                 return true;
             };
 
+            var container = new CompositionContainer(new AssemblyCatalog(typeof (SMTPCore).Assembly));
+
             // var client = new SMTPClient("localhost", 1337)
             // var client = new SMTPClient("test.smtp.org")
             // var client = new SMTPClient("mailtrap.io", 2525)
-            var client = new SMTPClient("localhost", 25)
-            {
-                Credentials = new NetworkCredential("357045ceeeb05fa28", "07db3fc0f21e46")
-            };
+            var client = SMTPClient.Create(container, "localhost", 25);
+
+            client.Credentials = new NetworkCredential("357045ceeeb05fa28", "07db3fc0f21e46");
 
             var mailMessage = new MailMessage("manuel.krebber@granikos.eu", "manuel.krebber@outlook.com", "Test", "Fubar.");
 

@@ -8,14 +8,6 @@ namespace HydraCore
     {
         [Required]
         [DataMember]
-        public string Banner { get; set; }
-
-        [Required]
-        [DataMember]
-        public string Greet { get; set; }
-
-        [Required]
-        [DataMember]
-        public string ServerName { get; set; }
+        public string CertificatePath { get; set; }
     }
 }

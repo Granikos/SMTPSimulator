@@ -18,17 +18,16 @@ namespace HydraTest.CommandHandlers
             string clientId = null;
             var reset = false;
 
-            Core.ConfigGet = () => new ShimServerConfig
-            {
-                GreetGet = () => greet
-            };
-
             Transaction.InitializeString = s =>
             {
                 init = true;
                 clientId = s;
             };
             Transaction.Reset = () => { reset = true; };
+            Transaction.SettingsGet = () => new StubISettings
+            {
+                GreetGet = () => greet
+            };
 
             handler.Initialize(Core);
 

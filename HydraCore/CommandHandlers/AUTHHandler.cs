@@ -35,12 +35,10 @@ namespace HydraCore.CommandHandlers
         public void OnCommandExecute(object sender, CommandExecuteEventArgs args)
         {
             var type = args.Handler.GetType();
-            var requiresAuth = type.GetCustomAttributes(typeof (RequiresAuthAttribute), false).Any();
+            var actionRequiresAuth = type.GetCustomAttributes(typeof (RequiresAuthAttribute), false).Any();
+            var transactionRequiresAuth = args.Transaction.Settings.RequireAuth;
 
-            // TODO: Callback validation
-            return;
-
-            if (requiresAuth && !args.Transaction.GetProperty<bool>("Authenticated"))
+            if (actionRequiresAuth && transactionRequiresAuth  && !args.Transaction.GetProperty<bool>("Authenticated"))
             {
                 args.Response = new SMTPResponse(SMTPStatusCode.AuthRequired);
             }

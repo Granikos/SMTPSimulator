@@ -30,8 +30,10 @@ namespace HydraCore.CommandHandlers
         {
             var type = args.Handler.GetType();
             var unsecuredAllowed = type.GetCustomAttributes(typeof(UnsecureAllowedAttribute), false).Any();
+            var requireEncryption = args.Transaction.Settings.RequireTLS;
+            var isSecured = args.Transaction.TLSEnabled;
 
-            if (!unsecuredAllowed && !args.Transaction.TLSEnabled)
+            if (!unsecuredAllowed && requireEncryption && !isSecured)
             {
                 args.Response = new SMTPResponse(SMTPStatusCode.AuthRequired, "Must issue a STARTTLS command first");
             }

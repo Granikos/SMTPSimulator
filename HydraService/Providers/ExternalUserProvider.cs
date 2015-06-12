@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using HydraService.Models;
@@ -9,15 +10,6 @@ namespace HydraService.Providers
     {
         public ExternalUserProvider()
         {
-            Add(new ExternalUser
-            {
-                Mailbox = "bernd.mueller@fubar.de"
-            });
-            Add(new ExternalUser
-            {
-                Mailbox = "max.muetze@fubar.de"
-            });
-
             OnAdd += entity =>
             {
                 _usersByEmail.Add(entity.Mailbox, entity);
@@ -27,9 +19,22 @@ namespace HydraService.Providers
             {
                 _usersByEmail.Remove(entity.Mailbox);
             };
+
+            Add(new ExternalUser
+            {
+                Mailbox = "bernd.mueller@fubar.de"
+            });
+            Add(new ExternalUser
+            {
+                Mailbox = "max.muetze@fubar.de"
+            });
+            Add(new ExternalUser
+            {
+                Mailbox = "manuel.krebber@outlook.com"
+            });
         }
 
-        private readonly Dictionary<string, ExternalUser> _usersByEmail = new Dictionary<string, ExternalUser>();
+        private readonly Dictionary<string, ExternalUser> _usersByEmail = new Dictionary<string, ExternalUser>(StringComparer.InvariantCultureIgnoreCase);
 
         public ExternalUser GetByEmail(string email)
         {

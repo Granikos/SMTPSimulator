@@ -16,8 +16,8 @@ namespace HydraService
         private static int _userId = 2;
         private static int _subnetId = 1;
 
-        [Import(typeof (IServerBindingsProvider))]
-        private IServerBindingsProvider _serverBindings;
+        [Import(typeof (IRecieveConnectorProvider))]
+        private IRecieveConnectorProvider _recieveConnectors;
 
         [Import(typeof(IServerSubnetProvider))]
         private IServerSubnetProvider _serverSubnets;
@@ -38,29 +38,29 @@ namespace HydraService
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ServerBindingConfiguration> GetServerBindings()
+        public IEnumerable<RecieveConnector> GetServerBindings()
         {
-            return _serverBindings.All();
+            return _recieveConnectors.All();
         }
 
-        public ServerBindingConfiguration GetServerBinding(int id)
+        public RecieveConnector GetServerBinding(int id)
         {
-            return _serverBindings.Get(id);
+            return _recieveConnectors.Get(id);
         }
 
-        public ServerBindingConfiguration AddServerBinding(ServerBindingConfiguration binding)
+        public RecieveConnector AddServerBinding(RecieveConnector binding)
         {
-            return _serverBindings.Add(binding);
+            return _recieveConnectors.Add(binding);
         }
 
-        public ServerBindingConfiguration UpdateServerBinding(ServerBindingConfiguration binding)
+        public RecieveConnector UpdateServerBinding(RecieveConnector binding)
         {
-            return _serverBindings.Update(binding);
+            return _recieveConnectors.Update(binding);
         }
 
         public bool DeleteServerBinding(int id)
         {
-            return _serverBindings.Delete(id);
+            return _recieveConnectors.Delete(id);
         }
 
         public IEnumerable<ServerSubnetConfiguration> GetSubnets()
@@ -111,18 +111,6 @@ namespace HydraService
         public bool DeleteLocalUser(int id)
         {
             return _localUsers.Delete(id);
-        }
-
-        public ServerConfig GetServerConfig()
-        {
-            return Core.Config;
-        }
-
-        public bool SetServerConfig(ServerConfig config)
-        {
-            Core.Config = config;
-
-            return true;
         }
     }
 }

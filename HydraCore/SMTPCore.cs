@@ -17,7 +17,8 @@ namespace HydraCore
 
         private readonly Dictionary<string, ICommandHandler> _handlers = new Dictionary<string, ICommandHandler>();
         private readonly IDictionary<string, object> _properties = new Dictionary<string, object>();
-        private ServerConfig _config;
+
+        public ServerConfig Config { get; set; }
 
         public SMTPCore(ICommandHandlerLoader loader)
         {
@@ -28,15 +29,11 @@ namespace HydraCore
                 handler.Item2.Initialize(this);
                 EventBroker.Register(handler.Item2);
             }
+
+            Config = new ServerConfig();
         }
 
         public EventBroker EventBroker { get; private set; }
-
-        public ServerConfig Config
-        {
-            get { return _config ?? (_config = new ServerConfig()); }
-            set { _config = value; }
-        }
 
         public T GetProperty<T>(string name)
         {
@@ -85,9 +82,9 @@ namespace HydraCore
 
         public event ConnectValidator OnConnect;
 
-        public SMTPTransaction StartTransaction(IPAddress address, out SMTPResponse response)
+        public SMTPTransaction StartTransaction(IPAddress address, ISettings settings, out SMTPResponse response)
         {
-            var transaction = new SMTPTransaction(this);
+            var transaction = new SMTPTransaction(this, settings);
             if (OnConnect != null)
             {
                 var args = new ConnectEventArgs(address);
@@ -101,7 +98,7 @@ namespace HydraCore
                 }
             }
 
-            response = new SMTPResponse(SMTPStatusCode.Ready, string.Format("{0} {1}", Config.ServerName, Config.Banner));
+            response = new SMTPResponse(SMTPStatusCode.Ready, settings.Banner);
 
             return transaction;
         }
@@ -110,7 +107,7 @@ namespace HydraCore
 
         public void TriggerNewMessage(SMTPTransaction transaction, Path sender, Path[] recipients, string body)
         {
-            var mail = new Mail(sender.ToMailAdress(), recipients.Select(r => r.ToMailAdress()), body);
+            var mail = new Mail(sender.ToMailAdress(), recipients.Select(r => r.ToMailAdress()).Where(r => r != null), body);
             if (OnNewMessage != null) OnNewMessage(transaction, mail);
         }
 

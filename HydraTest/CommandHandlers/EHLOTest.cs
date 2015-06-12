@@ -26,11 +26,6 @@ namespace HydraTest.CommandHandlers
             string clientId = null;
             var reset = false;
 
-            Core.ConfigGet = () => new ShimServerConfig
-            {
-                GreetGet = () => greet
-            };
-
             var lines2 = lines.Select<string,Func<SMTPTransaction, string>>(l => t => l);
 
             AddCoreListProperty("EHLOLines", () => new List<Func<SMTPTransaction, string>>(lines2));
@@ -41,6 +36,10 @@ namespace HydraTest.CommandHandlers
                 clientId = s;
             };
             Transaction.Reset = () => { reset = true; };
+            Transaction.SettingsGet = () => new StubISettings
+            {
+                GreetGet = () => greet
+            };
 
             handler.Initialize(Core);
 
@@ -70,11 +69,6 @@ namespace HydraTest.CommandHandlers
 
             SMTPTransaction actualTransaction = null;
 
-            Core.ConfigGet = () => new ShimServerConfig
-            {
-                GreetGet = () => greet
-            };
-
             AddCoreListProperty("EHLOLines", () => new List<Func<SMTPTransaction, string>>
             {
                 t =>
@@ -86,6 +80,10 @@ namespace HydraTest.CommandHandlers
 
             Transaction.InitializeString = s => {};
             Transaction.Reset = () => { };
+            Transaction.SettingsGet = () => new StubISettings
+            {
+                GreetGet = () => greet
+            };
 
             handler.Initialize(Core);
 
