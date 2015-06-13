@@ -1,11 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/HydraCore" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/HydraCore" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="ServerConfig">
+  <xs:complexType name="ArrayOfIPRange">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Banner" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Greet" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ServerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="IPRange" nillable="true" type="tns:IPRange" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ServerConfig" nillable="true" type="tns:ServerConfig" />
+  <xs:element name="ArrayOfIPRange" nillable="true" type="tns:ArrayOfIPRange" />
+  <xs:complexType name="IPRange">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EndString" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StartString" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="IPRange" nillable="true" type="tns:IPRange" />
 </xs:schema>

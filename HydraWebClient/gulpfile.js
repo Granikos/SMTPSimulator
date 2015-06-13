@@ -28,7 +28,8 @@ var config = {
         'bower_components/angular-ui/build/angular-ui.js',
         'bower_components/angular-ui-grid/ui-grid.js',
         'bower_components/angular-bootstrap/ui-bootstrap.js',
-        'bower_components/angular-bootstrap/ui-bootstrap-tpls.js'
+        'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+        'bower_components/angular-enum-flag-directive/angular-enum-flag-directive.js'
     ],
     angularbundle: 'Scripts/angular-bundle.min.js',
 

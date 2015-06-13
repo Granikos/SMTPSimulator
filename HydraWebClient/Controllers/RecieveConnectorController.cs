@@ -7,12 +7,14 @@ using HydraWebClient.HydraConfigurationService;
 namespace HydraWebClient.Controllers
 {
     [Authorize]
-    public class ServerBindingsController : ApiController
+    public class RecieveConnectorsController : ApiController
     {
         readonly ConfigurationServiceClient _service = new ConfigurationServiceClient();
 
+        // TODO: Renaming
+
         // GET api/<controller>
-        public IEnumerable<ServerBindingConfiguration> Get()
+        public IEnumerable<RecieveConnector> Get()
         {
             return _service.GetServerBindings();
         }
@@ -31,7 +33,7 @@ namespace HydraWebClient.Controllers
         }
 
         // POST api/<controller>
-        public HttpResponseMessage Post([FromBody]ServerBindingConfiguration serverBinding)
+        public HttpResponseMessage Post([FromBody]RecieveConnector serverBinding)
         {
             var added = _service.AddServerBinding(serverBinding);
 
@@ -44,7 +46,7 @@ namespace HydraWebClient.Controllers
         }
 
         // PUT api/<controller>/5
-        public HttpResponseMessage Put(int id, [FromBody]ServerBindingConfiguration serverBinding)
+        public HttpResponseMessage Put(int id, [FromBody]RecieveConnector serverBinding)
         {
             var updated = _service.UpdateServerBinding(serverBinding);
 

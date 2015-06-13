@@ -11,5 +11,7 @@ namespace HydraCore
         bool RequireAuth { get; }
 
         bool RequireTLS { get; }
+
+        bool EnableTLS { get; }
     }
 }

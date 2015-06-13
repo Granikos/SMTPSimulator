@@ -18,6 +18,7 @@ namespace HydraService
 
         public bool RequireAuth { get { return _connector.RequireAuth; } }
 
-        public bool RequireTLS { get { return _connector.RequireTLS; } }
+        public bool RequireTLS { get { return _connector.TLSSettings.Mode == TLSMode.Required; } }
+        public bool EnableTLS { get { return _connector.TLSSettings.Mode != TLSMode.Disabled && _connector.TLSSettings.Mode != TLSMode.FullTunnel; } }
     }
 }

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HydraCore;
 using HydraCore.Logging;
+using HydraService.Models;
 
 namespace HydraService
 {
@@ -16,15 +17,15 @@ namespace HydraService
     {
         private readonly TcpClient _client;
         private readonly IPEndPoint _localEndpoint;
+        private readonly string _name;
         private readonly IPEndPoint _remoteEndpoint;
+        private readonly string _session;
         private readonly SMTPServer _smtpServer;
+        private readonly TLSConnector _tlsConnector;
 
-        [ImportMany]
-        private IEnumerable<ISMTPLogger> _loggers;
+        [ImportMany] private IEnumerable<ISMTPLogger> _loggers;
 
-        private string _name;
         private StreamReader _reader;
-        private string _session;
         private bool _startTLS;
         private Stream _stream;
         private SMTPTransaction _transaction;
@@ -34,12 +35,19 @@ namespace HydraService
         {
             _client = client;
             _smtpServer = smtpServer;
+
+            _tlsConnector = new TLSConnector(_smtpServer.Connector.TLSSettings, CertificateLog);
             _localEndpoint = (IPEndPoint) _client.Client.LocalEndPoint;
-            _remoteEndpoint = (IPEndPoint)_client.Client.RemoteEndPoint;
+            _remoteEndpoint = (IPEndPoint) _client.Client.RemoteEndPoint;
             _session = Guid.NewGuid().ToString("N").Substring(0, 10);
             _name = _localEndpoint.Address.ToString();
             _stream = _client.GetStream();
             _startTLS = false;
+        }
+
+        private void CertificateLog(string msg)
+        {
+            Log(LogEventType.Certificate, msg);
         }
 
         private void Log(LogEventType type, string data = null)
@@ -57,7 +65,7 @@ namespace HydraService
             SMTPResponse response;
             _transaction = _smtpServer.Core.StartTransaction(_remoteEndpoint.Address, _smtpServer.Settings, out response);
 
-            if (_smtpServer.UseSsl)
+            if (_tlsConnector.Settings.Mode == TLSMode.FullTunnel)
             {
                 await StartTLS();
             }
@@ -167,11 +175,15 @@ namespace HydraService
 
         private async Task StartTLS()
         {
-            var sslStream = _smtpServer.TLSConnector.GetSslStream(_stream);
+            var sslStream = _tlsConnector.GetSslStream(_stream);
 
-            await _smtpServer.TLSConnector.AuthenticateAsServerAsync(sslStream);
+            await _tlsConnector.AuthenticateAsServerAsync(sslStream);
 
             Log(LogEventType.Other, "TLS Layer established.");
+
+            _tlsConnector.DisplaySecurityLevel(sslStream);
+            _tlsConnector.DisplaySecurityServices(sslStream);
+            _tlsConnector.DisplayCertificateInformation(sslStream);
 
             _transaction.TLSEnabled = true;
             _stream = sslStream;

@@ -1,7 +1,7 @@
 ﻿(function() {
     angular.module("Server", ["ui.grid", "ui.grid.edit", "ui.grid.rowEdit", "ui.grid.selection", "ui.bootstrap.modal"])
 
-        .service("BindingService", ["$http", DataService("api/ServerBindings")])
+        .service("BindingService", ["$http", DataService("api/RecieveConnectors")])
 
         .service("SubnetService", ["$http", DataService("api/ServerSubnets")])
 

@@ -45,15 +45,17 @@ namespace HydraCore.Logging
             switch (type)
             {
                 case LogEventType.Connect:
-                    return "*";
-                case LogEventType.Disconnect:
                     return "+";
+                case LogEventType.Disconnect:
+                    return "-";
                 case LogEventType.Incoming:
                     return "<";
                 case LogEventType.Outgoing:
                     return ">";
+                case LogEventType.Certificate:
+                    return "#";
                 case LogEventType.Other:
-                    return "?";
+                    return "*";
                 default:
                     return null;
             }

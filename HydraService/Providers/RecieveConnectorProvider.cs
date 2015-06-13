@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Net;
+using HydraCore;
 using HydraService.Models;
 
 namespace HydraService.Providers
@@ -11,17 +12,39 @@ namespace HydraService.Providers
         public RecieveConnectorProvider()
         {
             Add(new RecieveConnector
-                {
-                    Address = IPAddress.Parse("127.0.0.1"),
+            {
+                    Name = "Default",
+                    Enabled = true,
+                    Address = IPAddress.Parse("0.0.0.0"),
                     Port = 25,
-                    EnableSsl = false
+                    Banner = "This is the banner text!",
+                    TLSSettings = new TLSSettings
+                    {
+                        CertificateName = "cert.pfx",
+                        CertificatePassword = "tester",
+                        IsFilesystemCertificate = true
+                    },
+                    RemoteIPRanges = new[]
+                    {
+                        new IPRange(IPAddress.Parse("127.0.0.1"), IPAddress.Parse("127.0.0.255")),
+                        new IPRange(IPAddress.Parse("192.168.178.1"), IPAddress.Parse("192.168.178.255")),
+                    }
                 });
 
             Add(new RecieveConnector
-                {
-                    Address = IPAddress.Parse("127.0.0.1"),
+            {
+                    Name = "Default SSL",
+                    Enabled = true,
+                    Address = IPAddress.Parse("0.0.0.0"),
                     Port = 465,
-                    EnableSsl = true
+                    Banner = "This is the banner text!",
+                    TLSSettings = new TLSSettings
+                    {
+                        Mode = TLSMode.FullTunnel,
+                        CertificateName = "cert.pfx",
+                        CertificatePassword = "tester",
+                        IsFilesystemCertificate = true
+                    }
                 });
         }
     }

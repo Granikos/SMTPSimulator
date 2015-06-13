@@ -173,7 +173,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ServerBindingsController.cs" />
+    <Compile Include="Controllers\RecieveConnectorController.cs" />
     <Compile Include="Controllers\ServerController.cs" />
     <Compile Include="Controllers\LocalUsersController.cs" />
     <Compile Include="Controllers\ServerSubnetsController.cs" />
@@ -212,24 +212,21 @@
     <Content Include="Scripts\_references.js" />
     <None Include="Service References\HydraConfigurationService\configuration91.svcinfo" />
     <None Include="Service References\HydraConfigurationService\configuration.svcinfo" />
-    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.ServerBindingConfiguration.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.LocalUser.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Service References\HydraConfigurationService\HydraCore.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.ServerConfig.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Service References\HydraConfigurationService\HydraService.Models.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.RecieveConnector.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\HydraConfigurationService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -253,6 +250,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Home\Index.cshtml" />
+    <None Include="Service References\HydraConfigurationService\System.Security.Authentication.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -272,6 +272,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\HydraConfigurationService\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\HydraConfigurationService\System.Net.Security.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\HydraConfigurationService\System.Net.Sockets.xsd">

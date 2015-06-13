@@ -15,27 +15,45 @@ namespace HydraWebClient.HydraConfigurationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ServerBindingConfiguration", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RecieveConnector", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
     [System.SerializableAttribute()]
-    public partial class ServerBindingConfiguration : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class RecieveConnector : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Net.IPAddress AddressField;
+        private string AddressStringField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool EnableSslField;
+        private string AuthPasswordField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool EnforceTLSField;
+        private string AuthUsernameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BannerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool EnabledField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int PortField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HydraWebClient.HydraConfigurationService.IPRange[] RemoteIPRangesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool RequireAuthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HydraWebClient.HydraConfigurationService.TLSSettings TLSSettingsField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -48,40 +66,66 @@ namespace HydraWebClient.HydraConfigurationService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Net.IPAddress Address {
+        public string AddressString {
             get {
-                return this.AddressField;
+                return this.AddressStringField;
             }
             set {
-                if ((object.ReferenceEquals(this.AddressField, value) != true)) {
-                    this.AddressField = value;
-                    this.RaisePropertyChanged("Address");
+                if ((object.ReferenceEquals(this.AddressStringField, value) != true)) {
+                    this.AddressStringField = value;
+                    this.RaisePropertyChanged("AddressString");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool EnableSsl {
+        public string AuthPassword {
             get {
-                return this.EnableSslField;
+                return this.AuthPasswordField;
             }
             set {
-                if ((this.EnableSslField.Equals(value) != true)) {
-                    this.EnableSslField = value;
-                    this.RaisePropertyChanged("EnableSsl");
+                if ((object.ReferenceEquals(this.AuthPasswordField, value) != true)) {
+                    this.AuthPasswordField = value;
+                    this.RaisePropertyChanged("AuthPassword");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool EnforceTLS {
+        public string AuthUsername {
             get {
-                return this.EnforceTLSField;
+                return this.AuthUsernameField;
             }
             set {
-                if ((this.EnforceTLSField.Equals(value) != true)) {
-                    this.EnforceTLSField = value;
-                    this.RaisePropertyChanged("EnforceTLS");
+                if ((object.ReferenceEquals(this.AuthUsernameField, value) != true)) {
+                    this.AuthUsernameField = value;
+                    this.RaisePropertyChanged("AuthUsername");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Banner {
+            get {
+                return this.BannerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BannerField, value) != true)) {
+                    this.BannerField = value;
+                    this.RaisePropertyChanged("Banner");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Enabled {
+            get {
+                return this.EnabledField;
+            }
+            set {
+                if ((this.EnabledField.Equals(value) != true)) {
+                    this.EnabledField = value;
+                    this.RaisePropertyChanged("Enabled");
                 }
             }
         }
@@ -100,6 +144,19 @@ namespace HydraWebClient.HydraConfigurationService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int Port {
             get {
                 return this.PortField;
@@ -112,6 +169,45 @@ namespace HydraWebClient.HydraConfigurationService {
             }
         }
         
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HydraWebClient.HydraConfigurationService.IPRange[] RemoteIPRanges {
+            get {
+                return this.RemoteIPRangesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RemoteIPRangesField, value) != true)) {
+                    this.RemoteIPRangesField = value;
+                    this.RaisePropertyChanged("RemoteIPRanges");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool RequireAuth {
+            get {
+                return this.RequireAuthField;
+            }
+            set {
+                if ((this.RequireAuthField.Equals(value) != true)) {
+                    this.RequireAuthField = value;
+                    this.RaisePropertyChanged("RequireAuth");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HydraWebClient.HydraConfigurationService.TLSSettings TLSSettings {
+            get {
+                return this.TLSSettingsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TLSSettingsField, value) != true)) {
+                    this.TLSSettingsField = value;
+                    this.RaisePropertyChanged("TLSSettings");
+                }
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -120,6 +216,271 @@ namespace HydraWebClient.HydraConfigurationService {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TLSSettings", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
+    [System.SerializableAttribute()]
+    public partial class TLSSettings : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HydraWebClient.HydraConfigurationService.TLSAuthLevel AuthLevelField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CertificateDomainField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CertificateNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CertificatePasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Net.Security.EncryptionPolicy EncryptionPolicyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsFilesystemCertificateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HydraWebClient.HydraConfigurationService.TLSMode ModeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Security.Authentication.SslProtocols SslProtocolsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ValidateCertificateRevocationField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HydraWebClient.HydraConfigurationService.TLSAuthLevel AuthLevel {
+            get {
+                return this.AuthLevelField;
+            }
+            set {
+                if ((this.AuthLevelField.Equals(value) != true)) {
+                    this.AuthLevelField = value;
+                    this.RaisePropertyChanged("AuthLevel");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CertificateDomain {
+            get {
+                return this.CertificateDomainField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CertificateDomainField, value) != true)) {
+                    this.CertificateDomainField = value;
+                    this.RaisePropertyChanged("CertificateDomain");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CertificateName {
+            get {
+                return this.CertificateNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CertificateNameField, value) != true)) {
+                    this.CertificateNameField = value;
+                    this.RaisePropertyChanged("CertificateName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CertificatePassword {
+            get {
+                return this.CertificatePasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CertificatePasswordField, value) != true)) {
+                    this.CertificatePasswordField = value;
+                    this.RaisePropertyChanged("CertificatePassword");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Net.Security.EncryptionPolicy EncryptionPolicy {
+            get {
+                return this.EncryptionPolicyField;
+            }
+            set {
+                if ((this.EncryptionPolicyField.Equals(value) != true)) {
+                    this.EncryptionPolicyField = value;
+                    this.RaisePropertyChanged("EncryptionPolicy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsFilesystemCertificate {
+            get {
+                return this.IsFilesystemCertificateField;
+            }
+            set {
+                if ((this.IsFilesystemCertificateField.Equals(value) != true)) {
+                    this.IsFilesystemCertificateField = value;
+                    this.RaisePropertyChanged("IsFilesystemCertificate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HydraWebClient.HydraConfigurationService.TLSMode Mode {
+            get {
+                return this.ModeField;
+            }
+            set {
+                if ((this.ModeField.Equals(value) != true)) {
+                    this.ModeField = value;
+                    this.RaisePropertyChanged("Mode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Security.Authentication.SslProtocols SslProtocols {
+            get {
+                return this.SslProtocolsField;
+            }
+            set {
+                if ((this.SslProtocolsField.Equals(value) != true)) {
+                    this.SslProtocolsField = value;
+                    this.RaisePropertyChanged("SslProtocols");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ValidateCertificateRevocation {
+            get {
+                return this.ValidateCertificateRevocationField;
+            }
+            set {
+                if ((this.ValidateCertificateRevocationField.Equals(value) != true)) {
+                    this.ValidateCertificateRevocationField = value;
+                    this.RaisePropertyChanged("ValidateCertificateRevocation");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="IPRange", Namespace="http://schemas.datacontract.org/2004/07/HydraCore")]
+    [System.SerializableAttribute()]
+    public partial class IPRange : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EndStringField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StartStringField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EndString {
+            get {
+                return this.EndStringField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EndStringField, value) != true)) {
+                    this.EndStringField = value;
+                    this.RaisePropertyChanged("EndString");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string StartString {
+            get {
+                return this.StartStringField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StartStringField, value) != true)) {
+                    this.StartStringField = value;
+                    this.RaisePropertyChanged("StartString");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TLSAuthLevel", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
+    public enum TLSAuthLevel : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        EncryptionOnly = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CertificateValidation = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DomainValidation = 2,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TLSMode", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
+    public enum TLSMode : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Disabled = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Enabled = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Required = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        FullTunnel = 3,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -292,83 +653,6 @@ namespace HydraWebClient.HydraConfigurationService {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ServerConfig", Namespace="http://schemas.datacontract.org/2004/07/HydraCore")]
-    [System.SerializableAttribute()]
-    public partial class ServerConfig : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string BannerField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string GreetField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ServerNameField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Banner {
-            get {
-                return this.BannerField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BannerField, value) != true)) {
-                    this.BannerField = value;
-                    this.RaisePropertyChanged("Banner");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Greet {
-            get {
-                return this.GreetField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.GreetField, value) != true)) {
-                    this.GreetField = value;
-                    this.RaisePropertyChanged("Greet");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ServerName {
-            get {
-                return this.ServerNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ServerNameField, value) != true)) {
-                    this.ServerNameField = value;
-                    this.RaisePropertyChanged("ServerName");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="HydraConfigurationService.IConfigurationService")]
     public interface IConfigurationService {
@@ -380,28 +664,28 @@ namespace HydraWebClient.HydraConfigurationService {
         System.Threading.Tasks.Task SetPropertyAsync(string name, string value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetServerBindings", ReplyAction="http://tempuri.org/IConfigurationService/GetServerBindingsResponse")]
-        HydraWebClient.HydraConfigurationService.ServerBindingConfiguration[] GetServerBindings();
+        HydraWebClient.HydraConfigurationService.RecieveConnector[] GetServerBindings();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetServerBindings", ReplyAction="http://tempuri.org/IConfigurationService/GetServerBindingsResponse")]
-        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerBindingConfiguration[]> GetServerBindingsAsync();
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector[]> GetServerBindingsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/GetServerBindingResponse")]
-        HydraWebClient.HydraConfigurationService.ServerBindingConfiguration GetServerBinding(int id);
+        HydraWebClient.HydraConfigurationService.RecieveConnector GetServerBinding(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/GetServerBindingResponse")]
-        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerBindingConfiguration> GetServerBindingAsync(int id);
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> GetServerBindingAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/AddServerBindingResponse")]
-        HydraWebClient.HydraConfigurationService.ServerBindingConfiguration AddServerBinding(HydraWebClient.HydraConfigurationService.ServerBindingConfiguration binding);
+        HydraWebClient.HydraConfigurationService.RecieveConnector AddServerBinding(HydraWebClient.HydraConfigurationService.RecieveConnector binding);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/AddServerBindingResponse")]
-        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerBindingConfiguration> AddServerBindingAsync(HydraWebClient.HydraConfigurationService.ServerBindingConfiguration binding);
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> AddServerBindingAsync(HydraWebClient.HydraConfigurationService.RecieveConnector binding);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/UpdateServerBindingResponse")]
-        HydraWebClient.HydraConfigurationService.ServerBindingConfiguration UpdateServerBinding(HydraWebClient.HydraConfigurationService.ServerBindingConfiguration binding);
+        HydraWebClient.HydraConfigurationService.RecieveConnector UpdateServerBinding(HydraWebClient.HydraConfigurationService.RecieveConnector binding);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/UpdateServerBindingResponse")]
-        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerBindingConfiguration> UpdateServerBindingAsync(HydraWebClient.HydraConfigurationService.ServerBindingConfiguration binding);
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> UpdateServerBindingAsync(HydraWebClient.HydraConfigurationService.RecieveConnector binding);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/DeleteServerBindingResponse")]
         bool DeleteServerBinding(int id);
@@ -468,18 +752,6 @@ namespace HydraWebClient.HydraConfigurationService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteLocalUser", ReplyAction="http://tempuri.org/IConfigurationService/DeleteLocalUserResponse")]
         System.Threading.Tasks.Task<bool> DeleteLocalUserAsync(int id);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetServerConfig", ReplyAction="http://tempuri.org/IConfigurationService/GetServerConfigResponse")]
-        HydraWebClient.HydraConfigurationService.ServerConfig GetServerConfig();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetServerConfig", ReplyAction="http://tempuri.org/IConfigurationService/GetServerConfigResponse")]
-        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerConfig> GetServerConfigAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/SetServerConfig", ReplyAction="http://tempuri.org/IConfigurationService/SetServerConfigResponse")]
-        bool SetServerConfig(HydraWebClient.HydraConfigurationService.ServerConfig config);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/SetServerConfig", ReplyAction="http://tempuri.org/IConfigurationService/SetServerConfigResponse")]
-        System.Threading.Tasks.Task<bool> SetServerConfigAsync(HydraWebClient.HydraConfigurationService.ServerConfig config);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -517,35 +789,35 @@ namespace HydraWebClient.HydraConfigurationService {
             return base.Channel.SetPropertyAsync(name, value);
         }
         
-        public HydraWebClient.HydraConfigurationService.ServerBindingConfiguration[] GetServerBindings() {
+        public HydraWebClient.HydraConfigurationService.RecieveConnector[] GetServerBindings() {
             return base.Channel.GetServerBindings();
         }
         
-        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerBindingConfiguration[]> GetServerBindingsAsync() {
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector[]> GetServerBindingsAsync() {
             return base.Channel.GetServerBindingsAsync();
         }
         
-        public HydraWebClient.HydraConfigurationService.ServerBindingConfiguration GetServerBinding(int id) {
+        public HydraWebClient.HydraConfigurationService.RecieveConnector GetServerBinding(int id) {
             return base.Channel.GetServerBinding(id);
         }
         
-        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerBindingConfiguration> GetServerBindingAsync(int id) {
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> GetServerBindingAsync(int id) {
             return base.Channel.GetServerBindingAsync(id);
         }
         
-        public HydraWebClient.HydraConfigurationService.ServerBindingConfiguration AddServerBinding(HydraWebClient.HydraConfigurationService.ServerBindingConfiguration binding) {
+        public HydraWebClient.HydraConfigurationService.RecieveConnector AddServerBinding(HydraWebClient.HydraConfigurationService.RecieveConnector binding) {
             return base.Channel.AddServerBinding(binding);
         }
         
-        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerBindingConfiguration> AddServerBindingAsync(HydraWebClient.HydraConfigurationService.ServerBindingConfiguration binding) {
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> AddServerBindingAsync(HydraWebClient.HydraConfigurationService.RecieveConnector binding) {
             return base.Channel.AddServerBindingAsync(binding);
         }
         
-        public HydraWebClient.HydraConfigurationService.ServerBindingConfiguration UpdateServerBinding(HydraWebClient.HydraConfigurationService.ServerBindingConfiguration binding) {
+        public HydraWebClient.HydraConfigurationService.RecieveConnector UpdateServerBinding(HydraWebClient.HydraConfigurationService.RecieveConnector binding) {
             return base.Channel.UpdateServerBinding(binding);
         }
         
-        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerBindingConfiguration> UpdateServerBindingAsync(HydraWebClient.HydraConfigurationService.ServerBindingConfiguration binding) {
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> UpdateServerBindingAsync(HydraWebClient.HydraConfigurationService.RecieveConnector binding) {
             return base.Channel.UpdateServerBindingAsync(binding);
         }
         
@@ -635,22 +907,6 @@ namespace HydraWebClient.HydraConfigurationService {
         
         public System.Threading.Tasks.Task<bool> DeleteLocalUserAsync(int id) {
             return base.Channel.DeleteLocalUserAsync(id);
-        }
-        
-        public HydraWebClient.HydraConfigurationService.ServerConfig GetServerConfig() {
-            return base.Channel.GetServerConfig();
-        }
-        
-        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ServerConfig> GetServerConfigAsync() {
-            return base.Channel.GetServerConfigAsync();
-        }
-        
-        public bool SetServerConfig(HydraWebClient.HydraConfigurationService.ServerConfig config) {
-            return base.Channel.SetServerConfig(config);
-        }
-        
-        public System.Threading.Tasks.Task<bool> SetServerConfigAsync(HydraWebClient.HydraConfigurationService.ServerConfig config) {
-            return base.Channel.SetServerConfigAsync(config);
         }
     }
 }

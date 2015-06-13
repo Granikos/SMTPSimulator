@@ -29,7 +29,7 @@ namespace HydraCore.CommandHandlers
         public void OnCommandExecute(object sender, CommandExecuteEventArgs args)
         {
             var type = args.Handler.GetType();
-            var unsecuredAllowed = type.GetCustomAttributes(typeof(UnsecureAllowedAttribute), false).Any();
+            var unsecuredAllowed = type.GetCustomAttributes(typeof (UnsecureAllowedAttribute), false).Any();
             var requireEncryption = args.Transaction.Settings.RequireTLS;
             var isSecured = args.Transaction.TLSEnabled;
 
@@ -43,7 +43,8 @@ namespace HydraCore.CommandHandlers
         {
             base.Initialize(core);
 
-            core.GetListProperty<Func<SMTPTransaction, string>>("EHLOLines").Add(transaction => transaction.TLSEnabled? null : "STARTTLS");
+            core.GetListProperty<Func<SMTPTransaction, string>>("EHLOLines")
+                .Add(transaction => transaction.TLSEnabled || !transaction.Settings.EnableTLS ? null : "STARTTLS");
         }
 
         [EventPublication("StartTLS")]
@@ -51,7 +52,12 @@ namespace HydraCore.CommandHandlers
 
         public override SMTPResponse DoExecute(SMTPTransaction transaction, string parameters)
         {
-            if (!String.IsNullOrEmpty(parameters))
+            if (!transaction.Settings.EnableTLS)
+            {
+                return new SMTPResponse(SMTPStatusCode.BadSequence); // TODO: Check response code
+            }
+
+            if (!string.IsNullOrEmpty(parameters))
             {
                 return new SMTPResponse(SMTPStatusCode.SyntaxError);
             }

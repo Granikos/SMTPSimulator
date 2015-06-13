@@ -9,10 +9,14 @@ namespace HydraService.Models
     {
         public TLSSettings()
         {
+            Mode = TLSMode.Enabled;
             SslProtocols = SslProtocols.Default;
             EncryptionPolicy = EncryptionPolicy.RequireEncryption;
             AuthLevel = TLSAuthLevel.EncryptionOnly;
         }
+
+        [DataMember]
+        public TLSMode Mode { get; set; }
 
         [DataMember]
         public SslProtocols SslProtocols { get; set; }

@@ -28,8 +28,6 @@ namespace HydraService
             Connector = connector;
             Settings = new DefaultSettings(connector);
 
-            TLSConnector = new TLSConnector(connector.TLSSettings);
-
             // _sender = new MessageSender(container);
 
             Core.OnConnect += (transaction, connect) =>
@@ -60,9 +58,7 @@ namespace HydraService
         public SMTPCore Core { get; private set; }
         public ISettings Settings { get; private set; }
         public RecieveConnector Connector { get; private set; }
-        public TLSConnector TLSConnector { get; private set; }
         public IPEndPoint LocalEndpoint { get; private set; }
-        public bool UseSsl { get; set; }
 
         public void Start()
         {

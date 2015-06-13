@@ -11,6 +11,7 @@ namespace HydraWebClient.Controllers
     {
         readonly ConfigurationServiceClient _service = new ConfigurationServiceClient();
 
+        /*
         // GET api/<controller>
         public ServerConfig Get()
         {
@@ -27,5 +28,6 @@ namespace HydraWebClient.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, true);
         }
+         * */
     }
 }

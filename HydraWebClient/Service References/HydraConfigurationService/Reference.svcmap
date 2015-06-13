@@ -29,10 +29,12 @@
     <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="b7459ff1-0d1f-400b-a4de-1184a1d1f3bd" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
     <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="8284a6a0-7f31-4041-b55e-a01ab3b028a0" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
     <MetadataFile FileName="HydraService.Models.xsd" MetadataType="Schema" ID="b44eb9de-3326-45f3-b47a-dc6b6970ad33" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
+    <MetadataFile FileName="HydraCore.xsd" MetadataType="Schema" ID="701cd961-6168-44b4-b2c0-cb7fae66e70f" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
+    <MetadataFile FileName="System.Net.Security.xsd" MetadataType="Schema" ID="844343a7-406c-4099-add9-1746b2f6d8b8" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
+    <MetadataFile FileName="System.Security.Authentication.xsd" MetadataType="Schema" ID="f15504b3-96fe-463e-ba55-12c6bebfceab" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
     <MetadataFile FileName="System.Net.xsd" MetadataType="Schema" ID="c6f77c17-5cad-4563-a400-0c66259d73a4" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
     <MetadataFile FileName="System.Net.Sockets.xsd" MetadataType="Schema" ID="44da2695-947d-4b9c-b20e-d4937c07b3e5" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
     <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="21077e2f-596a-4688-beca-8e532c10f450" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
-    <MetadataFile FileName="HydraCore.xsd" MetadataType="Schema" ID="701cd961-6168-44b4-b2c0-cb7fae66e70f" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

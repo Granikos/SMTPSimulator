@@ -8,19 +8,42 @@ namespace HydraCore
     [DataContract]
     public class IPRange
     {
+        private IPAddress _start;
+        private IPAddress _end;
+
         public IPRange(IPAddress start, IPAddress end)
         {
             Contract.Requires<ArgumentNullException>(start != null);
             Contract.Requires<ArgumentNullException>(end != null);
             Contract.Requires<ArgumentException>(start.AddressFamily == end.AddressFamily);
 
-            Start = start;
-            End = end;
+            _start = start;
+            _end = end;
         }
 
-        public IPAddress Start { get; private set; }
+        public IPAddress Start
+        {
+            get { return _start; }
+        }
 
-        public IPAddress End { get; private set; }
+        public IPAddress End
+        {
+            get { return _end; }
+        }
+
+        [DataMember]
+        public string StartString
+        {
+            get { return _start.ToString(); }
+            set { _start = IPAddress.Parse(value); }
+        }
+
+        [DataMember]
+        public string EndString
+        {
+            get { return _end.ToString(); }
+            set { _end = IPAddress.Parse(value); }
+        }
 
         public bool Contains(IPAddress address)
         {

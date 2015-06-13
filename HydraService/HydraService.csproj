@@ -127,6 +127,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -153,6 +154,7 @@
     <Compile Include="Models\TLSAuthLevel.cs" />
     <Compile Include="Models\ExternalUser.cs" />
     <Compile Include="Models\SendConnector.cs" />
+    <Compile Include="Models\TLSMode.cs" />
     <Compile Include="Models\TLSSettings.cs" />
     <Compile Include="Providers\ExternalUserProvider.cs" />
     <Compile Include="Providers\IDataProvider.cs" />
