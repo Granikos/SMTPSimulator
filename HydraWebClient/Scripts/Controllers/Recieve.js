@@ -1,14 +1,17 @@
 ﻿(function () {
+    var IPRegexp = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+
     angular.module('Recieve', ['ui.bootstrap.modal', 'enumFlag'])
 
         .service("RecieveConnectorService", ["$http", DataService("api/RecieveConnectors")])
 
         .controller('RecieveController', [
-            '$scope', '$modal', '$q', 'RecieveConnectorService', function ($scope, $modal, $q, RecieveConnectorService) {
+            '$scope', '$modal', '$q', '$http', 'RecieveConnectorService', function ($scope, $modal, $q, $http, RecieveConnectorService) {
                 $scope.connectors = [];
+                $scope.adding = false;
 
                 $scope.sslProtocols = {
-                    0 : 'None',
+                    0: 'None',
                     12: 'SSL 2',
                     48: 'SSL 3',
                     192: 'TTL',
@@ -17,10 +20,114 @@
                     3072: 'TLS 1.2'
                 }
 
+                $scope.IPRegexp = IPRegexp;
+
                 RecieveConnectorService.all()
                     .success(function (connectors) {
                         $scope.connectors = connectors;
                     });
+
+
+                $scope.update = function (connector) {
+                    RecieveConnectorService
+                        .update(connector)
+                        .then(function (data) {
+                            for (var i = 0; i < $scope.connectors.length; i++) {
+                                if ($scope.connectors[i].Id === connector.Id) {
+                                    $scope.connectors[i] = data.data;
+                                    break;
+                                }
+                            }
+                            window.setTimeout(function () {
+                                $('#collapse' + connector.Id).addClass('in');
+                            }, 10);
+                        }, function (data) {
+                            // TODO
+                        });
+                };
+
+                $scope.delete = function (connector) {
+                    RecieveConnectorService
+                        .delete(connector.Id)
+                        .then(function (success) {
+                            var index = $scope.connectors.indexOf(connector);
+                            if (index > -1) {
+                                $scope.connectors.splice(index, 1);
+                            }
+                        }, function (data) {
+                            // TODO
+                        });
+                };
+
+                $scope.startAdd = function () {
+                    $http.get("api/RecieveConnectors/Default")
+                        .then(function (data) {
+                            $scope.adding = true;
+                            data.data.__adding__ = true;
+                            $scope.connectors.push(data.data);
+                        }, function (data) {
+                            // TODO
+                        });
+                };
+
+                $scope.add = function (connector) {
+                    RecieveConnectorService
+                        .add(connector)
+                        .then(function (data) {
+                            var index = $scope.connectors.indexOf(connector);
+                            if (index > -1) {
+                                $scope.connectors[index] = data.data;
+                            }
+                            window.setTimeout(function () {
+                                $('#collapse' + data.data.Id).addClass('in');
+                            }, 10);
+                            $scope.adding = false;
+                        }, function (data) {
+                            // TODO
+                        });
+                };
+
+                $scope.cancelAdd = function (connector) {
+                    var index = $scope.connectors.indexOf(connector);
+                    if (index > -1) {
+                        $scope.connectors.splice(index, 1);
+                    }
+                    $scope.adding = false;
+                };
+
+                $scope.showIPRangeDialog = function (connector) {
+                    $modal
+                        .open({
+                            templateUrl: 'Views/Recieve/AddIPRangeDialog.html',
+                            controller: 'AddIPRangeDialogController'
+                        })
+                        .result.then(function (range) {
+                            $scope.addIPRange(connector, range);
+                        });
+                };
+                $scope.addIPRange = function (connector, range) {
+                    connector.RemoteIPRanges.push(range);
+                };
+                $scope.removeIPRange = function (connector, range) {
+                    var index = connector.RemoteIPRanges.indexOf(range);
+                    if (index > -1) {
+                        connector.RemoteIPRanges.splice(index, 1);
+                    }
+                };
+            }
+        ])
+        .controller('AddIPRangeDialogController', [
+            '$scope', '$modalInstance', function ($scope, $modalInstance) {
+                $scope.range = {
+                    StartString: '',
+                    EndString: ''
+                }
+
+                $scope.IPRegexp = IPRegexp;
+
+                $scope.submit = function () {
+                    $modalInstance.close($scope.range);
+                };
             }
         ]);
 })();

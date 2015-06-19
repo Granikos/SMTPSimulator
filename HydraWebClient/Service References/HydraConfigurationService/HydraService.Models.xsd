@@ -4,12 +4,6 @@
   <xs:import namespace="http://schemas.datacontract.org/2004/07/System.Net.Security" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/System.Security.Authentication" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/System.Net" />
-  <xs:complexType name="ArrayOfRecieveConnector">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="RecieveConnector" nillable="true" type="tns:RecieveConnector" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfRecieveConnector" nillable="true" type="tns:ArrayOfRecieveConnector" />
   <xs:complexType name="RecieveConnector">
     <xs:sequence>
       <xs:element minOccurs="0" name="AddressString" nillable="true" type="xs:string" />
@@ -57,6 +51,12 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="TLSMode" nillable="true" type="tns:TLSMode" />
+  <xs:complexType name="ArrayOfRecieveConnector">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RecieveConnector" nillable="true" type="tns:RecieveConnector" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRecieveConnector" nillable="true" type="tns:ArrayOfRecieveConnector" />
   <xs:complexType name="ArrayOfServerSubnetConfiguration">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="ServerSubnetConfiguration" nillable="true" type="tns:ServerSubnetConfiguration" />

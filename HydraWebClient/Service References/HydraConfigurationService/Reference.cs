@@ -663,35 +663,41 @@ namespace HydraWebClient.HydraConfigurationService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/SetProperty", ReplyAction="http://tempuri.org/IConfigurationService/SetPropertyResponse")]
         System.Threading.Tasks.Task SetPropertyAsync(string name, string value);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetServerBindings", ReplyAction="http://tempuri.org/IConfigurationService/GetServerBindingsResponse")]
-        HydraWebClient.HydraConfigurationService.RecieveConnector[] GetServerBindings();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDefaultRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetDefaultRecieveConnectorResponse")]
+        HydraWebClient.HydraConfigurationService.RecieveConnector GetDefaultRecieveConnector();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetServerBindings", ReplyAction="http://tempuri.org/IConfigurationService/GetServerBindingsResponse")]
-        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector[]> GetServerBindingsAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDefaultRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetDefaultRecieveConnectorResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> GetDefaultRecieveConnectorAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/GetServerBindingResponse")]
-        HydraWebClient.HydraConfigurationService.RecieveConnector GetServerBinding(int id);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetRecieveConnectors", ReplyAction="http://tempuri.org/IConfigurationService/GetRecieveConnectorsResponse")]
+        HydraWebClient.HydraConfigurationService.RecieveConnector[] GetRecieveConnectors();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/GetServerBindingResponse")]
-        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> GetServerBindingAsync(int id);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetRecieveConnectors", ReplyAction="http://tempuri.org/IConfigurationService/GetRecieveConnectorsResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector[]> GetRecieveConnectorsAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/AddServerBindingResponse")]
-        HydraWebClient.HydraConfigurationService.RecieveConnector AddServerBinding(HydraWebClient.HydraConfigurationService.RecieveConnector binding);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetRecieveConnectorResponse")]
+        HydraWebClient.HydraConfigurationService.RecieveConnector GetRecieveConnector(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/AddServerBindingResponse")]
-        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> AddServerBindingAsync(HydraWebClient.HydraConfigurationService.RecieveConnector binding);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetRecieveConnectorResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> GetRecieveConnectorAsync(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/UpdateServerBindingResponse")]
-        HydraWebClient.HydraConfigurationService.RecieveConnector UpdateServerBinding(HydraWebClient.HydraConfigurationService.RecieveConnector binding);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/AddRecieveConnectorResponse")]
+        HydraWebClient.HydraConfigurationService.RecieveConnector AddRecieveConnector(HydraWebClient.HydraConfigurationService.RecieveConnector binding);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/UpdateServerBindingResponse")]
-        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> UpdateServerBindingAsync(HydraWebClient.HydraConfigurationService.RecieveConnector binding);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/AddRecieveConnectorResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> AddRecieveConnectorAsync(HydraWebClient.HydraConfigurationService.RecieveConnector binding);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/DeleteServerBindingResponse")]
-        bool DeleteServerBinding(int id);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/UpdateRecieveConnectorResponse")]
+        HydraWebClient.HydraConfigurationService.RecieveConnector UpdateRecieveConnector(HydraWebClient.HydraConfigurationService.RecieveConnector binding);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteServerBinding", ReplyAction="http://tempuri.org/IConfigurationService/DeleteServerBindingResponse")]
-        System.Threading.Tasks.Task<bool> DeleteServerBindingAsync(int id);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/UpdateRecieveConnectorResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> UpdateRecieveConnectorAsync(HydraWebClient.HydraConfigurationService.RecieveConnector binding);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/DeleteRecieveConnectorResponse")]
+        bool DeleteRecieveConnector(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/DeleteRecieveConnectorResponse")]
+        System.Threading.Tasks.Task<bool> DeleteRecieveConnectorAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetSubnets", ReplyAction="http://tempuri.org/IConfigurationService/GetSubnetsResponse")]
         HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration[] GetSubnets();
@@ -789,44 +795,52 @@ namespace HydraWebClient.HydraConfigurationService {
             return base.Channel.SetPropertyAsync(name, value);
         }
         
-        public HydraWebClient.HydraConfigurationService.RecieveConnector[] GetServerBindings() {
-            return base.Channel.GetServerBindings();
+        public HydraWebClient.HydraConfigurationService.RecieveConnector GetDefaultRecieveConnector() {
+            return base.Channel.GetDefaultRecieveConnector();
         }
         
-        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector[]> GetServerBindingsAsync() {
-            return base.Channel.GetServerBindingsAsync();
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> GetDefaultRecieveConnectorAsync() {
+            return base.Channel.GetDefaultRecieveConnectorAsync();
         }
         
-        public HydraWebClient.HydraConfigurationService.RecieveConnector GetServerBinding(int id) {
-            return base.Channel.GetServerBinding(id);
+        public HydraWebClient.HydraConfigurationService.RecieveConnector[] GetRecieveConnectors() {
+            return base.Channel.GetRecieveConnectors();
         }
         
-        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> GetServerBindingAsync(int id) {
-            return base.Channel.GetServerBindingAsync(id);
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector[]> GetRecieveConnectorsAsync() {
+            return base.Channel.GetRecieveConnectorsAsync();
         }
         
-        public HydraWebClient.HydraConfigurationService.RecieveConnector AddServerBinding(HydraWebClient.HydraConfigurationService.RecieveConnector binding) {
-            return base.Channel.AddServerBinding(binding);
+        public HydraWebClient.HydraConfigurationService.RecieveConnector GetRecieveConnector(int id) {
+            return base.Channel.GetRecieveConnector(id);
         }
         
-        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> AddServerBindingAsync(HydraWebClient.HydraConfigurationService.RecieveConnector binding) {
-            return base.Channel.AddServerBindingAsync(binding);
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> GetRecieveConnectorAsync(int id) {
+            return base.Channel.GetRecieveConnectorAsync(id);
         }
         
-        public HydraWebClient.HydraConfigurationService.RecieveConnector UpdateServerBinding(HydraWebClient.HydraConfigurationService.RecieveConnector binding) {
-            return base.Channel.UpdateServerBinding(binding);
+        public HydraWebClient.HydraConfigurationService.RecieveConnector AddRecieveConnector(HydraWebClient.HydraConfigurationService.RecieveConnector binding) {
+            return base.Channel.AddRecieveConnector(binding);
         }
         
-        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> UpdateServerBindingAsync(HydraWebClient.HydraConfigurationService.RecieveConnector binding) {
-            return base.Channel.UpdateServerBindingAsync(binding);
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> AddRecieveConnectorAsync(HydraWebClient.HydraConfigurationService.RecieveConnector binding) {
+            return base.Channel.AddRecieveConnectorAsync(binding);
         }
         
-        public bool DeleteServerBinding(int id) {
-            return base.Channel.DeleteServerBinding(id);
+        public HydraWebClient.HydraConfigurationService.RecieveConnector UpdateRecieveConnector(HydraWebClient.HydraConfigurationService.RecieveConnector binding) {
+            return base.Channel.UpdateRecieveConnector(binding);
         }
         
-        public System.Threading.Tasks.Task<bool> DeleteServerBindingAsync(int id) {
-            return base.Channel.DeleteServerBindingAsync(id);
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> UpdateRecieveConnectorAsync(HydraWebClient.HydraConfigurationService.RecieveConnector binding) {
+            return base.Channel.UpdateRecieveConnectorAsync(binding);
+        }
+        
+        public bool DeleteRecieveConnector(int id) {
+            return base.Channel.DeleteRecieveConnector(id);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteRecieveConnectorAsync(int id) {
+            return base.Channel.DeleteRecieveConnectorAsync(id);
         }
         
         public HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration[] GetSubnets() {

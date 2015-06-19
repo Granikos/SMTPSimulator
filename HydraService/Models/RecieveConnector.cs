@@ -13,6 +13,7 @@ namespace HydraService.Models
 
         public RecieveConnector()
         {
+            Address = IPAddress.Any;
             Port = 25;
             _tlsSettings = new TLSSettings();
         }

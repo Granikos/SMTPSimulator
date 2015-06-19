@@ -48,9 +48,10 @@ input.ng-valid.ng-dirty {
 
 /* adapted from http://maxwells.github.io/bootstrap-tags.html */
 .tag {
+    display: inline-block;
   font-size: 14px;
   padding: .3em .4em .4em;
-  margin: 0 .1em;
+  margin: 0.1em;
 }
 .tag a {
   color: #bbb;

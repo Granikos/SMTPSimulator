@@ -14,10 +14,26 @@ namespace HydraWebClient
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+            // Controller Only
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
+                name: "ApiControllerOnly",
+                routeTemplate: "api/{controller}"
+            );
+
+            // Controller with ID
+            config.Routes.MapHttpRoute(
+                name: "ApiControllerAndId",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                defaults: new { id = RouteParameter.Optional },
+                constraints: new { id = @"^\d+$" } // Only integers 
+            );
+
+            // Controllers with Actions
+            config.Routes.MapHttpRoute(
+                name: "ApiControllerAndAction",
+                routeTemplate: "api/{controller}/{action}/{id}",
+                defaults: new { id = RouteParameter.Optional },
+                constraints: new { id = @"^\d+$" } // Only integers 
             );
         }
     }

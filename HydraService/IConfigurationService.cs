@@ -13,43 +13,51 @@ namespace HydraService
         [OperationContract]
         void SetProperty(string name, string value);
 
+        // TODO: Clean up
         [OperationContract]
         [WebGet(
-            UriTemplate = "ServerBindings",
+            UriTemplate = "DefaultRecieveConnector",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        IEnumerable<RecieveConnector> GetServerBindings();
+        RecieveConnector GetDefaultRecieveConnector();
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "ServerBindings/{id}",
+            UriTemplate = "RecieveConnectors",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        RecieveConnector GetServerBinding(int id);
+        IEnumerable<RecieveConnector> GetRecieveConnectors();
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "RecieveConnectors/{id}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        RecieveConnector GetRecieveConnector(int id);
 
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "ServerBindings",
+            UriTemplate = "RecieveConnectors",
             Method = "PUT",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        RecieveConnector AddServerBinding(RecieveConnector binding);
+        RecieveConnector AddRecieveConnector(RecieveConnector binding);
 
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "ServerBindings",
+            UriTemplate = "RecieveConnectors",
             Method = "POST",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        RecieveConnector UpdateServerBinding(RecieveConnector binding);
+        RecieveConnector UpdateRecieveConnector(RecieveConnector binding);
 
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "ServerBindings/{id}",
+            UriTemplate = "RecieveConnectors/{id}",
             Method = "DELETE",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        bool DeleteServerBinding(int id);
+        bool DeleteRecieveConnector(int id);
 
         [OperationContract]
         IEnumerable<ServerSubnetConfiguration> GetSubnets();

@@ -29,35 +29,41 @@
   <wsdl:message name="IConfigurationService_SetProperty_OutputMessage">
     <wsdl:part name="parameters" element="tns:SetPropertyResponse" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_GetServerBindings_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetServerBindings" />
+  <wsdl:message name="IConfigurationService_GetDefaultRecieveConnector_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDefaultRecieveConnector" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_GetServerBindings_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetServerBindingsResponse" />
+  <wsdl:message name="IConfigurationService_GetDefaultRecieveConnector_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDefaultRecieveConnectorResponse" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_GetServerBinding_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetServerBinding" />
+  <wsdl:message name="IConfigurationService_GetRecieveConnectors_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRecieveConnectors" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_GetServerBinding_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetServerBindingResponse" />
+  <wsdl:message name="IConfigurationService_GetRecieveConnectors_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRecieveConnectorsResponse" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_AddServerBinding_InputMessage">
-    <wsdl:part name="parameters" element="tns:AddServerBinding" />
+  <wsdl:message name="IConfigurationService_GetRecieveConnector_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRecieveConnector" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_AddServerBinding_OutputMessage">
-    <wsdl:part name="parameters" element="tns:AddServerBindingResponse" />
+  <wsdl:message name="IConfigurationService_GetRecieveConnector_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRecieveConnectorResponse" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_UpdateServerBinding_InputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateServerBinding" />
+  <wsdl:message name="IConfigurationService_AddRecieveConnector_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddRecieveConnector" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_UpdateServerBinding_OutputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateServerBindingResponse" />
+  <wsdl:message name="IConfigurationService_AddRecieveConnector_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddRecieveConnectorResponse" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_DeleteServerBinding_InputMessage">
-    <wsdl:part name="parameters" element="tns:DeleteServerBinding" />
+  <wsdl:message name="IConfigurationService_UpdateRecieveConnector_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateRecieveConnector" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_DeleteServerBinding_OutputMessage">
-    <wsdl:part name="parameters" element="tns:DeleteServerBindingResponse" />
+  <wsdl:message name="IConfigurationService_UpdateRecieveConnector_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateRecieveConnectorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_DeleteRecieveConnector_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteRecieveConnector" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_DeleteRecieveConnector_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteRecieveConnectorResponse" />
   </wsdl:message>
   <wsdl:message name="IConfigurationService_GetSubnets_InputMessage">
     <wsdl:part name="parameters" element="tns:GetSubnets" />
@@ -124,25 +130,29 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/SetProperty" message="tns:IConfigurationService_SetProperty_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/SetPropertyResponse" message="tns:IConfigurationService_SetProperty_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetServerBindings">
-      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetServerBindings" message="tns:IConfigurationService_GetServerBindings_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetServerBindingsResponse" message="tns:IConfigurationService_GetServerBindings_OutputMessage" />
+    <wsdl:operation name="GetDefaultRecieveConnector">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetDefaultRecieveConnector" message="tns:IConfigurationService_GetDefaultRecieveConnector_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetDefaultRecieveConnectorResponse" message="tns:IConfigurationService_GetDefaultRecieveConnector_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetServerBinding">
-      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetServerBinding" message="tns:IConfigurationService_GetServerBinding_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetServerBindingResponse" message="tns:IConfigurationService_GetServerBinding_OutputMessage" />
+    <wsdl:operation name="GetRecieveConnectors">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetRecieveConnectors" message="tns:IConfigurationService_GetRecieveConnectors_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetRecieveConnectorsResponse" message="tns:IConfigurationService_GetRecieveConnectors_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="AddServerBinding">
-      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/AddServerBinding" message="tns:IConfigurationService_AddServerBinding_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/AddServerBindingResponse" message="tns:IConfigurationService_AddServerBinding_OutputMessage" />
+    <wsdl:operation name="GetRecieveConnector">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetRecieveConnector" message="tns:IConfigurationService_GetRecieveConnector_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetRecieveConnectorResponse" message="tns:IConfigurationService_GetRecieveConnector_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="UpdateServerBinding">
-      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/UpdateServerBinding" message="tns:IConfigurationService_UpdateServerBinding_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/UpdateServerBindingResponse" message="tns:IConfigurationService_UpdateServerBinding_OutputMessage" />
+    <wsdl:operation name="AddRecieveConnector">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/AddRecieveConnector" message="tns:IConfigurationService_AddRecieveConnector_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/AddRecieveConnectorResponse" message="tns:IConfigurationService_AddRecieveConnector_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="DeleteServerBinding">
-      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DeleteServerBinding" message="tns:IConfigurationService_DeleteServerBinding_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DeleteServerBindingResponse" message="tns:IConfigurationService_DeleteServerBinding_OutputMessage" />
+    <wsdl:operation name="UpdateRecieveConnector">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/UpdateRecieveConnector" message="tns:IConfigurationService_UpdateRecieveConnector_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/UpdateRecieveConnectorResponse" message="tns:IConfigurationService_UpdateRecieveConnector_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRecieveConnector">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DeleteRecieveConnector" message="tns:IConfigurationService_DeleteRecieveConnector_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DeleteRecieveConnectorResponse" message="tns:IConfigurationService_DeleteRecieveConnector_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetSubnets">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetSubnets" message="tns:IConfigurationService_GetSubnets_InputMessage" />
@@ -198,8 +208,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetServerBindings">
-      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetServerBindings" style="document" />
+    <wsdl:operation name="GetDefaultRecieveConnector">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetDefaultRecieveConnector" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -207,8 +217,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetServerBinding">
-      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetServerBinding" style="document" />
+    <wsdl:operation name="GetRecieveConnectors">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetRecieveConnectors" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -216,8 +226,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="AddServerBinding">
-      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/AddServerBinding" style="document" />
+    <wsdl:operation name="GetRecieveConnector">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetRecieveConnector" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -225,8 +235,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="UpdateServerBinding">
-      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/UpdateServerBinding" style="document" />
+    <wsdl:operation name="AddRecieveConnector">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/AddRecieveConnector" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -234,8 +244,17 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="DeleteServerBinding">
-      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/DeleteServerBinding" style="document" />
+    <wsdl:operation name="UpdateRecieveConnector">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/UpdateRecieveConnector" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRecieveConnector">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/DeleteRecieveConnector" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

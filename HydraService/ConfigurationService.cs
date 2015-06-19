@@ -38,27 +38,32 @@ namespace HydraService
             throw new NotImplementedException();
         }
 
-        public IEnumerable<RecieveConnector> GetServerBindings()
+        public RecieveConnector GetDefaultRecieveConnector()
+        {
+            return new RecieveConnector();
+        }
+
+        public IEnumerable<RecieveConnector> GetRecieveConnectors()
         {
             return _recieveConnectors.All();
         }
 
-        public RecieveConnector GetServerBinding(int id)
+        public RecieveConnector GetRecieveConnector(int id)
         {
             return _recieveConnectors.Get(id);
         }
 
-        public RecieveConnector AddServerBinding(RecieveConnector binding)
+        public RecieveConnector AddRecieveConnector(RecieveConnector binding)
         {
             return _recieveConnectors.Add(binding);
         }
 
-        public RecieveConnector UpdateServerBinding(RecieveConnector binding)
+        public RecieveConnector UpdateRecieveConnector(RecieveConnector binding)
         {
             return _recieveConnectors.Update(binding);
         }
 
-        public bool DeleteServerBinding(int id)
+        public bool DeleteRecieveConnector(int id)
         {
             return _recieveConnectors.Delete(id);
         }

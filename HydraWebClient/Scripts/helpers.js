@@ -1,5 +1,8 @@
 ﻿function DataService(urlBase) {
     return function ($http) {
+        this.urlBase = urlBase;
+        this.$http = $http;
+
         this.all = function () {
             return $http.get(urlBase);
         };

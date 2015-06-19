@@ -10,7 +10,7 @@
         </div>
         <div id="collapse{{connector.Id}}" class="panel-collapse collapse">
             <div class="panel-body">
-                <form class="form-horizontal">
+                <form class="form-horizontal" name="connectorForms.form{{connector.Id}}" ng-submit="connectorForms['form' + connector.Id].$valid && (connector.__adding__? add(connector) : update(connector))">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Name</label>
                         <div class="col-sm-8">
@@ -20,7 +20,8 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Binding IP</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" ng-model="connector.AddressString" placeholder="IP Address" required>
+                            <input type="text" class="form-control" ng-model="connector.AddressString" placeholder="IP Address" required
+                                   ng-pattern="IPRegexp">
                         </div>
                     </div>
                     <div class="form-group">
@@ -40,10 +41,11 @@
                         <div class="col-sm-8">
                             <span ng-repeat="range in connector.RemoteIPRanges" class="tag label label-default">
                                 <span>{{range.StartString}} - {{range.EndString}}</span>
-                                <a><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                                <a ng-click="removeIPRange(connector, range)"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
                             </span>
+                            <p ng-show="connector.RemoteIPRanges.length == 0" class="form-control-static" style="display: inline-block;">All IP adresses allowed</p>
                             <div class="btn-group pull-right">
-                                <button class="btn btn-sm btn-success" ng-click="addIPRange(connector)">
+                                <button type="button" class="btn btn-sm btn-success" ng-click="showIPRangeDialog(connector)">
                                     <i class="glyphicon glyphicon-plus-sign"></i> Add
                                 </button>
                             </div>
@@ -124,13 +126,13 @@
                                 <div class="form-group" ng-show="connector.TLSSettings.IsFilesystemCertificate == 0">
                                     <label class="col-sm-4 control-label">Certificate Name</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" ng-model="connector.TLSSettings.CertificateName" placeholder="Certificate Name">
+                                        <input type="text" class="form-control" ng-model="connector.TLSSettings.CertificateName" placeholder="Certificate Name" required>
                                     </div>
                                 </div>
                                 <div class="form-group" ng-show="connector.TLSSettings.IsFilesystemCertificate == 1">
                                     <label class="col-sm-4 control-label">Certificate File</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" ng-model="connector.TLSSettings.CertificateName" placeholder="Certificate File">
+                                        <input type="text" class="form-control" ng-model="connector.TLSSettings.CertificateName" placeholder="Certificate File" required>
                                     </div>
                                 </div>
                                 <div class="form-group" ng-show="connector.TLSSettings.IsFilesystemCertificate == 1">
@@ -155,11 +157,17 @@
                     <div class="form-group">
                         <div class="col-sm-12">
                             <div class="btn-group pull-right">
-                                <button class="btn btn-success" ng-click="update(connector)">
+                                <button type="submit" class="btn btn-success" ng-hide="connector.__adding__">
                                     <i class="glyphicon glyphicon-floppy-disk"></i> Update
                                 </button>
-                                <button class="btn btn-danger" ng-click="delete(connector.Id)">
+                                <button type="button" class="btn btn-danger" ng-click="delete(connector)" ng-hide="connector.__adding__">
                                     <i class="glyphicon glyphicon-remove-sign"></i> Remove
+                                </button>
+                                <button type="submit" class="btn btn-success" ng-show="connector.__adding__">
+                                    <i class="glyphicon glyphicon-floppy-disk"></i> Add
+                                </button>
+                                <button type="button" class="btn btn-danger" ng-click="cancelAdd(connector)" ng-show="connector.__adding__">
+                                    <i class="glyphicon glyphicon-remove-sign"></i> Cancel
                                 </button>
                             </div>
                         </div>
@@ -171,7 +179,7 @@
 
     <div class="col-sm-12">
         <div class="btn-group pull-right" style="margin-top: 10px;">
-            <button class="btn btn-success" ng-click="addDialog()">
+            <button type="button" class="btn btn-success" ng-click="startAdd()">
                 <i class="glyphicon glyphicon-plus-sign"></i> Add
             </button>
         </div>

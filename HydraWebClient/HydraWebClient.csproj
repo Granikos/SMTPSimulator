@@ -237,6 +237,7 @@
     <Content Include="Views\LocalUsers\AddDialog.html" />
     <Content Include="Views\LocalUsers\Index.html" />
     <Content Include="Views\Logging\Index.html" />
+    <Content Include="Views\Recieve\AddIPRangeDialog.html" />
     <Content Include="Views\Recieve\Index.html" />
     <Content Include="Views\Register.html" />
     <Content Include="Views\Send\Index.html" />
