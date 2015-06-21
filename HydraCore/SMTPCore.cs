@@ -105,7 +105,7 @@ namespace HydraCore
 
         public event NewMessageAction OnNewMessage;
 
-        public void TriggerNewMessage(SMTPTransaction transaction, Path sender, Path[] recipients, string body)
+        public void TriggerNewMessage(SMTPTransaction transaction, MailPath sender, MailPath[] recipients, string body)
         {
             var mail = new Mail(sender.ToMailAdress(), recipients.Select(r => r.ToMailAdress()).Where(r => r != null), body);
             if (OnNewMessage != null) OnNewMessage(transaction, mail);

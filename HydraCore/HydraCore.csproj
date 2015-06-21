@@ -169,7 +169,7 @@
     <Compile Include="Logging\LogPartType.cs" />
     <Compile Include="Mail.cs" />
     <Compile Include="Mailbox.cs" />
-    <Compile Include="Path.cs" />
+    <Compile Include="MailPath.cs" />
     <Compile Include="RegularExpressions.cs" />
     <Compile Include="ServerConfig.cs" />
     <Compile Include="SMTPClient.cs" />

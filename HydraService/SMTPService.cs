@@ -2,63 +2,101 @@
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition.Primitives;
-using System.Net;
+using System.Configuration;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.ServiceModel;
 using System.ServiceProcess;
 using HydraCore;
 using HydraCore.CommandHandlers;
-using HydraService.Models;
+using HydraService.Providers;
 
 namespace HydraService
 {
-    public partial class SMTPService : ServiceBase
+    public partial class SMTPService : ServiceBase, ISMTPServerContainer
     {
-        private readonly SMTPServer _server;
-        private readonly SMTPServer _server2;
-
-        private ServiceHost _host;
-        private readonly SMTPCore _core;
-
-        private readonly ComposablePartCatalog _catalog;
         private readonly CompositionContainer _container;
+        private readonly SMTPCore _core;
+        private ServiceHost _host;
+
+        [Import]
+        private IRecieveConnectorProvider _recieveConnectors;
+
+        private SMTPServer[] _servers;
+
+        public bool Running { get; private set; }
 
         public SMTPService()
         {
             InitializeComponent();
-            var ip = IPAddress.Parse("0.0.0.0");
-            var port = 25;
 
-            _catalog = new AggregateCatalog(new AssemblyCatalog(typeof(SMTPCore).Assembly),
-                new AssemblyCatalog(typeof(ConfigurationService).Assembly)); // TODO: Use Dependency Injection
+            var pluginFolder = ConfigurationManager.AppSettings["PluginFolder"];
 
-            _container = new CompositionContainer(_catalog);
+            ComposablePartCatalog catalog;
 
-            var loader = new CommandHandlerLoader(_catalog);
+            if (!string.IsNullOrEmpty(pluginFolder))
+            {
+                catalog = new AggregateCatalog(
+                    new AssemblyCatalog(typeof (SMTPService).Assembly),
+                    new DirectoryCatalog(AssemblyDirectory),
+                    new DirectoryCatalog(pluginFolder)
+                    );
+            }
+            else
+            {
+                catalog = new AggregateCatalog(
+                    new AssemblyCatalog(typeof (SMTPService).Assembly),
+                    new DirectoryCatalog(AssemblyDirectory)
+                    );
+            }
+
+            _container = new CompositionContainer(catalog);
+            _container.SatisfyImportsOnce(this);
+
+            var loader = new CommandHandlerLoader(catalog);
             _core = new SMTPCore(loader);
 
-            var recieve = new RecieveConnector
+            RefreshServers();
+        }
+
+        public static string AssemblyDirectory
+        {
+            get
             {
-                Banner = "This is the banner text!",
-                Address = ip,
-                Port = port,
-                TLSSettings = new TLSSettings
+                var codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                var uri = new UriBuilder(codeBase);
+                var path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
+        }
+
+        internal void RefreshServers()
+        {
+            StopSMTPServers();
+
+            _servers = _recieveConnectors.All().Select(r =>
+            {
+                var server = new SMTPServer(r, _core, _container);
+                _container.SatisfyImportsOnce(server);
+                return server;
+            })
+                .ToArray();
+
+            StartSMTPServers();
+        }
+
+        public void StopSMTPServers()
+        {
+            if (Running && _servers != null)
+            {
+                foreach (var server in _servers)
                 {
-                    CertificateName = "cert.pfx",
-                    CertificatePassword = "tester",
-                    IsFilesystemCertificate = true
+                    server.Stop();
                 }
-            };
+            }
 
-            _server = new SMTPServer(recieve, _core, _container);
-            _container.SatisfyImportsOnce(_server);
-
-            // _server.AddSubnet(new IPSubnet("127.0.0.1/24"));
-
-            /*
-            _server2 = new SMTPServer(new IPEndPoint(ip, 1338), core);
-            _server2.UseSsl = true;
-            _server2.AddSubnet(new IPSubnet("127.0.0.1/24"));
-             * */
+            Running = false;
         }
 
         internal void TestStartupAndStop(string[] args)
@@ -70,32 +108,37 @@ namespace HydraService
 
         protected override void OnStart(string[] args)
         {
-            if (_server != null) _server.Start();
-            if (_server2 != null) _server2.Start();
+            StartSMTPServers();
 
             if (_host != null)
             {
                 _host.Close();
             }
 
-            using (var container = new CompositionContainer(_catalog))
+            var service = new ConfigurationService(_core, this);
+            _container.ComposeParts(service);
+
+            _host = new ServiceHost(service);
+
+            _host.Open();
+        }
+
+        public void StartSMTPServers()
+        {
+            if (!Running && _servers != null)
             {
-                var service = new ConfigurationService(_core);
-                container.ComposeParts(service);
-
-                // http://localhost:1339/service.svc
-                // _host = new ServiceHost(typeof(ConfigurationService));
-                _host = new ServiceHost(service);
-
-                _host.Open();
+                foreach (var server in _servers)
+                {
+                    server.Start();
+                }
             }
 
+            Running = true;
         }
 
         protected override void OnStop()
         {
-            if (_server != null) _server.Stop();
-            if (_server2 != null) _server2.Start();
+            StopSMTPServers();
 
             if (_host != null)
             {

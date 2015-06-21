@@ -1,10 +1,7 @@
-﻿(function() {
+﻿(function () {
     angular.module("Server", ["ui.grid", "ui.grid.edit", "ui.grid.rowEdit", "ui.grid.selection", "ui.bootstrap.modal"])
-
         .service("BindingService", ["$http", DataService("api/RecieveConnectors")])
-
         .service("SubnetService", ["$http", DataService("api/ServerSubnets")])
-
         .service("ServerService", [
             "$http", function($http) {
                 this.get = function() {
@@ -16,117 +13,42 @@
                 };
             }
         ])
-
         .controller("ServerController", [
-            "$scope", "$modal", "$q", "ServerService", function($scope, $modal, $q, ServerService) {
-                $scope.config = {};
+            "$scope", "$modal", "$q", "$http", function ($scope, $modal, $q, $http) {
+                $scope.running = null;
                 $scope.status = '???';
 
-                ServerService.get().success(function(config) {
-                    $scope.config = config;
-                });
+                $http.get("api/Server/IsRunning")
+                    .success(function(running) {
+                        $scope.running = running;
+                        $scope.status = running ? 'Running' : 'Stopped';
+                    })
+                    .error(function(data) {
+                        $scope.status = 'Error';
+                        showError(data.Message);
+                    });
 
-                $scope.submit = function() {
-                    ServerService.set($scope.config)
-                        .success(function(config) {
-                            // TODO
+                $scope.start = function() {
+                    $http.get("api/Server/Start")
+                        .success(function() {
+                            $scope.running = true;
+                            $scope.status = 'Running';
                         })
-                        .error(function(config) {
-                            // TODO
+                        .error(function(data) {
+                            showError(data.Message);
                         });
-                };
-            }
-        ])
+                }
 
-        .controller("ServerBindingsController", [
-            "$scope", "$modal", "$q", "BindingService", function ($scope, $modal, $q, BindingService) {
-                $scope.bindings = [];
-
-                BindingService.all()
-                    .success(function (bindings) {
-                        $scope.bindings = bindings;
-                    });
-
-                var columnDefs = [
-                    { displayName: 'IP', field: 'Address', editableCellTemplate: simpleEditTemplate('required') },
-                    { displayName: 'Port', field: 'Port', editableCellTemplate: simpleEditTemplate('required', 'number'), type: 'number' },
-                    { displayName: 'Enable SSL?', field: 'EnableSsl', type: 'bool', editableCellTemplate: simpleEditTemplate('', 'checkbox'), cellTemplate: checkboxTemplate() },
-                    { displayName: 'Enforce TLS?', field: 'EnforceTLS', type: 'bool', editableCellTemplate: simpleEditTemplate('', 'checkbox'), cellTemplate: checkboxTemplate() }
-                ];
-
-                $scope.saveRow = function (rowEntity) {
-                    var promise = BindingService.update(rowEntity);
-                    $scope.gridApi.rowEdit.setSavePromise($scope.gridApi.grid, rowEntity, promise);
-                };
-
-                $scope.deleteSelected = function () {
-                    angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
-                        BindingService.delete(data.Id).success(function () {
-                            $scope.bindings.splice($scope.bindings.lastIndexOf(data), 1);
+                $scope.stop = function() {
+                    $http.get("api/Server/Stop")
+                        .success(function() {
+                            $scope.running = false;
+                            $scope.status = 'Stopped';
+                        })
+                        .error(function(data) {
+                            showError(data.Message);
                         });
-                    });
-                };
-
-                $scope.gridOptions = {
-                    data: 'bindings',
-                    enableCellSelection: false,
-                    enableRowSelection: true,
-                    multiSelect: true,
-                    showSelectionCheckbox: true,
-                    enableSelectAll: true,
-                    selectionRowHeaderWidth: 35,
-                    enableHorizontalScrollbar: 0,
-                    columnDefs: columnDefs,
-                    onRegisterApi: function (gridApi) {
-                        $scope.gridApi = gridApi;
-                        gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
-                    }
-                };
-            }
-        ])
-
-        .controller("ServerSubnetsController", [
-            "$scope", "$modal", "$q", "SubnetService", function ($scope, $modal, $q, SubnetService) {
-                $scope.subnets = [];
-
-                SubnetService.all()
-                    .success(function (subnets) {
-                        $scope.subnets = subnets;
-                    });
-
-                var columnDefs = [
-                    { displayName: 'Network IP', field: 'Address', editableCellTemplate: simpleEditTemplate('required') },
-                    { displayName: 'Size', field: 'Size', editableCellTemplate: simpleEditTemplate('required', 'number'), type: 'number' }
-                ];
-
-                $scope.saveRow = function (rowEntity) {
-                    var promise = SubnetService.update(rowEntity);
-                    $scope.gridApi.rowEdit.setSavePromise($scope.gridApi.grid, rowEntity, promise);
-                };
-
-                $scope.deleteSelected = function () {
-                    angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
-                        SubnetService.delete(data.Id).success(function () {
-                            $scope.subnets.splice($scope.subnets.lastIndexOf(data), 1);
-                        });
-                    });
-                };
-
-                $scope.gridOptions = {
-                    data: 'subnets',
-                    enableCellSelection: false,
-                    enableRowSelection: true,
-                    multiSelect: true,
-                    showSelectionCheckbox: true,
-                    enableSelectAll: true,
-                    selectionRowHeaderWidth: 35,
-                    enableHorizontalScrollbar: 0,
-                    columnDefs: columnDefs,
-                    onRegisterApi: function (gridApi) {
-                        $scope.gridApi = gridApi;
-                        gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
-                    }
-                };
+                }
             }
         ]);
 })();

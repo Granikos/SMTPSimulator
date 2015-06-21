@@ -27,6 +27,14 @@ namespace HydraWebClient.Controllers
             return _service.GetRecieveConnectors();
         }
 
+        // GET api/RecieveConnectors/Certificates
+        [HttpGet]
+        [Route("Certificates")]
+        public IEnumerable<string> GetCertificates()
+        {
+            return _service.GetCertificateFiles();
+        }
+
         // GET api/RecieveConnectors/5
         [HttpGet]
         [Route("{id:int}")]

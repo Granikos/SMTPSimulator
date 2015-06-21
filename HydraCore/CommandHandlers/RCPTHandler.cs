@@ -27,10 +27,10 @@ namespace HydraCore.CommandHandlers
             }
 
             var path = match.Groups[1].Value.Equals("<postmaster>", StringComparison.InvariantCultureIgnoreCase)
-                ? Path.Postmaster
-                : Path.FromMatch(match);
+                ? MailPath.Postmaster
+                : MailPath.FromMatch(match);
 
-            transaction.GetListProperty<Path>("ForwardPath").Add(path);
+            transaction.GetListProperty<MailPath>("ForwardPath").Add(path);
 
             return new SMTPResponse(SMTPStatusCode.Okay);
         }

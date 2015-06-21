@@ -10,7 +10,7 @@ namespace HydraTest.CommandHandlers
         [Fact]
         public void TestSuccess()
         {
-            var paths = new List<Path>();
+            var paths = new List<MailPath>();
             var permanent = false;
 
             AddTransactionProperty("MailInProgress", true);
@@ -21,14 +21,14 @@ namespace HydraTest.CommandHandlers
 
             var response = handler.Execute(Transaction, "TO:<test@test.de>");
             Assert.Equal(SMTPStatusCode.Okay, response.Code);
-            Assert.Contains(new Path("test", "test.de"), paths);
+            Assert.Contains(new MailPath("test", "test.de"), paths);
             Assert.False(permanent);
         }
 
         [Fact]
         public void TestSuccessWithPostmaster()
         {
-            var paths = new List<Path>();
+            var paths = new List<MailPath>();
             var permanent = false;
 
             AddTransactionProperty("MailInProgress", true);
@@ -39,7 +39,7 @@ namespace HydraTest.CommandHandlers
 
             var response = handler.Execute(Transaction, "TO:<postmaster>");
             Assert.Equal(SMTPStatusCode.Okay, response.Code);
-            Assert.Contains(Path.Postmaster, paths);
+            Assert.Contains(MailPath.Postmaster, paths);
             Assert.False(permanent);
         }
 

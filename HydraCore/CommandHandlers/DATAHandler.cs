@@ -16,7 +16,7 @@ namespace HydraCore.CommandHandlers
                 return new SMTPResponse(SMTPStatusCode.SyntaxError);
             }
 
-            var forwardPath = transaction.GetListProperty<Path>("ForwardPath");
+            var forwardPath = transaction.GetListProperty<MailPath>("ForwardPath");
 
             if (!transaction.GetProperty<bool>("MailInProgress") || forwardPath == null || !forwardPath.Any())
             {
@@ -42,8 +42,8 @@ namespace HydraCore.CommandHandlers
 
         public static SMTPResponse DataHandler(SMTPTransaction transaction, string data)
         {
-            transaction.Server.TriggerNewMessage(transaction, transaction.GetProperty<Path>("ReversePath"),
-                transaction.GetListProperty<Path>("ForwardPath").ToArray(), data);
+            transaction.Server.TriggerNewMessage(transaction, transaction.GetProperty<MailPath>("ReversePath"),
+                transaction.GetListProperty<MailPath>("ForwardPath").ToArray(), data);
 
             transaction.Reset();
 

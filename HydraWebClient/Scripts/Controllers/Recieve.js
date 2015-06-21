@@ -25,6 +25,17 @@
                 RecieveConnectorService.all()
                     .success(function (connectors) {
                         $scope.connectors = connectors;
+                    })
+                    .error(function (data) {
+                        showError(data.Message);
+                    });
+
+                $http.get("api/RecieveConnectors/Certificates")
+                    .success(function (certificates) {
+                        $scope.certificates = certificates;
+                    })
+                    .error(function (data) {
+                        showError(data.Message);
                     });
 
 
@@ -42,7 +53,7 @@
                                 $('#collapse' + connector.Id).addClass('in');
                             }, 10);
                         }, function (data) {
-                            // TODO
+                            showError(data.Message);
                         });
                 };
 
@@ -55,7 +66,7 @@
                                 $scope.connectors.splice(index, 1);
                             }
                         }, function (data) {
-                            // TODO
+                            showError(data.Message);
                         });
                 };
 
@@ -64,9 +75,14 @@
                         .then(function (data) {
                             $scope.adding = true;
                             data.data.__adding__ = true;
+                            data.data.Id = 'Add';
                             $scope.connectors.push(data.data);
+                            window.setTimeout(function () {
+                                $('#collapseAdd').addClass('in');
+                                $('#connectorFormAdd :input').first().focus();
+                            }, 10);
                         }, function (data) {
-                            // TODO
+                            showError(data.Message);
                         });
                 };
 
@@ -83,7 +99,7 @@
                             }, 10);
                             $scope.adding = false;
                         }, function (data) {
-                            // TODO
+                            showError(data.Message);
                         });
                 };
 

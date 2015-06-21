@@ -57,8 +57,8 @@ namespace HydraTest
             var settings = new StubISettings();
 
             var expectedTransaction = new StubSMTPTransaction(core, settings);
-            var expectedSender = new Path("tester", "test.de");
-            var expectedRecipients = new[] { new Path("fubar", "fu.com") };
+            var expectedSender = new MailPath("tester", "test.de");
+            var expectedRecipients = new[] { new MailPath("fubar", "fu.com") };
             var expectedBody = "Test";
 
             SMTPTransaction actualTransaction = null;

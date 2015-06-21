@@ -88,5 +88,33 @@ namespace HydraService
 
         [OperationContract]
         bool DeleteLocalUser(int id);
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "Certificates",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        string[] GetCertificateFiles();
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "Server/Start",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        void Start();
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "Server/Stop",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        void Stop();
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "Server/IsRunning",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool IsRunning();
     }
 }

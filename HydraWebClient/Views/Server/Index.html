@@ -7,66 +7,14 @@
             </div>
             <div class="col-sm-5">
                 <div class="btn-group pull-right">
-                    <button type="button" class="btn btn-success" ng-click="start()">
+                    <button type="button" class="btn btn-success" ng-click="start()" ng-disabled="running">
                         <i class="glyphicon glyphicon-play"></i> Start
                     </button>
-                    <button type="button" class="btn btn-danger" ng-click="stop()">
+                    <button type="button" class="btn btn-danger" ng-click="stop()" ng-disabled="!running">
                         <i class="glyphicon glyphicon-stop"></i> Stop
                     </button>
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <label for="serverName" class="control-label col-sm-3">Server Name</label>
-            <div class="col-sm-7">
-                <input type="text" class="form-control" id="serverName" placeholder="Enter server name" ng-model="config.ServerName" required/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="greet" class="control-label col-sm-3">Greeting</label>
-            <div class="col-sm-7">
-                <input type="text" class="form-control" id="greet" placeholder="Enter greeting" ng-model="config.Greet" required/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="banner" class="control-label col-sm-3">Banner</label>
-            <div class="col-sm-7">
-                <input type="text" class="form-control" id="banner" placeholder="Enter banner" ng-model="config.Banner" required/>
-            </div>
-        </div>
-        <div class="checkbox col-sm-offset-3 col-sm-7">
-            <label>
-                <input type="checkbox" value=""/> Validate Certificate Revocation
-            </label>
-        </div>
-        <button type="submit" class="btn btn-default pull-right">Update</button>
     </form>
-
-    <div class="clearfix" ng-controller="ServerBindingsController" style="margin-top: 10px;">
-        <div ui-grid="gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-selection ui-grid-auto-resize style="height: 200px;">
-
-        </div>
-        <div class="btn-group pull-right" style="margin-top: 10px;">
-            <button class="btn btn-success" ng-click="addDialog()">
-                <i class="glyphicon glyphicon-plus-sign"></i> Add
-            </button>
-            <button class="btn btn-danger" ng-click="deleteSelected()">
-                <i class="glyphicon glyphicon-remove-sign"></i> Remove
-            </button>
-        </div>
-    </div>
-
-    <div class="clearfix" ng-controller="ServerSubnetsController" style="margin-top: 10px;">
-        <div ui-grid="gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-selection ui-grid-auto-resize style="height: 200px;">
-
-        </div>
-        <div class="btn-group pull-right" style="margin-top: 10px;">
-            <button class="btn btn-success" ng-click="addDialog()">
-                <i class="glyphicon glyphicon-plus-sign"></i> Add
-            </button>
-            <button class="btn btn-danger" ng-click="deleteSelected()">
-                <i class="glyphicon glyphicon-remove-sign"></i> Remove
-            </button>
-        </div>
-    </div>
 </div>

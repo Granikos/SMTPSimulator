@@ -15,7 +15,7 @@ namespace HydraTest.CommandHandlers
         public void TestSuccess()
         {
             AddTransactionProperty("MailInProgress", true);
-            AddTransactionListProperty("ForwardPath", new List<Path> {new Path("fubar", "fubar.de")});
+            AddTransactionListProperty("ForwardPath", new List<MailPath> {new MailPath("fubar", "fubar.de")});
 
             var dataMode = false;
             var dataHandlerCalled = false;
@@ -72,7 +72,7 @@ namespace HydraTest.CommandHandlers
         public void TestBadSequenceBecauseNotMailing()
         {
             AddTransactionProperty("MailInProgress", false);
-            AddTransactionListProperty("ForwardPath", new List<Path> {new Path("fubar", "fubar.de")});
+            AddTransactionListProperty("ForwardPath", new List<MailPath> {new MailPath("fubar", "fubar.de")});
 
             var handler = new DATAHandler();
             handler.Initialize(Core);
@@ -86,7 +86,7 @@ namespace HydraTest.CommandHandlers
         public void TestBadSequenceBecauseNoRecipients()
         {
             AddTransactionProperty("MailInProgress", true);
-            AddTransactionListProperty("ForwardPath", new List<Path>());
+            AddTransactionListProperty("ForwardPath", new List<MailPath>());
 
             var handler = new DATAHandler();
             handler.Initialize(Core);
@@ -99,8 +99,8 @@ namespace HydraTest.CommandHandlers
         [Fact]
         public void TestDataHandler()
         {
-            var expectedSender = new Path("tester", "test.de");
-            var expectedRecipients = new List<Path> {new Path("tester", "fubar.de")};
+            var expectedSender = new MailPath("tester", "test.de");
+            var expectedRecipients = new List<MailPath> {new MailPath("tester", "fubar.de")};
             var expectedBody = "Body";
 
             AddTransactionProperty("ReversePath", () => expectedSender);
@@ -110,8 +110,8 @@ namespace HydraTest.CommandHandlers
 
             Transaction.Reset = () => { reset = true; };
 
-            Path actualSender = null;
-            List<Path> actualRecipients = null;
+            MailPath actualSender = null;
+            List<MailPath> actualRecipients = null;
             string actualBody = null;
 
             Core.TriggerNewMessageSMTPTransactionPathPathArrayString = (transaction, sender, recipients, body) =>

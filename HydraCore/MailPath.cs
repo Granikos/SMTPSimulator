@@ -7,15 +7,15 @@ using System.Text.RegularExpressions;
 
 namespace HydraCore
 {
-    public sealed class Path
+    public sealed class MailPath
     {
-        public static readonly Path Empty = new Path("");
-        public static readonly Path Postmaster = new Path("postmaster");
+        public static readonly MailPath Empty = new MailPath("");
+        public static readonly MailPath Postmaster = new MailPath("postmaster");
         public readonly string[] AtDomains;
         public readonly string Domain;
         public readonly string LocalPart;
 
-        public Path(string localPart, string domain, params string[] atDomains)
+        public MailPath(string localPart, string domain, params string[] atDomains)
         {
             Contract.Requires<ArgumentNullException>(localPart != null);
             Contract.Requires<ArgumentNullException>(domain != null);
@@ -28,7 +28,7 @@ namespace HydraCore
             AtDomains = atDomains;
         }
 
-        private Path(string localPart)
+        private MailPath(string localPart)
         {
             LocalPart = localPart;
             Domain = "";
@@ -45,7 +45,7 @@ namespace HydraCore
             return String.Format("<{2}:{0}@{1}>", LocalPart.ToSMTPString(), Domain, ad);
         }
 
-        public bool Equals(Path other)
+        public bool Equals(MailPath other)
         {
             if (ReferenceEquals(null, other)) return false;
 
@@ -57,7 +57,7 @@ namespace HydraCore
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj is Path && Equals((Path) obj);
+            return obj is MailPath && Equals((MailPath) obj);
         }
 
         public MailAddress ToMailAdress()
@@ -81,7 +81,7 @@ namespace HydraCore
             }
         }
 
-        public static Path FromString(string str)
+        public static MailPath FromString(string str)
         {
             Contract.Requires<ArgumentNullException>(str != null);
 
@@ -92,7 +92,7 @@ namespace HydraCore
             return FromMatch(match);
         }
 
-        public static Path FromMatch(Match match)
+        public static MailPath FromMatch(Match match)
         {
             Contract.Requires<ArgumentException>(match.Success);
 
@@ -103,7 +103,7 @@ namespace HydraCore
             var localPart = match.Groups["LocalPart"].Value.FromSMTPString();
             var domain = match.Groups["Domain"].Value;
 
-            return new Path(localPart, domain, atDomains);
+            return new MailPath(localPart, domain, atDomains);
         }
     }
 }

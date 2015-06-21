@@ -13,7 +13,7 @@ namespace HydraService
     internal class SMTPServer
     {
         private readonly CompositionContainer _container;
-        private readonly TcpListener _tcpListener;
+        private TcpListener _tcpListener;
         private Thread _listenThread;
         private Thread _processThread;
         private MessageSender _sender;
@@ -22,7 +22,6 @@ namespace HydraService
         {
             _container = container;
             LocalEndpoint = new IPEndPoint(connector.Address, connector.Port);
-            _tcpListener = new TcpListener(LocalEndpoint);
             Core = core;
 
             Connector = connector;
@@ -62,6 +61,13 @@ namespace HydraService
 
         public void Start()
         {
+            if (_tcpListener != null)
+            {
+                _tcpListener.Stop();
+            }
+
+            _tcpListener = new TcpListener(LocalEndpoint);
+
             if (_listenThread == null)
             {
                 _listenThread = new Thread(ListenForClients);
@@ -77,11 +83,10 @@ namespace HydraService
 
         public void Stop()
         {
-            // TODO: Cleaner solution
-            if (_listenThread != null)
+            if (_tcpListener != null)
             {
-                _listenThread.Abort();
-                _listenThread = null;
+                _tcpListener.Stop();
+                _tcpListener = null;
             }
 
             // TODO: Cleaner solution
@@ -94,14 +99,21 @@ namespace HydraService
 
         private void ListenForClients()
         {
-            _tcpListener.Start();
-
-            while (true)
+            try
             {
-                var client = _tcpListener.AcceptTcpClient();
+                _tcpListener.Start();
 
-                var clientThread = new Thread(HandleClientConnection);
-                clientThread.Start(client);
+                while (true)
+                {
+                    var client = _tcpListener.AcceptTcpClient();
+
+                    var clientThread = new Thread(HandleClientConnection);
+                    clientThread.Start(client);
+                }
+            }
+            catch (SocketException e)
+            {
+                if ((e.SocketErrorCode != SocketError.Interrupted)) throw;
             }
         }
 

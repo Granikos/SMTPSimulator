@@ -16,7 +16,7 @@ namespace HydraTest
             new[] {"[IPv6:2607:f0d0:1002:51::4]"})]
         public void TestFromString(string input, string localPart, string domain, string[] atDomains)
         {
-            var path = Path.FromString(input);
+            var path = MailPath.FromString(input);
             Assert.Equal(localPart, path.LocalPart);
             Assert.Equal(domain, path.Domain);
             Assert.Equal(atDomains, path.AtDomains);
@@ -31,7 +31,7 @@ namespace HydraTest
         [InlineData("<space tester@test.de>")]
         public void TestFromStringError(string input)
         {
-            Assert.Throws<ArgumentException>(() => Path.FromString(input));
+            Assert.Throws<ArgumentException>(() => MailPath.FromString(input));
         }
 
         [Theory]
@@ -44,23 +44,23 @@ namespace HydraTest
             new[] {"[IPv6:2607:f0d0:1002:51::4]"})]
         public void TestToString(string output, string localPart, string domain, string[] atDomains)
         {
-            var path = new Path(localPart, domain, atDomains);
+            var path = new MailPath(localPart, domain, atDomains);
             Assert.Equal(output, path.ToString());
         }
 
         [Fact]
         public void TestToStringEmpty()
         {
-            Assert.Equal("<>", Path.Empty.ToString());
+            Assert.Equal("<>", MailPath.Empty.ToString());
         }
 
         [Fact]
         public void TestEquals()
         {
-            var path1 = new Path("tester", "test.de");
-            var path2 = new Path("Tester", "Test.de");
-            var path3 = new Path("tester2", "test.de");
-            var path4 = new Path("tester", "test.de", "fubar.de");
+            var path1 = new MailPath("tester", "test.de");
+            var path2 = new MailPath("Tester", "Test.de");
+            var path3 = new MailPath("tester2", "test.de");
+            var path4 = new MailPath("tester", "test.de", "fubar.de");
 
             Assert.Equal(path1, path2);
             Assert.NotEqual(path1, path3);

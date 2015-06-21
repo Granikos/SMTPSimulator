@@ -758,6 +758,30 @@ namespace HydraWebClient.HydraConfigurationService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteLocalUser", ReplyAction="http://tempuri.org/IConfigurationService/DeleteLocalUserResponse")]
         System.Threading.Tasks.Task<bool> DeleteLocalUserAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetCertificateFiles", ReplyAction="http://tempuri.org/IConfigurationService/GetCertificateFilesResponse")]
+        string[] GetCertificateFiles();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetCertificateFiles", ReplyAction="http://tempuri.org/IConfigurationService/GetCertificateFilesResponse")]
+        System.Threading.Tasks.Task<string[]> GetCertificateFilesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/Start", ReplyAction="http://tempuri.org/IConfigurationService/StartResponse")]
+        void Start();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/Start", ReplyAction="http://tempuri.org/IConfigurationService/StartResponse")]
+        System.Threading.Tasks.Task StartAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/Stop", ReplyAction="http://tempuri.org/IConfigurationService/StopResponse")]
+        void Stop();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/Stop", ReplyAction="http://tempuri.org/IConfigurationService/StopResponse")]
+        System.Threading.Tasks.Task StopAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/IsRunning", ReplyAction="http://tempuri.org/IConfigurationService/IsRunningResponse")]
+        bool IsRunning();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/IsRunning", ReplyAction="http://tempuri.org/IConfigurationService/IsRunningResponse")]
+        System.Threading.Tasks.Task<bool> IsRunningAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -921,6 +945,38 @@ namespace HydraWebClient.HydraConfigurationService {
         
         public System.Threading.Tasks.Task<bool> DeleteLocalUserAsync(int id) {
             return base.Channel.DeleteLocalUserAsync(id);
+        }
+        
+        public string[] GetCertificateFiles() {
+            return base.Channel.GetCertificateFiles();
+        }
+        
+        public System.Threading.Tasks.Task<string[]> GetCertificateFilesAsync() {
+            return base.Channel.GetCertificateFilesAsync();
+        }
+        
+        public void Start() {
+            base.Channel.Start();
+        }
+        
+        public System.Threading.Tasks.Task StartAsync() {
+            return base.Channel.StartAsync();
+        }
+        
+        public void Stop() {
+            base.Channel.Stop();
+        }
+        
+        public System.Threading.Tasks.Task StopAsync() {
+            return base.Channel.StopAsync();
+        }
+        
+        public bool IsRunning() {
+            return base.Channel.IsRunning();
+        }
+        
+        public System.Threading.Tasks.Task<bool> IsRunningAsync() {
+            return base.Channel.IsRunningAsync();
         }
     }
 }

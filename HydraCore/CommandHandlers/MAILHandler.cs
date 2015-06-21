@@ -26,7 +26,7 @@ namespace HydraCore.CommandHandlers
                 return new SMTPResponse(SMTPStatusCode.SyntaxError);
             }
 
-            var path = match.Groups[1].Value.Equals("<>") ? Path.Empty : Path.FromMatch(match);
+            var path = match.Groups[1].Value.Equals("<>") ? MailPath.Empty : MailPath.FromMatch(match);
 
             transaction.SetProperty("ReversePath", path);
             transaction.SetProperty("MailInProgress", true);

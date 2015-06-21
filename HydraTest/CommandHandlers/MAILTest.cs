@@ -17,7 +17,7 @@ namespace HydraTest.CommandHandlers
             AddTransactionProperty("MailInProgress", false);
 
             var inProgress = false;
-            Path reversePath = null;
+            MailPath reversePath = null;
 
             Transaction.SetPropertyStringObjectBoolean = (name, value, _) =>
             {
@@ -27,7 +27,7 @@ namespace HydraTest.CommandHandlers
                         inProgress = (bool) value;
                         break;
                     case "ReversePath":
-                        reversePath = (Path) value;
+                        reversePath = (MailPath) value;
                         break;
                     default:
                         throw new InvalidOperationException("The name is invalid...");

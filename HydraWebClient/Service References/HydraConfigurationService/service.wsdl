@@ -125,6 +125,30 @@
   <wsdl:message name="IConfigurationService_DeleteLocalUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteLocalUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetCertificateFiles_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCertificateFiles" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetCertificateFiles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCertificateFilesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_Start_InputMessage">
+    <wsdl:part name="parameters" element="tns:Start" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_Start_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StartResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_Stop_InputMessage">
+    <wsdl:part name="parameters" element="tns:Stop" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_Stop_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StopResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_IsRunning_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsRunning" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_IsRunning_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsRunningResponse" />
+  </wsdl:message>
   <wsdl:portType name="IConfigurationService">
     <wsdl:operation name="SetProperty">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/SetProperty" message="tns:IConfigurationService_SetProperty_InputMessage" />
@@ -193,6 +217,22 @@
     <wsdl:operation name="DeleteLocalUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DeleteLocalUser" message="tns:IConfigurationService_DeleteLocalUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DeleteLocalUserResponse" message="tns:IConfigurationService_DeleteLocalUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCertificateFiles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetCertificateFiles" message="tns:IConfigurationService_GetCertificateFiles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetCertificateFilesResponse" message="tns:IConfigurationService_GetCertificateFiles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Start">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/Start" message="tns:IConfigurationService_Start_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/StartResponse" message="tns:IConfigurationService_Start_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Stop">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/Stop" message="tns:IConfigurationService_Stop_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/StopResponse" message="tns:IConfigurationService_Stop_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsRunning">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/IsRunning" message="tns:IConfigurationService_IsRunning_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/IsRunningResponse" message="tns:IConfigurationService_IsRunning_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IConfigurationService" type="tns:IConfigurationService">
@@ -345,6 +385,42 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteLocalUser">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/DeleteLocalUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCertificateFiles">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetCertificateFiles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Start">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/Start" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Stop">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/Stop" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsRunning">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/IsRunning" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
