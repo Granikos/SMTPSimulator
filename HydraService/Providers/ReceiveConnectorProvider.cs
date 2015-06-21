@@ -7,9 +7,9 @@ using HydraService.Models;
 namespace HydraService.Providers
 {
     [Export(typeof(IRecieveConnectorProvider))]
-    public class RecieveConnectorProvider : InMemoryProvider<RecieveConnector>, IRecieveConnectorProvider
+    public class ReceiveConnectorProvider : InMemoryProvider<RecieveConnector>, IRecieveConnectorProvider
     {
-        public RecieveConnectorProvider()
+        public ReceiveConnectorProvider()
         {
             Add(new RecieveConnector
             {

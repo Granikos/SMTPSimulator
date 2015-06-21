@@ -1,2 +1,196 @@
 ﻿<div class="container-fluid">
+    <div class="panel" ng-class="{'panel-success': connector.Enabled, 'panel-default': !connector.Enabled}" ng-repeat="connector in connectors">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <input type="checkbox" ng-model="connector.Enabled" />
+                <a data-toggle="collapse" data-target="#collapse{{connector.Id}}" class="collapsed">
+                    {{connector.Name}}
+                </a>
+            </h4>
+        </div>
+        <div id="collapse{{connector.Id}}" class="panel-collapse collapse">
+            <div class="panel-body">
+                <form id="connectorForm{{connector.Id}}" class="form-horizontal" name="connectorForms.form{{connector.Id}}" ng-submit="connectorForms['form' + connector.Id].$valid && (connector.__adding__? add(connector) : update(connector))">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" ng-model="connector.Name" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Local IP</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" ng-model="connector.LocalAddressString" placeholder="IP Address"
+                                   ng-pattern="IPRegexp">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Smarthost</label>
+                        <div class="col-sm-8">
+                            <input type="checkbox" ng-model="connector.UseSmarthost" /> Use Smarthost
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Remote IP</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" ng-model="connector.RemoteAddressString" placeholder="IP Address"
+                                   ng-pattern="IPRegexp" ng-disabled="connector.UseSmarthost" ng-required="!connector.UseSmarthost">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Remote Port</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" ng-model="connector.RemotePort" placeholder="Port" ng-disabled="connector.UseSmarthost" ng-required="!connector.UseSmarthost">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Auth</label>
+                        <div class="col-sm-8">
+                            <input type="checkbox" ng-model="connector.UseAuth" /> Use Authentification
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="connector.UseAuth">
+                        <label class="col-sm-4 control-label">Username</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" ng-model="connector.Username" placeholder="Username" ng-required="connector.UseAuth">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="connector.UseAuth">
+                        <label class="col-sm-4 control-label">Password</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" ng-model="connector.Password" placeholder="Password" ng-required="connector.UseAuth">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Domains</label>
+                        <div class="col-sm-8">
+                            <ul class="list-group domain-list">
+                                <li class="list-group-item">
+                                    <input type="checkbox" checklist-model="connector.Domains" checklist-value="'*'" value="*">
+                                    *
+                                </li>
+                                <li ng-repeat="domain in domains" class="list-group-item">
+                                    <input type="checkbox" checklist-model="connector.Domains" checklist-value="domain" value="{{domain}}">
+                                    {{domain}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel" ng-class="{'panel-success': connector.TLSSettings.Mode > 0, 'panel-default': connector.TLSSettings.Mode == 0}">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-target="#collapse-tls{{connector.Id}}" class="collapsed">TLS</a>
+                            </h4>
+                        </div>
+                        <div id="collapse-tls{{connector.Id}}" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Mode</label>
+                                    <div class="col-sm-8">
+                                        <select ng-model="connector.TLSSettings.Mode" class="form-control">
+                                            <option value="0">Disabled</option>
+                                            <option value="1">Enabled</option>
+                                            <option value="2">Required</option>
+                                            <option value="3">Full Tunnel</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Encryption Policy</label>
+                                    <div class="col-sm-8">
+                                        <select ng-model="connector.TLSSettings.EncryptionPolicy" class="form-control">
+                                            <option value="0">Require Encryption</option>
+                                            <option value="1">Allow No Encryption</option>
+                                            <option value="2">No Encryption</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Auth Level</label>
+                                    <div class="col-sm-8">
+                                        <select ng-model="connector.TLSSettings.AuthLevel" class="form-control">
+                                            <option value="0">Encryption Only</option>
+                                            <option value="1">Certificate Validation</option>
+                                            <option value="2">Domain Validation</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Validate Certificate Revocation</label>
+                                    <div class="col-sm-8">
+                                        <input type="radio" ng-value="true" ng-model="connector.TLSSettings.ValidateCertificateRevocation" /> Yes
+                                        <input type="radio" ng-value="false" ng-model="connector.TLSSettings.ValidateCertificateRevocation" /> No
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Certificate Source</label>
+                                    <div class="col-sm-8">
+                                        <input type="radio" class="" ng-model="connector.TLSSettings.IsFilesystemCertificate" ng-value="false"> Store
+                                        <input type="radio" class="" ng-model="connector.TLSSettings.IsFilesystemCertificate" ng-value="true"> File System
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-hide="connector.TLSSettings.IsFilesystemCertificate">
+                                    <label class="col-sm-4 control-label">Certificate Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" ng-model="connector.TLSSettings.CertificateName" placeholder="Certificate Name">
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-show="connector.TLSSettings.IsFilesystemCertificate">
+                                    <label class="col-sm-4 control-label">Certificate File</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" ng-model="connector.TLSSettings.CertificateName" ng-options="city for city in certificates">
+                                            <option value="">-- None --</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-show="connector.TLSSettings.IsFilesystemCertificate">
+                                    <label class="col-sm-4 control-label">Certificate Password</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" ng-model="connector.TLSSettings.CertificatePassword" placeholder="Certificate Password" ng-disabled="connector.TLSSettings.CertificateName == null">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">SSL Protocols</label>
+                                    <div class="col-sm-8">
+                                        <input type="checkbox" ng-enum-flag="12" ng-enum-model="connector.TLSSettings.SslProtocols" /> SSL 2 &nbsp;
+                                        <input type="checkbox" ng-enum-flag="48" ng-enum-model="connector.TLSSettings.SslProtocols" /> SSL 3 &nbsp;
+                                        <input type="checkbox" ng-enum-flag="192" ng-enum-model="connector.TLSSettings.SslProtocols" /> TLS &nbsp;
+                                        <input type="checkbox" ng-enum-flag="768" ng-enum-model="connector.TLSSettings.SslProtocols" /> TLS 1.1 &nbsp;
+                                        <input type="checkbox" ng-enum-flag="3072" ng-enum-model="connector.TLSSettings.SslProtocols" /> TLS 1.2
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="btn-group pull-right">
+                                <button type="submit" class="btn btn-success" ng-hide="connector.__adding__">
+                                    <i class="glyphicon glyphicon-floppy-disk"></i> Update
+                                </button>
+                                <button type="button" class="btn btn-danger" ng-click="delete(connector)" ng-hide="connector.__adding__">
+                                    <i class="glyphicon glyphicon-remove-sign"></i> Remove
+                                </button>
+                                <button type="submit" class="btn btn-success" ng-show="connector.__adding__">
+                                    <i class="glyphicon glyphicon-floppy-disk"></i> Add
+                                </button>
+                                <button type="button" class="btn btn-danger" ng-click="cancelAdd(connector)" ng-show="connector.__adding__">
+                                    <i class="glyphicon glyphicon-remove-sign"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="btn-group pull-right" style="margin-top: 10px;">
+            <button type="button" class="btn btn-success" ng-click="startAdd()" ng-disabled="adding">
+                <i class="glyphicon glyphicon-plus-sign"></i> Add
+            </button>
+        </div>
+    </div>
 </div>

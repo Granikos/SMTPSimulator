@@ -24,6 +24,7 @@
     "papaparse": "~4.1.1",
     "angular-ui-grid": "~3.0.0-rc.21",
     "angular-bootstrap": "~0.13.0",
-    "angular-enum-flag-directive": "https://github.com/jvdvleuten/angular-enum-flag-directive.git"
+    "angular-enum-flag-directive": "https://github.com/jvdvleuten/angular-enum-flag-directive.git",
+    "checklist-model": "~0.2.4"
   }
 }

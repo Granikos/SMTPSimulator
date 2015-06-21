@@ -8,9 +8,9 @@ namespace HydraCore
 {
     public class SMTPTransaction
     {
-        private readonly ISettings _settings;
+        private readonly IReceiveSettings _settings;
 
-        public ISettings Settings
+        public IReceiveSettings Settings
         {
             get { return _settings; }
         }
@@ -22,7 +22,7 @@ namespace HydraCore
         private Func<string, SMTPResponse> _dataHandler;
         private Func<string, StringBuilder, bool> _dataLineHandler;
          
-        public SMTPTransaction(SMTPCore server, ISettings settings)
+        public SMTPTransaction(SMTPCore server, IReceiveSettings settings)
         {
             Contract.Requires<ArgumentNullException>(server != null);
             Contract.Requires<ArgumentNullException>(settings != null);

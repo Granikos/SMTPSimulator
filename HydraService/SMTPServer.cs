@@ -25,7 +25,7 @@ namespace HydraService
             Core = core;
 
             Connector = connector;
-            Settings = new DefaultSettings(connector);
+            Settings = new DefaultRecieveSettings(connector);
 
             // _sender = new MessageSender(container);
 
@@ -55,7 +55,7 @@ namespace HydraService
         }
 
         public SMTPCore Core { get; private set; }
-        public ISettings Settings { get; private set; }
+        public IReceiveSettings Settings { get; private set; }
         public RecieveConnector Connector { get; private set; }
         public IPEndPoint LocalEndpoint { get; private set; }
 

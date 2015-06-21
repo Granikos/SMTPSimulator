@@ -3,7 +3,7 @@
   <xs:import namespace="http://schemas.datacontract.org/2004/07/HydraCore" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/System.Net.Security" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/System.Security.Authentication" />
-  <xs:import namespace="http://schemas.datacontract.org/2004/07/System.Net" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:complexType name="RecieveConnector">
     <xs:sequence>
       <xs:element minOccurs="0" name="AddressString" nillable="true" type="xs:string" />
@@ -57,20 +57,28 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfRecieveConnector" nillable="true" type="tns:ArrayOfRecieveConnector" />
-  <xs:complexType name="ArrayOfServerSubnetConfiguration">
+  <xs:complexType name="SendConnector">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="ServerSubnetConfiguration" nillable="true" type="tns:ServerSubnetConfiguration" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfServerSubnetConfiguration" nillable="true" type="tns:ArrayOfServerSubnetConfiguration" />
-  <xs:complexType name="ServerSubnetConfiguration">
-    <xs:sequence>
-      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/System.Net" minOccurs="0" name="Address" nillable="true" type="q4:IPAddress" />
+      <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Domains" nillable="true" type="q4:ArrayOfstring" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Size" type="xs:int" />
+      <xs:element minOccurs="0" name="LocalAddressString" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RemoteAddressString" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RemotePort" type="xs:int" />
+      <xs:element minOccurs="0" name="TLSSettings" nillable="true" type="tns:TLSSettings" />
+      <xs:element minOccurs="0" name="UseAuth" type="xs:boolean" />
+      <xs:element minOccurs="0" name="UseSmarthost" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ServerSubnetConfiguration" nillable="true" type="tns:ServerSubnetConfiguration" />
+  <xs:element name="SendConnector" nillable="true" type="tns:SendConnector" />
+  <xs:complexType name="ArrayOfSendConnector">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SendConnector" nillable="true" type="tns:SendConnector" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSendConnector" nillable="true" type="tns:ArrayOfSendConnector" />
   <xs:complexType name="ArrayOfLocalUser">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="LocalUser" nillable="true" type="tns:LocalUser" />

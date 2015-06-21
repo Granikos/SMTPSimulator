@@ -2,7 +2,7 @@
 
 namespace HydraCore
 {
-    public interface ISettings
+    public interface IReceiveSettings
     {
         string Banner { get; }
 

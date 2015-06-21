@@ -171,7 +171,7 @@ namespace HydraTest
         public void TestStartTransaction()
         {
             const string banner = "Test Banner";
-            ISettings actualSettings = null;
+            IReceiveSettings actualSettings = null;
 
             var core = new SMTPCore(DefaultLoader());
 

@@ -29,7 +29,8 @@ var config = {
         'bower_components/angular-ui-grid/ui-grid.js',
         'bower_components/angular-bootstrap/ui-bootstrap.js',
         'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-        'bower_components/angular-enum-flag-directive/angular-enum-flag-directive.js'
+        'bower_components/angular-enum-flag-directive/angular-enum-flag-directive.js',
+        'bower_components/checklist-model/checklist-model.js'
     ],
     angularbundle: 'Scripts/angular-bundle.min.js',
 

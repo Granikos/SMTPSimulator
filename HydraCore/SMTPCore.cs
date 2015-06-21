@@ -82,7 +82,7 @@ namespace HydraCore
 
         public event ConnectValidator OnConnect;
 
-        public SMTPTransaction StartTransaction(IPAddress address, ISettings settings, out SMTPResponse response)
+        public SMTPTransaction StartTransaction(IPAddress address, IReceiveSettings settings, out SMTPResponse response)
         {
             var transaction = new SMTPTransaction(this, settings);
             if (OnConnect != null)

@@ -1,41 +1,74 @@
-﻿using System.Net;
-using System.Net.Security;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Runtime.Serialization;
-using System.Security.Authentication;
 
 namespace HydraService.Models
 {
     [DataContract]
     public class SendConnector : IEntity
     {
-        public SendConnector()
+        private string[] _domains;
+        private TLSSettings _tlsSettings;
+
+        public SendConnector(IPAddress remoteIP = null)
         {
+            RemoteAddress = remoteIP;
+            UseSmarthost = RemoteAddress == null;
+            LocalAddress = IPAddress.Any;
+            RemotePort = 25;
             TLSSettings = new TLSSettings();
         }
 
+        [Required]
         [DataMember]
-        public int Id { get; set; }
+        public string Name { get; set; }
 
-        [DataMember]
         public IPAddress LocalAddress { get; set; }
 
+        [Required]
         [DataMember]
-        public string Domain { get; set; }
+        [RegularExpression(
+            @"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$")]
+        public string LocalAddressString
+        {
+            get { return LocalAddress.ToString(); }
+            set { LocalAddress = IPAddress.Parse(value); }
+        }
 
+        [Required]
         [DataMember]
+        public string[] Domains
+        {
+            get { return _domains; }
+            set { _domains = value ?? new string[0]; }
+        }
+
         public IPAddress RemoteAddress { get; set; }
 
         [DataMember]
-        public int RemotePort { get; set; }
+        [RegularExpression(
+            @"^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))?$")]
+        public string RemoteAddressString
+        {
+            get { return RemoteAddress != null ? RemoteAddress.ToString() : null; }
+            set { RemoteAddress = value != null ? IPAddress.Parse(value) : null; }
+        }
 
+        [Required]
         [DataMember]
-        public bool EnableSsl { get; set; }
+        [Range(0, 65535)]
+        public int RemotePort { get; set; }
 
         [DataMember]
         public bool UseSmarthost { get; set; }
 
+        [Required]
         [DataMember]
-        public TLSSettings TLSSettings { get; set; }
+        public TLSSettings TLSSettings
+        {
+            get { return _tlsSettings; }
+            set { _tlsSettings = value ?? new TLSSettings(); }
+        }
 
         [DataMember]
         public bool UseAuth { get; set; }
@@ -45,5 +78,10 @@ namespace HydraService.Models
 
         [DataMember]
         public string Password { get; set; }
+
+        [Required]
+        [DataMember]
+        [Range(0, int.MaxValue)]
+        public int Id { get; set; }
     }
 }

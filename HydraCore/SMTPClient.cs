@@ -18,23 +18,34 @@ namespace HydraCore
 {
     public class SMTPClient
     {
-        public static SMTPClient Create(CompositionContainer container, string host, int port = 25)
+        private bool _authenticated;
+        private string[] _authMethods;
+        private TcpClient _client;
+        private string _clientName;
+        private IPEndPoint _localEndpoint;
+
+        [ImportMany]
+        private IEnumerable<ISMTPLogger> _loggers;
+
+        private int _port;
+        private StreamReader _reader;
+        private IPEndPoint _remoteEndpoint;
+        private string _session;
+        private Stream _stream;
+        private StreamWriter _writer;
+
+        protected SMTPClient(ISendSettings settings, string host, int port = 25)
         {
-            var client = new SMTPClient(host, port);
+            Contract.Requires<ArgumentNullException>(settings != null, "settings");
+            Contract.Requires<ArgumentNullException>(host != null, "host");
+            Contract.Requires<ArgumentOutOfRangeException>(port >= 0, "port");
 
-            container.SatisfyImportsOnce(client);
-
-            return client;
-        }
-
-        protected SMTPClient(string host, int port = 25)
-        {
-            Contract.Requires<ArgumentNullException>(host != null);
-
+            Settings = settings;
             Host = host;
             Port = port;
         }
 
+        public ISendSettings Settings { get; private set; }
         public string Host { get; set; }
 
         public string ClientName
@@ -43,34 +54,37 @@ namespace HydraCore
             set { _clientName = value; }
         }
 
-        [ImportMany]
-        private IEnumerable<ISMTPLogger> _loggers;
-
-        public int Port { get; set; }
+        public int Port
+        {
+            get { return _port; }
+            set
+            {
+                Contract.Requires<ArgumentOutOfRangeException>(value >= 0, "value");
+                _port = value;
+            }
+        }
 
         public bool EnableSsl { get; set; }
-
         public ICredentials Credentials { get; set; }
-
         public X509Certificate2Collection Certificates { get; set; }
 
-        private TcpClient _client;
-        private Stream _stream;
-        private StreamWriter _writer;
-        private StreamReader _reader;
-        private string _clientName;
-        private string[] _authMethods;
-        private string _session;
-        private IPEndPoint _localEndpoint;
-        private IPEndPoint _remoteEndpoint;
+        public static SMTPClient Create(CompositionContainer container, ISendSettings settings, string host,
+            int port = 25)
+        {
+            var client = new SMTPClient(settings, host, port);
+
+            container.SatisfyImportsOnce(client);
+
+            return client;
+        }
 
         private void Log(LogEventType type, string data = null)
         {
             if (_session == null)
             {
                 _session = Guid.NewGuid().ToString("N").Substring(0, 10);
-                _localEndpoint  = (IPEndPoint)_client.Client.LocalEndPoint;
-                _remoteEndpoint = (IPEndPoint)_client.Client.RemoteEndPoint;
+                _localEndpoint = (IPEndPoint) _client.Client.LocalEndPoint;
+                _remoteEndpoint = (IPEndPoint) _client.Client.RemoteEndPoint;
             }
             foreach (var logger in _loggers)
             {
@@ -87,7 +101,8 @@ namespace HydraCore
 
             if (EnableSsl)
             {
-                var sslStream = new SslStream(_stream, false, UserCertificateValidationCallback, UserCertificateSelectionCallback, EncryptionPolicy.RequireEncryption);
+                var sslStream = new SslStream(_stream, false, UserCertificateValidationCallback,
+                    UserCertificateSelectionCallback, EncryptionPolicy.RequireEncryption);
 
                 sslStream.AuthenticateAsClient(Host, Certificates, SslProtocols.Default, true);
 
@@ -127,8 +142,6 @@ namespace HydraCore
 
             return true;
         }
-
-        private bool _authenticated = false;
 
         public bool SendMail(string from, string[] recipients, string body)
         {
@@ -202,7 +215,6 @@ namespace HydraCore
 
             if (Credentials != null)
             {
-
                 if (_authMethods.Contains("PLAIN", StringComparer.InvariantCultureIgnoreCase))
                 {
                     if (AuthPlain())
@@ -236,7 +248,7 @@ namespace HydraCore
         private void RefreshWriter()
         {
             if (_writer != null) _writer.Close();
-            _writer = new StreamWriter(_stream, Encoding.ASCII, 1000, true) { NewLine = "\r\n" };
+            _writer = new StreamWriter(_stream, Encoding.ASCII, 1000, true) {NewLine = "\r\n"};
         }
 
         private void RefreshReader()
@@ -256,7 +268,8 @@ namespace HydraCore
                 return false;
             }
 
-            var sslStream = new SslStream(_stream, false, UserCertificateValidationCallback, UserCertificateSelectionCallback, EncryptionPolicy.RequireEncryption);
+            var sslStream = new SslStream(_stream, false, UserCertificateValidationCallback,
+                UserCertificateSelectionCallback, EncryptionPolicy.RequireEncryption);
 
             sslStream.AuthenticateAsClient(Host, Certificates, SslProtocols.Default, true);
 
@@ -319,7 +332,7 @@ namespace HydraCore
             if (nc != null)
             {
                 // var auth = Base64Encode(String.Format("{0} {1}", nc.UserName, nc.Password));
-                var auth = Base64Encode(String.Format("\0{0}\0{1}", nc.UserName, nc.Password));
+                var auth = Base64Encode(string.Format("\0{0}\0{1}", nc.UserName, nc.Password));
 
                 Write("AUTH PLAIN {0}", auth);
 
@@ -361,7 +374,7 @@ namespace HydraCore
                 Log(LogEventType.Incoming, line);
 
                 if (line.Length < 4) throw new Exception("Unexpected reply by server");
-                var newCode = (SMTPStatusCode)int.Parse(line.Substring(0, 3));
+                var newCode = (SMTPStatusCode) int.Parse(line.Substring(0, 3));
                 var message = line.Substring(4);
 
                 if (code != null && newCode != code)
@@ -433,7 +446,8 @@ namespace HydraCore
             Log(LogEventType.Disconnect);
         }
 
-        private X509Certificate UserCertificateSelectionCallback(object sender, string targetHost, X509CertificateCollection localCertificates, X509Certificate remoteCertificate, string[] acceptableIssuers)
+        private X509Certificate UserCertificateSelectionCallback(object sender, string targetHost,
+            X509CertificateCollection localCertificates, X509Certificate remoteCertificate, string[] acceptableIssuers)
         {
             Debug.WriteLine("Client is selecting a local certificate.");
             if (acceptableIssuers != null &&
@@ -442,9 +456,9 @@ namespace HydraCore
                 localCertificates.Count > 0)
             {
                 // Use the first certificate that is from an acceptable issuer. 
-                foreach (X509Certificate certificate in localCertificates)
+                foreach (var certificate in localCertificates)
                 {
-                    string issuer = certificate.Issuer;
+                    var issuer = certificate.Issuer;
                     if (Array.IndexOf(acceptableIssuers, issuer) != -1)
                         return certificate;
                 }
@@ -456,18 +470,19 @@ namespace HydraCore
             return null;
         }
 
-        private bool UserCertificateValidationCallback(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        private bool UserCertificateValidationCallback(object sender, X509Certificate certificate, X509Chain chain,
+            SslPolicyErrors sslPolicyErrors)
         {
             //Return true if the server certificate is ok
             if (sslPolicyErrors == SslPolicyErrors.None)
                 return true;
 
-            bool acceptCertificate = true;
-            string msg = "The server could not be validated for the following reason(s):\r\n";
+            var acceptCertificate = true;
+            var msg = "The server could not be validated for the following reason(s):\r\n";
 
             //The server did not present a certificate
             if ((sslPolicyErrors &
-                SslPolicyErrors.RemoteCertificateNotAvailable) == SslPolicyErrors.RemoteCertificateNotAvailable)
+                 SslPolicyErrors.RemoteCertificateNotAvailable) == SslPolicyErrors.RemoteCertificateNotAvailable)
             {
                 msg = msg + "\r\n    -The server did not present a certificate.\r\n";
                 acceptCertificate = false;
@@ -476,7 +491,7 @@ namespace HydraCore
             {
                 //The certificate does not match the server name
                 if ((sslPolicyErrors &
-                    SslPolicyErrors.RemoteCertificateNameMismatch) == SslPolicyErrors.RemoteCertificateNameMismatch)
+                     SslPolicyErrors.RemoteCertificateNameMismatch) == SslPolicyErrors.RemoteCertificateNameMismatch)
                 {
                     msg = msg + "\r\n    -The certificate name does not match the authenticated name.\r\n";
                     acceptCertificate = false;
@@ -484,9 +499,9 @@ namespace HydraCore
 
                 //There is some other problem with the certificate
                 if ((sslPolicyErrors &
-                    SslPolicyErrors.RemoteCertificateChainErrors) == SslPolicyErrors.RemoteCertificateChainErrors)
+                     SslPolicyErrors.RemoteCertificateChainErrors) == SslPolicyErrors.RemoteCertificateChainErrors)
                 {
-                    foreach (X509ChainStatus item in chain.ChainStatus)
+                    foreach (var item in chain.ChainStatus)
                     {
                         if (item.Status != X509ChainStatusFlags.RevocationStatusUnknown &&
                             item.Status != X509ChainStatusFlags.OfflineRevocation)

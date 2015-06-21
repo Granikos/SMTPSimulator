@@ -162,7 +162,8 @@
     <Compile Include="IModuleLoader.cs" />
     <Compile Include="IPRange.cs" />
     <Compile Include="IPSubnet.cs" />
-    <Compile Include="ISettings.cs" />
+    <Compile Include="IReceiveSettings.cs" />
+    <Compile Include="ISendSettings.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />
     <Compile Include="Logging\ISMTPLogger.cs" />
     <Compile Include="Logging\LogEventType.cs" />

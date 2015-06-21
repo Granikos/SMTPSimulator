@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using HydraCore;
 using HydraService.Models;
 
 namespace HydraService
@@ -12,6 +10,33 @@ namespace HydraService
     {
         [OperationContract]
         void SetProperty(string name, string value);
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "Domains",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<string> GetDomains();
+
+        [WebGet(
+            UriTemplate = "Domains/{domain}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool DomainExists(string domain);
+
+        [WebInvoke(
+            UriTemplate = "Domains/{domain}",
+            Method = "PUT",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool AddDomain(string domain);
+
+        [WebInvoke(
+            UriTemplate = "Domains/{domain}",
+            Method = "DELETE",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool DeleteDomain(string domain);
 
         // TODO: Clean up
         [OperationContract]
@@ -41,7 +66,7 @@ namespace HydraService
             Method = "PUT",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        RecieveConnector AddRecieveConnector(RecieveConnector binding);
+        RecieveConnector AddRecieveConnector(RecieveConnector connector);
 
         [OperationContract]
         [WebInvoke(
@@ -49,7 +74,7 @@ namespace HydraService
             Method = "POST",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        RecieveConnector UpdateRecieveConnector(RecieveConnector binding);
+        RecieveConnector UpdateRecieveConnector(RecieveConnector connector);
 
         [OperationContract]
         [WebInvoke(
@@ -60,19 +85,49 @@ namespace HydraService
         bool DeleteRecieveConnector(int id);
 
         [OperationContract]
-        IEnumerable<ServerSubnetConfiguration> GetSubnets();
+        [WebGet(
+            UriTemplate = "DefaultSendConnector",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        SendConnector GetDefaultSendConnector();
 
         [OperationContract]
-        ServerSubnetConfiguration GetSubnet(int id);
+        [WebGet(
+            UriTemplate = "SendConnectors",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<SendConnector> GetSendConnectors();
 
         [OperationContract]
-        ServerSubnetConfiguration AddSubnet(ServerSubnetConfiguration subnet);
+        [WebGet(
+            UriTemplate = "SendConnectors/{id}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        SendConnector GetSendConnector(int id);
 
         [OperationContract]
-        ServerSubnetConfiguration UpdateSubnet(ServerSubnetConfiguration subnet);
+        [WebInvoke(
+            UriTemplate = "SendConnectors",
+            Method = "PUT",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        SendConnector AddSendConnector(SendConnector connector);
 
         [OperationContract]
-        bool DeleteSubnet(int id);
+        [WebInvoke(
+            UriTemplate = "SendConnectors",
+            Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        SendConnector UpdateSendConnector(SendConnector connector);
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "SendConnectors/{id}",
+            Method = "DELETE",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool DeleteSendConnector(int id);
 
         [OperationContract]
         IEnumerable<LocalUser> GetLocalUsers();

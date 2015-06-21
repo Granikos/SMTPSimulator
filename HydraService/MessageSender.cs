@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Mail;
-using System.Threading.Tasks.Dataflow;
+using System.Threading;
 using ARSoft.Tools.Net.Dns;
 using HydraCore;
+using HydraService.PriorityQueue;
 using HydraService.Providers;
-using Path = System.IO.Path;
 
 namespace HydraService
 {
@@ -25,77 +24,61 @@ namespace HydraService
             container.SatisfyImportsOnce(this);
         }
 
-        public string Diretory { get; set; }
+        readonly DelayedQueue<Mail> _mailQueue = new DelayedQueue<Mail>(1000);
 
-        private readonly BufferBlock<Mail> _mails = new BufferBlock<Mail>();
-
-        [Import]
-        private ILocalUserProvider _localUsers;
-
-        [Import]
-        private IExternalUserProvider _externalUsers;
-
-        public void Enqueue(Mail mail)
+        public void Enqueue(Mail mail, TimeSpan delay = default(TimeSpan))
         {
-            _mails.Post(mail);
+            _mailQueue.Enqueue(mail, delay);
         }
 
         private int _id = 1;
 
+        [Import]
+        private ISendConnectorProvider sendConnectors;
+
         public async void ProcessMail()
         {
-            var mail = await _mails.ReceiveAsync();
+            var mail = Dequeue();
 
             var badMailAdresses = new List<MailAddress>();
 
             foreach (var recipientGroup in mail.Recipients.GroupBy(r => r.Host))
             {
-                List<MailAddress> externalMails = new List<MailAddress>();
+                var host = recipientGroup.Key;
+                var connector = sendConnectors.All()
+                    .FirstOrDefault(s => s.Domains.Contains(host, StringComparer.InvariantCultureIgnoreCase));
 
-                foreach (var recipient in recipientGroup)
+                if (connector != null)
                 {
-                    var local = _localUsers.GetByEmail(recipient.Address);
+                    string remoteHost;
+                    int remotePort;
 
-                    if (local != null)
+                    if (connector.UseSmarthost)
                     {
-                        using (var emlFile = File.Create(Path.Combine(Diretory, local.Id.ToString(), (_id++) + ".eml")))
-                        using (var writer = new StreamWriter(emlFile))
-                        {
-                            writer.Write(mail.ToString());
-                            writer.Flush();
-                        }
+                        var response = await DnsClient.Default.ResolveAsync(recipientGroup.Key, RecordType.Mx);
+                        var records = response.AnswerRecords.OfType<MxRecord>();
+                        remoteHost = records.OrderBy(record => record.Preference).First().ExchangeDomainName;
+                        remotePort = 25;
                     }
                     else
                     {
-                        var external = _externalUsers.GetByEmail(recipient.ToString());
-
-                        if (external == null)
-                        {
-                            badMailAdresses.Add(recipient);
-                        }
-                        else
-                        {
-                            externalMails.Add(recipient);
-                        }
+                        remoteHost = connector.RemoteAddress.ToString();
+                        remotePort = connector.RemotePort;
                     }
-                }
 
-                if (externalMails.Any())
-                {
-                    var response = await DnsClient.Default.ResolveAsync(recipientGroup.Key, RecordType.Mx);
-                    var records = response.AnswerRecords.OfType<MxRecord>();
-                    var domain = records.OrderBy(record => record.Preference).First().ExchangeDomainName;
+                    var addresses = recipientGroup.Select(m => m.Address).ToArray();
 
-                    var client = SMTPClient.Create(_container, domain);
+                    var settings = new DefaultSendSettings(connector);
+
+                    var client = SMTPClient.Create(_container, settings, remoteHost, remotePort);
 
                     var success = client.Connect();
-                    success &= client.SendMail(mail.From.ToString(), externalMails.Select(m => m.Address).ToArray(),
-                        mail.ToString());
+                    success &= client.SendMail(mail.From.ToString(), addresses, mail.ToString());
                     client.Close();
 
                     if (!success)
                     {
-                        badMailAdresses.AddRange(externalMails);
+                        // TODO
                     }
                 }
             }
@@ -105,6 +88,20 @@ namespace HydraService
                 Debug.WriteLine("Error with recipients: " + string.Join(", ", badMailAdresses.Select(m => m.ToString())));
                 // Enqueue(CreateErrorMail(mail, badMailAdresses));
             }
+        }
+
+        private Mail Dequeue()
+        {
+            Mail mail = null;
+
+            while (mail == null)
+            {
+                while (_mailQueue.Peek() == null) Thread.Sleep(100);
+
+                mail = _mailQueue.Dequeue();
+            }
+
+            return mail;
         }
 
         private Mail CreateErrorMail(Mail original, IEnumerable<MailAddress> errorAddresses)

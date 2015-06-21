@@ -72,3 +72,11 @@ input.ng-valid.ng-dirty {
   color: #fff;
   margin-bottom: 2px;
 }
+
+.domain-list .list-group-item {
+    padding: 5px 8px;
+}
+
+.domain-list input[type=checkbox] {
+    margin-right: 5px;
+}

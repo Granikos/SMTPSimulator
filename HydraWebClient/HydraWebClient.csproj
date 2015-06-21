@@ -173,10 +173,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SendConnectorsController.cs" />
     <Compile Include="Controllers\RecieveConnectorController.cs" />
     <Compile Include="Controllers\ServerController.cs" />
     <Compile Include="Controllers\LocalUsersController.cs" />
-    <Compile Include="Controllers\ServerSubnetsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -218,13 +218,13 @@
     <None Include="Service References\HydraConfigurationService\HydraCore.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.ServerSubnetConfiguration.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <None Include="Service References\HydraConfigurationService\HydraService.Models.xsd">
       <SubType>Designer</SubType>
     </None>
     <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.RecieveConnector.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.SendConnector.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Service References\HydraConfigurationService\Reference.svcmap">
@@ -276,12 +276,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\HydraConfigurationService\System.Net.Security.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\HydraConfigurationService\System.Net.Sockets.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\HydraConfigurationService\System.Net.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
