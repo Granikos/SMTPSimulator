@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 namespace HydraService.Models
 {
     [DataContract]
-    public class LocalUser : IEntity
+    public class LocalUser : IEntity<int>
     {
         [DataMember]
         public int Id { get; set; }

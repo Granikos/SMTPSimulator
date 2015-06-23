@@ -5,9 +5,8 @@ using System.Runtime.Serialization;
 namespace HydraService.Models
 {
     [DataContract]
-    public class SendConnector : IEntity
+    public class SendConnector : IEntity<int>
     {
-        private string[] _domains;
         private TLSSettings _tlsSettings;
 
         public SendConnector(IPAddress remoteIP = null)
@@ -33,14 +32,6 @@ namespace HydraService.Models
         {
             get { return LocalAddress.ToString(); }
             set { LocalAddress = IPAddress.Parse(value); }
-        }
-
-        [Required]
-        [DataMember]
-        public string[] Domains
-        {
-            get { return _domains; }
-            set { _domains = value ?? new string[0]; }
         }
 
         public IPAddress RemoteAddress { get; set; }

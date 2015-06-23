@@ -16,27 +16,34 @@ namespace HydraService
             UriTemplate = "Domains",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        IEnumerable<string> GetDomains();
+        IEnumerable<Domain> GetDomains();
 
         [WebGet(
             UriTemplate = "Domains/{domain}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        bool DomainExists(string domain);
+        Domain GetDomain(string domain);
+
+        [WebInvoke(
+            UriTemplate = "Domains",
+            Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        Domain UpdateDomain(Domain domain);
 
         [WebInvoke(
             UriTemplate = "Domains/{domain}",
             Method = "PUT",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        bool AddDomain(string domain);
+        Domain AddDomain(string domain);
 
         [WebInvoke(
-            UriTemplate = "Domains/{domain}",
+            UriTemplate = "Domains/{id}",
             Method = "DELETE",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        bool DeleteDomain(string domain);
+        bool DeleteDomain(int id);
 
         // TODO: Clean up
         [OperationContract]
@@ -89,7 +96,20 @@ namespace HydraService
             UriTemplate = "DefaultSendConnector",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
+        SendConnector GetEmptySendConnector();
+
+        [WebGet(
+            UriTemplate = "DefaultSendConnector",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
         SendConnector GetDefaultSendConnector();
+
+        [WebInvoke(
+            UriTemplate = "DefaultSendConnector/{id}",
+            Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool SetDefaultSendConnector(int id);
 
         [OperationContract]
         [WebGet(

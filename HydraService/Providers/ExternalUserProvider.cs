@@ -6,16 +6,16 @@ using HydraService.Models;
 namespace HydraService.Providers
 {
     [Export(typeof(IExternalUserProvider))]
-    public class ExternalUserProvider : InMemoryProvider<ExternalUser>, IExternalUserProvider
+    public class ExternalUserProvider : DefaultProvider<ExternalUser>, IExternalUserProvider
     {
         public ExternalUserProvider()
         {
-            OnAdd += entity =>
+            OnAdded += entity =>
             {
                 _usersByEmail.Add(entity.Mailbox, entity);
             };
 
-            OnRemove += entity =>
+            OnRemoved += entity =>
             {
                 _usersByEmail.Remove(entity.Mailbox);
             };

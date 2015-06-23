@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Net;
 using HydraCore;
@@ -7,7 +6,7 @@ using HydraService.Models;
 namespace HydraService.Providers
 {
     [Export(typeof(IRecieveConnectorProvider))]
-    public class ReceiveConnectorProvider : InMemoryProvider<RecieveConnector>, IRecieveConnectorProvider
+    public class ReceiveConnectorProvider : DefaultProvider<RecieveConnector>, IRecieveConnectorProvider
     {
         public ReceiveConnectorProvider()
         {

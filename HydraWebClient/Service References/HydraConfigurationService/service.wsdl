@@ -14,11 +14,11 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/HydraService.Models" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/HydraCore" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Net.Security" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Security.Authentication" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IConfigurationService_SetProperty_InputMessage">
@@ -33,11 +33,17 @@
   <wsdl:message name="IConfigurationService_GetDomains_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetDomainsResponse" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_DomainExists_InputMessage">
-    <wsdl:part name="parameters" element="tns:DomainExists" />
+  <wsdl:message name="IConfigurationService_GetDomain_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDomain" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_DomainExists_OutputMessage">
-    <wsdl:part name="parameters" element="tns:DomainExistsResponse" />
+  <wsdl:message name="IConfigurationService_GetDomain_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDomainResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_UpdateDomain_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateDomain" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_UpdateDomain_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateDomainResponse" />
   </wsdl:message>
   <wsdl:message name="IConfigurationService_AddDomain_InputMessage">
     <wsdl:part name="parameters" element="tns:AddDomain" />
@@ -87,11 +93,23 @@
   <wsdl:message name="IConfigurationService_DeleteRecieveConnector_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteRecieveConnectorResponse" />
   </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetEmptySendConnector_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmptySendConnector" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetEmptySendConnector_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmptySendConnectorResponse" />
+  </wsdl:message>
   <wsdl:message name="IConfigurationService_GetDefaultSendConnector_InputMessage">
     <wsdl:part name="parameters" element="tns:GetDefaultSendConnector" />
   </wsdl:message>
   <wsdl:message name="IConfigurationService_GetDefaultSendConnector_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetDefaultSendConnectorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_SetDefaultSendConnector_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetDefaultSendConnector" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_SetDefaultSendConnector_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetDefaultSendConnectorResponse" />
   </wsdl:message>
   <wsdl:message name="IConfigurationService_GetSendConnectors_InputMessage">
     <wsdl:part name="parameters" element="tns:GetSendConnectors" />
@@ -186,9 +204,13 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetDomains" message="tns:IConfigurationService_GetDomains_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetDomainsResponse" message="tns:IConfigurationService_GetDomains_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="DomainExists">
-      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DomainExists" message="tns:IConfigurationService_DomainExists_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DomainExistsResponse" message="tns:IConfigurationService_DomainExists_OutputMessage" />
+    <wsdl:operation name="GetDomain">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetDomain" message="tns:IConfigurationService_GetDomain_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetDomainResponse" message="tns:IConfigurationService_GetDomain_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDomain">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/UpdateDomain" message="tns:IConfigurationService_UpdateDomain_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/UpdateDomainResponse" message="tns:IConfigurationService_UpdateDomain_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AddDomain">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/AddDomain" message="tns:IConfigurationService_AddDomain_InputMessage" />
@@ -222,9 +244,17 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DeleteRecieveConnector" message="tns:IConfigurationService_DeleteRecieveConnector_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DeleteRecieveConnectorResponse" message="tns:IConfigurationService_DeleteRecieveConnector_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetEmptySendConnector">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetEmptySendConnector" message="tns:IConfigurationService_GetEmptySendConnector_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetEmptySendConnectorResponse" message="tns:IConfigurationService_GetEmptySendConnector_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetDefaultSendConnector">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetDefaultSendConnector" message="tns:IConfigurationService_GetDefaultSendConnector_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetDefaultSendConnectorResponse" message="tns:IConfigurationService_GetDefaultSendConnector_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetDefaultSendConnector">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/SetDefaultSendConnector" message="tns:IConfigurationService_SetDefaultSendConnector_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/SetDefaultSendConnectorResponse" message="tns:IConfigurationService_SetDefaultSendConnector_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetSendConnectors">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetSendConnectors" message="tns:IConfigurationService_GetSendConnectors_InputMessage" />
@@ -305,8 +335,17 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="DomainExists">
-      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/DomainExists" style="document" />
+    <wsdl:operation name="GetDomain">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetDomain" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDomain">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/UpdateDomain" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -386,8 +425,26 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetEmptySendConnector">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetEmptySendConnector" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetDefaultSendConnector">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetDefaultSendConnector" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetDefaultSendConnector">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/SetDefaultSendConnector" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

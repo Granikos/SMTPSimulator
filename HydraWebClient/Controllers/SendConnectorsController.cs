@@ -13,10 +13,29 @@ namespace HydraWebClient.Controllers
         readonly ConfigurationServiceClient _service = new ConfigurationServiceClient();
 
         [HttpGet]
+        [Route("Empty")]
+        public SendConnector Empty()
+        {
+            return _service.GetEmptySendConnector();
+        }
+
+        [HttpGet]
         [Route("Default")]
         public SendConnector Default()
         {
             return _service.GetDefaultSendConnector();
+        }
+
+        [HttpPost]
+        [Route("Default/{id:int}")]
+        public HttpResponseMessage SetDefault(int id)
+        {
+            if (!_service.SetDefaultSendConnector(id))
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Could not update default send connector.");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         // GET api/SendConnectors
@@ -33,14 +52,6 @@ namespace HydraWebClient.Controllers
         public IEnumerable<string> GetCertificates()
         {
             return _service.GetCertificateFiles();
-        }
-
-        // GET api/SendConnectors/Domains
-        [HttpGet]
-        [Route("Domains")]
-        public IEnumerable<string> GetDomains()
-        {
-            return _service.GetDomains();
         }
 
         // GET api/SendConnectors/5

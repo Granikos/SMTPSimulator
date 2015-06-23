@@ -5,7 +5,7 @@ using HydraService.Models;
 namespace HydraService.Providers
 {
     [Export(typeof(ILocalUserProvider))]
-    public class LocalUserProvider : InMemoryProvider<LocalUser>, ILocalUserProvider
+    public class LocalUserProvider : DefaultProvider<LocalUser>, ILocalUserProvider
     {
         public LocalUserProvider()
         {
@@ -22,12 +22,12 @@ namespace HydraService.Providers
                     Mailbox = "eva.schmidt@test.de"
                 });
 
-            OnAdd += entity =>
+            OnAdded += entity =>
             {
                 _usersByEmail.Add(entity.Mailbox, entity);
             };
 
-            OnRemove += entity =>
+            OnRemoved += entity =>
             {
                 _usersByEmail.Remove(entity.Mailbox);
             };

@@ -162,6 +162,8 @@
     <Compile Include="PriorityQueue\HeapPriorityQueue.cs" />
     <Compile Include="PriorityQueue\IPriorityQueue.cs" />
     <Compile Include="PriorityQueue\PriorityQueueNode.cs" />
+    <Compile Include="Providers\DefaultProvider.cs" />
+    <Compile Include="Models\Domain.cs" />
     <Compile Include="Providers\DomainProvider.cs" />
     <Compile Include="Providers\ExternalUserProvider.cs" />
     <Compile Include="Providers\IDataProvider.cs" />
@@ -174,12 +176,9 @@
     <Compile Include="Models\LocalUser.cs" />
     <Compile Include="Models\RecieveConnector.cs" />
     <Compile Include="Providers\ISendConnectorProvider.cs" />
-    <Compile Include="Providers\IServerSubnetProvider.cs" />
     <Compile Include="Providers\LocalUserProvider.cs" />
     <Compile Include="Providers\ReceiveConnectorProvider.cs" />
-    <Compile Include="Models\ServerSubnetConfiguration.cs" />
     <Compile Include="Providers\SendConnectorProvider.cs" />
-    <Compile Include="Providers\ServerSubnetProvider.cs" />
     <Compile Include="SMTPServer.cs" />
     <Compile Include="SMTPService.cs">
       <SubType>Component</SubType>

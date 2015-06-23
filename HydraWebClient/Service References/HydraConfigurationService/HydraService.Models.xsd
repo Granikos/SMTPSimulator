@@ -3,7 +3,20 @@
   <xs:import namespace="http://schemas.datacontract.org/2004/07/HydraCore" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/System.Net.Security" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/System.Security.Authentication" />
-  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="ArrayOfDomain">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Domain" nillable="true" type="tns:Domain" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDomain" nillable="true" type="tns:ArrayOfDomain" />
+  <xs:complexType name="Domain">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DomainName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="SendConnectorId" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Domain" nillable="true" type="tns:Domain" />
   <xs:complexType name="RecieveConnector">
     <xs:sequence>
       <xs:element minOccurs="0" name="AddressString" nillable="true" type="xs:string" />
@@ -59,7 +72,6 @@
   <xs:element name="ArrayOfRecieveConnector" nillable="true" type="tns:ArrayOfRecieveConnector" />
   <xs:complexType name="SendConnector">
     <xs:sequence>
-      <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Domains" nillable="true" type="q4:ArrayOfstring" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="LocalAddressString" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />

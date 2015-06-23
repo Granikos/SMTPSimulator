@@ -15,6 +15,83 @@ namespace HydraWebClient.HydraConfigurationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Domain", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
+    [System.SerializableAttribute()]
+    public partial class Domain : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DomainNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> SendConnectorIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DomainName {
+            get {
+                return this.DomainNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DomainNameField, value) != true)) {
+                    this.DomainNameField = value;
+                    this.RaisePropertyChanged("DomainName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> SendConnectorId {
+            get {
+                return this.SendConnectorIdField;
+            }
+            set {
+                if ((this.SendConnectorIdField.Equals(value) != true)) {
+                    this.SendConnectorIdField = value;
+                    this.RaisePropertyChanged("SendConnectorId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RecieveConnector", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
     [System.SerializableAttribute()]
     public partial class RecieveConnector : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -493,9 +570,6 @@ namespace HydraWebClient.HydraConfigurationService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string[] DomainsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -532,19 +606,6 @@ namespace HydraWebClient.HydraConfigurationService {
             }
             set {
                 this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] Domains {
-            get {
-                return this.DomainsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DomainsField, value) != true)) {
-                    this.DomainsField = value;
-                    this.RaisePropertyChanged("Domains");
-                }
             }
         }
         
@@ -792,28 +853,34 @@ namespace HydraWebClient.HydraConfigurationService {
         System.Threading.Tasks.Task SetPropertyAsync(string name, string value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDomains", ReplyAction="http://tempuri.org/IConfigurationService/GetDomainsResponse")]
-        string[] GetDomains();
+        HydraWebClient.HydraConfigurationService.Domain[] GetDomains();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDomains", ReplyAction="http://tempuri.org/IConfigurationService/GetDomainsResponse")]
-        System.Threading.Tasks.Task<string[]> GetDomainsAsync();
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.Domain[]> GetDomainsAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DomainExists", ReplyAction="http://tempuri.org/IConfigurationService/DomainExistsResponse")]
-        bool DomainExists(string domain);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDomain", ReplyAction="http://tempuri.org/IConfigurationService/GetDomainResponse")]
+        HydraWebClient.HydraConfigurationService.Domain GetDomain(string domain);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DomainExists", ReplyAction="http://tempuri.org/IConfigurationService/DomainExistsResponse")]
-        System.Threading.Tasks.Task<bool> DomainExistsAsync(string domain);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDomain", ReplyAction="http://tempuri.org/IConfigurationService/GetDomainResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.Domain> GetDomainAsync(string domain);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateDomain", ReplyAction="http://tempuri.org/IConfigurationService/UpdateDomainResponse")]
+        HydraWebClient.HydraConfigurationService.Domain UpdateDomain(HydraWebClient.HydraConfigurationService.Domain domain);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateDomain", ReplyAction="http://tempuri.org/IConfigurationService/UpdateDomainResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.Domain> UpdateDomainAsync(HydraWebClient.HydraConfigurationService.Domain domain);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddDomain", ReplyAction="http://tempuri.org/IConfigurationService/AddDomainResponse")]
-        bool AddDomain(string domain);
+        HydraWebClient.HydraConfigurationService.Domain AddDomain(string domain);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddDomain", ReplyAction="http://tempuri.org/IConfigurationService/AddDomainResponse")]
-        System.Threading.Tasks.Task<bool> AddDomainAsync(string domain);
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.Domain> AddDomainAsync(string domain);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteDomain", ReplyAction="http://tempuri.org/IConfigurationService/DeleteDomainResponse")]
-        bool DeleteDomain(string domain);
+        bool DeleteDomain(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteDomain", ReplyAction="http://tempuri.org/IConfigurationService/DeleteDomainResponse")]
-        System.Threading.Tasks.Task<bool> DeleteDomainAsync(string domain);
+        System.Threading.Tasks.Task<bool> DeleteDomainAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDefaultRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetDefaultRecieveConnectorResponse")]
         HydraWebClient.HydraConfigurationService.RecieveConnector GetDefaultRecieveConnector();
@@ -851,11 +918,23 @@ namespace HydraWebClient.HydraConfigurationService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/DeleteRecieveConnectorResponse")]
         System.Threading.Tasks.Task<bool> DeleteRecieveConnectorAsync(int id);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetEmptySendConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetEmptySendConnectorResponse")]
+        HydraWebClient.HydraConfigurationService.SendConnector GetEmptySendConnector();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetEmptySendConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetEmptySendConnectorResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.SendConnector> GetEmptySendConnectorAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDefaultSendConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetDefaultSendConnectorResponse")]
         HydraWebClient.HydraConfigurationService.SendConnector GetDefaultSendConnector();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDefaultSendConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetDefaultSendConnectorResponse")]
         System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.SendConnector> GetDefaultSendConnectorAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/SetDefaultSendConnector", ReplyAction="http://tempuri.org/IConfigurationService/SetDefaultSendConnectorResponse")]
+        bool SetDefaultSendConnector(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/SetDefaultSendConnector", ReplyAction="http://tempuri.org/IConfigurationService/SetDefaultSendConnectorResponse")]
+        System.Threading.Tasks.Task<bool> SetDefaultSendConnectorAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetSendConnectors", ReplyAction="http://tempuri.org/IConfigurationService/GetSendConnectorsResponse")]
         HydraWebClient.HydraConfigurationService.SendConnector[] GetSendConnectors();
@@ -977,36 +1056,44 @@ namespace HydraWebClient.HydraConfigurationService {
             return base.Channel.SetPropertyAsync(name, value);
         }
         
-        public string[] GetDomains() {
+        public HydraWebClient.HydraConfigurationService.Domain[] GetDomains() {
             return base.Channel.GetDomains();
         }
         
-        public System.Threading.Tasks.Task<string[]> GetDomainsAsync() {
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.Domain[]> GetDomainsAsync() {
             return base.Channel.GetDomainsAsync();
         }
         
-        public bool DomainExists(string domain) {
-            return base.Channel.DomainExists(domain);
+        public HydraWebClient.HydraConfigurationService.Domain GetDomain(string domain) {
+            return base.Channel.GetDomain(domain);
         }
         
-        public System.Threading.Tasks.Task<bool> DomainExistsAsync(string domain) {
-            return base.Channel.DomainExistsAsync(domain);
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.Domain> GetDomainAsync(string domain) {
+            return base.Channel.GetDomainAsync(domain);
         }
         
-        public bool AddDomain(string domain) {
+        public HydraWebClient.HydraConfigurationService.Domain UpdateDomain(HydraWebClient.HydraConfigurationService.Domain domain) {
+            return base.Channel.UpdateDomain(domain);
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.Domain> UpdateDomainAsync(HydraWebClient.HydraConfigurationService.Domain domain) {
+            return base.Channel.UpdateDomainAsync(domain);
+        }
+        
+        public HydraWebClient.HydraConfigurationService.Domain AddDomain(string domain) {
             return base.Channel.AddDomain(domain);
         }
         
-        public System.Threading.Tasks.Task<bool> AddDomainAsync(string domain) {
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.Domain> AddDomainAsync(string domain) {
             return base.Channel.AddDomainAsync(domain);
         }
         
-        public bool DeleteDomain(string domain) {
-            return base.Channel.DeleteDomain(domain);
+        public bool DeleteDomain(int id) {
+            return base.Channel.DeleteDomain(id);
         }
         
-        public System.Threading.Tasks.Task<bool> DeleteDomainAsync(string domain) {
-            return base.Channel.DeleteDomainAsync(domain);
+        public System.Threading.Tasks.Task<bool> DeleteDomainAsync(int id) {
+            return base.Channel.DeleteDomainAsync(id);
         }
         
         public HydraWebClient.HydraConfigurationService.RecieveConnector GetDefaultRecieveConnector() {
@@ -1057,12 +1144,28 @@ namespace HydraWebClient.HydraConfigurationService {
             return base.Channel.DeleteRecieveConnectorAsync(id);
         }
         
+        public HydraWebClient.HydraConfigurationService.SendConnector GetEmptySendConnector() {
+            return base.Channel.GetEmptySendConnector();
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.SendConnector> GetEmptySendConnectorAsync() {
+            return base.Channel.GetEmptySendConnectorAsync();
+        }
+        
         public HydraWebClient.HydraConfigurationService.SendConnector GetDefaultSendConnector() {
             return base.Channel.GetDefaultSendConnector();
         }
         
         public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.SendConnector> GetDefaultSendConnectorAsync() {
             return base.Channel.GetDefaultSendConnectorAsync();
+        }
+        
+        public bool SetDefaultSendConnector(int id) {
+            return base.Channel.SetDefaultSendConnector(id);
+        }
+        
+        public System.Threading.Tasks.Task<bool> SetDefaultSendConnectorAsync(int id) {
+            return base.Channel.SetDefaultSendConnectorAsync(id);
         }
         
         public HydraWebClient.HydraConfigurationService.SendConnector[] GetSendConnectors() {

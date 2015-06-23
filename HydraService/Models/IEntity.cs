@@ -1,7 +1,10 @@
+using System;
+
 namespace HydraService.Models
 {
-    public interface IEntity
+    public interface IEntity<TKey>
+        where TKey : IComparable<TKey>
     {
-        int Id { get; set; }
+        TKey Id { get; set; }
     }
 }

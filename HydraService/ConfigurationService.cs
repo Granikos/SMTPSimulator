@@ -30,24 +30,29 @@ namespace HydraService
         [Import]
         private IDomainProvider _domains;
 
-        public IEnumerable<string> GetDomains()
+        public IEnumerable<Domain> GetDomains()
         {
-            return _domains.GetDomains();
+            return _domains.All();
         }
 
-        public bool DomainExists(string domain)
+        public Domain GetDomain(string domain)
         {
-            return _domains.Exists(domain);
+            return _domains.All().FirstOrDefault(d => d.DomainName.Equals(domain, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        public bool AddDomain(string domain)
+        public Domain UpdateDomain(Domain domain)
         {
-            return _domains.Add(domain);
+            return _domains.Update(domain);
         }
 
-        public bool DeleteDomain(string domain)
+        public Domain AddDomain(string domain)
         {
-            return _domains.Delete(domain);
+            return _domains.Add(new Domain(domain));
+        }
+
+        public bool DeleteDomain(int id)
+        {
+            return _domains.Delete(id);
         }
 
         public ConfigurationService(SMTPCore core, ISMTPServerContainer servers)
@@ -86,12 +91,31 @@ namespace HydraService
             return _sendConnectors.Delete(id);
         }
 
+        public SendConnector GetDefaultSendConnector()
+        {
+            return _sendConnectors.DefaultConnector;
+        }
+
+        public bool SetDefaultSendConnector(int id)
+        {
+            try
+            {
+                _sendConnectors.DefaultId = id;
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public void SetProperty(string name, string value)
         {
             throw new NotImplementedException();
         }
 
-        public SendConnector GetDefaultSendConnector()
+        public SendConnector GetEmptySendConnector()
         {
             return new SendConnector();
         }

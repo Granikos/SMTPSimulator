@@ -6,7 +6,7 @@ using HydraCore;
 namespace HydraService.Models
 {
     [DataContract]
-    public class RecieveConnector : IEntity
+    public class RecieveConnector : IEntity<int>
     {
         private IPRange[] _remoteIPRanges;
         private TLSSettings _tlsSettings;

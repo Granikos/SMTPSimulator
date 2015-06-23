@@ -45,8 +45,9 @@ namespace HydraService
             foreach (var recipientGroup in mail.Recipients.GroupBy(r => r.Host))
             {
                 var host = recipientGroup.Key;
-                var connector = sendConnectors.All()
-                    .FirstOrDefault(s => s.Domains.Contains(host, StringComparer.InvariantCultureIgnoreCase));
+                var connector = sendConnectors.DefaultConnector; // TODO
+                    // .FirstOrDefault(s => s.Domains.Contains(host, StringComparer.InvariantCultureIgnoreCase));
+
 
                 if (connector != null)
                 {

@@ -6,19 +6,25 @@ using HydraService.Models;
 
 namespace HydraService.Providers
 {
-    public class InMemoryProvider<TEntity> : IDataProvider<TEntity>
-        where TEntity : class, IEntity
+    public class InMemoryProvider<TEntity, TKey> : IDataProvider<TEntity,TKey>
+        where TEntity : class, IEntity<TKey>
+        where TKey : IComparable<TKey>
     {
-        private int _id = 1;
+        protected Func<TEntity, TKey> AutoId;
 
-        private readonly ConcurrentDictionary<int, TEntity> _entities = new ConcurrentDictionary<int, TEntity>();
+        private readonly ConcurrentDictionary<TKey, TEntity> _entities = new ConcurrentDictionary<TKey, TEntity>();
+
+        public InMemoryProvider(Func<TEntity,TKey> autoId = null)
+        {
+            AutoId = autoId;
+        }
 
         public IEnumerable<TEntity> All()
         {
             return _entities.Values.ToList();
         }
 
-        public TEntity Get(int id)
+        public TEntity Get(TKey id)
         {
             TEntity binding;
 
@@ -27,26 +33,38 @@ namespace HydraService.Providers
             return binding;
         }
 
-        public delegate void OnAddHandler(TEntity entity);
+        public delegate void PostHandler(TEntity entity);
 
-        public event OnAddHandler OnAdd;
+        public delegate bool PreHandler(TKey id);
 
-        public delegate void OnRemoveHandler(TEntity entity);
+        public event PostHandler OnAdded;
 
-        public event OnRemoveHandler OnRemove;
+        public event PostHandler OnRemoved;
+
+        protected virtual bool CanRemove(TKey id)
+        {
+            return true;
+        }
 
         public TEntity Add(TEntity entity)
         {
-            entity.Id = _id++;
+            if (AutoId != null)
+            {
+                entity.Id = AutoId(entity);
+            }
+            else if (entity.Id == null)
+            {
+                throw new ArgumentException("Entity id not set.", "entity");
+            }
 
             if (!_entities.TryAdd(entity.Id, entity))
             {
                 return null;
             }
 
-            if (OnAdd != null)
+            if (OnAdded != null)
             {
-                OnAdd(entity);
+                OnAdded(entity);
             }
 
             return entity;
@@ -59,35 +77,37 @@ namespace HydraService.Providers
                 throw new ArgumentException(String.Format("The {1} with the id {0} does not exist.", entity.Id, typeof(TEntity).Name));
             }
 
-            if (OnRemove != null)
+            if (OnRemoved != null)
             {
-                OnRemove(_entities[entity.Id]);
+                OnRemoved(_entities[entity.Id]);
             }
 
             _entities[entity.Id] = entity;
 
-            if (OnAdd != null)
+            if (OnAdded != null)
             {
-                OnAdd(entity);
+                OnAdded(entity);
             }
 
             return entity;
         }
 
-        public bool Delete(int id)
+        public bool Delete(TKey id)
         {
             if (!_entities.ContainsKey(id))
             {
                 throw new ArgumentException(String.Format("The {1} with the id {0} does not exist.", id, typeof(TEntity).Name));
             }
 
+            if (!CanRemove(id)) return false;
+
             TEntity entity;
 
             if (!_entities.TryRemove(id, out entity)) return false;
 
-            if (OnRemove != null)
+            if (OnRemoved != null)
             {
-                OnRemove(entity);
+                OnRemoved(entity);
             }
 
             return true;

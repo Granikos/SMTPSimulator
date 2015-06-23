@@ -1,10 +1,9 @@
 ﻿<div class="container-fluid">
-    <div class="panel" ng-class="{'panel-success': connector.Enabled, 'panel-default': !connector.Enabled}" ng-repeat="connector in connectors">
+    <div class="panel" ng-class="{'panel-info': connector.Id === defaultId, 'panel-default': connector.Id !== defaultId}" ng-repeat="connector in connectors">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <input type="checkbox" ng-model="connector.Enabled" />
                 <a data-toggle="collapse" data-target="#collapse{{connector.Id}}" class="collapsed">
-                    {{connector.Name}}
+                    {{connector.Name}}&nbsp;
                 </a>
             </h4>
         </div>
@@ -64,16 +63,13 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Domains</label>
                         <div class="col-sm-8">
-                            <ul class="list-group domain-list">
-                                <li class="list-group-item">
-                                    <input type="checkbox" checklist-model="connector.Domains" checklist-value="'*'" value="*">
-                                    *
-                                </li>
-                                <li ng-repeat="domain in domains" class="list-group-item">
-                                    <input type="checkbox" checklist-model="connector.Domains" checklist-value="domain" value="{{domain}}">
-                                    {{domain}}
+                            <ul class="list-group domain-list" ng-show="filtered[connector.Id].length > 0">
+                                <li ng-repeat="domain in filtered[connector.Id] = (domains | filter: { SendConnectorId: connector.Id } : defaultComparer(defaultId))" class="list-group-item">
+                                    <i ng-show="domain.SendConnectorId === null">{{domain.DomainName}}</i>
+                                    <span ng-show="domain.SendConnectorId !== null">{{domain.DomainName}}</span>
                                 </li>
                             </ul>
+                            <p class="form-control-static" ng-show="filtered[connector.Id].length == 0">None</p>
                         </div>
                     </div>
                     <div class="panel" ng-class="{'panel-success': connector.TLSSettings.Mode > 0, 'panel-default': connector.TLSSettings.Mode == 0}">
@@ -166,10 +162,13 @@
                     <div class="form-group">
                         <div class="col-sm-12">
                             <div class="btn-group pull-right">
+                                <button type="button" class="btn btn-info" ng-click="makeDefault(connector)" ng-hide="connector.Id === defaultId || connector.__adding__">
+                                    <i class="glyphicon glyphicon-default"></i> Make Default
+                                </button>
                                 <button type="submit" class="btn btn-success" ng-hide="connector.__adding__">
                                     <i class="glyphicon glyphicon-floppy-disk"></i> Update
                                 </button>
-                                <button type="button" class="btn btn-danger" ng-click="delete(connector)" ng-hide="connector.__adding__">
+                                <button type="button" class="btn btn-danger" ng-click="delete(connector)" ng-hide="connector.Id === defaultId || connector.__adding__">
                                     <i class="glyphicon glyphicon-remove-sign"></i> Remove
                                 </button>
                                 <button type="submit" class="btn btn-success" ng-show="connector.__adding__">

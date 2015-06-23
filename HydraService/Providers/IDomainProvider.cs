@@ -1,15 +1,9 @@
-using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using HydraService.Models;
 
 namespace HydraService.Providers
 {
-    public interface IDomainProvider
+    public interface IDomainProvider : IDataProvider<Domain,int>
     {
-        IEnumerable<string> GetDomains();
-
-        bool Exists(string domain);
-
-        bool Add(string domain);
-
-        bool Delete(string domain);
     }
 }
