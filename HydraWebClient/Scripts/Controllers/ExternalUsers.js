@@ -1,80 +1,70 @@
 ﻿(function () {
-    angular.module('ExternalUsers', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.selection', 'ui.bootstrap.modal'])
+    angular.module('ExternalUsers', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.selection', 'ui.bootstrap.modal', 'ngFileUpload'])
 
         .service('ExternalUsersService', ['$http', DataService('api/ExternalUsers')])
 
+        .service("DomainService", ["$http", DataService("api/Domains")])
+
         .controller('ExternalUsersController', [
-            '$scope', '$modal', '$q', 'ExternalUsersService', function ($scope, $modal, $q, ExternalUsersService) {
+            '$scope', '$modal', '$q', '$http', 'ExternalUsersService', 'Upload', 'DomainService', function ($scope, $modal, $q, $http, ExternalUsersService, Upload, DomainService) {
                 $scope.users = [];
+                $scope.domains = {};
 
                 var columnDefs = [
                     { name: 'firstName', field: 'FirstName', editableCellTemplate: simpleEditTemplate('required') },
                     { name: 'lastName', field: 'LastName', editableCellTemplate: simpleEditTemplate('required') },
-                    { name: 'mailbox', field: 'Mailbox', editableCellTemplate: simpleEditTemplate('required', 'email'), type: 'email' }
+                    { name: 'mailbox', field: 'getMailAddress()', editableCellTemplate: simpleEditTemplate('required', 'email'), type: 'email' }
                 ];
 
-                $scope.import = function (name, content) {
-                    if (name.lastIndexOf('.csv') !== name.length - 4) {
-                        showError('Only .csv files can be imported!');
-                        return;
-                    }
-
-                    $scope.importCurrent = 0;
-                    $scope.importMax = 0;
-                    $scope.importErrors = [];
-                    $scope.importRunning = true;
-
-                    var modal = $modal
-                        .open({
-                            templateUrl: 'Views/ExternalUsers/ImportDialog.html',
-                            backdrop: 'static',
-                            keyboard: false,
-                            scope: $scope
+                DomainService.all()
+                    .success(function (domains) {
+                        angular.forEach(domains, function (domain) {
+                            $scope.domains[domain.Id] = domain;
                         });
-
-                    modal.opened.then(function () {
-                        parseCSV(content, columnDefs, $q).then(function () {
-                            $scope.importRunning = false;
-                        }, function (errors) {
-                            for (var i = 0; i < errors.length; i++) {
-                                var error = errors[i];
-                                $scope.importErrors.push({
-                                    i: i,
-                                    message: error.message + ' (in row ' + error.row + ')'
-                                });
-                            }
-                            $scope.importRunning = false;
-                        }, function (args) {
-                            if (args.item) {
-                                $scope.add(args.item).error(function (e) {
-                                    $scope.importErrors.push({
-                                        i: args.current,
-                                        message: e.Message + ' (' + args.item.Mailbox + ')'
-                                    });
-                                });
-                            }
-
-                            $scope.importCurrent = args.current;
-                            $scope.importMax = args.max;
+                        angular.forEach($scope.users, function (user) {
+                            user.__changed__ = true;
                         });
+                    })
+                    .error(function (data) {
+                        showError(data.data.Message);
                     });
+
+                $scope.import = function (files) {
+                    if (files && files.length) {
+                        var file = files[0];
+                        Upload.upload({
+                            url: 'api/ExternalUsers/Import',
+                            // fields: { 'username': $scope.username },
+                            file: file
+                        }).progress(function (evt) {
+                            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                            console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+                        }).success(function (data, status, headers, config) {
+                            console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                        });
+                    }
                 };
 
                 $scope.export = function () {
-                    var rows = [['First Name', 'Last Name', 'Mailbox']];
-
-                    for (var i = 0; i < $scope.users.length; i++) {
-                        var user = $scope.users[i];
-
-                        rows.push([user.FirstName, user.LastName, user.Mailbox]);
-                    }
-
-                    exportToCsv('ExternalUsers.csv', rows);
+                    $http.get("api/ExternalUsers/Export")
+                    .success(function (data) {
+                            alert(data);
+                        })
+                    .error(function (data) {
+                        showError(data.data.Message);
+                    });
                 };
 
                 ExternalUsersService.all()
                     .success(function (users) {
                         $scope.users = users;
+
+                        angular.forEach($scope.users, function (row) {
+                            row.getMailAddress = function () {
+                                var domain = $scope.domains[row.DomainId];
+                                return row.Mailbox + '@' + (domain? domain.DomainName : '???');
+                            };
+                        });
                     });
 
                 $scope.saveRow = function (rowEntity) {

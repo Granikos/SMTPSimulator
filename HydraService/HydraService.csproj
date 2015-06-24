@@ -125,6 +125,9 @@
     <Reference Include="ARSoft.Tools.Net">
       <HintPath>..\packages\ARSoft.Tools.Net.2.1.1\lib\net45\ARSoft.Tools.Net.dll</HintPath>
     </Reference>
+    <Reference Include="CsvHelper">
+      <HintPath>..\packages\CsvHelper.2.13.1.0\lib\net40-client\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />

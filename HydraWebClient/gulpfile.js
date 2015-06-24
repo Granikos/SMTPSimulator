@@ -30,7 +30,8 @@ var config = {
         'bower_components/angular-bootstrap/ui-bootstrap.js',
         'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
         'bower_components/angular-enum-flag-directive/angular-enum-flag-directive.js',
-        'bower_components/checklist-model/checklist-model.js'
+        'bower_components/checklist-model/checklist-model.js',
+        'bower_components/ng-file-upload/ng-file-upload.js'
     ],
     angularbundle: 'Scripts/angular-bundle.min.js',
 

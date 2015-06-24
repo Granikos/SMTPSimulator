@@ -842,6 +842,115 @@ namespace HydraWebClient.HydraConfigurationService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ExternalUser", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
+    [System.SerializableAttribute()]
+    public partial class ExternalUser : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int DomainIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FirstNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MailboxField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int DomainId {
+            get {
+                return this.DomainIdField;
+            }
+            set {
+                if ((this.DomainIdField.Equals(value) != true)) {
+                    this.DomainIdField = value;
+                    this.RaisePropertyChanged("DomainId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FirstName {
+            get {
+                return this.FirstNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FirstNameField, value) != true)) {
+                    this.FirstNameField = value;
+                    this.RaisePropertyChanged("FirstName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastName {
+            get {
+                return this.LastNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastNameField, value) != true)) {
+                    this.LastNameField = value;
+                    this.RaisePropertyChanged("LastName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Mailbox {
+            get {
+                return this.MailboxField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MailboxField, value) != true)) {
+                    this.MailboxField = value;
+                    this.RaisePropertyChanged("Mailbox");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="HydraConfigurationService.IConfigurationService")]
     public interface IConfigurationService {
@@ -995,6 +1104,48 @@ namespace HydraWebClient.HydraConfigurationService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteLocalUser", ReplyAction="http://tempuri.org/IConfigurationService/DeleteLocalUserResponse")]
         System.Threading.Tasks.Task<bool> DeleteLocalUserAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalUsers", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalUsersResponse")]
+        HydraWebClient.HydraConfigurationService.ExternalUser[] GetExternalUsers();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalUsers", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalUsersResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ExternalUser[]> GetExternalUsersAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalUserResponse")]
+        HydraWebClient.HydraConfigurationService.ExternalUser GetExternalUser(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalUserResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ExternalUser> GetExternalUserAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/AddExternalUserResponse")]
+        HydraWebClient.HydraConfigurationService.ExternalUser AddExternalUser(HydraWebClient.HydraConfigurationService.ExternalUser user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/AddExternalUserResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ExternalUser> AddExternalUserAsync(HydraWebClient.HydraConfigurationService.ExternalUser user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/UpdateExternalUserResponse")]
+        HydraWebClient.HydraConfigurationService.ExternalUser UpdateExternalUser(HydraWebClient.HydraConfigurationService.ExternalUser user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/UpdateExternalUserResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ExternalUser> UpdateExternalUserAsync(HydraWebClient.HydraConfigurationService.ExternalUser user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/DeleteExternalUserResponse")]
+        bool DeleteExternalUser(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/DeleteExternalUserResponse")]
+        System.Threading.Tasks.Task<bool> DeleteExternalUserAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/ExportExternalUsers", ReplyAction="http://tempuri.org/IConfigurationService/ExportExternalUsersResponse")]
+        System.IO.Stream ExportExternalUsers();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/ExportExternalUsers", ReplyAction="http://tempuri.org/IConfigurationService/ExportExternalUsersResponse")]
+        System.Threading.Tasks.Task<System.IO.Stream> ExportExternalUsersAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/ImportExternalUsers", ReplyAction="http://tempuri.org/IConfigurationService/ImportExternalUsersResponse")]
+        void ImportExternalUsers(System.IO.Stream stream);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/ImportExternalUsers", ReplyAction="http://tempuri.org/IConfigurationService/ImportExternalUsersResponse")]
+        System.Threading.Tasks.Task ImportExternalUsersAsync(System.IO.Stream stream);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetCertificateFiles", ReplyAction="http://tempuri.org/IConfigurationService/GetCertificateFilesResponse")]
         string[] GetCertificateFiles();
@@ -1246,6 +1397,62 @@ namespace HydraWebClient.HydraConfigurationService {
         
         public System.Threading.Tasks.Task<bool> DeleteLocalUserAsync(int id) {
             return base.Channel.DeleteLocalUserAsync(id);
+        }
+        
+        public HydraWebClient.HydraConfigurationService.ExternalUser[] GetExternalUsers() {
+            return base.Channel.GetExternalUsers();
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ExternalUser[]> GetExternalUsersAsync() {
+            return base.Channel.GetExternalUsersAsync();
+        }
+        
+        public HydraWebClient.HydraConfigurationService.ExternalUser GetExternalUser(int id) {
+            return base.Channel.GetExternalUser(id);
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ExternalUser> GetExternalUserAsync(int id) {
+            return base.Channel.GetExternalUserAsync(id);
+        }
+        
+        public HydraWebClient.HydraConfigurationService.ExternalUser AddExternalUser(HydraWebClient.HydraConfigurationService.ExternalUser user) {
+            return base.Channel.AddExternalUser(user);
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ExternalUser> AddExternalUserAsync(HydraWebClient.HydraConfigurationService.ExternalUser user) {
+            return base.Channel.AddExternalUserAsync(user);
+        }
+        
+        public HydraWebClient.HydraConfigurationService.ExternalUser UpdateExternalUser(HydraWebClient.HydraConfigurationService.ExternalUser user) {
+            return base.Channel.UpdateExternalUser(user);
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ExternalUser> UpdateExternalUserAsync(HydraWebClient.HydraConfigurationService.ExternalUser user) {
+            return base.Channel.UpdateExternalUserAsync(user);
+        }
+        
+        public bool DeleteExternalUser(int id) {
+            return base.Channel.DeleteExternalUser(id);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteExternalUserAsync(int id) {
+            return base.Channel.DeleteExternalUserAsync(id);
+        }
+        
+        public System.IO.Stream ExportExternalUsers() {
+            return base.Channel.ExportExternalUsers();
+        }
+        
+        public System.Threading.Tasks.Task<System.IO.Stream> ExportExternalUsersAsync() {
+            return base.Channel.ExportExternalUsersAsync();
+        }
+        
+        public void ImportExternalUsers(System.IO.Stream stream) {
+            base.Channel.ImportExternalUsers(stream);
+        }
+        
+        public System.Threading.Tasks.Task ImportExternalUsersAsync(System.IO.Stream stream) {
+            return base.Channel.ImportExternalUsersAsync(stream);
         }
         
         public string[] GetCertificateFiles() {

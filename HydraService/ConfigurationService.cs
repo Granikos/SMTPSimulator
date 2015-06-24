@@ -5,7 +5,6 @@ using System.Configuration;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.ServiceModel;
 using HydraCore;
 using HydraService.Models;
@@ -19,6 +18,12 @@ namespace HydraService
         private readonly ISMTPServerContainer _servers;
 
         [Import]
+        private IDomainProvider _domains;
+
+        [Import]
+        private IExternalUserProvider _externalUsers;
+
+        [Import]
         private ILocalUserProvider _localUsers;
 
         [Import]
@@ -27,8 +32,16 @@ namespace HydraService
         [Import]
         private ISendConnectorProvider _sendConnectors;
 
-        [Import]
-        private IDomainProvider _domains;
+        public ConfigurationService(SMTPCore core, ISMTPServerContainer servers)
+        {
+            Contract.Requires<ArgumentNullException>(core != null, "core");
+            Contract.Requires<ArgumentNullException>(servers != null, "servers");
+
+            _servers = servers;
+            Core = core;
+        }
+
+        public SMTPCore Core { get; private set; }
 
         public IEnumerable<Domain> GetDomains()
         {
@@ -37,7 +50,9 @@ namespace HydraService
 
         public Domain GetDomain(string domain)
         {
-            return _domains.All().FirstOrDefault(d => d.DomainName.Equals(domain, StringComparison.InvariantCultureIgnoreCase));
+            return
+                _domains.All()
+                    .FirstOrDefault(d => d.DomainName.Equals(domain, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public Domain UpdateDomain(Domain domain)
@@ -54,17 +69,6 @@ namespace HydraService
         {
             return _domains.Delete(id);
         }
-
-        public ConfigurationService(SMTPCore core, ISMTPServerContainer servers)
-        {
-            Contract.Requires<ArgumentNullException>(core != null, "core");
-            Contract.Requires<ArgumentNullException>(servers != null, "servers");
-
-            _servers = servers;
-            Core = core;
-        }
-
-        public SMTPCore Core { get; private set; }
 
         public IEnumerable<SendConnector> GetSendConnectors()
         {
@@ -175,6 +179,46 @@ namespace HydraService
             return _localUsers.Delete(id);
         }
 
+        public IEnumerable<ExternalUser> GetExternalUsers()
+        {
+            return _externalUsers.All();
+        }
+
+        public ExternalUser GetExternalUser(int id)
+        {
+            return _externalUsers.Get(id);
+        }
+
+        public ExternalUser AddExternalUser(ExternalUser user)
+        {
+            return _externalUsers.Add(user);
+        }
+
+        public ExternalUser UpdateExternalUser(ExternalUser user)
+        {
+            return _externalUsers.Update(user);
+        }
+
+        public bool DeleteExternalUser(int id)
+        {
+            return _externalUsers.Delete(id);
+        }
+
+        public Stream ExportExternalUsers()
+        {
+            var stream = new MemoryStream();
+            _externalUsers.ExportAsCSV(stream, DomainSource);
+
+            stream.Position = 0;
+
+            return stream;
+        }
+
+        public void ImportExternalUsers(Stream stream)
+        {
+            _externalUsers.ImportFromCSV(stream, DomainSource);
+        }
+
         public string[] GetCertificateFiles()
         {
             var folder = ConfigurationManager.AppSettings["CertificateFolder"];
@@ -195,6 +239,25 @@ namespace HydraService
         public bool IsRunning()
         {
             return _servers.Running;
+        }
+
+        private string DomainSource(int id)
+        {
+            return _domains.Get(id).DomainName;
+        }
+
+        private int DomainSource(string domainName)
+        {
+            var domain =
+                _domains.All()
+                    .FirstOrDefault(d => d.DomainName.Equals(domainName, StringComparison.InvariantCultureIgnoreCase));
+
+            if (domain == null)
+            {
+                domain = AddDomain(domainName);
+            }
+
+            return domain.Id;
         }
     }
 }

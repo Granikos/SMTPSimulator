@@ -5,6 +5,8 @@
       <wsp:All>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
+        <msf:Streamed xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+        </msf:Streamed>
         <wsaw:UsingAddressing>
         </wsaw:UsingAddressing>
       </wsp:All>
@@ -18,6 +20,7 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/HydraCore" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Net.Security" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Security.Authentication" />
+      <xsd:import namespace="http://schemas.microsoft.com/Message" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
@@ -171,6 +174,48 @@
   <wsdl:message name="IConfigurationService_DeleteLocalUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteLocalUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetExternalUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetExternalUsers" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetExternalUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetExternalUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetExternalUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetExternalUser" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetExternalUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetExternalUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_AddExternalUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddExternalUser" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_AddExternalUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddExternalUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_UpdateExternalUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateExternalUser" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_UpdateExternalUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateExternalUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_DeleteExternalUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteExternalUser" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_DeleteExternalUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteExternalUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_ExportExternalUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExportExternalUsers" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_ExportExternalUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExportExternalUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_ImportExternalUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportExternalUsers" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_ImportExternalUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportExternalUsersResponse" />
+  </wsdl:message>
   <wsdl:message name="IConfigurationService_GetCertificateFiles_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCertificateFiles" />
   </wsdl:message>
@@ -295,6 +340,34 @@
     <wsdl:operation name="DeleteLocalUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DeleteLocalUser" message="tns:IConfigurationService_DeleteLocalUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DeleteLocalUserResponse" message="tns:IConfigurationService_DeleteLocalUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExternalUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetExternalUsers" message="tns:IConfigurationService_GetExternalUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetExternalUsersResponse" message="tns:IConfigurationService_GetExternalUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExternalUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetExternalUser" message="tns:IConfigurationService_GetExternalUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetExternalUserResponse" message="tns:IConfigurationService_GetExternalUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddExternalUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/AddExternalUser" message="tns:IConfigurationService_AddExternalUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/AddExternalUserResponse" message="tns:IConfigurationService_AddExternalUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateExternalUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/UpdateExternalUser" message="tns:IConfigurationService_UpdateExternalUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/UpdateExternalUserResponse" message="tns:IConfigurationService_UpdateExternalUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteExternalUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DeleteExternalUser" message="tns:IConfigurationService_DeleteExternalUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DeleteExternalUserResponse" message="tns:IConfigurationService_DeleteExternalUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExportExternalUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/ExportExternalUsers" message="tns:IConfigurationService_ExportExternalUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/ExportExternalUsersResponse" message="tns:IConfigurationService_ExportExternalUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportExternalUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/ImportExternalUsers" message="tns:IConfigurationService_ImportExternalUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/ImportExternalUsersResponse" message="tns:IConfigurationService_ImportExternalUsers_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetCertificateFiles">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetCertificateFiles" message="tns:IConfigurationService_GetCertificateFiles_InputMessage" />
@@ -535,6 +608,69 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteLocalUser">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/DeleteLocalUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExternalUsers">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetExternalUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExternalUser">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetExternalUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddExternalUser">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/AddExternalUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateExternalUser">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/UpdateExternalUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteExternalUser">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/DeleteExternalUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExportExternalUsers">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/ExportExternalUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportExternalUsers">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/ImportExternalUsers" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

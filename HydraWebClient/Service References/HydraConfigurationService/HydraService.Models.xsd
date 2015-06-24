@@ -106,4 +106,20 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="LocalUser" nillable="true" type="tns:LocalUser" />
+  <xs:complexType name="ArrayOfExternalUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ExternalUser" nillable="true" type="tns:ExternalUser" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfExternalUser" nillable="true" type="tns:ArrayOfExternalUser" />
+  <xs:complexType name="ExternalUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DomainId" type="xs:int" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Mailbox" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ExternalUser" nillable="true" type="tns:ExternalUser" />
 </xs:schema>

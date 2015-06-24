@@ -32,6 +32,7 @@
     <MetadataFile FileName="HydraCore.xsd" MetadataType="Schema" ID="701cd961-6168-44b4-b2c0-cb7fae66e70f" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
     <MetadataFile FileName="System.Net.Security.xsd" MetadataType="Schema" ID="844343a7-406c-4099-add9-1746b2f6d8b8" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
     <MetadataFile FileName="System.Security.Authentication.xsd" MetadataType="Schema" ID="f15504b3-96fe-463e-ba55-12c6bebfceab" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
+    <MetadataFile FileName="Message.xsd" MetadataType="Schema" ID="b25f6c51-8e23-4a89-810e-ed69ac5cb93f" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
     <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="21077e2f-596a-4688-beca-8e532c10f450" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
   </Metadata>
   <Extensions>

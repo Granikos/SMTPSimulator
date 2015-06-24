@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using HydraService.Models;
@@ -163,6 +164,59 @@ namespace HydraService
 
         [OperationContract]
         bool DeleteLocalUser(int id);
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "ExternalUsers",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<ExternalUser> GetExternalUsers();
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "ExternalUsers/{id}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        ExternalUser GetExternalUser(int id);
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "ExternalUsers",
+            Method = "PUT",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        ExternalUser AddExternalUser(ExternalUser user);
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "ExternalUsers",
+            Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        ExternalUser UpdateExternalUser(ExternalUser user);
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "ExternalUsers/{id}",
+            Method = "DELETE",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool DeleteExternalUser(int id);
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "ExternalUsers/Export",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        Stream ExportExternalUsers();
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "ExternalUsers/Import",
+            Method = "PUT",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        void ImportExternalUsers(Stream stream);
 
         [OperationContract]
         [WebGet(
