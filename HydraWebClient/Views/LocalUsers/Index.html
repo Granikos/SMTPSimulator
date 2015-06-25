@@ -4,13 +4,13 @@
 
     </div>
     <div class="btn-group pull-right" style="margin-top: 10px;">
-        <button class="btn btn-default" ng-click="export()">
+        <a class="btn btn-default" target="_self" href="/api/LocalUsers/Export">
             <i class="glyphicon glyphicon-download"></i> Export
-        </button>
+        </a>
         <label class="btn btn-default" for="importfile">
             <i class="glyphicon glyphicon-upload"></i> Import
         </label>
-        <input id="importfile" type="file" on-read-file="import($fileName, $fileContent)" style="position: absolute; clip: rect(0px 0px 0px 0px)" />
+        <input id="importfile" type="file" ngf-select ngf-change="import($files)" ngf-accept="'text/csv'" style="position: absolute; clip: rect(0px 0px 0px 0px)" />
         <div class="btn-group">
             <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                 <i class="glyphicon glyphicon-wrench"></i> Generate <span class="caret"></span>

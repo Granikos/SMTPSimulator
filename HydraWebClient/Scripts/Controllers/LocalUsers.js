@@ -62,7 +62,7 @@
         }])
 
         .controller('LocalUsersController', [
-            '$scope', '$modal', '$q', 'LocalUsersService', 'UserTemplateService', function ($scope, $modal, $q, LocalUserService, UserTemplateService) {
+            '$scope', '$modal', '$q', '$http', 'LocalUsersService', 'UserTemplateService', 'Upload', function ($scope, $modal, $q, $http, LocalUserService, UserTemplateService, Upload) {
                 $scope.users = [];
                 $scope.templates = UserTemplateService.templates;
 
@@ -72,51 +72,16 @@
                     { name: 'mailbox', field: 'Mailbox', editableCellTemplate: simpleEditTemplate('required', 'email'), type: 'email' }
                 ];
 
-                $scope.import = function (name, content) {
-                    if (name.lastIndexOf('.csv') !== name.length - 4) {
-                        showError('Only .csv files can be imported!');
-                        return;
+                $scope.import = function (files) {
+                    if (files && files.length) {
+                        var file = files[0];
+                        Upload.upload({
+                            url: 'api/LocalUsers/Import',
+                            file: file
+                        }).success(function (data, status, headers, config) {
+                            // TODO
+                        });
                     }
-
-                    $scope.importCurrent = 0;
-                    $scope.importMax = 0;
-                    $scope.importErrors = [];
-                    $scope.importRunning = true;
-
-                    var modal = $modal
-                        .open({
-                            templateUrl: 'Views/LocalUsers/ImportDialog.html',
-                            backdrop: 'static',
-                            keyboard: false,
-                            scope: $scope
-                        });
-
-                    modal.opened.then(function () {
-                        parseCSV(content, columnDefs, $q).then(function () {
-                            $scope.importRunning = false;
-                        }, function (errors) {
-                            for (var i = 0; i < errors.length; i++) {
-                                var error = errors[i];
-                                $scope.importErrors.push({
-                                    i: i,
-                                    message: error.message + ' (in row ' + error.row + ')'
-                                });
-                            }
-                            $scope.importRunning = false;
-                        }, function (args) {
-                            if (args.item) {
-                                $scope.add(args.item).error(function (e) {
-                                    $scope.importErrors.push({
-                                        i: args.current,
-                                        message: e.Message + ' (' + args.item.Mailbox + ')'
-                                    });
-                                });
-                            }
-
-                            $scope.importCurrent = args.current;
-                            $scope.importMax = args.max;
-                        });
-                    });
                 };
 
                 $scope.generate = function(template) {
@@ -161,18 +126,6 @@
                                 });
                             });
                     };
-                };
-
-                $scope.export = function () {
-                    var rows = [['First Name', 'Last Name', 'Mailbox']];
-
-                    for (var i = 0; i < $scope.users.length; i++) {
-                        var user = $scope.users[i];
-
-                        rows.push([user.FirstName, user.LastName, user.Mailbox]);
-                    }
-
-                    exportToCsv('LocalUsers.csv', rows);
                 };
 
                 LocalUserService.all()

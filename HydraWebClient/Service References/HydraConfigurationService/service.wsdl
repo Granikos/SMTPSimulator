@@ -174,6 +174,24 @@
   <wsdl:message name="IConfigurationService_DeleteLocalUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteLocalUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IConfigurationService_ExportLocalUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExportLocalUsers" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_ExportLocalUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExportLocalUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_ImportLocalUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportLocalUsers" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_ImportLocalUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportLocalUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GenerateLocalUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateLocalUsers" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GenerateLocalUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateLocalUsersResponse" />
+  </wsdl:message>
   <wsdl:message name="IConfigurationService_GetExternalUsers_InputMessage">
     <wsdl:part name="parameters" element="tns:GetExternalUsers" />
   </wsdl:message>
@@ -340,6 +358,18 @@
     <wsdl:operation name="DeleteLocalUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DeleteLocalUser" message="tns:IConfigurationService_DeleteLocalUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DeleteLocalUserResponse" message="tns:IConfigurationService_DeleteLocalUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExportLocalUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/ExportLocalUsers" message="tns:IConfigurationService_ExportLocalUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/ExportLocalUsersResponse" message="tns:IConfigurationService_ExportLocalUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportLocalUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/ImportLocalUsers" message="tns:IConfigurationService_ImportLocalUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/ImportLocalUsersResponse" message="tns:IConfigurationService_ImportLocalUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateLocalUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GenerateLocalUsers" message="tns:IConfigurationService_GenerateLocalUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GenerateLocalUsersResponse" message="tns:IConfigurationService_GenerateLocalUsers_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetExternalUsers">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetExternalUsers" message="tns:IConfigurationService_GetExternalUsers_InputMessage" />
@@ -608,6 +638,33 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteLocalUser">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/DeleteLocalUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExportLocalUsers">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/ExportLocalUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportLocalUsers">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/ImportLocalUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateLocalUsers">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GenerateLocalUsers" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

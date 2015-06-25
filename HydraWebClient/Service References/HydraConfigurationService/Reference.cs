@@ -1105,6 +1105,24 @@ namespace HydraWebClient.HydraConfigurationService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteLocalUser", ReplyAction="http://tempuri.org/IConfigurationService/DeleteLocalUserResponse")]
         System.Threading.Tasks.Task<bool> DeleteLocalUserAsync(int id);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/ExportLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/ExportLocalUsersResponse")]
+        System.IO.Stream ExportLocalUsers();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/ExportLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/ExportLocalUsersResponse")]
+        System.Threading.Tasks.Task<System.IO.Stream> ExportLocalUsersAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/ImportLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/ImportLocalUsersResponse")]
+        void ImportLocalUsers(System.IO.Stream stream);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/ImportLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/ImportLocalUsersResponse")]
+        System.Threading.Tasks.Task ImportLocalUsersAsync(System.IO.Stream stream);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GenerateLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/GenerateLocalUsersResponse")]
+        bool GenerateLocalUsers(string template, string pattern, int count);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GenerateLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/GenerateLocalUsersResponse")]
+        System.Threading.Tasks.Task<bool> GenerateLocalUsersAsync(string template, string pattern, int count);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalUsers", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalUsersResponse")]
         HydraWebClient.HydraConfigurationService.ExternalUser[] GetExternalUsers();
         
@@ -1397,6 +1415,30 @@ namespace HydraWebClient.HydraConfigurationService {
         
         public System.Threading.Tasks.Task<bool> DeleteLocalUserAsync(int id) {
             return base.Channel.DeleteLocalUserAsync(id);
+        }
+        
+        public System.IO.Stream ExportLocalUsers() {
+            return base.Channel.ExportLocalUsers();
+        }
+        
+        public System.Threading.Tasks.Task<System.IO.Stream> ExportLocalUsersAsync() {
+            return base.Channel.ExportLocalUsersAsync();
+        }
+        
+        public void ImportLocalUsers(System.IO.Stream stream) {
+            base.Channel.ImportLocalUsers(stream);
+        }
+        
+        public System.Threading.Tasks.Task ImportLocalUsersAsync(System.IO.Stream stream) {
+            return base.Channel.ImportLocalUsersAsync(stream);
+        }
+        
+        public bool GenerateLocalUsers(string template, string pattern, int count) {
+            return base.Channel.GenerateLocalUsers(template, pattern, count);
+        }
+        
+        public System.Threading.Tasks.Task<bool> GenerateLocalUsersAsync(string template, string pattern, int count) {
+            return base.Channel.GenerateLocalUsersAsync(template, pattern, count);
         }
         
         public HydraWebClient.HydraConfigurationService.ExternalUser[] GetExternalUsers() {

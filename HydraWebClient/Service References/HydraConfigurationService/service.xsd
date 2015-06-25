@@ -338,6 +338,46 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ExportLocalUsers">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExportLocalUsersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q27="http://schemas.microsoft.com/Message" name="ExportLocalUsersResult" type="q27:StreamBody" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImportLocalUsers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q28="http://schemas.microsoft.com/Message" name="stream" type="q28:StreamBody" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImportLocalUsersResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerateLocalUsers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="template" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pattern" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="count" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerateLocalUsersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GenerateLocalUsersResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetExternalUsers">
     <xs:complexType>
       <xs:sequence />
@@ -346,7 +386,7 @@
   <xs:element name="GetExternalUsersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="GetExternalUsersResult" nillable="true" type="q27:ArrayOfExternalUser" />
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="GetExternalUsersResult" nillable="true" type="q29:ArrayOfExternalUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -360,35 +400,35 @@
   <xs:element name="GetExternalUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="GetExternalUserResult" nillable="true" type="q28:ExternalUser" />
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="GetExternalUserResult" nillable="true" type="q30:ExternalUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddExternalUser">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="user" nillable="true" type="q29:ExternalUser" />
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="user" nillable="true" type="q31:ExternalUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddExternalUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="AddExternalUserResult" nillable="true" type="q30:ExternalUser" />
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="AddExternalUserResult" nillable="true" type="q32:ExternalUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateExternalUser">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="user" nillable="true" type="q31:ExternalUser" />
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="user" nillable="true" type="q33:ExternalUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateExternalUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="UpdateExternalUserResult" nillable="true" type="q32:ExternalUser" />
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="UpdateExternalUserResult" nillable="true" type="q34:ExternalUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -414,14 +454,14 @@
   <xs:element name="ExportExternalUsersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q33="http://schemas.microsoft.com/Message" name="ExportExternalUsersResult" type="q33:StreamBody" />
+        <xs:element xmlns:q35="http://schemas.microsoft.com/Message" name="ExportExternalUsersResult" type="q35:StreamBody" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ImportExternalUsers">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q34="http://schemas.microsoft.com/Message" name="stream" type="q34:StreamBody" />
+        <xs:element xmlns:q36="http://schemas.microsoft.com/Message" name="stream" type="q36:StreamBody" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -438,7 +478,7 @@
   <xs:element name="GetCertificateFilesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q35="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetCertificateFilesResult" nillable="true" type="q35:ArrayOfstring" />
+        <xs:element xmlns:q37="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetCertificateFilesResult" nillable="true" type="q37:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

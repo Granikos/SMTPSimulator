@@ -1,23 +1,73 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.Http;
 using HydraWebClient.HydraConfigurationService;
 
 namespace HydraWebClient.Controllers
 {
     [Authorize]
+    [RoutePrefix("api/LocalUsers")]
     public class LocalUsersController : ApiController
     {
         readonly ConfigurationServiceClient _service = new ConfigurationServiceClient();
 
-        // GET api/<controller>
-        public IEnumerable<LocalUser> Get()
+        // GET api/LocalUsers
+        [HttpGet]
+        [Route("")]
+        public IEnumerable<LocalUser> All()
         {
             return _service.GetLocalUsers();
         }
 
-        // GET api/<controller>/5
+        // GET api/LocalUsers/Export
+        [HttpGet]
+        [Route("Export")]
+        public HttpResponseMessage Export()
+        {
+            var stream = _service.ExportLocalUsers();
+
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StreamContent(stream),
+
+            };
+
+
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/csv");
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = "LocalUsers.csv"
+            };
+
+            return response;
+        }
+        // GET api/LocalUsers/Export
+        [HttpPost]
+        [Route("Import")]
+        public async Task<HttpResponseMessage> Import()
+        {
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+
+            var provider = new MultipartMemoryStreamProvider();
+
+            var reader = await Request.Content.ReadAsMultipartAsync(provider);
+            var stream = await reader.Contents.First().ReadAsStreamAsync();
+
+            _service.ImportLocalUsers(stream);
+
+            return new HttpResponseMessage(HttpStatusCode.OK);
+        }
+
+        // GET api/LocalUsers/5
+        [HttpGet]
+        [Route("{id:int}")]
         public HttpResponseMessage Get(int id)
         {
             var user = _service.GetLocalUser(id);
@@ -30,8 +80,10 @@ namespace HydraWebClient.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, user);
         }
 
-        // POST api/<controller>
-        public HttpResponseMessage Post([FromBody]LocalUser user)
+        // POST api/LocalUsers
+        [HttpPost]
+        [Route("")]
+        public HttpResponseMessage Add([FromBody]LocalUser user)
         {
             var added = _service.AddLocalUser(user);
 
@@ -43,8 +95,10 @@ namespace HydraWebClient.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, added);
         }
 
-        // PUT api/<controller>/5
-        public HttpResponseMessage Put(int id, [FromBody]LocalUser user)
+        // PUT api/LocalUsers/5
+        [HttpPut]
+        [Route("{id:int}")]
+        public HttpResponseMessage Update(int id, [FromBody]LocalUser user)
         {
             var updated = _service.UpdateLocalUser(user);
 
@@ -56,7 +110,9 @@ namespace HydraWebClient.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, updated);
         }
 
-        // DELETE api/<controller>/5
+        // DELETE api/LocalUsers/5
+        [HttpDelete]
+        [Route("{id:int}")]
         public HttpResponseMessage Delete(int id)
         {
             if (!_service.DeleteLocalUser(id))

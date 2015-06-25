@@ -167,6 +167,29 @@ namespace HydraService
 
         [OperationContract]
         [WebGet(
+            UriTemplate = "LocalUsers/Export",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        Stream ExportLocalUsers();
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "LocalUsers/Import",
+            Method = "PUT",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        void ImportLocalUsers(Stream stream);
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "LocalUsers/Generate",
+            Method = "PUT",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool GenerateLocalUsers(string template, string pattern, int count);
+
+        [OperationContract]
+        [WebGet(
             UriTemplate = "ExternalUsers",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]

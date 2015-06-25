@@ -179,6 +179,26 @@ namespace HydraService
             return _localUsers.Delete(id);
         }
 
+        public Stream ExportLocalUsers()
+        {
+            var stream = new MemoryStream();
+            _localUsers.ExportAsCSV(stream);
+
+            stream.Position = 0;
+
+            return stream;
+        }
+
+        public void ImportLocalUsers(Stream stream)
+        {
+            _localUsers.ImportFromCSV(stream);
+        }
+
+        public bool GenerateLocalUsers(string template, string pattern, int count)
+        {
+            return _localUsers.Generate(template, pattern, count);
+        }
+
         public IEnumerable<ExternalUser> GetExternalUsers()
         {
             return _externalUsers.All();
