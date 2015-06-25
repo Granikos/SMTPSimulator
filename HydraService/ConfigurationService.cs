@@ -194,9 +194,14 @@ namespace HydraService
             _localUsers.ImportFromCSV(stream);
         }
 
-        public bool GenerateLocalUsers(string template, string pattern, int count)
+        public bool GenerateLocalUsers(string template, string pattern, string domain, int count)
         {
-            return _localUsers.Generate(template, pattern, count);
+            return _localUsers.Generate(template, pattern, domain, count);
+        }
+
+        public IEnumerable<UserTemplate> GetLocalUserTemplates()
+        {
+            return _localUsers.GetTemplates();
         }
 
         public IEnumerable<ExternalUser> GetExternalUsers()

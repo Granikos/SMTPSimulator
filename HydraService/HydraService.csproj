@@ -179,9 +179,13 @@
     <Compile Include="Models\LocalUser.cs" />
     <Compile Include="Models\RecieveConnector.cs" />
     <Compile Include="Providers\ISendConnectorProvider.cs" />
+    <Compile Include="Providers\IUserTemplate.cs" />
+    <Compile Include="Providers\IUserTemplateProvider.cs" />
     <Compile Include="Providers\LocalUserProvider.cs" />
     <Compile Include="Providers\ReceiveConnectorProvider.cs" />
     <Compile Include="Providers\SendConnectorProvider.cs" />
+    <Compile Include="Models\UserTemplate.cs" />
+    <Compile Include="Providers\TechnicalUserTemplates.cs" />
     <Compile Include="SMTPServer.cs" />
     <Compile Include="SMTPService.cs">
       <SubType>Component</SubType>

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using HydraService.Models;
 
@@ -9,6 +10,8 @@ namespace HydraService.Providers
 
         int ExportAsCSV(Stream csv);
 
-        bool Generate(string template, string pattern, int count);
+        bool Generate(string template, string pattern, string domain, int count);
+
+        IEnumerable<UserTemplate> GetTemplates();
     }
 }

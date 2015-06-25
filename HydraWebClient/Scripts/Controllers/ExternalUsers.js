@@ -45,16 +45,6 @@
                     }
                 };
 
-                $scope.export = function () {
-                    $http.get("api/ExternalUsers/Export")
-                    .success(function (data) {
-                            alert(data);
-                        })
-                    .error(function (data) {
-                        showError(data.data.Message);
-                    });
-                };
-
                 ExternalUsersService.all()
                     .success(function (users) {
                         $scope.users = users;

@@ -13,6 +13,9 @@ namespace HydraService.Providers
     [Export(typeof(ILocalUserProvider))]
     public class LocalUserProvider : DefaultProvider<LocalUser>, ILocalUserProvider
     {
+        [ImportMany]
+        private IEnumerable<IUserTemplateProvider> _templateProviders;
+
         public LocalUserProvider()
         {
             Add(new LocalUser
@@ -99,9 +102,17 @@ namespace HydraService.Providers
             }
         }
 
-        public bool Generate(string template, string pattern, int count)
+        public bool Generate(string template, string pattern, string domain, int count)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<UserTemplate> GetTemplates()
+        {
+            return _templateProviders
+                .SelectMany(t => t.All())
+                .Select(t => new UserTemplate(t.GetType().Name + "/" + t.Name, t.DisplayName))
+                .OrderBy(t => t.DisplayName);
         }
     }
 }

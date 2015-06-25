@@ -106,6 +106,19 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="LocalUser" nillable="true" type="tns:LocalUser" />
+  <xs:complexType name="ArrayOfUserTemplate">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserTemplate" nillable="true" type="tns:UserTemplate" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserTemplate" nillable="true" type="tns:ArrayOfUserTemplate" />
+  <xs:complexType name="UserTemplate">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserTemplate" nillable="true" type="tns:UserTemplate" />
   <xs:complexType name="ArrayOfExternalUser">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="ExternalUser" nillable="true" type="tns:ExternalUser" />

@@ -186,7 +186,14 @@ namespace HydraService
             Method = "PUT",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        bool GenerateLocalUsers(string template, string pattern, int count);
+        bool GenerateLocalUsers(string template, string pattern, string domain, int count);
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "LocalUsers/Templates",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<UserTemplate> GetLocalUserTemplates();
 
         [OperationContract]
         [WebGet(

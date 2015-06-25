@@ -192,6 +192,12 @@
   <wsdl:message name="IConfigurationService_GenerateLocalUsers_OutputMessage">
     <wsdl:part name="parameters" element="tns:GenerateLocalUsersResponse" />
   </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetLocalUserTemplates_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLocalUserTemplates" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetLocalUserTemplates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLocalUserTemplatesResponse" />
+  </wsdl:message>
   <wsdl:message name="IConfigurationService_GetExternalUsers_InputMessage">
     <wsdl:part name="parameters" element="tns:GetExternalUsers" />
   </wsdl:message>
@@ -370,6 +376,10 @@
     <wsdl:operation name="GenerateLocalUsers">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GenerateLocalUsers" message="tns:IConfigurationService_GenerateLocalUsers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GenerateLocalUsersResponse" message="tns:IConfigurationService_GenerateLocalUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLocalUserTemplates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetLocalUserTemplates" message="tns:IConfigurationService_GetLocalUserTemplates_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetLocalUserTemplatesResponse" message="tns:IConfigurationService_GetLocalUserTemplates_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetExternalUsers">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetExternalUsers" message="tns:IConfigurationService_GetExternalUsers_InputMessage" />
@@ -665,6 +675,15 @@
     </wsdl:operation>
     <wsdl:operation name="GenerateLocalUsers">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GenerateLocalUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLocalUserTemplates">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetLocalUserTemplates" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

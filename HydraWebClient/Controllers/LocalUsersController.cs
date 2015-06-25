@@ -15,6 +15,14 @@ namespace HydraWebClient.Controllers
     {
         readonly ConfigurationServiceClient _service = new ConfigurationServiceClient();
 
+        // GET api/LocalUsers/Templates
+        [HttpGet]
+        [Route("Templates")]
+        public IEnumerable<UserTemplate> GetTemplates()
+        {
+            return _service.GetLocalUserTemplates();
+        }
+
         // GET api/LocalUsers
         [HttpGet]
         [Route("")]

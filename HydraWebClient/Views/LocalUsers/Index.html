@@ -16,7 +16,7 @@
                 <i class="glyphicon glyphicon-wrench"></i> Generate <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li ng-repeat="template in templates"><a href="#" ng-click="generate(template)">{{template.name}}</a></li>
+                <li ng-repeat="template in templates"><a href="#" ng-click="generate(template.Name)">{{template.DisplayName}}</a></li>
             </ul>
         </div>
         <button class="btn btn-success" ng-click="addDialog()">

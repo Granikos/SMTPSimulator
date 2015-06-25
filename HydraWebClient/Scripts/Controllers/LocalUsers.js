@@ -64,7 +64,15 @@
         .controller('LocalUsersController', [
             '$scope', '$modal', '$q', '$http', 'LocalUsersService', 'UserTemplateService', 'Upload', function ($scope, $modal, $q, $http, LocalUserService, UserTemplateService, Upload) {
                 $scope.users = [];
-                $scope.templates = UserTemplateService.templates;
+                $scope.templates = [];
+
+                $http.get("api/LocalUsers/Templates")
+                    .success(function (data) {
+                        $scope.templates = data;
+                    })
+                    .error(function (data) {
+                        showError(data.data.Message);
+                    });
 
                 var columnDefs = [
                     { name: 'firstName', field: 'FirstName', editableCellTemplate: simpleEditTemplate('required') },
