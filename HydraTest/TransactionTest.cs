@@ -16,7 +16,7 @@ namespace HydraTest
             using (ShimsContext.Create())
             {
                 var server = new ShimSMTPCore();
-                var settings = new StubISettings();
+                var settings = new StubIReceiveSettings();
 
                 var transaction = new SMTPTransaction(server, settings);
 
@@ -35,7 +35,7 @@ namespace HydraTest
             using (ShimsContext.Create())
             {
                 var server = new ShimSMTPCore();
-                var settings = new StubISettings();
+                var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
                 const int value1 = 5;
@@ -69,7 +69,7 @@ namespace HydraTest
             using (ShimsContext.Create())
             {
                 var server = new ShimSMTPCore();
-                var settings = new StubISettings();
+                var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
                 var list = transaction.GetListProperty<string>("foo", permanent);
@@ -99,7 +99,7 @@ namespace HydraTest
             using (ShimsContext.Create())
             {
                 var server = new ShimSMTPCore();
-                var settings = new StubISettings();
+                var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
                 const string value1 = "bar";
@@ -125,7 +125,7 @@ namespace HydraTest
             using (ShimsContext.Create())
             {
                 var server = new ShimSMTPCore();
-                var settings = new StubISettings();
+                var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
                 Assert.False(transaction.HasProperty("foo"));
@@ -150,7 +150,7 @@ namespace HydraTest
             using (ShimsContext.Create())
             {
                 var server = new ShimSMTPCore();
-                var settings = new StubISettings();
+                var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
                 Assert.Equal(default(int), transaction.GetProperty<int>("nonExistant"));
@@ -165,7 +165,7 @@ namespace HydraTest
             using (ShimsContext.Create())
             {
                 var server = new ShimSMTPCore();
-                var settings = new StubISettings();
+                var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
                 transaction.SetProperty("foo", "bar", false);
@@ -189,7 +189,7 @@ namespace HydraTest
             using (ShimsContext.Create())
             {
                 var server = new ShimSMTPCore();
-                var settings = new StubISettings();
+                var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
                 Assert.False(transaction.InDataMode);
@@ -208,7 +208,7 @@ namespace HydraTest
             using (ShimsContext.Create())
             {
                 var server = new ShimSMTPCore();
-                var settings = new StubISettings();
+                var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
                 Assert.False(transaction.InDataMode);
@@ -223,7 +223,7 @@ namespace HydraTest
             using (ShimsContext.Create())
             {
                 var server = new ShimSMTPCore();
-                var settings = new StubISettings();
+                var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
                 var closed = false;
@@ -245,7 +245,7 @@ namespace HydraTest
             using (ShimsContext.Create())
             {
                 var server = new ShimSMTPCore();
-                var settings = new StubISettings();
+                var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
                 const string clientId = "ClientID";
@@ -269,7 +269,7 @@ namespace HydraTest
             using (ShimsContext.Create())
             {
                 var server = new ShimSMTPCore();
-                var settings = new StubISettings();
+                var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
                 SMTPTransaction actualTransaction = null;
@@ -306,7 +306,7 @@ namespace HydraTest
             using (ShimsContext.Create())
             {
                 var server = new ShimSMTPCore();
-                var settings = new StubISettings();
+                var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
                 server.GetHandlerString = s => null;
@@ -325,7 +325,7 @@ namespace HydraTest
             using (ShimsContext.Create())
             {
                 var server = new ShimSMTPCore();
-                var settings = new StubISettings();
+                var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
                 Assert.False(transaction.InDataMode);

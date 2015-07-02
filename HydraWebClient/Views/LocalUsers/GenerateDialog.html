@@ -3,18 +3,7 @@
 </div>
 
 <div class="modal-body clearfix">
-    <progressbar ng-show="generate.started" value="( generate.current * 1000 ) / generate.max" max="1000">
-        <b style="white-space: nowrap;">{{generate.current}} / {{generate.max}}</b>
-    </progressbar>
-
-    <div ng-show="generate.errors.length > 0" style="max-height: 400px; overflow: auto;">
-        <div class="alert alert-danger" role="alert" ng-repeat="error in generate.errors">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Error:</strong> {{error.message}}
-        </div>
-    </div>
-
-    <form role="form" name="generateForm" ng-submit="!generate.started && generateForm.$valid && startGeneration()" ng-show="!generate.started">
+    <form role="form" name="generateForm" ng-submit="generateForm.$valid && startGeneration()">
         <div class="form-group">
             <label for="numberOfUsers">Number of Users</label>
             <input type="number" class="form-control" id="numberOfUsers" placeholder="Enter number of users" ng-model="generate.numberOfUsers" min="1" required />
@@ -23,8 +12,16 @@
             <label for="domain">Domain for Users' Mailboxes</label>
             <input type="text" class="form-control" id="domain" placeholder="Enter domain" ng-model="generate.domain" required />
         </div>
+        <div class="form-group" ng-show="generate.supportsPattern">
+            <label for="pattern">Pattern for Mailbox Name</label>
+            <input type="text" class="form-control" id="pattern" placeholder="Enter pattern" ng-model="generate.pattern" required />
+            <select class="form-control" ng-model="generate.pattern" required>
+                <option value="">-- Select pattern --</option>
+                <option value="%g.%s">%g.%s (max.musterman)</option>
+                <option value="%1g.%s">%1g.%s (m.musterman)</option>
+                <option value="%g_%s">%g.%s (max_musterman)</option>
+            </select>
+        </div>
         <button type="submit" class="btn btn-default pull-right">Start</button>
     </form>
-
-    <button class="btn btn-default pull-right" ng-show="generate.done" ng-click="$close()" style="margin-top: 10px">Close</button>
 </div>

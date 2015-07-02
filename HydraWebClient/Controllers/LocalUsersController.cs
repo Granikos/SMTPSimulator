@@ -23,10 +23,25 @@ namespace HydraWebClient.Controllers
             return _service.GetLocalUserTemplates();
         }
 
+        public class GenerateParams
+        {
+            public string template;
+            public string pattern;
+            public string domain;
+        }
+
+        // POST api/LocalUsers/Generate/10
+        [HttpPost]
+        [Route("Generate/{count:int}")]
+        public bool Generate(GenerateParams parameters, int count)
+        {
+            return _service.GenerateLocalUsers(parameters.template, parameters.pattern, parameters.domain, count);
+        }
+
         // GET api/LocalUsers
         [HttpGet]
         [Route("")]
-        public IEnumerable<LocalUser> All()
+        public IEnumerable<LocalUser> All([FromUri]PagedFilter filter)
         {
             return _service.GetLocalUsers();
         }
@@ -53,6 +68,7 @@ namespace HydraWebClient.Controllers
 
             return response;
         }
+
         // GET api/LocalUsers/Export
         [HttpPost]
         [Route("Import")]

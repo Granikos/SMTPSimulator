@@ -11,7 +11,7 @@ var sourcemaps = require('gulp-sourcemaps');
 
 var config = {
     jquerysrc: [
-        'bower_components/jquery/dist/jquery.min.js',
+        'bower_components/jquery/dist/jquery.js',
     ],
     jquerybundle: 'Scripts/jquery-bundle.min.js',
 
@@ -70,13 +70,17 @@ gulp.task('clean-vendor-scripts', function (cb) {
 
 gulp.task('jquery-bundle', ['bower-restore'], function () {
     return gulp.src(config.jquerysrc)
+     .pipe(sourcemaps.init())
+        .pipe(uglify())
      .pipe(concat('jquery-bundle.min.js'))
+     .pipe(sourcemaps.write('maps'))
      .pipe(gulp.dest('Scripts'));
 });
 
 gulp.task('bootstrap-bundle', ['bower-restore'], function () {
     return gulp.src(config.bootstrapsrc)
      .pipe(sourcemaps.init())
+        .pipe(uglify())
      .pipe(concat('bootstrap-bundle.min.js'))
      .pipe(sourcemaps.write('maps'))
      .pipe(gulp.dest('Scripts'));

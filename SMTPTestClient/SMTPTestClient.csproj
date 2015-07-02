@@ -53,6 +53,10 @@
       <Project>{1109925f-690b-4e73-99f8-dc1fce96ca97}</Project>
       <Name>HydraCore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HydraService\HydraService.csproj">
+      <Project>{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}</Project>
+      <Name>HydraService</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

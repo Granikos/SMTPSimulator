@@ -857,6 +857,9 @@ namespace HydraWebClient.HydraConfigurationService {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool SupportsPatternField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -889,6 +892,19 @@ namespace HydraWebClient.HydraConfigurationService {
                 if ((object.ReferenceEquals(this.NameField, value) != true)) {
                     this.NameField = value;
                     this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool SupportsPattern {
+            get {
+                return this.SupportsPatternField;
+            }
+            set {
+                if ((this.SupportsPatternField.Equals(value) != true)) {
+                    this.SupportsPatternField = value;
+                    this.RaisePropertyChanged("SupportsPattern");
                 }
             }
         }

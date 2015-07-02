@@ -114,7 +114,7 @@ namespace HydraTest.CommandHandlers
             List<MailPath> actualRecipients = null;
             string actualBody = null;
 
-            Core.TriggerNewMessageSMTPTransactionPathPathArrayString = (transaction, sender, recipients, body) =>
+            Core.TriggerNewMessageSMTPTransactionMailPathMailPathArrayString = (transaction, sender, recipients, body) =>
             {
                 actualSender = sender;
                 actualRecipients = recipients.ToList();

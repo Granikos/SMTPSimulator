@@ -102,16 +102,27 @@ namespace HydraService.Providers
             }
         }
 
-        public bool Generate(string template, string pattern, string domain, int count)
+        public bool Generate(string templateName, string pattern, string domain, int count)
         {
-            throw new NotImplementedException();
+            var parts = templateName.Split(new[] {'/'}, 2);
+            var template = _templateProviders
+                .SelectMany(t => t.All())
+                .First(t => t.GetType().Name.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase)
+                    && t.Name.Equals(parts[1], StringComparison.InvariantCultureIgnoreCase));
+
+            foreach (var user in template.Generate(pattern, domain, count))
+            {
+                if (Add(user) == null) return false;
+            }
+
+            return true;
         }
 
         public IEnumerable<UserTemplate> GetTemplates()
         {
             return _templateProviders
                 .SelectMany(t => t.All())
-                .Select(t => new UserTemplate(t.GetType().Name + "/" + t.Name, t.DisplayName))
+                .Select(t => new UserTemplate(t.GetType().Name + "/" + t.Name, t.DisplayName, t.SupportsPattern))
                 .OrderBy(t => t.DisplayName);
         }
     }

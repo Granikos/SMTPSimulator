@@ -5,10 +5,11 @@ namespace HydraService.Models
     [DataContract]
     public class UserTemplate
     {
-        public UserTemplate(string name, string displayName)
+        public UserTemplate(string name, string displayName, bool supportsPattern = false)
         {
             Name = name;
             DisplayName = displayName;
+            SupportsPattern = supportsPattern;
         }
 
         [DataMember]
@@ -16,6 +17,9 @@ namespace HydraService.Models
 
         [DataMember]
         public string DisplayName { get; private set; }
+
+        [DataMember]
+        public bool SupportsPattern { get; private set; }
         
     }
 }

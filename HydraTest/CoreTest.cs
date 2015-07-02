@@ -54,7 +54,7 @@ namespace HydraTest
         public void TestTriggerNewMessage()
         {
             var core = new SMTPCore(DefaultLoader());
-            var settings = new StubISettings();
+            var settings = new StubIReceiveSettings();
 
             var expectedTransaction = new StubSMTPTransaction(core, settings);
             var expectedSender = new MailPath("tester", "test.de");
@@ -179,14 +179,14 @@ namespace HydraTest
 
             using (ShimsContext.Create())
             {
-                var expectedSettings = new StubISettings
+                var expectedSettings = new StubIReceiveSettings
                 {
                     BannerGet = () => banner
                 };
 
                 SMTPCore actualCore = null;
 
-                ShimSMTPTransaction.ConstructorSMTPCoreISettings = (transaction, smtpCore, settings) =>
+                ShimSMTPTransaction.ConstructorSMTPCoreIReceiveSettings = (transaction, smtpCore, settings) =>
                 {
                     actualSettings = settings;
                     actualCore = smtpCore;
@@ -221,7 +221,7 @@ namespace HydraTest
             SMTPResponse reponse;
             using (ShimsContext.Create())
             {
-                var settings = new StubISettings();
+                var settings = new StubIReceiveSettings();
 
                 expectedTransaction = core.StartTransaction(ip, settings, out reponse);
             }
@@ -248,7 +248,7 @@ namespace HydraTest
                 SMTPResponse reponse;
                 using (ShimsContext.Create())
                 {
-                    var settings = new StubISettings();
+                    var settings = new StubIReceiveSettings();
 
                     core.StartTransaction(ip, settings, out reponse);
                 }

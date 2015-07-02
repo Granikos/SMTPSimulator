@@ -6,6 +6,8 @@ using System.Net.Mail;
 using System.Reflection;
 using System.Text;
 using HydraCore;
+using HydraService;
+using HydraService.Models;
 
 // using System.Net.Mail;
 
@@ -83,10 +85,11 @@ namespace SMTPTestClient
 
             var container = new CompositionContainer(new AssemblyCatalog(typeof (SMTPCore).Assembly));
 
+            var settings = new DefaultSendSettings(new SendConnector());
             // var client = new SMTPClient("localhost", 1337)
             // var client = new SMTPClient("test.smtp.org")
             // var client = new SMTPClient("mailtrap.io", 2525)
-            var client = SMTPClient.Create(container, "localhost", 25);
+            var client = SMTPClient.Create(container, settings, "localhost", 25);
 
             client.Credentials = new NetworkCredential("357045ceeeb05fa28", "07db3fc0f21e46");
 

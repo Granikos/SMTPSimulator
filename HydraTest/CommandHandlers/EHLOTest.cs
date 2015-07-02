@@ -36,7 +36,7 @@ namespace HydraTest.CommandHandlers
                 clientId = s;
             };
             Transaction.Reset = () => { reset = true; };
-            Transaction.SettingsGet = () => new StubISettings
+            Transaction.SettingsGet = () => new StubIReceiveSettings
             {
                 GreetGet = () => greet
             };
@@ -80,7 +80,7 @@ namespace HydraTest.CommandHandlers
 
             Transaction.InitializeString = s => {};
             Transaction.Reset = () => { };
-            Transaction.SettingsGet = () => new StubISettings
+            Transaction.SettingsGet = () => new StubIReceiveSettings
             {
                 GreetGet = () => greet
             };

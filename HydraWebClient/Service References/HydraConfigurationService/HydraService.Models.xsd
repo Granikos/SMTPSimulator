@@ -116,6 +116,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SupportsPattern" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="UserTemplate" nillable="true" type="tns:UserTemplate" />

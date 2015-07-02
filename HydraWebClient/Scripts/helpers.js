@@ -3,8 +3,8 @@
         this.urlBase = urlBase;
         this.$http = $http;
 
-        this.all = function () {
-            return $http.get(urlBase);
+        this.all = function (params) {
+            return $http.get(urlBase, params && { params: params });
         };
 
         this.get = function (id) {

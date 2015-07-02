@@ -59,7 +59,7 @@ namespace HydraTest.CommandHandlers
         {
             using (ShimsContext.Create())
             {
-                Transaction.SettingsGet = () => new StubISettings
+                Transaction.SettingsGet = () => new StubIReceiveSettings
                 {
                     RequireAuthGet = () => transactionRequiresAuth
                 };
@@ -422,6 +422,11 @@ namespace HydraTest.CommandHandlers
         private class HandlerWithRequiresAuth : ICommandHandler
         {
             public void Initialize(SMTPCore core)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Initialize(SMTPTransaction transaction)
             {
                 throw new NotImplementedException();
             }

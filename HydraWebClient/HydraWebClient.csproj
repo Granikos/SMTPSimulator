@@ -175,6 +175,7 @@
     <Compile Include="Controllers\DomainsController.cs" />
     <Compile Include="Controllers\ExternalUsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PagedFilter.cs" />
     <Compile Include="Controllers\SendConnectorsController.cs" />
     <Compile Include="Controllers\RecieveConnectorController.cs" />
     <Compile Include="Controllers\ServerController.cs" />
@@ -198,6 +199,8 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
+    <Content Include="Scripts\angular-bundle.min.js" />
+    <Content Include="Scripts\bootstrap-bundle.min.js" />
     <Content Include="Scripts\Controllers\Recieve.js" />
     <Content Include="Scripts\Controllers\Send.js" />
     <Content Include="Scripts\Controllers\Timer.js" />
@@ -210,7 +213,14 @@
     <Content Include="Scripts\helpers.js" />
     <Content Include="Scripts\HydraApp.js" />
     <Content Include="bower.json" />
+    <Content Include="Scripts\jquery-bundle.min.js" />
+    <Content Include="Scripts\maps\angular-bundle.min.js.map" />
+    <Content Include="Scripts\maps\angular-min.js.map" />
+    <Content Include="Scripts\maps\bootstrap-bundle.min.js.map" />
+    <Content Include="Scripts\maps\papaparse-min.js.map" />
+    <Content Include="Scripts\maps\papaparse.min.js.map" />
     <None Include="Scripts\UserTemplates\en.json" />
+    <Content Include="Scripts\papaparse.min.js" />
     <Content Include="Scripts\_references.js" />
     <None Include="Service References\HydraConfigurationService\configuration91.svcinfo" />
     <None Include="Service References\HydraConfigurationService\configuration.svcinfo" />
