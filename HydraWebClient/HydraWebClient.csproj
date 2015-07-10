@@ -248,6 +248,12 @@
     <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.UserTemplate.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.ExternalUsersWithTotal.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.LocalUsersWithTotal.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\HydraConfigurationService\Message.xsd">
       <SubType>Designer</SubType>
     </None>

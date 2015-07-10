@@ -6,6 +6,8 @@ using HydraService.Models;
 
 namespace HydraService
 {
+
+
     [ServiceContract]
     public interface IConfigurationService
     {
@@ -151,18 +153,41 @@ namespace HydraService
         bool DeleteSendConnector(int id);
 
         [OperationContract]
-        IEnumerable<LocalUser> GetLocalUsers();
+        [WebGet(
+            UriTemplate = "LocalUsers/{perPage}/{page}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        EntitiesWithTotal<LocalUser> GetLocalUsers(int page, int perPage);
 
         [OperationContract]
+        [WebGet(
+            UriTemplate = "LocalUsers/{id}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
         LocalUser GetLocalUser(int id);
 
         [OperationContract]
+        [WebInvoke(
+            UriTemplate = "LocalUsers",
+            Method = "PUT",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
         LocalUser AddLocalUser(LocalUser user);
 
         [OperationContract]
+        [WebInvoke(
+            UriTemplate = "LocalUsers/{id}",
+            Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
         LocalUser UpdateLocalUser(LocalUser user);
 
         [OperationContract]
+        [WebInvoke(
+            UriTemplate = "LocalUsers/{id}",
+            Method = "DELETE",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
         bool DeleteLocalUser(int id);
 
         [OperationContract]
@@ -197,10 +222,10 @@ namespace HydraService
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "ExternalUsers",
+            UriTemplate = "ExternalUsers/{perPage}/{page}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        IEnumerable<ExternalUser> GetExternalUsers();
+        EntitiesWithTotal<ExternalUser> GetExternalUsers(int page, int perPage);
 
         [OperationContract]
         [WebGet(

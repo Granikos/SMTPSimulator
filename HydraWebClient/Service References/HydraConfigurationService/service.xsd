@@ -272,13 +272,16 @@
   </xs:element>
   <xs:element name="GetLocalUsers">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="page" type="xs:int" />
+        <xs:element minOccurs="0" name="perPage" type="xs:int" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetLocalUsersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="GetLocalUsersResult" nillable="true" type="q21:ArrayOfLocalUser" />
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="GetLocalUsersResult" nillable="true" type="q21:LocalUsersWithTotal" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -393,13 +396,16 @@
   </xs:element>
   <xs:element name="GetExternalUsers">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="page" type="xs:int" />
+        <xs:element minOccurs="0" name="perPage" type="xs:int" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetExternalUsersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="GetExternalUsersResult" nillable="true" type="q30:ArrayOfExternalUser" />
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/HydraService.Models" minOccurs="0" name="GetExternalUsersResult" nillable="true" type="q30:ExternalUsersWithTotal" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -25,9 +25,10 @@
                     paginationPageSizes: [25, 50, 100],
                     paginationPageSize: 25,
                     useExternalPagination: true,
-                    sortInfo: $scope.sortOptions,
                     totalServerItems: "totalServerItems",
-                    useExternalSorting: true,
+                    enableSorting: false,
+                    enableColumnMenus: false,
+                    useExternalSorting: false,
                     enableCellSelection: false,
                     enableRowSelection: true,
                     multiSelect: true,
@@ -63,7 +64,7 @@
                             url: 'api/LocalUsers/Import',
                             file: file
                         }).success(function (data, status, headers, config) {
-                            // TODO
+                            $scope.refresh();
                         });
                     }
                 };
@@ -90,6 +91,7 @@
                         })
                             .success(function (data) {
                                 modal.close();
+                                $scope.refresh();
                             })
                             .error(function (data) {
                                 showError(data.data.Message);
@@ -117,7 +119,8 @@
                     var p = LocalUserService.add(user);
 
                     p.success(function (u) {
-                        $scope.users.push(u);
+                        $scope.refresh();
+                        // $scope.users.push(u);
                     });
 
                     return p;
@@ -126,16 +129,18 @@
                 $scope.deleteSelected = function () {
                     angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
                         LocalUserService.delete(data.Id).success(function () {
-                            $scope.users.splice($scope.users.lastIndexOf(data), 1);
+                            // $scope.users.splice($scope.users.lastIndexOf(data), 1);
+                            $scope.refresh();
                         });
                     });
                 };
+
                 $scope.refresh = function () {
                     setTimeout(function () {
                         LocalUserService.all(paginationOptions)
-                            .success(function (users) {
-                                $scope.gridOptions.totalItems = 100;
-                                $scope.users = users;
+                            .success(function (result) {
+                                $scope.gridOptions.totalItems = result.Total;
+                                $scope.users = result.Entities;
                             });
                     }, 100);
                 };
@@ -143,18 +148,6 @@
                 // watches
                 $scope.$watch('pagingOptions', function (newVal, oldVal) {
                     if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
-                        $scope.refresh();
-                    }
-                }, true);
-
-                $scope.$watch('filterOptions', function (newVal, oldVal) {
-                    if (newVal !== oldVal) {
-                        $scope.refresh();
-                    }
-                }, true);
-
-                $scope.$watch('sortOptions', function (newVal, oldVal) {
-                    if (newVal !== oldVal) {
                         $scope.refresh();
                     }
                 }, true);

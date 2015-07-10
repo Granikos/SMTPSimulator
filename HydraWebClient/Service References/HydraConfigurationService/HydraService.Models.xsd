@@ -91,6 +91,21 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfSendConnector" nillable="true" type="tns:ArrayOfSendConnector" />
+  <xs:complexType name="LocalUsersWithTotal">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="{0}sWithTotal" Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="LocalUser" Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models">
+          </GenericParameter>
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Entities" nillable="true" type="tns:ArrayOfLocalUser" />
+      <xs:element minOccurs="0" name="Total" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LocalUsersWithTotal" nillable="true" type="tns:LocalUsersWithTotal" />
   <xs:complexType name="ArrayOfLocalUser">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="LocalUser" nillable="true" type="tns:LocalUser" />
@@ -120,6 +135,21 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="UserTemplate" nillable="true" type="tns:UserTemplate" />
+  <xs:complexType name="ExternalUsersWithTotal">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="{0}sWithTotal" Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="ExternalUser" Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models">
+          </GenericParameter>
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Entities" nillable="true" type="tns:ArrayOfExternalUser" />
+      <xs:element minOccurs="0" name="Total" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ExternalUsersWithTotal" nillable="true" type="tns:ExternalUsersWithTotal" />
   <xs:complexType name="ArrayOfExternalUser">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="ExternalUser" nillable="true" type="tns:ExternalUser" />

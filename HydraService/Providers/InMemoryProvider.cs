@@ -19,9 +19,26 @@ namespace HydraService.Providers
             AutoId = autoId;
         }
 
+        public int Total
+        {
+            get { return _entities.Count; }
+        }
+
         public IEnumerable<TEntity> All()
         {
             return _entities.Values.ToList();
+        }
+
+        protected virtual IOrderedEnumerable<TEntity> ApplyOrder(IEnumerable<TEntity> entities)
+        {
+            return entities.OrderBy(e => e.Id);
+        }
+
+        public IEnumerable<TEntity> Paged(int page, int pageSize)
+        {
+            var skip = (page-1)*pageSize;
+            var entities = ApplyOrder(_entities.Values);
+            return entities.Skip(skip).Take(pageSize).ToList();
         }
 
         public TEntity Get(TKey id)

@@ -41,9 +41,11 @@ namespace HydraWebClient.Controllers
         // GET api/LocalUsers
         [HttpGet]
         [Route("")]
-        public IEnumerable<LocalUser> All([FromUri]PagedFilter filter)
+        public LocalUsersWithTotal Paged([FromUri]PagedFilter filter)
         {
-            return _service.GetLocalUsers();
+            var page = filter != null ? filter.PageNumber : 1;
+            var pageSize = filter != null ? filter.PageSize : 25;
+            return _service.GetLocalUsers(page, pageSize);
         }
 
         // GET api/LocalUsers/Export

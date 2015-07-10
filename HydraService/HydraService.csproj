@@ -156,6 +156,7 @@
     <Compile Include="ConfigurationService.cs" />
     <Compile Include="DefaultRecieveSettings.cs" />
     <Compile Include="DefaultSendSettings.cs" />
+    <Compile Include="Models\EntitiesWithTotal.cs" />
     <Compile Include="PriorityQueue\DelayedQueue.cs" />
     <Compile Include="IConfigurationService.cs" />
     <Compile Include="ISMTPServerContainer.cs" />

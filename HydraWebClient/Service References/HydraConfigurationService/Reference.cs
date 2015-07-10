@@ -751,6 +751,67 @@ namespace HydraWebClient.HydraConfigurationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LocalUsersWithTotal", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
+    [System.SerializableAttribute()]
+    public partial class LocalUsersWithTotal : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HydraWebClient.HydraConfigurationService.LocalUser[] EntitiesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TotalField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HydraWebClient.HydraConfigurationService.LocalUser[] Entities {
+            get {
+                return this.EntitiesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EntitiesField, value) != true)) {
+                    this.EntitiesField = value;
+                    this.RaisePropertyChanged("Entities");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Total {
+            get {
+                return this.TotalField;
+            }
+            set {
+                if ((this.TotalField.Equals(value) != true)) {
+                    this.TotalField = value;
+                    this.RaisePropertyChanged("Total");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="LocalUser", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
     [System.SerializableAttribute()]
     public partial class LocalUser : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -905,6 +966,67 @@ namespace HydraWebClient.HydraConfigurationService {
                 if ((this.SupportsPatternField.Equals(value) != true)) {
                     this.SupportsPatternField = value;
                     this.RaisePropertyChanged("SupportsPattern");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ExternalUsersWithTotal", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
+    [System.SerializableAttribute()]
+    public partial class ExternalUsersWithTotal : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HydraWebClient.HydraConfigurationService.ExternalUser[] EntitiesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TotalField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HydraWebClient.HydraConfigurationService.ExternalUser[] Entities {
+            get {
+                return this.EntitiesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EntitiesField, value) != true)) {
+                    this.EntitiesField = value;
+                    this.RaisePropertyChanged("Entities");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Total {
+            get {
+                return this.TotalField;
+            }
+            set {
+                if ((this.TotalField.Equals(value) != true)) {
+                    this.TotalField = value;
+                    this.RaisePropertyChanged("Total");
                 }
             }
         }
@@ -1153,10 +1275,10 @@ namespace HydraWebClient.HydraConfigurationService {
         System.Threading.Tasks.Task<bool> DeleteSendConnectorAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/GetLocalUsersResponse")]
-        HydraWebClient.HydraConfigurationService.LocalUser[] GetLocalUsers();
+        HydraWebClient.HydraConfigurationService.LocalUsersWithTotal GetLocalUsers(int page, int perPage);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/GetLocalUsersResponse")]
-        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.LocalUser[]> GetLocalUsersAsync();
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.LocalUsersWithTotal> GetLocalUsersAsync(int page, int perPage);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLocalUser", ReplyAction="http://tempuri.org/IConfigurationService/GetLocalUserResponse")]
         HydraWebClient.HydraConfigurationService.LocalUser GetLocalUser(int id);
@@ -1207,10 +1329,10 @@ namespace HydraWebClient.HydraConfigurationService {
         System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.UserTemplate[]> GetLocalUserTemplatesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalUsers", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalUsersResponse")]
-        HydraWebClient.HydraConfigurationService.ExternalUser[] GetExternalUsers();
+        HydraWebClient.HydraConfigurationService.ExternalUsersWithTotal GetExternalUsers(int page, int perPage);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalUsers", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalUsersResponse")]
-        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ExternalUser[]> GetExternalUsersAsync();
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ExternalUsersWithTotal> GetExternalUsersAsync(int page, int perPage);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalUserResponse")]
         HydraWebClient.HydraConfigurationService.ExternalUser GetExternalUser(int id);
@@ -1460,12 +1582,12 @@ namespace HydraWebClient.HydraConfigurationService {
             return base.Channel.DeleteSendConnectorAsync(id);
         }
         
-        public HydraWebClient.HydraConfigurationService.LocalUser[] GetLocalUsers() {
-            return base.Channel.GetLocalUsers();
+        public HydraWebClient.HydraConfigurationService.LocalUsersWithTotal GetLocalUsers(int page, int perPage) {
+            return base.Channel.GetLocalUsers(page, perPage);
         }
         
-        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.LocalUser[]> GetLocalUsersAsync() {
-            return base.Channel.GetLocalUsersAsync();
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.LocalUsersWithTotal> GetLocalUsersAsync(int page, int perPage) {
+            return base.Channel.GetLocalUsersAsync(page, perPage);
         }
         
         public HydraWebClient.HydraConfigurationService.LocalUser GetLocalUser(int id) {
@@ -1532,12 +1654,12 @@ namespace HydraWebClient.HydraConfigurationService {
             return base.Channel.GetLocalUserTemplatesAsync();
         }
         
-        public HydraWebClient.HydraConfigurationService.ExternalUser[] GetExternalUsers() {
-            return base.Channel.GetExternalUsers();
+        public HydraWebClient.HydraConfigurationService.ExternalUsersWithTotal GetExternalUsers(int page, int perPage) {
+            return base.Channel.GetExternalUsers(page, perPage);
         }
         
-        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ExternalUser[]> GetExternalUsersAsync() {
-            return base.Channel.GetExternalUsersAsync();
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ExternalUsersWithTotal> GetExternalUsersAsync(int page, int perPage) {
+            return base.Channel.GetExternalUsersAsync(page, perPage);
         }
         
         public HydraWebClient.HydraConfigurationService.ExternalUser GetExternalUser(int id) {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -30,6 +31,11 @@ namespace HydraService.Providers
                     LastName = "Schmidt",
                     Mailbox = "eva.schmidt@test.de"
                 });
+        }
+
+        protected override IOrderedEnumerable<LocalUser> ApplyOrder(IEnumerable<LocalUser> entities)
+        {
+            return entities.OrderBy(u => u.Mailbox, StringComparer.InvariantCultureIgnoreCase);
         }
 
         class CsvMap : CsvClassMap<LocalUser>

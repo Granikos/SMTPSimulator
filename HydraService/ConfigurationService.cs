@@ -154,9 +154,12 @@ namespace HydraService
             return _recieveConnectors.Delete(id);
         }
 
-        public IEnumerable<LocalUser> GetLocalUsers()
+        public EntitiesWithTotal<LocalUser> GetLocalUsers(int page, int perPage)
         {
-            return _localUsers.All();
+            var users = _localUsers.Paged(page, perPage);
+            var total = _localUsers.Total;
+            var result = new EntitiesWithTotal<LocalUser>(users, total);
+            return result;
         }
 
         public LocalUser GetLocalUser(int id)
@@ -204,9 +207,9 @@ namespace HydraService
             return _localUsers.GetTemplates();
         }
 
-        public IEnumerable<ExternalUser> GetExternalUsers()
+        public EntitiesWithTotal<ExternalUser> GetExternalUsers(int page, int perPage)
         {
-            return _externalUsers.All();
+            return new EntitiesWithTotal<ExternalUser>(_externalUsers.Paged(page, perPage), _externalUsers.Total);
         }
 
         public ExternalUser GetExternalUser(int id)

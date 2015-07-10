@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
@@ -29,6 +30,11 @@ namespace HydraService.Providers
                 Mailbox = "manuel.krebber",
                 DomainId = 2
             });
+        }
+
+        protected override IOrderedEnumerable<ExternalUser> ApplyOrder(IEnumerable<ExternalUser> entities)
+        {
+            return entities.OrderBy(u => u.Mailbox, StringComparer.InvariantCultureIgnoreCase);
         }
 
         class CsvMap : CsvClassMap<ExternalUser>

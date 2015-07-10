@@ -18,9 +18,9 @@ namespace HydraWebClient.Controllers
         // GET api/ExternalUsers
         [HttpGet]
         [Route("")]
-        public IEnumerable<ExternalUser> All()
+        public ExternalUsersWithTotal All([FromUri]PagedFilter filter)
         {
-            return _service.GetExternalUsers();
+            return _service.GetExternalUsers(filter.PageNumber, filter.PageSize);
         }
 
         // GET api/ExternalUsers/Export
