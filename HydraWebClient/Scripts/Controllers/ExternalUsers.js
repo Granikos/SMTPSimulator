@@ -53,7 +53,8 @@
 
                 $scope.refreshDomains = function() {
                     DomainService.all()
-                        .success(function(domains) {
+                        .success(function (domains) {
+                            $scope.domains = {};
                             angular.forEach(domains, function(domain) {
                                 $scope.domains[domain.Id] = domain;
                             });
@@ -117,6 +118,44 @@
                             // $scope.users.splice($scope.users.lastIndexOf(data), 1);
                         });
                     });
+                };
+
+                var domainAddCtrl = function ($scope, $modalInstance) {
+                    $scope.add = function () {
+                        $modalInstance.close($scope.DomainName);
+                    };
+                };
+
+                $scope.addDomainDialog = function () {
+                    $modal
+                        .open({
+                            templateUrl: 'Views/ExternalUsers/AddDomainDialog.html',
+                            controller: domainAddCtrl
+                        })
+                        .result.then(function (domain) {
+                            $scope.addDomain(domain);
+                        });
+                };
+
+                $scope.addDomain = function (domain) {
+                    var p = $http.post('api/Domains/' + domain);
+
+                    p.success(function () {
+                        $scope.refreshDomains();
+                    });
+
+                    return p;
+                };
+
+                $scope.deleteDomain = function (id) {
+                    DomainService.delete(id)
+                        .success(function() {
+                            $scope.refreshDomains();
+                            $scope.refresh();
+                        })
+                        .error(function (data) {
+                            showError(data.data.Message);
+                        });
                 };
 
                 $scope.refresh = function () {

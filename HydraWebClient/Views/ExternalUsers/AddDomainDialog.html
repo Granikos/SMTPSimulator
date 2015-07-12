@@ -1,0 +1,13 @@
+﻿<div class="modal-header">
+    <h4 class="modal-title"><span class="glyphicon glyphicon-plus-sign"></span> Add Domain</h4>
+</div>
+
+<div class="modal-body clearfix">
+    <form role="form" name="addDomainForm" ng-submit="addDomainForm.$valid && add()">
+        <div class="form-group">
+            <label for="domain">Domain</label>
+            <input type="text" class="form-control" id="domain" placeholder="Enter domain" ng-model="DomainName" required />
+        </div>
+        <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-plus-sign"></i> Add</button>
+    </form>
+</div>

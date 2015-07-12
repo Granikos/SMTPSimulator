@@ -67,7 +67,18 @@ namespace HydraService
 
         public bool DeleteDomain(int id)
         {
-            return _domains.Delete(id);
+            var success = _domains.Delete(id);
+
+            if (success)
+            {
+                // TODO: Special method for this
+                foreach (var user in _externalUsers.All().Where(u => u.DomainId == id).ToList())
+                {
+                    _externalUsers.Delete(user.Id);
+                }
+            }
+
+            return success;
         }
 
         public IEnumerable<SendConnector> GetSendConnectors()

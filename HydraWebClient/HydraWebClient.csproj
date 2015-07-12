@@ -261,6 +261,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Views\ExternalUsers\AddDomainDialog.html" />
     <Content Include="Views\ExternalUsers\Index.html" />
     <Content Include="Views\LocalUsers\GenerateDialog.html" />
     <Content Include="Views\LocalUsers\ImportDialog.html" />
