@@ -1,5 +1,6 @@
 ﻿(function () {
     var IPRegexp = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    var TimeRegexp = /^\d+:([0-5]\d):([0-5]\d)$/;
 
     angular.module('Recieve', ['ui.bootstrap.modal', 'enumFlag'])
 
@@ -21,6 +22,7 @@
                 }
 
                 $scope.IPRegexp = IPRegexp;
+                $scope.TimeRegexp = TimeRegexp;
 
                 RecieveConnectorService.all()
                     .success(function (connectors) {

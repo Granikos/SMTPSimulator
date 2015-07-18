@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace HydraService
         private Thread _processThread;
         private MessageSender _sender;
 
+        private Dictionary<IPAddress,DateTime> _greyList = new Dictionary<IPAddress, DateTime>(); 
+
         public SMTPServer(RecieveConnector connector, SMTPCore core, CompositionContainer container)
         {
             _container = container;
@@ -35,6 +38,8 @@ namespace HydraService
                 {
                     connect.Cancel = true;
                 }
+
+                CheckGreylisting(connect);
             };
 
             Core.OnNewMessage += (transaction, mail) =>
@@ -52,6 +57,33 @@ namespace HydraService
             _container.SatisfyImportsOnce(this);
 
             // container.SatisfyImportsOnce(_sender);
+        }
+
+        private void CheckGreylisting(SMTPCore.ConnectEventArgs connect)
+        {
+            if (Connector.GreylistingTime != null && Connector.GreylistingTime > TimeSpan.Zero)
+            {
+                DateTime time;
+
+                if (_greyList.TryGetValue(connect.IP, out time))
+                {
+                    if (time > DateTime.Now)
+                    {
+                        connect.Cancel = true;
+                        connect.ResponseCode = SMTPStatusCode.NotAvailiable;
+                    }
+                    else
+                    {
+                        _greyList.Remove(connect.IP);
+                    }
+                }
+                else
+                {
+                    _greyList.Add(connect.IP, (DateTime)(DateTime.Now + Connector.GreylistingTime));
+                    connect.Cancel = true;
+                    connect.ResponseCode = SMTPStatusCode.NotAvailiable;
+                }
+            }
         }
 
         public SMTPCore Core { get; private set; }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Runtime.Serialization;
 using HydraCore;
@@ -74,5 +75,9 @@ namespace HydraService.Models
         [DataMember]
         [Range(0, int.MaxValue)]
         public int Id { get; set; }
+
+        [DataMember]
+        // TODO: [Range(TimeSpan.Zero, TimeSpan.MaxValue)]
+        public TimeSpan? GreylistingTime { get; set; }
     }
 }

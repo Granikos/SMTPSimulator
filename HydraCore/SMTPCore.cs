@@ -92,7 +92,7 @@ namespace HydraCore
 
                 if (args.Cancel)
                 {
-                    response = new SMTPResponse(SMTPStatusCode.TransactionFailed);
+                    response = new SMTPResponse(args.ResponseCode ?? SMTPStatusCode.TransactionFailed);
                     transaction.Close();
                     return transaction;
                 }
@@ -127,6 +127,8 @@ namespace HydraCore
             }
 
             public IPAddress IP { get; private set; }
+
+            public SMTPStatusCode? ResponseCode { get; set; }
         }
     }
 }

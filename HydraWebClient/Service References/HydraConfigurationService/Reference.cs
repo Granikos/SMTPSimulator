@@ -115,6 +115,9 @@ namespace HydraWebClient.HydraConfigurationService {
         private bool EnabledField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.TimeSpan> GreylistingTimeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -203,6 +206,19 @@ namespace HydraWebClient.HydraConfigurationService {
                 if ((this.EnabledField.Equals(value) != true)) {
                     this.EnabledField = value;
                     this.RaisePropertyChanged("Enabled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.TimeSpan> GreylistingTime {
+            get {
+                return this.GreylistingTimeField;
+            }
+            set {
+                if ((this.GreylistingTimeField.Equals(value) != true)) {
+                    this.GreylistingTimeField = value;
+                    this.RaisePropertyChanged("GreylistingTime");
                 }
             }
         }
