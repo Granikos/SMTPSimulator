@@ -54,13 +54,27 @@ namespace HydraService.Providers
 
         public delegate bool PreHandler(TKey id);
 
+        public delegate void UpdateHandler();
+
         public event PostHandler OnAdded;
 
         public event PostHandler OnRemoved;
 
+        public event UpdateHandler OnUpdated; 
+
         protected virtual bool CanRemove(TKey id)
         {
             return true;
+        }
+
+        protected bool InternalAdd(TEntity entity)
+        {
+            if (entity.Id == null)
+            {
+                throw new ArgumentException("Entity id not set.", "entity");
+            }
+
+            return _entities.TryAdd(entity.Id, entity);
         }
 
         public TEntity Add(TEntity entity)
@@ -69,7 +83,8 @@ namespace HydraService.Providers
             {
                 entity.Id = AutoId(entity);
             }
-            else if (entity.Id == null)
+            
+            if (entity.Id == null)
             {
                 throw new ArgumentException("Entity id not set.", "entity");
             }
@@ -82,6 +97,11 @@ namespace HydraService.Providers
             if (OnAdded != null)
             {
                 OnAdded(entity);
+            }
+
+            if (OnUpdated != null)
+            {
+                OnUpdated();
             }
 
             return entity;
@@ -106,6 +126,11 @@ namespace HydraService.Providers
                 OnAdded(entity);
             }
 
+            if (OnUpdated != null)
+            {
+                OnUpdated();
+            }
+
             return entity;
         }
 
@@ -125,6 +150,11 @@ namespace HydraService.Providers
             if (OnRemoved != null)
             {
                 OnRemoved(entity);
+            }
+
+            if (OnUpdated != null)
+            {
+                OnUpdated();
             }
 
             return true;

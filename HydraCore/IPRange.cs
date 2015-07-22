@@ -2,6 +2,7 @@
 using System.Diagnostics.Contracts;
 using System.Net;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace HydraCore
 {
@@ -10,6 +11,17 @@ namespace HydraCore
     {
         private IPAddress _start;
         private IPAddress _end;
+
+        // TODO: Use converter instead to remove dependency
+        [JsonConstructor]
+        public IPRange(string startString, string endString)
+        {
+            Contract.Requires<ArgumentNullException>(!String.IsNullOrEmpty(startString));
+            Contract.Requires<ArgumentNullException>(!String.IsNullOrEmpty(endString));
+
+            StartString = startString;
+            EndString = endString;
+        }
 
         public IPRange(IPAddress start, IPAddress end)
         {

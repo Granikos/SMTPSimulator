@@ -14,23 +14,30 @@ namespace HydraService.Providers
     public class ExternalUserProvider : DefaultProvider<ExternalUser>, IExternalUserProvider
     {
         public ExternalUserProvider()
+            : base("ExternalUsers")
         {
-            Add(new ExternalUser
+        }
+
+#if DEBUG
+        protected override IEnumerable<ExternalUser> Initializer()
+        {
+            yield return new ExternalUser
             {
                 Mailbox = "bernd.mueller",
                 DomainId = 1
-            });
-            Add(new ExternalUser
+            };
+            yield return new ExternalUser
             {
                 Mailbox = "max.muetze",
                 DomainId = 1
-            });
-            Add(new ExternalUser
+            };
+            yield return new ExternalUser
             {
                 Mailbox = "manuel.krebber",
                 DomainId = 2
-            });
+            };
         }
+#endif
 
         protected override IOrderedEnumerable<ExternalUser> ApplyOrder(IEnumerable<ExternalUser> entities)
         {

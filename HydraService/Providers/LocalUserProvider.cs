@@ -18,20 +18,27 @@ namespace HydraService.Providers
         private IEnumerable<IUserTemplateProvider> _templateProviders;
 
         public LocalUserProvider()
+            : base("LocalUsers")
         {
-            Add(new LocalUser
-                {
-                    FirstName = "Bernd",
-                    LastName = "Müller",
-                    Mailbox = "bernd.mueller@test.de"
-                });
-            Add(new LocalUser
-                {
-                    FirstName = "Eva",
-                    LastName = "Schmidt",
-                    Mailbox = "eva.schmidt@test.de"
-                });
         }
+        
+#if DEBUG
+        protected override IEnumerable<LocalUser> Initializer()
+        {
+            yield return new LocalUser
+            {
+                FirstName = "Bernd",
+                LastName = "Müller",
+                Mailbox = "bernd.mueller@test.de"
+            };
+            yield return new LocalUser
+            {
+                FirstName = "Eva",
+                LastName = "Schmidt",
+                Mailbox = "eva.schmidt@test.de"
+            };
+        }
+#endif
 
         protected override IOrderedEnumerable<LocalUser> ApplyOrder(IEnumerable<LocalUser> entities)
         {

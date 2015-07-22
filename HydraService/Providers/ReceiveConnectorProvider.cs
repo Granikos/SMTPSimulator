@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Net;
 using HydraCore;
@@ -10,8 +11,13 @@ namespace HydraService.Providers
     public class ReceiveConnectorProvider : DefaultProvider<RecieveConnector>, IRecieveConnectorProvider
     {
         public ReceiveConnectorProvider()
+            : base("ReceiveConnectors")
         {
-            Add(new RecieveConnector
+        }
+
+        protected override IEnumerable<RecieveConnector> Initializer()
+        {
+            yield return new RecieveConnector
             {
                     Name = "Default",
                     Enabled = true,
@@ -30,9 +36,9 @@ namespace HydraService.Providers
                         new IPRange(IPAddress.Parse("127.0.0.1"), IPAddress.Parse("127.0.0.255")),
                         new IPRange(IPAddress.Parse("192.168.178.1"), IPAddress.Parse("192.168.178.255")),
                     }
-                });
+                };
 
-            Add(new RecieveConnector
+            yield return new RecieveConnector
             {
                     Name = "Default SSL",
                     Enabled = true,
@@ -47,7 +53,7 @@ namespace HydraService.Providers
                         CertificatePassword = "tester",
                         IsFilesystemCertificate = true
                     }
-                });
+                };
         }
     }
 }

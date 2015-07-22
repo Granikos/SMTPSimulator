@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Diagnostics.Contracts;
 using HydraService.Models;
@@ -9,12 +10,19 @@ namespace HydraService.Providers
     public class SendConnectorProvider : DefaultProvider<SendConnector>, ISendConnectorProvider
     {
         public SendConnectorProvider()
+            : base("SendConnectors")
         {
-            Add(new SendConnector
+        }
+
+#if DEBUG
+        protected override IEnumerable<SendConnector> Initializer()
+        {
+            yield return new SendConnector
             {
                 Name = "Default"
-            });
+            };
         }
+#endif
 
         protected override bool CanRemove(int id)
         {

@@ -1,6 +1,5 @@
-using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Diagnostics.Contracts;
 using HydraService.Models;
 
 namespace HydraService.Providers
@@ -9,9 +8,16 @@ namespace HydraService.Providers
     class DomainProvider : DefaultProvider<Domain>, IDomainProvider
     {
         public DomainProvider()
+            : base("Domains")
         {
-            Add(new Domain("test.de"));
-            Add(new Domain("fubar.com"));
         }
+
+#if DEBUG
+        protected override IEnumerable<Domain> Initializer()
+        {
+            yield return new Domain("test.de");
+            yield return new Domain("fubar.com");
+        }
+#endif
     }
 }
