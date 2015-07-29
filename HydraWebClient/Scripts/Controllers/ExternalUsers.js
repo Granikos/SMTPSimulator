@@ -1,14 +1,19 @@
 ﻿(function () {
+    var DomainRegexp = /^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/;
+
     angular.module('ExternalUsers', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.selection', 'ui.grid.pagination', 'ui.bootstrap.modal', 'ngFileUpload'])
 
         .service('ExternalUsersService', ['$http', DataService('api/ExternalUsers')])
 
         .service("DomainService", ["$http", DataService("api/Domains")])
 
+        .service("SendConnectorService", ["$http", DataService("api/SendConnectors")])
+
         .controller('ExternalUsersController', [
-            '$scope', '$modal', '$q', '$http', 'ExternalUsersService', 'Upload', 'DomainService', function ($scope, $modal, $q, $http, ExternalUsersService, Upload, DomainService) {
+            '$scope', '$modal', '$q', '$http', 'ExternalUsersService', 'Upload', 'DomainService', 'SendConnectorService', function ($scope, $modal, $q, $http, ExternalUsersService, Upload, DomainService, SendConnectorService) {
                 $scope.users = [];
                 $scope.domains = {};
+                $scope.connectors = [];
 
                 var paginationOptions = {
                     PageSize: 25,
@@ -51,18 +56,34 @@
                     }
                 };
 
-                $scope.refreshDomains = function() {
+                SendConnectorService.all()
+                    .success(function (connectors) {
+                        $scope.connectors = connectors;
+                    })
+                    .error(function (data) {
+                        showError(data.data.Message);
+                    });
+
+
+                $scope.refreshDomains = function () {
                     DomainService.all()
                         .success(function (domains) {
                             $scope.domains = {};
-                            angular.forEach(domains, function(domain) {
+                            angular.forEach(domains, function (domain) {
                                 $scope.domains[domain.Id] = domain;
                             });
-                            angular.forEach($scope.users, function(user) {
+                            angular.forEach($scope.users, function (user) {
                                 user.__changed__ = true;
                             });
                         })
-                        .error(function(data) {
+                        .error(function (data) {
+                            showError(data.data.Message);
+                        });
+                };
+
+                $scope.updateDomain = function (domain) {
+                    DomainService.update(domain)
+                        .error(function (data) {
                             showError(data.data.Message);
                         });
                 };
@@ -121,6 +142,9 @@
                 };
 
                 var domainAddCtrl = function ($scope, $modalInstance) {
+                    $scope.DomainName = null;
+                    $scope.DomainRegexp = DomainRegexp;
+
                     $scope.add = function () {
                         $modalInstance.close($scope.DomainName);
                     };
@@ -149,7 +173,7 @@
 
                 $scope.deleteDomain = function (id) {
                     DomainService.delete(id)
-                        .success(function() {
+                        .success(function () {
                             $scope.refreshDomains();
                             $scope.refresh();
                         })

@@ -6,7 +6,7 @@
     <form role="form" name="addDomainForm" ng-submit="addDomainForm.$valid && add()">
         <div class="form-group">
             <label for="domain">Domain</label>
-            <input type="text" class="form-control" id="domain" placeholder="Enter domain" ng-model="DomainName" required />
+            <input type="text" class="form-control" id="domain" placeholder="Enter domain" ng-model="DomainName" required ng-pattern="DomainRegexp" />
         </div>
         <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-plus-sign"></i> Add</button>
     </form>

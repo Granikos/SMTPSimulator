@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 using HydraWebClient.HydraConfigurationService;
 
@@ -35,11 +36,18 @@ namespace HydraWebClient.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, domain);
         }
 
+        static readonly Regex DomainRegex = new Regex(@"^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
         // POST api/Domains
         [HttpPost]
-        [Route("{domainName}")]
+        [Route("{*domainName}")]
         public HttpResponseMessage Post(string domainName)
         {
+            if (!DomainRegex.IsMatch(domainName))
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Invalid domain name.");
+            }
+
             var added = _service.AddDomain(domainName);
 
             if (added == null)

@@ -10,7 +10,12 @@
         </li>
         <li ng-repeat="domain in domains" class="list-group-item">
             {{domain.DomainName}}
+
             <span class="pull-right">
+                Send Connector:
+                <select ng-model="domain.SendConnectorId" ng-options="connector.Id as connector.Name for connector in connectors" ng-change="updateDomain(domain)" style="padding-right: 10px">
+                    <option value="" style="font-style: italic">Use Default Connector</option>
+                </select>
                 <button class="btn btn-xs btn-danger" ng-really-message="Do you really want to delete the domain?&lt;br /&gt;All mailboxes of that domain will be deleted as well!"
                         ng-really-click="deleteDomain(domain.Id)" ng-really-ok-class="btn-danger" ng-really-ok-text="Delete" ng-really-cancel-class="btn-default">
                     <span class="glyphicon glyphicon-remove-sign"></span>
