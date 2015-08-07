@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ServiceProcess;
+using log4net.Config;
 
 namespace HydraService
 {
@@ -10,6 +11,7 @@ namespace HydraService
         /// </summary>
         private static void Main(string[] args)
         {
+            XmlConfigurator.Configure();
             if (Environment.UserInteractive)
             {
                 var service = new SMTPService();

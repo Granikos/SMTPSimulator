@@ -34,6 +34,8 @@ namespace HydraService.Providers
             var fileName = (name ?? GetType().Name) + ".json";
             FileName = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["DataFolder"], fileName));
 
+            AutoId = entity => ++_id;
+
             if (!File.Exists(FileName))
             {
                 foreach (var entity in Initializer())
@@ -47,8 +49,6 @@ namespace HydraService.Providers
             {
                 Load();
             }
-
-            AutoId = entity => ++_id;
 
             OnUpdated += Store;
         }
