@@ -9,6 +9,7 @@ using Microsoft.Owin.Security;
 namespace HydraWebClient.Controllers
 {
     [Authorize]
+    [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
         private ApplicationUserManager _userManager;
@@ -42,7 +43,17 @@ namespace HydraWebClient.Controllers
             private set { _authManager = value; }
         }
 
-        public bool Delete()
+        [HttpGet]
+        [Route("")]
+        [AllowAnonymous]
+        public string GetInfo()
+        {
+            return User.Identity.IsAuthenticated? AuthenticationManager.User.Identity.Name : null;
+        }
+
+        [HttpDelete]
+        [Route("")]
+        public bool Logout()
         {
             AuthenticationManager.SignOut();
 
@@ -50,7 +61,9 @@ namespace HydraWebClient.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<bool> Post(LoginViewModel model)
+        [HttpPost]
+        [Route("")]
+        public async Task<bool> Login(LoginViewModel model)
         {
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
             switch (result)
@@ -63,7 +76,9 @@ namespace HydraWebClient.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<object> Put(RegisterViewModel model)
+        [HttpPut]
+        [Route("")]
+        public async Task<object> Register(RegisterViewModel model)
         {
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
             var result = await UserManager.CreateAsync(user, model.Password);

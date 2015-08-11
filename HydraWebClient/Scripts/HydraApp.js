@@ -51,8 +51,13 @@
             }
         ])
         .run([
-            '$rootScope', '$location', function ($rootScope, $location) {
+            '$rootScope', '$location', '$http', function ($rootScope, $location, $http) {
                 $rootScope.auth = {};
+
+                $http.get('/api/Account').
+                       success(function (data) {
+                        if (data) $rootScope.auth.user = data;
+                    });
 
                 $rootScope.$on('$locationChangeSuccess', function() {
                     var url = $location.url();

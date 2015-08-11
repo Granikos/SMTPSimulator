@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HydraClient", "HydraClient\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HydraWebClient", "HydraWebClient\HydraWebClient.csproj", "{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Hydra Setup", "Hydra Setup\Hydra Setup.vdproj", "{042F26B5-6DBD-4E49-814D-6B2B6647606E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,8 @@ Global
 		{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{042F26B5-6DBD-4E49-814D-6B2B6647606E}.Debug|Any CPU.ActiveCfg = Debug
+		{042F26B5-6DBD-4E49-814D-6B2B6647606E}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Runtime.Serialization;
 using HydraService.Models;
+using log4net;
 using Newtonsoft.Json;
 
 namespace HydraService.Providers
@@ -32,7 +33,16 @@ namespace HydraService.Providers
         public DefaultProvider(string name = null)
         {
             var fileName = (name ?? GetType().Name) + ".json";
-            FileName = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["DataFolder"], fileName));
+            var folderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["DataFolder"]);
+            
+            ILog logger = LogManager.GetLogger(GetType());
+
+            logger.Debug("Data Folder: " + folderPath);
+
+
+            if (!File.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+
+            FileName = Path.GetFullPath(Path.Combine(folderPath, fileName));
 
             AutoId = entity => ++_id;
 

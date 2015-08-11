@@ -2,15 +2,11 @@
     var DomainRegexp = /^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/;
 
     angular.module('ExternalUsers', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.selection', 'ui.grid.pagination', 'ui.bootstrap.modal', 'ngFileUpload'])
-
         .service('ExternalUsersService', ['$http', DataService('api/ExternalUsers')])
-
         .service("DomainService", ["$http", DataService("api/Domains")])
-
         .service("SendConnectorService", ["$http", DataService("api/SendConnectors")])
-
         .controller('ExternalUsersController', [
-            '$scope', '$modal', '$q', '$http', 'ExternalUsersService', 'Upload', 'DomainService', 'SendConnectorService', function ($scope, $modal, $q, $http, ExternalUsersService, Upload, DomainService, SendConnectorService) {
+            '$scope', '$modal', '$q', '$http', 'ExternalUsersService', 'Upload', 'DomainService', 'SendConnectorService', function($scope, $modal, $q, $http, ExternalUsersService, Upload, DomainService, SendConnectorService) {
                 $scope.users = [];
                 $scope.domains = {};
                 $scope.connectors = [];
@@ -44,11 +40,11 @@
                     selectionRowHeaderWidth: 35,
                     enableHorizontalScrollbar: 0,
                     columnDefs: columnDefs,
-                    onRegisterApi: function (gridApi) {
+                    onRegisterApi: function(gridApi) {
                         $scope.gridApi = gridApi;
                         gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
 
-                        gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
+                        gridApi.pagination.on.paginationChanged($scope, function(newPage, pageSize) {
                             paginationOptions.PageNumber = newPage;
                             paginationOptions.PageSize = pageSize;
                             $scope.refresh();
@@ -57,48 +53,48 @@
                 };
 
                 SendConnectorService.all()
-                    .success(function (connectors) {
+                    .success(function(connectors) {
                         $scope.connectors = connectors;
                     })
-                    .error(function (data) {
+                    .error(function(data) {
                         showError(data.data.Message);
                     });
 
 
-                $scope.refreshDomains = function () {
+                $scope.refreshDomains = function() {
                     DomainService.all()
-                        .success(function (domains) {
+                        .success(function(domains) {
                             $scope.domains = {};
-                            angular.forEach(domains, function (domain) {
+                            angular.forEach(domains, function(domain) {
                                 $scope.domains[domain.Id] = domain;
                             });
-                            angular.forEach($scope.users, function (user) {
+                            angular.forEach($scope.users, function(user) {
                                 user.__changed__ = true;
                             });
                         })
-                        .error(function (data) {
+                        .error(function(data) {
                             showError(data.data.Message);
                         });
                 };
 
-                $scope.updateDomain = function (domain) {
+                $scope.updateDomain = function(domain) {
                     DomainService.update(domain)
-                        .error(function (data) {
+                        .error(function(data) {
                             showError(data.data.Message);
                         });
                 };
 
-                $scope.import = function (files) {
+                $scope.import = function(files) {
                     if (files && files.length) {
                         var file = files[0];
                         Upload.upload({
                             url: 'api/ExternalUsers/Import',
                             // fields: { 'username': $scope.username },
                             file: file
-                        }).progress(function (evt) {
+                        }).progress(function(evt) {
                             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                             console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
-                        }).success(function (data, status, headers, config) {
+                        }).success(function(data, status, headers, config) {
                             console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
                             $scope.refreshDomains();
                             $scope.refresh();
@@ -106,91 +102,69 @@
                     }
                 };
 
-                $scope.saveRow = function (rowEntity) {
+                $scope.saveRow = function(rowEntity) {
                     var promise = ExternalUsersService.update(rowEntity);
                     $scope.gridApi.rowEdit.setSavePromise($scope.gridApi.grid, rowEntity, promise);
                 };
 
-                $scope.addDialog = function () {
-                    $modal
-                        .open({
-                            templateUrl: 'Views/ExternalUsers/AddDialog.html',
-                            controller: 'ExternalUsersAddDialogController'
-                        })
-                        .result.then(function (user) {
-                            $scope.add(user);
-                        });
-                };
-
-                $scope.add = function (user) {
-                    var p = ExternalUsersService.add(user);
-
-                    p.success(function (u) {
-                        $scope.users.push(u);
-                    });
-
-                    return p;
-                };
-
-                $scope.deleteSelected = function () {
-                    angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
-                        ExternalUsersService.delete(data.Id).success(function () {
+                $scope.deleteSelected = function() {
+                    angular.forEach($scope.gridApi.selection.getSelectedRows(), function(data, index) {
+                        ExternalUsersService.delete(data.Id).success(function() {
                             $scope.refresh();
-                            // $scope.users.splice($scope.users.lastIndexOf(data), 1);
                         });
                     });
                 };
 
-                var domainAddCtrl = function ($scope, $modalInstance) {
+                var domainAddCtrl = function($scope, $modalInstance) {
                     $scope.DomainName = null;
                     $scope.DomainRegexp = DomainRegexp;
 
-                    $scope.add = function () {
+                    $scope.add = function() {
                         $modalInstance.close($scope.DomainName);
                     };
                 };
 
-                $scope.addDomainDialog = function () {
+                $scope.addDomainDialog = function() {
                     $modal
                         .open({
                             templateUrl: 'Views/ExternalUsers/AddDomainDialog.html',
                             controller: domainAddCtrl
                         })
-                        .result.then(function (domain) {
+                        .result.then(function(domain) {
                             $scope.addDomain(domain);
                         });
                 };
 
-                $scope.addDomain = function (domain) {
+                $scope.addDomain = function(domain) {
                     var p = $http.post('api/Domains/' + domain);
 
-                    p.success(function () {
+                    p.success(function() {
                         $scope.refreshDomains();
                     });
 
                     return p;
                 };
 
-                $scope.deleteDomain = function (id) {
+                $scope.deleteDomain = function(id) {
                     DomainService.delete(id)
-                        .success(function () {
+                        .success(function() {
                             $scope.refreshDomains();
                             $scope.refresh();
                         })
-                        .error(function (data) {
+                        .error(function(data) {
                             showError(data.data.Message);
                         });
                 };
 
-                $scope.refresh = function () {
-                    setTimeout(function () {
+                $scope.refresh = function() {
+                    setTimeout(function() {
                         ExternalUsersService.all(paginationOptions)
-                            .success(function (result) {
+                            .success(function(result) {
                                 $scope.gridOptions.totalItems = result.Total;
                                 $scope.users = result.Entities;
 
-                                angular.forEach($scope.users, function (row) {
-                                    row.getMailAddress = function () {
+                                angular.forEach($scope.users, function(row) {
+                                    row.getMailAddress = function() {
                                         var domain = $scope.domains[row.DomainId];
                                         return row.Mailbox + '@' + (domain ? domain.DomainName : '???');
                                     };
@@ -200,7 +174,7 @@
                 };
 
                 // watches
-                $scope.$watch('pagingOptions', function (newVal, oldVal) {
+                $scope.$watch('pagingOptions', function(newVal, oldVal) {
                     if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
                         $scope.refresh();
                     }
@@ -208,19 +182,6 @@
 
                 $scope.refreshDomains();
                 $scope.refresh();
-            }
-        ])
-        .controller('ExternalUsersAddDialogController', [
-            '$scope', '$modalInstance', function ($scope, $modalInstance) {
-                $scope.user = {
-                    FirstName: '',
-                    LastName: '',
-                    Mailbox: ''
-                }
-
-                $scope.submit = function () {
-                    $modalInstance.close($scope.user);
-                };
             }
         ]);
 })();

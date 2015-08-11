@@ -32,24 +32,5 @@ namespace HydraWebClient.Controllers
         {
             return _service.IsRunning();
         }
-
-        /*
-        // GET api/<controller>
-        public ServerConfig Get()
-        {
-            return _service.GetServerConfig();
-        }
-
-        // POST api/<controller>
-        public HttpResponseMessage Post([FromBody]ServerConfig config)
-        {
-            if (!_service.SetServerConfig(config))
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Could not update settings.");
-            }
-
-            return Request.CreateResponse(HttpStatusCode.OK, true);
-        }
-         * */
     }
 }

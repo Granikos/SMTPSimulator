@@ -169,10 +169,16 @@
     <Compile Include="IReceiveSettings.cs" />
     <Compile Include="ISendSettings.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />
+    <Compile Include="Logging\CsvPatternLayout.cs" />
+    <Compile Include="Logging\CsvTextWriter.cs" />
+    <Compile Include="Logging\EndRowConverter.cs" />
     <Compile Include="Logging\ISMTPLogger.cs" />
+    <Compile Include="Logging\Log4NetLogger.cs" />
+    <Compile Include="Logging\LogEnumExtensions.cs" />
     <Compile Include="Logging\LogEvent.cs" />
     <Compile Include="Logging\LogEventType.cs" />
     <Compile Include="Logging\LogPartType.cs" />
+    <Compile Include="Logging\NewFieldConverter.cs" />
     <Compile Include="Mail.cs" />
     <Compile Include="Mailbox.cs" />
     <Compile Include="MailPath.cs" />
