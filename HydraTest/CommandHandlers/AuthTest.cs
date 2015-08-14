@@ -426,11 +426,6 @@ namespace HydraTest.CommandHandlers
                 throw new NotImplementedException();
             }
 
-            public void Initialize(SMTPTransaction transaction)
-            {
-                throw new NotImplementedException();
-            }
-
             public SMTPResponse Execute(SMTPTransaction transaction, string parameters)
             {
                 throw new NotImplementedException();

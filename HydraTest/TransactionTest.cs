@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Text;
 using HydraCore;
 using HydraCore.CommandHandlers.Fakes;
@@ -314,6 +315,35 @@ namespace HydraTest
                 var response = transaction.ExecuteCommand(new SMTPCommand("NonExistentCommand", "Params"));
 
                 Assert.Equal(SMTPStatusCode.SyntaxError, response.Code);
+            }
+        }
+
+        [Fact]
+        public void TestStartTLS()
+        {
+            using (ShimsContext.Create())
+            {
+                var server = new ShimSMTPCore();
+                var settings = new StubIReceiveSettings();
+                var transaction = new SMTPTransaction(server, settings);
+
+                var args = new CancelEventArgs();
+                CancelEventArgs actualArgs = null;
+                object actualSender = null;
+                var called = false;
+
+                transaction.OnStartTLS += (sender, eventArgs) =>
+                {
+                    called = true;
+                    actualSender = sender;
+                    actualArgs = eventArgs;
+                };
+
+                transaction.StartTLS(args);
+
+                Assert.True(called);
+                Assert.Same(transaction, actualSender);
+                Assert.Same(args, actualArgs);
             }
         }
 

@@ -63,10 +63,7 @@ namespace HydraCore
         public MailAddress ToMailAdress()
         {
             return String.IsNullOrEmpty(Domain)
-                ? (String.IsNullOrEmpty(LocalPart)
-                    ? null
-                    : new MailAddress(LocalPart)
-                )
+                ? null
                 : new MailAddress(LocalPart + "@" + Domain);
         }
 

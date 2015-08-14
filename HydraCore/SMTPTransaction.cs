@@ -35,7 +35,7 @@ namespace HydraCore
         public string ClientIdentifier { get; private set; }
         public bool Initialized { get; private set; }
         public bool Closed { get; private set; }
-        public bool TLSEnabled { get; set; }
+        public bool TLSActive { get; set; }
 
         public bool InDataMode
         {

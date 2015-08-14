@@ -43,6 +43,10 @@ namespace HydraCore
             Settings = settings;
             Host = host;
             Port = port;
+
+            EncryptionPolicy = EncryptionPolicy.RequireEncryption;
+            SslProtocols = SslProtocols.Default;
+            ValidateCertificateRevocation = true;
         }
 
         public ISendSettings Settings { get; private set; }
@@ -64,9 +68,13 @@ namespace HydraCore
             }
         }
 
-        public bool EnableSsl { get; set; }
+        public bool TLSFullTunnel { get; set; }
         public ICredentials Credentials { get; set; }
         public X509Certificate2Collection Certificates { get; set; }
+
+        public EncryptionPolicy EncryptionPolicy { get; set; }
+        public SslProtocols SslProtocols { get; set; }
+        public bool ValidateCertificateRevocation { get; set; }
 
         public static SMTPClient Create(CompositionContainer container, ISendSettings settings, string host,
             int port = 25)
@@ -99,12 +107,12 @@ namespace HydraCore
 
             Log(LogEventType.Connect);
 
-            if (EnableSsl)
+            if (TLSFullTunnel)
             {
                 var sslStream = new SslStream(_stream, false, UserCertificateValidationCallback,
-                    UserCertificateSelectionCallback, EncryptionPolicy.RequireEncryption);
+                    UserCertificateSelectionCallback, EncryptionPolicy);
 
-                sslStream.AuthenticateAsClient(Host, Certificates, SslProtocols.Default, true);
+                sslStream.AuthenticateAsClient(Host, Certificates, SslProtocols, ValidateCertificateRevocation);
 
                 _stream = sslStream;
             }
@@ -129,13 +137,25 @@ namespace HydraCore
             }
 
             var tlsEnabled = reponse.Args.Contains("STARTTLS", StringComparer.InvariantCultureIgnoreCase);
-            _authMethods = (reponse.Args
-                .FirstOrDefault(a => a.StartsWith("AUTH ", StringComparison.InvariantCultureIgnoreCase)) ?? "")
-                .Split(' ').Skip(1).ToArray();
+            var authLine =
+                reponse.Args.FirstOrDefault(a => a.StartsWith("AUTH ", StringComparison.InvariantCultureIgnoreCase));
+            _authMethods = (authLine ?? "").Split(' ').Skip(1).ToArray();
 
-            if (!EnableSsl && tlsEnabled)
+            if (!tlsEnabled && Settings.RequireTLS)
             {
-                StartTLS();
+                Log(LogEventType.Connect, "TLS is required, but the server does not support it.");
+                return false;
+            }
+
+            if (Settings.EnableTLS && tlsEnabled)
+            {
+                var success = StartTLS();
+
+                if (Settings.RequireTLS && !success)
+                {
+                    Log(LogEventType.Connect, "TLS is required, but establishing the TLS layer failed.");
+                    return false;
+                }
             }
 
             // Auth();
@@ -193,8 +213,6 @@ namespace HydraCore
                 {
                     _writer.WriteLine(line);
                 }
-
-                Debug.WriteLine(">> " + line);
             }
             _writer.WriteLine(".");
             _writer.Flush();
@@ -269,9 +287,9 @@ namespace HydraCore
             }
 
             var sslStream = new SslStream(_stream, false, UserCertificateValidationCallback,
-                UserCertificateSelectionCallback, EncryptionPolicy.RequireEncryption);
+                UserCertificateSelectionCallback, EncryptionPolicy);
 
-            sslStream.AuthenticateAsClient(Host, Certificates, SslProtocols.Default, true);
+            sslStream.AuthenticateAsClient(Host, Certificates, SslProtocols, ValidateCertificateRevocation);
 
             _stream = sslStream;
 
@@ -332,7 +350,7 @@ namespace HydraCore
             if (nc != null)
             {
                 // var auth = Base64Encode(String.Format("{0} {1}", nc.UserName, nc.Password));
-                var auth = Base64Encode(string.Format("\0{0}\0{1}", nc.UserName, nc.Password));
+                var auth = Base64Encode(string.Format("\0{0}\0{1}", Settings.Username, Settings.Password));
 
                 Write("AUTH PLAIN {0}", auth);
 
@@ -374,7 +392,14 @@ namespace HydraCore
                 Log(LogEventType.Incoming, line);
 
                 if (line.Length < 4) throw new Exception("Unexpected reply by server");
-                var newCode = (SMTPStatusCode) int.Parse(line.Substring(0, 3));
+                var intCode = int.Parse(line.Substring(0, 3));
+
+                if (!Enum.IsDefined(typeof (SMTPStatusCode), intCode))
+                {
+                    throw new Exception("Unexpected reply by server: Unknown status code");
+                }
+
+                var newCode = (SMTPStatusCode)intCode;
                 var message = line.Substring(4);
 
                 if (code != null && newCode != code)
@@ -503,8 +528,8 @@ namespace HydraCore
                 {
                     foreach (var item in chain.ChainStatus)
                     {
-                        if (item.Status != X509ChainStatusFlags.RevocationStatusUnknown &&
-                            item.Status != X509ChainStatusFlags.OfflineRevocation)
+                        if (item.Status == X509ChainStatusFlags.RevocationStatusUnknown &&
+                            item.Status == X509ChainStatusFlags.OfflineRevocation)
                             break;
 
                         if (item.Status != X509ChainStatusFlags.NoError)
@@ -516,7 +541,7 @@ namespace HydraCore
                 }
             }
 
-            Debug.WriteLine(msg);
+            Log(LogEventType.Certificate, msg);
 
             return acceptCertificate;
         }

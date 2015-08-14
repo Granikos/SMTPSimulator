@@ -202,3 +202,4 @@ FakesAssemblies/
 /HydraWebClient/Scripts/maps
 /HydraWebClient/Scripts/*.min.js
 /HydraService/AppData/*.json
+/WebDeploy

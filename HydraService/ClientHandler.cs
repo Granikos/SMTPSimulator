@@ -169,7 +169,7 @@ namespace HydraService
             _transaction.OnClose -= OnCloseHandler;
             _transaction.Close();
             _transaction = _smtpServer.Core.StartTransaction(_remoteEndpoint.Address, _smtpServer.Settings, out response);
-            _transaction.TLSEnabled = true;
+            _transaction.TLSActive = true;
             _transaction.OnClose += OnCloseHandler;
         }
 
@@ -185,7 +185,7 @@ namespace HydraService
             _tlsConnector.DisplaySecurityServices(sslStream);
             _tlsConnector.DisplayCertificateInformation(sslStream);
 
-            _transaction.TLSEnabled = true;
+            _transaction.TLSActive = true;
             _stream = sslStream;
         }
 

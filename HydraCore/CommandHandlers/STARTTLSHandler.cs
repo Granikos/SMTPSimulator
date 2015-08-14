@@ -11,16 +11,6 @@ namespace HydraCore.CommandHandlers
     {
     }
 
-    public class StartTLSEventArgs : CancelEventArgs
-    {
-        public StartTLSEventArgs(SMTPTransaction transaction)
-        {
-            Transaction = transaction;
-        }
-
-        public SMTPTransaction Transaction { get; private set; }
-    }
-
     [UnsecureAllowed]
     [CommandHandler(Command = "STARTTLS")]
     public class STARTTLSHandler : CommandHandlerBase
@@ -31,7 +21,7 @@ namespace HydraCore.CommandHandlers
             var type = args.Handler.GetType();
             var unsecuredAllowed = type.GetCustomAttributes(typeof (UnsecureAllowedAttribute), false).Any();
             var requireEncryption = args.Transaction.Settings.RequireTLS;
-            var isSecured = args.Transaction.TLSEnabled;
+            var isSecured = args.Transaction.TLSActive;
 
             if (!unsecuredAllowed && requireEncryption && !isSecured)
             {
@@ -44,25 +34,22 @@ namespace HydraCore.CommandHandlers
             base.Initialize(core);
 
             core.GetListProperty<Func<SMTPTransaction, string>>("EHLOLines")
-                .Add(transaction => transaction.TLSEnabled || !transaction.Settings.EnableTLS ? null : "STARTTLS");
+                .Add(transaction => transaction.TLSActive || !transaction.Settings.EnableTLS ? null : "STARTTLS");
         }
-
-        [EventPublication("StartTLS")]
-        public event EventHandler<CancelEventArgs> OnStartTLS;
 
         public override SMTPResponse DoExecute(SMTPTransaction transaction, string parameters)
         {
-            if (!transaction.Settings.EnableTLS)
-            {
-                return new SMTPResponse(SMTPStatusCode.BadSequence); // TODO: Check response code
-            }
-
             if (!string.IsNullOrEmpty(parameters))
             {
                 return new SMTPResponse(SMTPStatusCode.SyntaxError);
             }
 
-            if (transaction.GetProperty<bool>("TLS"))
+            if (!transaction.Settings.EnableTLS)
+            {
+                return new SMTPResponse(SMTPStatusCode.BadSequence); // TODO: Check response code
+            }
+
+            if (transaction.TLSActive)
             {
                 return new SMTPResponse(SMTPStatusCode.BadSequence);
             }

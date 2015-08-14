@@ -231,8 +231,10 @@ namespace HydraTest
             Assert.Same(ip, actualIP);
         }
 
-        [Fact]
-        public void TestStartTransactionValidationFail()
+        [Theory]
+        [InlineData(null)]
+        [InlineData(SMTPStatusCode.AuthFailed)]
+        public void TestStartTransactionValidationFail(SMTPStatusCode? code)
         {
             var core = new SMTPCore(DefaultLoader());
 
@@ -243,7 +245,11 @@ namespace HydraTest
                 var closed = false;
                 ShimSMTPTransaction.AllInstances.Close = transaction => { closed = true; };
 
-                core.OnConnect += (transaction, args) => { args.Cancel = true; };
+                core.OnConnect += (transaction, args) =>
+                {
+                    args.Cancel = true;
+                    args.ResponseCode = code;
+                };
 
                 SMTPResponse reponse;
                 using (ShimsContext.Create())
@@ -253,7 +259,7 @@ namespace HydraTest
                     core.StartTransaction(ip, settings, out reponse);
                 }
 
-                Assert.Equal(SMTPStatusCode.TransactionFailed, reponse.Code);
+                Assert.Equal(code ?? SMTPStatusCode.TransactionFailed, reponse.Code);
                 Assert.True(closed);
             }
         }

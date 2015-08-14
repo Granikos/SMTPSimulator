@@ -32,6 +32,8 @@ namespace HydraService.Providers
 
         public DefaultProvider(string name = null)
         {
+            _serializer.Converters.Add(new IPRangeConverter());
+
             var fileName = (name ?? GetType().Name) + ".json";
             var folderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["DataFolder"]);
             
@@ -46,7 +48,7 @@ namespace HydraService.Providers
 
             AutoId = entity => ++_id;
 
-            if (!File.Exists(FileName))
+            if (!File.Exists(FileName) || !Load())
             {
                 foreach (var entity in Initializer())
                 {
@@ -54,10 +56,6 @@ namespace HydraService.Providers
                 }
 
                 Store();
-            }
-            else
-            {
-                Load();
             }
 
             OnUpdated += Store;
@@ -82,12 +80,14 @@ namespace HydraService.Providers
             }
         }
 
-        private void Load()
+        private bool Load()
         {
             using (StreamReader sr = new StreamReader(FileName))
             using (JsonReader reader = new JsonTextReader(sr))
             {
                 var container = _serializer.Deserialize<DataContainer<TEntity>>(reader);
+
+                if (container == null) return false;
 
                 _id = container.AutoId;
                 foreach (var entity in container.Entities)
@@ -95,6 +95,8 @@ namespace HydraService.Providers
                     InternalAdd(entity);
                 }
             }
+
+            return true;
         }
 
         public string FileName { get; private set; }

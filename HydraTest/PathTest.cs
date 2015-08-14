@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Mail;
 using HydraCore;
 using Xunit;
 
@@ -11,9 +12,9 @@ namespace HydraTest
         [InlineData("<a.b@d.e>", "a.b", "d.e", new string[0])]
         [InlineData("<\"Na,sowas\"@d.e>", "Na,sowas", "d.e", new string[0])]
         [InlineData("<a.b@[127.0.0.1]>", "a.b", "[127.0.0.1]", new string[0])]
-        [InlineData("<@foo.de,@bla.de:tester@test.de>", "tester", "test.de", new[] {"foo.de", "bla.de"})]
+        [InlineData("<@foo.de,@bla.de:tester@test.de>", "tester", "test.de", new[] { "foo.de", "bla.de" })]
         [InlineData("<@[IPv6:2607:f0d0:1002:51::4]:tester@test.de>", "tester", "test.de",
-            new[] {"[IPv6:2607:f0d0:1002:51::4]"})]
+            new[] { "[IPv6:2607:f0d0:1002:51::4]" })]
         public void TestFromString(string input, string localPart, string domain, string[] atDomains)
         {
             var path = MailPath.FromString(input);
@@ -39,13 +40,23 @@ namespace HydraTest
         [InlineData("<a.b@d.e>", "a.b", "d.e", new string[0])]
         [InlineData("<\"Na,sowas\"@d.e>", "Na,sowas", "d.e", new string[0])]
         [InlineData("<a.b@[127.0.0.1]>", "a.b", "[127.0.0.1]", new string[0])]
-        [InlineData("<@foo.de,@bla.de:tester@test.de>", "tester", "test.de", new[] {"foo.de", "bla.de"})]
+        [InlineData("<@foo.de,@bla.de:tester@test.de>", "tester", "test.de", new[] { "foo.de", "bla.de" })]
         [InlineData("<@[IPv6:2607:f0d0:1002:51::4]:tester@test.de>", "tester", "test.de",
-            new[] {"[IPv6:2607:f0d0:1002:51::4]"})]
+            new[] { "[IPv6:2607:f0d0:1002:51::4]" })]
         public void TestToString(string output, string localPart, string domain, string[] atDomains)
         {
             var path = new MailPath(localPart, domain, atDomains);
             Assert.Equal(output, path.ToString());
+        }
+
+        [Fact]
+        public void TestToToMailAdress()
+        {
+            var path = new MailPath("tester", "test.de");
+
+            Assert.Equal(new MailAddress("tester@test.de"), path.ToMailAdress());
+            Assert.Null(MailPath.Empty.ToMailAdress());
+            Assert.Null(MailPath.Postmaster.ToMailAdress());
         }
 
         [Fact]
@@ -70,11 +81,11 @@ namespace HydraTest
             Assert.NotEqual(path3, path4);
 
             Assert.False(path1.Equals(null));
-            Assert.False(path1.Equals((object) null));
+            Assert.False(path1.Equals((object)null));
             Assert.False(path1.Equals(new object()));
-            Assert.True(path1.Equals((object) path1));
-            Assert.True(path1.Equals((object) path2));
-            Assert.False(path1.Equals((object) path3));
+            Assert.True(path1.Equals((object)path1));
+            Assert.True(path1.Equals((object)path2));
+            Assert.False(path1.Equals((object)path3));
         }
     }
 }

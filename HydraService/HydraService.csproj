@@ -220,6 +220,7 @@
     <Compile Include="Providers\IExternalUserProvider.cs" />
     <Compile Include="Providers\ILocalUserProvider.cs" />
     <Compile Include="Providers\InMemoryProvider.cs" />
+    <Compile Include="Providers\IPRangeConverter.cs" />
     <Compile Include="Providers\IRecieveConnectorProvider.cs" />
     <Compile Include="Models\LocalUser.cs" />
     <Compile Include="Models\RecieveConnector.cs" />

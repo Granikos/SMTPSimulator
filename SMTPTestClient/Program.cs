@@ -105,7 +105,7 @@ namespace SMTPTestClient
             /*
             using (var client = new SmtpClient("localhost", 1337))
             {
-                client.EnableSsl = true;
+                client.TLSFullTunnel = true;
 
                 var message = new MailMessage("tester@test.de", "tester2@test.de", "Subject", "Some body");
 

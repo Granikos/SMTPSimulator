@@ -12,10 +12,6 @@ namespace HydraCore.CommandHandlers
             Server = core;
         }
 
-        public virtual void Initialize(SMTPTransaction transaction)
-        {
-        }
-
         public SMTPResponse Execute(SMTPTransaction transaction, string parameters)
         {
             var args = new CommandExecuteEventArgs(transaction, this, parameters);
