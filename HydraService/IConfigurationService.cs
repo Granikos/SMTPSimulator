@@ -6,8 +6,6 @@ using HydraService.Models;
 
 namespace HydraService
 {
-
-
     [ServiceContract]
     public interface IConfigurationService
     {

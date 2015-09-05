@@ -6,9 +6,6 @@ namespace HydraService.Models
     public class LocalUser : IEntity<int>
     {
         [DataMember]
-        public int Id { get; set; }
-
-        [DataMember]
         public string FirstName { get; set; }
 
         [DataMember]
@@ -16,5 +13,8 @@ namespace HydraService.Models
 
         [DataMember]
         public string Mailbox { get; set; }
+
+        [DataMember]
+        public int Id { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Runtime.Serialization;
 
@@ -69,6 +70,13 @@ namespace HydraService.Models
 
         [DataMember]
         public string Password { get; set; }
+
+        [DataMember]
+        public TimeSpan RetryTime { get; set; }
+
+        [DataMember]
+        [Range(0, 10)]
+        public int RetryCount { get; set; }
 
         [Required]
         [DataMember]

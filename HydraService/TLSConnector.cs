@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Net.Security;
@@ -37,7 +36,7 @@ namespace HydraService
 
         public X509Certificate2Collection GetCertificateCollection()
         {
-            return new X509Certificate2Collection(new[] { GetCertificate() });
+            return new X509Certificate2Collection(new[] {GetCertificate()});
         }
 
         public SslStream GetSslStream(Stream stream)
@@ -121,7 +120,8 @@ namespace HydraService
             {
                 //The certificate does not match the server name
                 if (Settings.AuthLevel == TLSAuthLevel.DomainValidation &&
-                    (sslPolicyErrors & SslPolicyErrors.RemoteCertificateNameMismatch) == SslPolicyErrors.RemoteCertificateNameMismatch)
+                    (sslPolicyErrors & SslPolicyErrors.RemoteCertificateNameMismatch) ==
+                    SslPolicyErrors.RemoteCertificateNameMismatch)
                 {
                     msg = msg + "\r\n    -The certificate name does not match the authenticated name.\r\n";
                     acceptCertificate = false;
@@ -153,7 +153,7 @@ namespace HydraService
 
         private void Log(string message, params object[] args)
         {
-            _logger(String.Format(message, args));
+            _logger(string.Format(message, args));
         }
 
         public void DisplaySecurityLevel(SslStream stream)
@@ -178,7 +178,7 @@ namespace HydraService
             Contract.Requires<ArgumentNullException>(stream != null);
             Log("Certificate revocation list checked: {0}", stream.CheckCertRevocationStatus);
 
-            X509Certificate localCertificate = stream.LocalCertificate;
+            var localCertificate = stream.LocalCertificate;
             if (stream.LocalCertificate != null)
             {
                 Log("Local cert was issued to {0} and is valid from {1} until {2}.",
@@ -191,7 +191,7 @@ namespace HydraService
                 Log("Local certificate is null.");
             }
 
-            X509Certificate remoteCertificate = stream.RemoteCertificate;
+            var remoteCertificate = stream.RemoteCertificate;
             if (remoteCertificate != null)
             {
                 Log("Remote cert was issued to {0} and is valid from {1} until {2}.",

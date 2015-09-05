@@ -16,6 +16,8 @@ namespace HydraService
 {
     public partial class SMTPService : ServiceBase, ISMTPServerContainer
     {
+        // TODO: Use locks
+
         private readonly CompositionContainer _container;
         private readonly SMTPCore _core;
         private ServiceHost _host;
@@ -25,7 +27,7 @@ namespace HydraService
 
         private SMTPServer[] _servers;
 
-        public bool Running { get; private set; }
+        private MessageSender[] _senders;
 
         public SMTPService()
         {
@@ -71,6 +73,55 @@ namespace HydraService
             }
         }
 
+        public bool Running { get; private set; }
+
+        public void StopSMTPServers()
+        {
+            if (Running && _servers != null)
+            {
+                foreach (var server in _servers)
+                {
+                    server.Stop();
+                }
+            }
+
+            Running = false;
+        }
+        public void StopMessageProcessing()
+        {
+            if (_senders != null)
+            {
+                foreach (var sender in _senders)
+                {
+                    sender.Stop();
+                }
+            }
+        }
+
+        public void StartSMTPServers()
+        {
+            if (!Running && _servers != null)
+            {
+                foreach (var server in _servers)
+                {
+                    server.Start();
+                }
+            }
+
+            Running = true;
+        }
+
+        public void StartMessageProcessing()
+        {
+            if (_senders != null)
+            {
+                foreach (var sender in _senders)
+                {
+                    sender.Start();
+                }
+            }
+        }
+
         internal void RefreshServers()
         {
             StopSMTPServers();
@@ -84,19 +135,6 @@ namespace HydraService
                 .ToArray();
 
             StartSMTPServers();
-        }
-
-        public void StopSMTPServers()
-        {
-            if (Running && _servers != null)
-            {
-                foreach (var server in _servers)
-                {
-                    server.Stop();
-                }
-            }
-
-            Running = false;
         }
 
         internal void TestStartupAndStop(string[] args)
@@ -121,19 +159,6 @@ namespace HydraService
             _host = new ServiceHost(service);
 
             _host.Open();
-        }
-
-        public void StartSMTPServers()
-        {
-            if (!Running && _servers != null)
-            {
-                foreach (var server in _servers)
-                {
-                    server.Start();
-                }
-            }
-
-            Running = true;
         }
 
         protected override void OnStop()

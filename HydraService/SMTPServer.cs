@@ -14,12 +14,11 @@ namespace HydraService
     internal class SMTPServer
     {
         private readonly CompositionContainer _container;
-        private TcpListener _tcpListener;
+        private readonly Dictionary<IPAddress, DateTime> _greyList = new Dictionary<IPAddress, DateTime>();
         private Thread _listenThread;
         private Thread _processThread;
-        private MessageSender _sender;
-
-        private Dictionary<IPAddress,DateTime> _greyList = new Dictionary<IPAddress, DateTime>(); 
+        private MessageProcessor _processor;
+        private TcpListener _tcpListener;
 
         public SMTPServer(RecieveConnector connector, SMTPCore core, CompositionContainer container)
         {
@@ -30,7 +29,7 @@ namespace HydraService
             Connector = connector;
             Settings = new DefaultRecieveSettings(connector);
 
-            // _sender = new MessageSender(container);
+            // _processor = new MessageProcessor(container);
 
             Core.OnConnect += (transaction, connect) =>
             {
@@ -44,7 +43,7 @@ namespace HydraService
 
             Core.OnNewMessage += (transaction, mail) =>
             {
-                // _sender.Enqueue(mail);
+                // _processor.Enqueue(mail);
 
                 Console.WriteLine("--------------------------------------");
                 Console.WriteLine("New message from " + mail.From);
@@ -56,8 +55,13 @@ namespace HydraService
 
             _container.SatisfyImportsOnce(this);
 
-            // container.SatisfyImportsOnce(_sender);
+            // container.SatisfyImportsOnce(_processor);
         }
+
+        public SMTPCore Core { get; private set; }
+        public IReceiveSettings Settings { get; private set; }
+        public RecieveConnector Connector { get; private set; }
+        public IPEndPoint LocalEndpoint { get; private set; }
 
         private void CheckGreylisting(SMTPCore.ConnectEventArgs connect)
         {
@@ -79,17 +83,12 @@ namespace HydraService
                 }
                 else
                 {
-                    _greyList.Add(connect.IP, (DateTime)(DateTime.Now + Connector.GreylistingTime));
+                    _greyList.Add(connect.IP, (DateTime) (DateTime.Now + Connector.GreylistingTime));
                     connect.Cancel = true;
                     connect.ResponseCode = SMTPStatusCode.NotAvailiable;
                 }
             }
         }
-
-        public SMTPCore Core { get; private set; }
-        public IReceiveSettings Settings { get; private set; }
-        public RecieveConnector Connector { get; private set; }
-        public IPEndPoint LocalEndpoint { get; private set; }
 
         public void Start()
         {
@@ -160,7 +159,7 @@ namespace HydraService
         {
             while (true)
             {
-                // _sender.ProcessMail();
+                // _processor.ProcessMail();
             }
         }
     }

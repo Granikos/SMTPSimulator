@@ -6,7 +6,7 @@ using HydraWebClient.HydraConfigurationService;
 
 namespace HydraWebClient.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [RoutePrefix("api/RecieveConnectors")]
     public class RecieveConnectorsController : ApiController
     {

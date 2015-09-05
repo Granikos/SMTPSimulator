@@ -110,7 +110,7 @@ namespace HydraService.PriorityQueue
 
                 //Node has lower priority value, so move it up the heap
                 Swap(node, parentNode);
-                    //For some reason, this is faster with Swap() rather than (less..?) individual operations, like in CascadeDown()
+                //For some reason, this is faster with Swap() rather than (less..?) individual operations, like in CascadeDown()
 
                 parent = node.QueueIndex/2;
             }

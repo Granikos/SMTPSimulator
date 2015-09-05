@@ -20,6 +20,5 @@ namespace HydraService.Models
 
         [DataMember]
         public bool SupportsPattern { get; private set; }
-        
     }
 }

@@ -9,7 +9,7 @@ using HydraWebClient.HydraConfigurationService;
 
 namespace HydraWebClient.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [RoutePrefix("api/LocalUsers")]
     public class LocalUsersController : ApiController
     {

@@ -71,13 +71,13 @@ namespace HydraService.Models
             set { _tlsSettings = value ?? new TLSSettings(); }
         }
 
+        [DataMember]
+        // TODO: [Range(TimeSpan.Zero, TimeSpan.MaxValue)]
+        public TimeSpan? GreylistingTime { get; set; }
+
         [Required]
         [DataMember]
         [Range(0, int.MaxValue)]
         public int Id { get; set; }
-
-        [DataMember]
-        // TODO: [Range(TimeSpan.Zero, TimeSpan.MaxValue)]
-        public TimeSpan? GreylistingTime { get; set; }
     }
 }

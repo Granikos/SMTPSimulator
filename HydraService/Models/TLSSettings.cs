@@ -41,6 +41,5 @@ namespace HydraService.Models
 
         [DataMember]
         public bool IsFilesystemCertificate { get; set; }
-        
     }
 }

@@ -6,15 +6,20 @@ using HydraService.Models;
 
 namespace HydraService.Providers
 {
-    public class InMemoryProvider<TEntity, TKey> : IDataProvider<TEntity,TKey>
+    public class InMemoryProvider<TEntity, TKey> : IDataProvider<TEntity, TKey>
         where TEntity : class, IEntity<TKey>
         where TKey : IComparable<TKey>
     {
-        protected Func<TEntity, TKey> AutoId;
+        public delegate void PostHandler(TEntity entity);
+
+        public delegate bool PreHandler(TKey id);
+
+        public delegate void UpdateHandler();
 
         private readonly ConcurrentDictionary<TKey, TEntity> _entities = new ConcurrentDictionary<TKey, TEntity>();
+        protected Func<TEntity, TKey> AutoId;
 
-        public InMemoryProvider(Func<TEntity,TKey> autoId = null)
+        public InMemoryProvider(Func<TEntity, TKey> autoId = null)
         {
             AutoId = autoId;
         }
@@ -29,14 +34,9 @@ namespace HydraService.Providers
             return _entities.Values.ToList();
         }
 
-        protected virtual IOrderedEnumerable<TEntity> ApplyOrder(IEnumerable<TEntity> entities)
-        {
-            return entities.OrderBy(e => e.Id);
-        }
-
         public IEnumerable<TEntity> Paged(int page, int pageSize)
         {
-            var skip = (page-1)*pageSize;
+            var skip = (page - 1)*pageSize;
             var entities = ApplyOrder(_entities.Values);
             return entities.Skip(skip).Take(pageSize).ToList();
         }
@@ -50,40 +50,13 @@ namespace HydraService.Providers
             return binding;
         }
 
-        public delegate void PostHandler(TEntity entity);
-
-        public delegate bool PreHandler(TKey id);
-
-        public delegate void UpdateHandler();
-
-        public event PostHandler OnAdded;
-
-        public event PostHandler OnRemoved;
-
-        public event UpdateHandler OnUpdated; 
-
-        protected virtual bool CanRemove(TKey id)
-        {
-            return true;
-        }
-
-        protected bool InternalAdd(TEntity entity)
-        {
-            if (entity.Id == null)
-            {
-                throw new ArgumentException("Entity id not set.", "entity");
-            }
-
-            return _entities.TryAdd(entity.Id, entity);
-        }
-
         public TEntity Add(TEntity entity)
         {
             if (AutoId != null)
             {
                 entity.Id = AutoId(entity);
             }
-            
+
             if (entity.Id == null)
             {
                 throw new ArgumentException("Entity id not set.", "entity");
@@ -111,7 +84,8 @@ namespace HydraService.Providers
         {
             if (!_entities.ContainsKey(entity.Id))
             {
-                throw new ArgumentException(String.Format("The {1} with the id {0} does not exist.", entity.Id, typeof(TEntity).Name));
+                throw new ArgumentException(string.Format("The {1} with the id {0} does not exist.", entity.Id,
+                    typeof (TEntity).Name));
             }
 
             if (OnRemoved != null)
@@ -138,7 +112,8 @@ namespace HydraService.Providers
         {
             if (!_entities.ContainsKey(id))
             {
-                throw new ArgumentException(String.Format("The {1} with the id {0} does not exist.", id, typeof(TEntity).Name));
+                throw new ArgumentException(string.Format("The {1} with the id {0} does not exist.", id,
+                    typeof (TEntity).Name));
             }
 
             if (!CanRemove(id)) return false;
@@ -158,6 +133,30 @@ namespace HydraService.Providers
             }
 
             return true;
+        }
+
+        protected virtual IOrderedEnumerable<TEntity> ApplyOrder(IEnumerable<TEntity> entities)
+        {
+            return entities.OrderBy(e => e.Id);
+        }
+
+        public event PostHandler OnAdded;
+        public event PostHandler OnRemoved;
+        public event UpdateHandler OnUpdated;
+
+        protected virtual bool CanRemove(TKey id)
+        {
+            return true;
+        }
+
+        protected bool InternalAdd(TEntity entity)
+        {
+            if (entity.Id == null)
+            {
+                throw new ArgumentException("Entity id not set.", "entity");
+            }
+
+            return _entities.TryAdd(entity.Id, entity);
         }
     }
 }

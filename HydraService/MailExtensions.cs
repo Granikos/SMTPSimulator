@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Net.Mail;
 using System.Reflection;
@@ -10,27 +9,27 @@ namespace HydraService
     {
         public static string ToRaw(this MailMessage message)
         {
-            Assembly assembly = typeof(SmtpClient).Assembly;
-            Type _mailWriterType =
+            var assembly = typeof (SmtpClient).Assembly;
+            var _mailWriterType =
                 assembly.GetType("System.Net.Mail.MailWriter");
 
             using (Stream stream = new MemoryStream(500))
             {
                 // Get reflection info for MailWriter contructor
-                ConstructorInfo _mailWriterContructor =
+                var _mailWriterContructor =
                     _mailWriterType.GetConstructor(
                         BindingFlags.Instance | BindingFlags.NonPublic,
                         null,
-                        new Type[] { typeof(Stream) },
+                        new[] {typeof (Stream)},
                         null);
 
                 // Construct MailWriter object with our FileStream
-                object _mailWriter =
-                    _mailWriterContructor.Invoke(new object[] { stream });
+                var _mailWriter =
+                    _mailWriterContructor.Invoke(new object[] {stream});
 
                 // Get reflection info for Send() method on MailMessage
-                MethodInfo _sendMethod =
-                    typeof(MailMessage).GetMethod(
+                var _sendMethod =
+                    typeof (MailMessage).GetMethod(
                         "Send",
                         BindingFlags.Instance | BindingFlags.NonPublic);
 
@@ -39,7 +38,7 @@ namespace HydraService
                     message,
                     BindingFlags.Instance | BindingFlags.NonPublic,
                     null,
-                    new object[] { _mailWriter, true, false },
+                    new[] {_mailWriter, true, false},
                     null);
 
                 string str;
@@ -48,11 +47,10 @@ namespace HydraService
                 using (var reader = new StreamReader(stream, Encoding.ASCII, false, 200, true))
                 {
                     str = reader.ReadToEnd();
-
                 }
 
                 // Finally get reflection info for Close() method on our MailWriter
-                MethodInfo _closeMethod =
+                var _closeMethod =
                     _mailWriter.GetType().GetMethod(
                         "Close",
                         BindingFlags.Instance | BindingFlags.NonPublic);
@@ -62,7 +60,7 @@ namespace HydraService
                     _mailWriter,
                     BindingFlags.Instance | BindingFlags.NonPublic,
                     null,
-                    new object[] { },
+                    new object[] {},
                     null);
 
                 return str;
@@ -71,25 +69,25 @@ namespace HydraService
 
         public static void WriteToStream(this MailMessage message, Stream stream)
         {
-            Assembly assembly = typeof(SmtpClient).Assembly;
-            Type _mailWriterType =
+            var assembly = typeof (SmtpClient).Assembly;
+            var _mailWriterType =
                 assembly.GetType("System.Net.Mail.MailWriter");
 
             // Get reflection info for MailWriter contructor
-            ConstructorInfo _mailWriterContructor =
+            var _mailWriterContructor =
                 _mailWriterType.GetConstructor(
                     BindingFlags.Instance | BindingFlags.NonPublic,
                     null,
-                    new Type[] { typeof(Stream) },
+                    new[] {typeof (Stream)},
                     null);
 
             // Construct MailWriter object with our FileStream
-            object _mailWriter =
-                _mailWriterContructor.Invoke(new object[] { stream });
+            var _mailWriter =
+                _mailWriterContructor.Invoke(new object[] {stream});
 
             // Get reflection info for Send() method on MailMessage
-            MethodInfo _sendMethod =
-                typeof(MailMessage).GetMethod(
+            var _sendMethod =
+                typeof (MailMessage).GetMethod(
                     "Send",
                     BindingFlags.Instance | BindingFlags.NonPublic);
 
@@ -98,11 +96,11 @@ namespace HydraService
                 message,
                 BindingFlags.Instance | BindingFlags.NonPublic,
                 null,
-                new object[] { _mailWriter, true, false },
+                new[] {_mailWriter, true, false},
                 null);
 
             // Finally get reflection info for Close() method on our MailWriter
-            MethodInfo _closeMethod =
+            var _closeMethod =
                 _mailWriter.GetType().GetMethod(
                     "Close",
                     BindingFlags.Instance | BindingFlags.NonPublic);
@@ -112,7 +110,7 @@ namespace HydraService
                 _mailWriter,
                 BindingFlags.Instance | BindingFlags.NonPublic,
                 null,
-                new object[] { },
+                new object[] {},
                 null);
         }
     }

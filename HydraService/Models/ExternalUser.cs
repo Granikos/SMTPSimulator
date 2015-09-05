@@ -7,10 +7,6 @@ namespace HydraService.Models
     public class ExternalUser : IEntity<int>
     {
         [DataMember]
-        [Required]
-        public int Id { get; set; }
-
-        [DataMember]
         public string FirstName { get; set; }
 
         [DataMember]
@@ -23,5 +19,9 @@ namespace HydraService.Models
         [DataMember]
         [Required]
         public int DomainId { get; set; }
+
+        [DataMember]
+        [Required]
+        public int Id { get; set; }
     }
 }

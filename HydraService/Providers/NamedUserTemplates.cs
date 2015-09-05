@@ -10,20 +10,29 @@ using Newtonsoft.Json;
 
 namespace HydraService.Providers
 {
-    [Export(typeof(IUserTemplateProvider))]
+    [Export(typeof (IUserTemplateProvider))]
     public class NamedUserTemplates : IUserTemplateProvider
     {
-        class NameData
+        public IEnumerable<IUserTemplate> All()
+        {
+            var templateFolder = ConfigurationManager.AppSettings["UserTemplates"];
+
+            return Directory.GetFiles(templateFolder, "*.json")
+                .Select(p => new NamedTemplate(Path.GetFileNameWithoutExtension(p), p));
+        }
+
+        private class NameData
         {
             public string DisplayName { get; set; }
-
             public string[] FirstNames { get; set; }
-
             public string[] LastNames { get; set; }
         }
 
-        class NamePattern
+        private class NamePattern
         {
+            private static readonly Regex FirstNameRegex = new Regex(@"%(\d*)g", RegexOptions.Compiled);
+            private static readonly Regex LastNameRegex = new Regex(@"%(\d*)s", RegexOptions.Compiled);
+            private static readonly Regex CharReplaceRegex = new Regex(@"%r(.)([^ ])(.*)$", RegexOptions.Compiled);
             private readonly string _pattern;
 
             public NamePattern(string pattern)
@@ -31,17 +40,13 @@ namespace HydraService.Providers
                 _pattern = pattern;
             }
 
-            static readonly Regex FirstNameRegex = new Regex(@"%(\d*)g", RegexOptions.Compiled);
-            static readonly Regex LastNameRegex = new Regex(@"%(\d*)s", RegexOptions.Compiled);
-            static readonly Regex CharReplaceRegex = new Regex(@"%r(.)([^ ])(.*)$", RegexOptions.Compiled);
-
             public string Format(string firstName, string lastName)
             {
                 var result = _pattern;
 
                 result = FirstNameRegex.Replace(result, match =>
                 {
-                    if (!String.IsNullOrEmpty(match.Groups[1].Value))
+                    if (!string.IsNullOrEmpty(match.Groups[1].Value))
                     {
                         var size = int.Parse(match.Groups[1].Value);
                         return firstName.Substring(0, size);
@@ -52,7 +57,7 @@ namespace HydraService.Providers
 
                 result = LastNameRegex.Replace(result, match =>
                 {
-                    if (!String.IsNullOrEmpty(match.Groups[1].Value))
+                    if (!string.IsNullOrEmpty(match.Groups[1].Value))
                     {
                         var size = int.Parse(match.Groups[1].Value);
                         return lastName.Substring(0, size);
@@ -60,17 +65,18 @@ namespace HydraService.Providers
 
                     return lastName;
                 });
-                
-                result = CharReplaceRegex.Replace(result, match =>
-                {
-                    return match.Groups[3].Value.Replace(match.Groups[1].Value[0], match.Groups[2].Value[0]);
-                });
+
+                result = CharReplaceRegex.Replace(result,
+                    match =>
+                    {
+                        return match.Groups[3].Value.Replace(match.Groups[1].Value[0], match.Groups[2].Value[0]);
+                    });
 
                 return result;
             }
         }
 
-        class NamedTemplate : IUserTemplate
+        private class NamedTemplate : IUserTemplate
         {
             private readonly NameData _nameData;
 
@@ -82,18 +88,25 @@ namespace HydraService.Providers
                 using (var reader = new StreamReader(stream))
                 {
                     _nameData = JsonConvert.DeserializeObject<NameData>(reader.ReadToEnd());
-                };
+                }
+                ;
             }
 
             public string Name { get; private set; }
 
-            public string DisplayName { get { return _nameData.DisplayName; } }
+            public string DisplayName
+            {
+                get { return _nameData.DisplayName; }
+            }
 
-            public bool SupportsPattern { get { return true; } }
+            public bool SupportsPattern
+            {
+                get { return true; }
+            }
 
             public IEnumerable<LocalUser> Generate(string pattern, string domain, int count)
             {
-                HashSet<string> boxes = new HashSet<string>();
+                var boxes = new HashSet<string>();
 
                 var random = new Random();
                 for (var i = 1; i <= count; i++)
@@ -113,18 +126,10 @@ namespace HydraService.Providers
                     {
                         FirstName = fn,
                         LastName = ln,
-                        Mailbox = mb + "@" + domain,
+                        Mailbox = mb + "@" + domain
                     };
                 }
             }
-        }
-
-        public IEnumerable<IUserTemplate> All()
-        {
-            var templateFolder = ConfigurationManager.AppSettings["UserTemplates"];
-
-            return Directory.GetFiles(templateFolder, "*.json")
-                .Select(p => new NamedTemplate(Path.GetFileNameWithoutExtension(p), p));
         }
     }
 }

@@ -100,7 +100,7 @@ namespace HydraCore
             }
         }
 
-        public bool Connect()
+        public SMTPStatusCode? Connect()
         {
             _client = new TcpClient(Host, Port);
             _stream = _client.GetStream();
@@ -124,7 +124,7 @@ namespace HydraCore
 
             if (reponse.Code != SMTPStatusCode.Ready)
             {
-                return false;
+                return reponse.Code;
             }
 
             Write("EHLO {0}", ClientName);
@@ -133,7 +133,7 @@ namespace HydraCore
 
             if (reponse.Code != SMTPStatusCode.Okay)
             {
-                return false;
+                return reponse.Code;
             }
 
             var tlsEnabled = reponse.Args.Contains("STARTTLS", StringComparer.InvariantCultureIgnoreCase);
@@ -144,7 +144,7 @@ namespace HydraCore
             if (!tlsEnabled && Settings.RequireTLS)
             {
                 Log(LogEventType.Connect, "TLS is required, but the server does not support it.");
-                return false;
+                return reponse.Code;
             }
 
             if (Settings.EnableTLS && tlsEnabled)
@@ -154,13 +154,13 @@ namespace HydraCore
                 if (Settings.RequireTLS && !success)
                 {
                     Log(LogEventType.Connect, "TLS is required, but establishing the TLS layer failed.");
-                    return false;
+                    return reponse.Code;
                 }
             }
 
             // Auth();
 
-            return true;
+            return null;
         }
 
         public bool SendMail(string from, string[] recipients, string body)

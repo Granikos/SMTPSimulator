@@ -23,7 +23,8 @@ namespace HydraService
         private readonly SMTPServer _smtpServer;
         private readonly TLSConnector _tlsConnector;
 
-        [ImportMany] private IEnumerable<ISMTPLogger> _loggers;
+        [ImportMany]
+        private IEnumerable<ISMTPLogger> _loggers;
 
         private StreamReader _reader;
         private bool _startTLS;

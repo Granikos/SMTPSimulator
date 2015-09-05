@@ -8,7 +8,7 @@ using HydraWebClient.HydraConfigurationService;
 
 namespace HydraWebClient.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [RoutePrefix("api/ExternalUsers")]
     public class ExternalUsersController : ApiController
     {

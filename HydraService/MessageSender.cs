@@ -1,93 +1,64 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Mail;
 using System.Threading;
-using ARSoft.Tools.Net.Dns;
 using HydraCore;
 using HydraService.PriorityQueue;
-using HydraService.Providers;
 
 namespace HydraService
 {
-    class MessageSender
+    internal class MessageSender
     {
-        private readonly CompositionContainer _container;
+        private Thread thread;
+        private readonly ManualResetEvent _askStop;
+        private readonly ManualResetEvent _informStopped;
+ 
+        public delegate void ThreadFinishedEventHandler();
+        public event ThreadFinishedEventHandler ThreadFinishedEvent;
+ 
+        private readonly object _lockObject = new object();
 
-        public MessageSender(CompositionContainer container)
+        private readonly MessageProcessor _processor;
+        private readonly DelayedQueue<Mail> _mailQueue;
+ 
+        private void RaiseFinishedEvent()
         {
-            _container = container;
-
-            container.SatisfyImportsOnce(this);
-        }
-
-        readonly DelayedQueue<Mail> _mailQueue = new DelayedQueue<Mail>(1000);
-
-        public void Enqueue(Mail mail, TimeSpan delay = default(TimeSpan))
-        {
-            _mailQueue.Enqueue(mail, delay);
-        }
-
-        private int _id = 1;
-
-        [Import]
-        private ISendConnectorProvider sendConnectors;
-
-        public async void ProcessMail()
-        {
-            var mail = Dequeue();
-
-            var badMailAdresses = new List<MailAddress>();
-
-            foreach (var recipientGroup in mail.Recipients.GroupBy(r => r.Host))
+            if (ThreadFinishedEvent != null)
             {
-                var host = recipientGroup.Key;
-                var connector = sendConnectors.DefaultConnector; // TODO
-                    // .FirstOrDefault(s => s.Domains.Contains(host, StringComparer.InvariantCultureIgnoreCase));
-
-
-                if (connector != null)
-                {
-                    string remoteHost;
-                    int remotePort;
-
-                    if (connector.UseSmarthost)
-                    {
-                        var response = await DnsClient.Default.ResolveAsync(recipientGroup.Key, RecordType.Mx);
-                        var records = response.AnswerRecords.OfType<MxRecord>();
-                        remoteHost = records.OrderBy(record => record.Preference).First().ExchangeDomainName;
-                        remotePort = 25;
-                    }
-                    else
-                    {
-                        remoteHost = connector.RemoteAddress.ToString();
-                        remotePort = connector.RemotePort;
-                    }
-
-                    var addresses = recipientGroup.Select(m => m.Address).ToArray();
-
-                    var settings = new DefaultSendSettings(connector);
-
-                    var client = SMTPClient.Create(_container, settings, remoteHost, remotePort);
-
-                    var success = client.Connect();
-                    success &= client.SendMail(mail.From.ToString(), addresses, mail.ToString());
-                    client.Close();
-
-                    if (!success)
-                    {
-                        // TODO
-                    }
-                }
+                ThreadFinishedEvent();
             }
+        }
 
-            if (badMailAdresses.Any())
+        public MessageSender(CompositionContainer container, DelayedQueue<Mail> queue)
+        {
+            _askStop = new ManualResetEvent(false);
+            _informStopped = new ManualResetEvent(false);
+
+            _processor = new MessageProcessor(container);
+            _mailQueue = queue;
+
+            _processor.OnMailError += HandleMailError;
+        }
+
+        public void HandleMailError(Mail mail, MessageProcessor.ConnectorInfo info, SMTPStatusCode status)
+        {
+            var connector = info.Connector;
+            if (status == SMTPStatusCode.NotAvailiable)
             {
-                Debug.WriteLine("Error with recipients: " + string.Join(", ", badMailAdresses.Select(m => m.ToString())));
-                // Enqueue(CreateErrorMail(mail, badMailAdresses));
+                if (mail.RetryCount > connector.RetryCount)
+                {
+                    mail.RetryCount++;
+                    _mailQueue.Enqueue(mail, connector.RetryTime);
+                }
+                else
+                {
+                    // TODO
+                    /*
+                    Log(LogEventType.Other,
+                        string.Format("Retry count '{0}' exceeded while trying to deliver via '{1}'",
+                            connector.RetryCount, connector.Name));
+
+                    // Error mail?
+                    */
+                }
             }
         }
 
@@ -104,11 +75,72 @@ namespace HydraService
 
             return mail;
         }
-
-        private Mail CreateErrorMail(Mail original, IEnumerable<MailAddress> errorAddresses)
+ 
+        public virtual void Start()
         {
-            // TODO
-            return original;
+            lock (_lockObject)
+            {
+                if (thread != null)
+                {
+                    // already running state
+                    return;
+                }
+                _askStop.Reset();
+                _informStopped.Reset();
+                thread = new Thread(WorkerCallback);
+                thread.IsBackground = true;
+                thread.Start();
+            }
         }
+ 
+        protected int TickDefaultMilliseconds = 1000;
+        protected int TickCount;
+        protected virtual void WorkerCallback()
+        {
+            for (; ; )
+            {
+                DoUnitOfWork(ref TickCount);
+                TickCount--;
+                Thread.Sleep(TickDefaultMilliseconds);
+ 
+                if (_askStop.WaitOne(0, true))
+                {
+                    _informStopped.Set();
+                    break;
+                }
+            }
+            RaiseFinishedEvent();
+        }
+ 
+        public bool HasStopped()
+        {
+            return _informStopped.WaitOne(1, true);
+        }
+ 
+        public bool IsAlive
+        {
+            get { return thread != null && thread.IsAlive; }
+        }
+ 
+        public virtual void Stop()
+        {
+            lock (_lockObject)
+            {
+                // todo fix faulted state exception
+                if (thread != null && thread.IsAlive) // thread is active
+                {
+                    _askStop.Set();
+                    while (thread.IsAlive)
+                    {
+                        if (_informStopped.WaitOne(100, true))
+                        {
+                            break;
+                        }
+                    }
+                    thread = null;
+                }
+            }
+        }
+ 
     }
 }

@@ -2,6 +2,8 @@
 {
     public enum TLSAuthLevel
     {
-        EncryptionOnly, CertificateValidation, DomainValidation
+        EncryptionOnly,
+        CertificateValidation,
+        DomainValidation
     }
 }

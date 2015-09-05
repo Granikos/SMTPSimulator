@@ -10,7 +10,7 @@ namespace HydraService.Providers
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var range = (IPRange)value;
+            var range = (IPRange) value;
             writer.WriteStartObject();
             writer.WritePropertyName("Start");
             writer.WriteValue(range.StartString);
@@ -19,11 +19,12 @@ namespace HydraService.Providers
             writer.WriteEndObject();
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+            JsonSerializer serializer)
         {
             var obj = JObject.Load(reader);
 
-            return new IPRange(IPAddress.Parse((string)obj["Start"]), IPAddress.Parse((string)obj["End"]));
+            return new IPRange(IPAddress.Parse((string) obj["Start"]), IPAddress.Parse((string) obj["End"]));
         }
 
         public override bool CanConvert(Type objectType)

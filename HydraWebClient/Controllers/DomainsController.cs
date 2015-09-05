@@ -7,7 +7,7 @@ using HydraWebClient.HydraConfigurationService;
 
 namespace HydraWebClient.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [RoutePrefix("api/Domains")]
     public class DomainsController : ApiController
     {
