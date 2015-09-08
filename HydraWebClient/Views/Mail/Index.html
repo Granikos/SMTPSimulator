@@ -1,0 +1,53 @@
+﻿<script type="text/ng-template" id="escapingTemplate">
+    <a href tabindex="-1" bind-html-unsafe="match.label | escapeHTML| typeaheadHighlight:query"></a>
+</script>
+
+<div class="container-fluid">
+    <form id="mailForm" class="form-horizontal" name="mailForm" ng-submit="mailForm.$valid && send()">
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Send Connector</label>
+            <div class="col-sm-8">
+                <select class="form-control" ng-model="SendConnectorId" ng-options="connector.Id as connector.Name for connector in connectors">
+                    <option value="" style="font-style: italic">Automatic</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group has-feedback">
+            <label class="col-sm-4 control-label">From</label>
+            <div class="col-sm-8">
+                <input type="text" ng-model="From" typeahead="user as user for user in searchLocalUsers($viewValue)" typeahead-loading="loadingLocalUsers" typeahead-no-results="noResults" typeahead-template-url="escapingTemplate" class="form-control" required>
+                <i class="glyphicon form-control-feedback" ng-class="{'glyphicon-refresh': loadingLocalUsers, 'glyphicon-envelope': !loadingLocalUsers}"></i>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">To</label>
+            <div class="col-sm-8">
+                <span ng-repeat="recipient in Recipients" class="tag label label-default">
+                    <span>{{recipient}}</span>
+                    <a ng-click="removeRecipient($index)"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                </span>
+                <p ng-show="Recipients.length == 0" class="form-control-static" style="display: inline-block;">None</p>
+                <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-sm btn-success" ng-click="addRecipientDialog()">
+                        <i class="glyphicon glyphicon-plus-sign"></i> Add
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Content</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" rows="5" ng-model="Content" required></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <div class="btn-group pull-right">
+                    <button type="submit" class="btn btn-success">
+                        <i class="glyphicon glyphicon-envelope"></i> Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

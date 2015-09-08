@@ -10,5 +10,6 @@ namespace HydraService.Providers
         int ExportAsCSV(Stream csv);
         bool Generate(string template, string pattern, string domain, int count);
         IEnumerable<UserTemplate> GetTemplates();
+        IEnumerable<LocalUser> SearchUsers(string search, int max);
     }
 }

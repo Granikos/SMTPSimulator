@@ -7,18 +7,18 @@ namespace HydraService
 {
     internal class MessageSender
     {
-        private Thread thread;
+        private Thread _thread;
         private readonly ManualResetEvent _askStop;
         private readonly ManualResetEvent _informStopped;
- 
+
         public delegate void ThreadFinishedEventHandler();
         public event ThreadFinishedEventHandler ThreadFinishedEvent;
- 
+
         private readonly object _lockObject = new object();
 
         private readonly MessageProcessor _processor;
         private readonly DelayedQueue<Mail> _mailQueue;
- 
+
         private void RaiseFinishedEvent()
         {
             if (ThreadFinishedEvent != null)
@@ -46,7 +46,10 @@ namespace HydraService
                 if (mail.RetryCount > connector.RetryCount)
                 {
                     mail.RetryCount++;
-                    _mailQueue.Enqueue(mail, connector.RetryTime);
+                    lock (_mailQueue)
+                    {
+                        _mailQueue.Enqueue(mail, connector.RetryTime);
+                    }
                 }
                 else
                 {
@@ -60,87 +63,87 @@ namespace HydraService
                     */
                 }
             }
+
+            // TODO
         }
 
-        private Mail Dequeue()
-        {
-            Mail mail = null;
-
-            while (mail == null)
-            {
-                while (_mailQueue.Peek() == null) Thread.Sleep(100);
-
-                mail = _mailQueue.Dequeue();
-            }
-
-            return mail;
-        }
- 
         public virtual void Start()
         {
             lock (_lockObject)
             {
-                if (thread != null)
+                if (_thread != null)
                 {
                     // already running state
                     return;
                 }
                 _askStop.Reset();
                 _informStopped.Reset();
-                thread = new Thread(WorkerCallback);
-                thread.IsBackground = true;
-                thread.Start();
+                _thread = new Thread(WorkerCallback) { IsBackground = true };
+                _thread.Start();
             }
         }
- 
+
         protected int TickDefaultMilliseconds = 1000;
-        protected int TickCount;
+
         protected virtual void WorkerCallback()
         {
-            for (; ; )
+            while (true)
             {
-                DoUnitOfWork(ref TickCount);
-                TickCount--;
+                Mail mail = null;
+                lock (_mailQueue)
+                {
+                    if (_mailQueue.Peek() != null)
+                    {
+                        mail = _mailQueue.Dequeue();
+                    }
+                }
+
+                if (mail != null)
+                {
+                    _processor.ProcessMail(mail);
+                }
+
                 Thread.Sleep(TickDefaultMilliseconds);
- 
+
                 if (_askStop.WaitOne(0, true))
                 {
                     _informStopped.Set();
                     break;
                 }
             }
+
             RaiseFinishedEvent();
         }
- 
+
         public bool HasStopped()
         {
             return _informStopped.WaitOne(1, true);
         }
- 
-        public bool IsAlive
+
+        public bool IsRunning
         {
-            get { return thread != null && thread.IsAlive; }
+            get { return _thread != null && _thread.IsAlive; }
         }
- 
+
         public virtual void Stop()
         {
             lock (_lockObject)
             {
                 // todo fix faulted state exception
-                if (thread != null && thread.IsAlive) // thread is active
+                if (_thread != null && _thread.IsAlive) // thread is active
                 {
                     _askStop.Set();
-                    while (thread.IsAlive)
+                    while (_thread.IsAlive)
                     {
                         if (_informStopped.WaitOne(100, true))
                         {
                             break;
                         }
                     }
-                    thread = null;
+                    _thread = null;
                 }
             }
         }
- 
+
     }
 }

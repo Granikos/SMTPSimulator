@@ -159,6 +159,13 @@ namespace HydraService
 
         [OperationContract]
         [WebGet(
+            UriTemplate = "LocalUsers/{search}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<LocalUser> SearchLocalUsers(string search);
+
+        [OperationContract]
+        [WebGet(
             UriTemplate = "LocalUsers/{id}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
@@ -224,6 +231,13 @@ namespace HydraService
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         EntitiesWithTotal<ExternalUser> GetExternalUsers(int page, int perPage);
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "ExternalUsers/{search}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<string> SearchExternalUsers(string search);
 
         [OperationContract]
         [WebGet(
@@ -298,5 +312,13 @@ namespace HydraService
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         bool IsRunning();
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "Mail",
+            Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        void SendMail(MailMessage msg);
     }
 }

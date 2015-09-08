@@ -150,6 +150,12 @@
   <wsdl:message name="IConfigurationService_GetLocalUsers_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetLocalUsersResponse" />
   </wsdl:message>
+  <wsdl:message name="IConfigurationService_SearchLocalUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchLocalUsers" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_SearchLocalUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchLocalUsersResponse" />
+  </wsdl:message>
   <wsdl:message name="IConfigurationService_GetLocalUser_InputMessage">
     <wsdl:part name="parameters" element="tns:GetLocalUser" />
   </wsdl:message>
@@ -203,6 +209,12 @@
   </wsdl:message>
   <wsdl:message name="IConfigurationService_GetExternalUsers_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetExternalUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_SearchExternalUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchExternalUsers" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_SearchExternalUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchExternalUsersResponse" />
   </wsdl:message>
   <wsdl:message name="IConfigurationService_GetExternalUser_InputMessage">
     <wsdl:part name="parameters" element="tns:GetExternalUser" />
@@ -263,6 +275,12 @@
   </wsdl:message>
   <wsdl:message name="IConfigurationService_IsRunning_OutputMessage">
     <wsdl:part name="parameters" element="tns:IsRunningResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_SendMail_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendMail" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_SendMail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendMailResponse" />
   </wsdl:message>
   <wsdl:portType name="IConfigurationService">
     <wsdl:operation name="SetProperty">
@@ -349,6 +367,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetLocalUsers" message="tns:IConfigurationService_GetLocalUsers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetLocalUsersResponse" message="tns:IConfigurationService_GetLocalUsers_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="SearchLocalUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/SearchLocalUsers" message="tns:IConfigurationService_SearchLocalUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/SearchLocalUsersResponse" message="tns:IConfigurationService_SearchLocalUsers_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetLocalUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetLocalUser" message="tns:IConfigurationService_GetLocalUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetLocalUserResponse" message="tns:IConfigurationService_GetLocalUser_OutputMessage" />
@@ -384,6 +406,10 @@
     <wsdl:operation name="GetExternalUsers">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetExternalUsers" message="tns:IConfigurationService_GetExternalUsers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetExternalUsersResponse" message="tns:IConfigurationService_GetExternalUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchExternalUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/SearchExternalUsers" message="tns:IConfigurationService_SearchExternalUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/SearchExternalUsersResponse" message="tns:IConfigurationService_SearchExternalUsers_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetExternalUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetExternalUser" message="tns:IConfigurationService_GetExternalUser_InputMessage" />
@@ -424,6 +450,10 @@
     <wsdl:operation name="IsRunning">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/IsRunning" message="tns:IConfigurationService_IsRunning_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/IsRunningResponse" message="tns:IConfigurationService_IsRunning_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendMail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/SendMail" message="tns:IConfigurationService_SendMail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/SendMailResponse" message="tns:IConfigurationService_SendMail_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IConfigurationService" type="tns:IConfigurationService">
@@ -619,6 +649,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SearchLocalUsers">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/SearchLocalUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetLocalUser">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetLocalUser" style="document" />
       <wsdl:input>
@@ -693,6 +732,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetExternalUsers">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetExternalUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchExternalUsers">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/SearchExternalUsers" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -783,6 +831,15 @@
     </wsdl:operation>
     <wsdl:operation name="IsRunning">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/IsRunning" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMail">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/SendMail" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

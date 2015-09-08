@@ -17,6 +17,8 @@ namespace HydraService
     {
         private readonly ISMTPServerContainer _servers;
 
+        private readonly IMailQueueProvider _mailQueue;
+
         [Import]
         private IDomainProvider _domains;
 
@@ -32,12 +34,14 @@ namespace HydraService
         [Import]
         private ISendConnectorProvider _sendConnectors;
 
-        public ConfigurationService(SMTPCore core, ISMTPServerContainer servers)
+        public ConfigurationService(SMTPCore core, ISMTPServerContainer servers, IMailQueueProvider mailQueue)
         {
             Contract.Requires<ArgumentNullException>(core != null, "core");
             Contract.Requires<ArgumentNullException>(servers != null, "servers");
+            Contract.Requires<ArgumentNullException>(mailQueue != null, "mailQueue");
 
             _servers = servers;
+            _mailQueue = mailQueue;
             Core = core;
         }
 
@@ -173,6 +177,11 @@ namespace HydraService
             return result;
         }
 
+        public IEnumerable<LocalUser> SearchLocalUsers(string search)
+        {
+            return _localUsers.SearchUsers(search, 20);
+        }
+
         public LocalUser GetLocalUser(int id)
         {
             return _localUsers.Get(id);
@@ -221,6 +230,11 @@ namespace HydraService
         public EntitiesWithTotal<ExternalUser> GetExternalUsers(int page, int perPage)
         {
             return new EntitiesWithTotal<ExternalUser>(_externalUsers.Paged(page, perPage), _externalUsers.Total);
+        }
+
+        public IEnumerable<string> SearchExternalUsers(string search)
+        {
+            return _externalUsers.SearchMailboxes(DomainSource, search, 20);
         }
 
         public ExternalUser GetExternalUser(int id)
@@ -278,6 +292,11 @@ namespace HydraService
         public bool IsRunning()
         {
             return _servers.Running;
+        }
+
+        public void SendMail(MailMessage msg)
+        {
+            _mailQueue.Enqueue(msg);
         }
 
         private string DomainSource(int id)

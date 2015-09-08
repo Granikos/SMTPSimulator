@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('Hydra', ['ngRoute', 'ui.bootstrap', 'Server', 'LocalUsers', 'ExternalUsers', 'Send', 'Recieve', 'Timer', 'Logging', 'Register', 'Login', 'enumFlag', 'checklist-model'])
+    angular.module('Hydra', ['ngRoute', 'ui.bootstrap', 'Server', 'LocalUsers', 'ExternalUsers', 'Send', 'Recieve', 'Timer', 'Mail', 'Logging', 'Register', 'Login', 'enumFlag', 'checklist-model'])
         .config([
             '$routeProvider', '$httpProvider', '$locationProvider', function($routeProvider, $httpProvider, $locationProvider) {
                 $locationProvider.hashPrefix('!').html5Mode(true);
@@ -24,6 +24,10 @@
                     .when('/Recieve', {
                         templateUrl: 'Views/Recieve/Index.html',
                         controller: 'RecieveController'
+                    })
+                    .when('/Mail', {
+                        templateUrl: 'Views/Mail/Index.html',
+                        controller: 'MailController'
                     })
                     .when('/Timer', {
                         templateUrl: 'Views/Timer/Index.html',
@@ -174,5 +178,18 @@
                 }
             }
         }
-      ]);
+      ])
+    .filter('escapeHTML', function() {
+            return function(text) {
+                if (text) {
+                    return text.
+                        replace(/&/g, '&amp;').
+                        replace(/</g, '&lt;').
+                        replace(/>/g, '&gt;').
+                        replace(/'/g, '&#39;').
+                        replace(/"/g, '&quot;');
+                }
+                return '';
+            };
+        });
 })();

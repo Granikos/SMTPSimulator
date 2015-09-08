@@ -5,16 +5,19 @@ using System.ComponentModel.Composition.Primitives;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Reflection;
 using System.ServiceModel;
 using System.ServiceProcess;
 using HydraCore;
 using HydraCore.CommandHandlers;
+using HydraService.PriorityQueue;
 using HydraService.Providers;
+using MailMessage = HydraService.Models.MailMessage;
 
 namespace HydraService
 {
-    public partial class SMTPService : ServiceBase, ISMTPServerContainer
+    public partial class SMTPService : ServiceBase, ISMTPServerContainer, IMailQueueProvider
     {
         // TODO: Use locks
 
@@ -28,6 +31,10 @@ namespace HydraService
         private SMTPServer[] _servers;
 
         private MessageSender[] _senders;
+
+        private readonly DelayedQueue<Mail> _mailQueue = new DelayedQueue<Mail>(1000);
+
+        private const int NumSenders = 4;
 
         public SMTPService()
         {
@@ -60,6 +67,7 @@ namespace HydraService
             _core = new SMTPCore(loader);
 
             RefreshServers();
+            RefreshSenders();
         }
 
         public static string AssemblyDirectory
@@ -87,6 +95,7 @@ namespace HydraService
 
             Running = false;
         }
+
         public void StopMessageProcessing()
         {
             if (_senders != null)
@@ -137,6 +146,17 @@ namespace HydraService
             StartSMTPServers();
         }
 
+        internal void RefreshSenders()
+        {
+            StopMessageProcessing();
+
+            _senders = Enumerable.Range(0, NumSenders)
+                .Select(r => new MessageSender(_container, _mailQueue))
+                .ToArray();
+
+            StartMessageProcessing();
+        }
+
         internal void TestStartupAndStop(string[] args)
         {
             OnStart(args);
@@ -147,13 +167,14 @@ namespace HydraService
         protected override void OnStart(string[] args)
         {
             StartSMTPServers();
+            StartMessageProcessing();
 
             if (_host != null)
             {
                 _host.Close();
             }
 
-            var service = new ConfigurationService(_core, this);
+            var service = new ConfigurationService(_core, this, this);
             _container.ComposeParts(service);
 
             _host = new ServiceHost(service);
@@ -164,12 +185,22 @@ namespace HydraService
         protected override void OnStop()
         {
             StopSMTPServers();
+            StopMessageProcessing();
 
             if (_host != null)
             {
                 _host.Close();
                 _host = null;
             }
+        }
+
+        public void Enqueue(MailMessage mail)
+        {
+            var from = new MailAddress(mail.Sender);
+            var to = mail.Recipients.Select(r => new MailAddress(r)).ToArray();
+            var parsed = new Mail(from, to, mail.Content);
+
+            _mailQueue.Enqueue(parsed, TimeSpan.Zero);
         }
     }
 }

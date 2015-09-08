@@ -1,0 +1,14 @@
+﻿<div class="modal-header">
+    <h4 class="modal-title"><span class="glyphicon glyphicon-plus-sign"></span> Add Recipient</h4>
+</div>
+
+<div class="modal-body clearfix">
+    <form role="form" name="addRecipientForm" ng-submit="addRecipientForm.$valid && submit()">
+        <div class="form-group has-feedback">
+            <label for="addRecipient">Recipient</label>
+            <input placeholder="Recipient" id="addRecipient" type="text" ng-model="Recipient" typeahead="user as user for user in searchExternalUsers($viewValue)" typeahead-loading="loadingExternalUsers" typeahead-template-url="escapingTemplate" class="form-control" required>
+            <i class="glyphicon form-control-feedback" ng-class="{'glyphicon-refresh': loadingExternalUsers, 'glyphicon-envelope': !loadingExternalUsers}"></i>
+        </div>
+        <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-plus-sign"></i> Add</button>
+    </form>
+</div>

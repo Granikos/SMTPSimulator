@@ -93,6 +93,14 @@ namespace HydraService.Providers
                 .OrderBy(t => t.DisplayName);
         }
 
+        public IEnumerable<LocalUser> SearchUsers(string search, int max)
+        {
+            return
+                All()
+                    .Where(u => u.Mailbox.Contains(search) || (u.FirstName + " " + u.LastName).Contains(search))
+                    .Take(max);
+        }
+
 #if DEBUG
         protected override IEnumerable<LocalUser> Initializer()
         {

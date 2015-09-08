@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ using HydraService.Models;
 
 namespace HydraService.Providers
 {
-    [Export(typeof (IExternalUserProvider))]
+    [Export(typeof(IExternalUserProvider))]
     public class ExternalUserProvider : DefaultProvider<ExternalUser>, IExternalUserProvider
     {
         public ExternalUserProvider()
@@ -35,7 +36,7 @@ namespace HydraService.Providers
                     var count = 0;
                     foreach (var user in csv.GetRecords<ExternalUser>())
                     {
-                        var parts = user.Mailbox.Split(new[] {'@'}, 2);
+                        var parts = user.Mailbox.Split(new[] { '@' }, 2);
                         user.Mailbox = parts[0];
                         user.DomainId = domainSource(parts[1]);
 
@@ -74,6 +75,21 @@ namespace HydraService.Providers
 
                 return All().Count();
             }
+        }
+
+        public IEnumerable<string> SearchMailboxes(Func<int, string> domainSource, string search, int max)
+        {
+            return
+                All().Select(u =>
+                    {
+
+                        var domain = domainSource(u.DomainId);
+                        var mailbox = String.Format("{0}@{1}", u.Mailbox, domain);
+
+                        return String.Format("\"{0} {1}\" <{2}>", u.FirstName, u.LastName, mailbox);
+                    })
+                    .Where(m => CultureInfo.InvariantCulture.CompareInfo.IndexOf(m, search, CompareOptions.IgnoreCase) >= 0)
+                    .Take(max);
         }
 
 #if DEBUG

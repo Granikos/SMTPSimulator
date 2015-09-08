@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -20,6 +21,14 @@ namespace HydraWebClient.Controllers
         public ExternalUsersWithTotal All([FromUri]PagedFilter filter)
         {
             return _service.GetExternalUsers(filter.PageNumber, filter.PageSize);
+        }
+
+        // GET api/LocalUsers/Search
+        [HttpGet]
+        [Route("Search/{search}")]
+        public IEnumerable<string> Search(string search)
+        {
+            return _service.SearchExternalUsers(search);
         }
 
         // GET api/ExternalUsers/Export

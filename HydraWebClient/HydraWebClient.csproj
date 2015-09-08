@@ -175,6 +175,7 @@
     <Compile Include="Controllers\DomainsController.cs" />
     <Compile Include="Controllers\ExternalUsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\PagedFilter.cs" />
     <Compile Include="Controllers\SendConnectorsController.cs" />
     <Compile Include="Controllers\RecieveConnectorController.cs" />
@@ -201,6 +202,7 @@
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\angular-bundle.min.js" />
     <Content Include="Scripts\bootstrap-bundle.min.js" />
+    <Content Include="Scripts\Controllers\Mail.js" />
     <Content Include="Scripts\Controllers\Recieve.js" />
     <Content Include="Scripts\Controllers\Send.js" />
     <Content Include="Scripts\Controllers\Timer.js" />
@@ -268,6 +270,8 @@
     <Content Include="Views\LocalUsers\ImportDialog.html" />
     <Content Include="Views\LocalUsers\AddDialog.html" />
     <Content Include="Views\LocalUsers\Index.html" />
+    <Content Include="Views\Mail\AddUserDialog.html" />
+    <Content Include="Views\Mail\Index.html" />
     <Content Include="Views\Logging\Index.html" />
     <Content Include="Views\Recieve\AddIPRangeDialog.html" />
     <Content Include="Views\Recieve\Index.html" />

@@ -48,6 +48,14 @@ namespace HydraWebClient.Controllers
             return _service.GetLocalUsers(page, pageSize);
         }
 
+        // GET api/LocalUsers/Search
+        [HttpGet]
+        [Route("Search/{search}")]
+        public IEnumerable<LocalUser> Search(string search)
+        {
+            return _service.SearchLocalUsers(search);
+        }
+
         // GET api/LocalUsers/Export
         [HttpGet]
         [Route("Export")]
