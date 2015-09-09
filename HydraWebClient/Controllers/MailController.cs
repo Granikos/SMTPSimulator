@@ -10,7 +10,7 @@ namespace HydraWebClient.Controllers
         readonly ConfigurationServiceClient _service = new ConfigurationServiceClient();
 
         // PUT api/Mail/Send
-        [HttpPut]
+        [HttpPost]
         [Route("Send")]
         public void Send(MailMessage msg)
         {

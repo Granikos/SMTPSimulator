@@ -7,7 +7,7 @@
         <div class="form-group">
             <label class="col-sm-4 control-label">Send Connector</label>
             <div class="col-sm-8">
-                <select class="form-control" ng-model="SendConnectorId" ng-options="connector.Id as connector.Name for connector in connectors">
+                <select class="form-control" ng-model="Mail.ConnectorId" ng-options="connector.Id as connector.Name for connector in connectors">
                     <option value="" style="font-style: italic">Automatic</option>
                 </select>
             </div>
@@ -15,18 +15,19 @@
         <div class="form-group has-feedback">
             <label class="col-sm-4 control-label">From</label>
             <div class="col-sm-8">
-                <input type="text" ng-model="From" typeahead="user as user for user in searchLocalUsers($viewValue)" typeahead-loading="loadingLocalUsers" typeahead-no-results="noResults" typeahead-template-url="escapingTemplate" class="form-control" required>
+                <input type="text" ng-model="Mail.Sender" typeahead="user as user for user in searchLocalUsers($viewValue)" typeahead-loading="loadingLocalUsers" typeahead-no-results="noResults"
+                       typeahead-template-url="escapingTemplate" class="form-control" ng-pattern="MailRegexp" required>
                 <i class="glyphicon form-control-feedback" ng-class="{'glyphicon-refresh': loadingLocalUsers, 'glyphicon-envelope': !loadingLocalUsers}"></i>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-4 control-label">To</label>
             <div class="col-sm-8">
-                <span ng-repeat="recipient in Recipients" class="tag label label-default">
+                <span ng-repeat="recipient in Mail.Recipients" class="tag label label-default">
                     <span>{{recipient}}</span>
                     <a ng-click="removeRecipient($index)"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
                 </span>
-                <p ng-show="Recipients.length == 0" class="form-control-static" style="display: inline-block;">None</p>
+                <p ng-show="Mail.Recipients.length == 0" class="form-control-static" style="display: inline-block;">None</p>
                 <div class="btn-group pull-right">
                     <button type="button" class="btn btn-sm btn-success" ng-click="addRecipientDialog()">
                         <i class="glyphicon glyphicon-plus-sign"></i> Add
@@ -37,7 +38,7 @@
         <div class="form-group">
             <label class="col-sm-4 control-label">Content</label>
             <div class="col-sm-8">
-                <textarea class="form-control" rows="5" ng-model="Content" required></textarea>
+                <textarea class="form-control" rows="5" ng-model="Mail.Content" required></textarea>
             </div>
         </div>
         <div class="form-group">

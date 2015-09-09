@@ -1,4 +1,6 @@
 ﻿(function () {
+    var mailRegexp = /^([\u00C0-\u017F\w\s'-]+<[\w\.]+@([\w\d-]+\.)+[\w]{2,4}>|[\w\.]+@([\w\d-]+\.)+[\w]{2,4})$/;
+
     angular.module('Mail', ['ui.bootstrap.modal'])
 
         .service("SendConnectorService", ["$http", DataService("api/SendConnectors")])
@@ -6,21 +8,15 @@
         .service('LocalUsersService', ['$http', DataService('api/LocalUsers')])
 
         .controller('MailController', [
-            '$scope', '$http', '$modal', 'LocalUsersService', 'SendConnectorService', function ($scope, $http, $modal, LocalUsersService, SendConnectorService) {
-                $scope.From = null;
-                $scope.Recipients = [];
-                $scope.SendConnector = null;
-                $scope.Content = null;
+            '$scope', '$http', '$modal', 'SendConnectorService', function ($scope, $http, $modal, SendConnectorService) {
+                $scope.Mail = {
+                    Sender: null,
+                    Recipients: [],
+                    ConnectorId: null,
+                    Content: null
+                };
                 $scope.connectors = [];
-                $scope.localUsers = [];
-
-                LocalUsersService.all({ PageSize: 9999, PageNumber: 1 })
-                    .success(function (result) {
-                        $scope.localUsers =  result.Entities;
-                    })
-                    .error(function (data) {
-                        showError(data.data.Message);
-                    });
+                $scope.MailRegexp = mailRegexp;
 
                 SendConnectorService.all()
                     .success(function (connectors) {
@@ -33,10 +29,18 @@
                 $scope.searchLocalUsers = function(search) {
                     return $http.get("api/LocalUsers/Search/" + search)
                         .then(function(data) {
-                            return $.map(data.data, function(item) {
-                                return '"' + item.FirstName + ' ' + item.LastName + '" <' + item.Mailbox + '>';
-                            });
+                            return data.data;
                         });
+                };
+
+                $scope.send = function () {
+                    return $http.post("api/Mail/Send", $scope.Mail)
+                    .success(function (data) {
+                        // TODO
+                    })
+                    .error(function (data) {
+                        showError(data.data.Message);
+                    });
                 };
 
                 $scope.removeRecipient = function (index) {
@@ -50,6 +54,7 @@
                             controller: [
                                 '$scope', '$modalInstance', function ($scope, $modalInstance) {
                                     $scope.Recipient = null;
+                                    $scope.MailRegexp = mailRegexp;
 
                                     $scope.searchExternalUsers = function (search) {
                                         return $http.get("api/ExternalUsers/Search/" + search)
@@ -65,7 +70,7 @@
                             ]
                         })
                         .result.then(function (user) {
-                            $scope.Recipients.push(user);
+                            $scope.Mail.Recipients.push(user);
                         });
                 };
             }

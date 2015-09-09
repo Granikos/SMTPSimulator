@@ -28,6 +28,9 @@ namespace HydraService
         [Import]
         private IRecieveConnectorProvider _recieveConnectors;
 
+        [Import]
+        private ISendConnectorProvider _sendConnectors;
+
         private SMTPServer[] _servers;
 
         private MessageSender[] _senders;
@@ -199,6 +202,9 @@ namespace HydraService
             var from = new MailAddress(mail.Sender);
             var to = mail.Recipients.Select(r => new MailAddress(r)).ToArray();
             var parsed = new Mail(from, to, mail.Content);
+
+            // TODO
+            parsed.Settings = new DefaultSendSettings(_sendConnectors.DefaultConnector);
 
             _mailQueue.Enqueue(parsed, TimeSpan.Zero);
         }

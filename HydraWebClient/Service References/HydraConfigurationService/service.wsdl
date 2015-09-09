@@ -20,8 +20,8 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/HydraCore" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Net.Security" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Security.Authentication" />
-      <xsd:import namespace="http://schemas.microsoft.com/Message" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import namespace="http://schemas.microsoft.com/Message" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IConfigurationService_SetProperty_InputMessage">

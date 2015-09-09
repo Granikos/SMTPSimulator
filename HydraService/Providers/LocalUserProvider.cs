@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ using HydraService.Models;
 
 namespace HydraService.Providers
 {
-    [Export(typeof (ILocalUserProvider))]
+    [Export(typeof(ILocalUserProvider))]
     public class LocalUserProvider : DefaultProvider<LocalUser>, ILocalUserProvider
     {
         [ImportMany]
@@ -71,7 +72,7 @@ namespace HydraService.Providers
 
         public bool Generate(string templateName, string pattern, string domain, int count)
         {
-            var parts = templateName.Split(new[] {'/'}, 2);
+            var parts = templateName.Split(new[] { '/' }, 2);
             var template = _templateProviders
                 .SelectMany(t => t.All())
                 .First(t => t.GetType().Name.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase)
@@ -93,11 +94,11 @@ namespace HydraService.Providers
                 .OrderBy(t => t.DisplayName);
         }
 
-        public IEnumerable<LocalUser> SearchUsers(string search, int max)
+        public IEnumerable<string> SearchMailboxes(string search, int max)
         {
-            return
-                All()
-                    .Where(u => u.Mailbox.Contains(search) || (u.FirstName + " " + u.LastName).Contains(search))
+            return All()
+                    .Select(u => String.Format("{0} {1} <{2}>", u.FirstName, u.LastName, u.Mailbox))
+                    .Where(m => CultureInfo.InvariantCulture.CompareInfo.IndexOf(m, search, CompareOptions.IgnoreCase) >= 0)
                     .Take(max);
         }
 

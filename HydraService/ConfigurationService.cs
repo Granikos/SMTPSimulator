@@ -177,9 +177,9 @@ namespace HydraService
             return result;
         }
 
-        public IEnumerable<LocalUser> SearchLocalUsers(string search)
+        public IEnumerable<string> SearchLocalUsers(string search)
         {
-            return _localUsers.SearchUsers(search, 20);
+            return _localUsers.SearchMailboxes(search, 20);
         }
 
         public LocalUser GetLocalUser(int id)

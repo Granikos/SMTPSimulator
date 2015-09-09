@@ -1406,10 +1406,10 @@ namespace HydraWebClient.HydraConfigurationService {
         System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.LocalUsersWithTotal> GetLocalUsersAsync(int page, int perPage);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/SearchLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/SearchLocalUsersResponse")]
-        HydraWebClient.HydraConfigurationService.LocalUser[] SearchLocalUsers(string search);
+        string[] SearchLocalUsers(string search);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/SearchLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/SearchLocalUsersResponse")]
-        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.LocalUser[]> SearchLocalUsersAsync(string search);
+        System.Threading.Tasks.Task<string[]> SearchLocalUsersAsync(string search);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLocalUser", ReplyAction="http://tempuri.org/IConfigurationService/GetLocalUserResponse")]
         HydraWebClient.HydraConfigurationService.LocalUser GetLocalUser(int id);
@@ -1733,11 +1733,11 @@ namespace HydraWebClient.HydraConfigurationService {
             return base.Channel.GetLocalUsersAsync(page, perPage);
         }
         
-        public HydraWebClient.HydraConfigurationService.LocalUser[] SearchLocalUsers(string search) {
+        public string[] SearchLocalUsers(string search) {
             return base.Channel.SearchLocalUsers(search);
         }
         
-        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.LocalUser[]> SearchLocalUsersAsync(string search) {
+        public System.Threading.Tasks.Task<string[]> SearchLocalUsersAsync(string search) {
             return base.Channel.SearchLocalUsersAsync(search);
         }
         

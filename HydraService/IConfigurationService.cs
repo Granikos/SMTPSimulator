@@ -162,7 +162,7 @@ namespace HydraService
             UriTemplate = "LocalUsers/{search}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        IEnumerable<LocalUser> SearchLocalUsers(string search);
+        IEnumerable<string> SearchLocalUsers(string search);
 
         [OperationContract]
         [WebGet(

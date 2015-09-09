@@ -51,7 +51,7 @@ namespace HydraWebClient.Controllers
         // GET api/LocalUsers/Search
         [HttpGet]
         [Route("Search/{search}")]
-        public IEnumerable<LocalUser> Search(string search)
+        public IEnumerable<string> Search(string search)
         {
             return _service.SearchLocalUsers(search);
         }

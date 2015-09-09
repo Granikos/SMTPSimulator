@@ -6,6 +6,9 @@ namespace HydraService.Models
     public class MailMessage
     {
         [DataMember]
+        public int? ConnectorId { get; set; }
+
+        [DataMember]
         public string Sender { get; set; }
 
         [DataMember]

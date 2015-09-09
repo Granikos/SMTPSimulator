@@ -13,6 +13,7 @@ namespace HydraCore
         public Dictionary<string,string> Headers { get; private set; }
         public string Body { get; set; }
         public int RetryCount { get; set; }
+        public ISendSettings Settings { get; set; }
 
         public Mail(MailAddress from, IEnumerable<MailAddress> recipients, string mail)
         {

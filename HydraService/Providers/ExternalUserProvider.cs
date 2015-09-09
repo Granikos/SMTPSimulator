@@ -86,7 +86,7 @@ namespace HydraService.Providers
                         var domain = domainSource(u.DomainId);
                         var mailbox = String.Format("{0}@{1}", u.Mailbox, domain);
 
-                        return String.Format("\"{0} {1}\" <{2}>", u.FirstName, u.LastName, mailbox);
+                        return String.Format("{0} {1} <{2}>", u.FirstName, u.LastName, mailbox);
                     })
                     .Where(m => CultureInfo.InvariantCulture.CompareInfo.IndexOf(m, search, CompareOptions.IgnoreCase) >= 0)
                     .Take(max);
