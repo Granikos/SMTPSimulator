@@ -12,6 +12,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var config = {
     jquerysrc: [
         'bower_components/jquery/dist/jquery.js',
+        'bower_components/moment/moment.js'
     ],
     jquerybundle: 'Scripts/jquery-bundle.min.js',
 
@@ -31,7 +32,9 @@ var config = {
         'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
         'bower_components/angular-enum-flag-directive/angular-enum-flag-directive.js',
         'bower_components/checklist-model/checklist-model.js',
-        'bower_components/ng-file-upload/ng-file-upload.js'
+        'bower_components/ng-file-upload/ng-file-upload.js',
+        'bower_components/angular-moment-duration/src/angular-moment-duration.js',
+        'bower_components/ngTouchSpin/src/js/ngTouchSpin.js'
     ],
     angularbundle: 'Scripts/angular-bundle.min.js',
 

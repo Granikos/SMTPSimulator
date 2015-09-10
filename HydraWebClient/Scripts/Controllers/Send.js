@@ -1,7 +1,7 @@
 ﻿(function () {
     var IPRegexp = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 
-    angular.module('Send', ['ui.bootstrap.modal', 'enumFlag', 'checklist-model'])
+    angular.module('Send', ['ui.bootstrap.modal', 'enumFlag', 'checklist-model', 'ui.moment-duration', 'jkuri.touchspin'])
 
         .service("SendConnectorService", ["$http", DataService("api/SendConnectors")])
 
@@ -16,8 +16,8 @@
                 $scope.IPRegexp = IPRegexp;
                 $scope.defaultId = 0;
 
-                $scope.defaultComparer = function(def) {
-                    return function(actual, expected) {
+                $scope.defaultComparer = function (def) {
+                    return function (actual, expected) {
                         if (actual === null)
                             actual = def;
                         return actual === expected;
@@ -34,6 +34,9 @@
 
                 SendConnectorService.all()
                     .success(function (connectors) {
+                        $.each(connectors, function (i, c) {
+                            c.RetryTimeDuration = moment.duration(c.RetryTime);
+                        });
                         $scope.connectors = connectors;
                     })
                     .error(function (data) {
@@ -70,6 +73,10 @@
                 $scope.update = function (connector) {
                     if (connector.TLSSettings.CertificateName === '-- None --')
                         connector.TLSSettings.CertificateName = null;
+
+                    connector.RetryTime = connector.RetryTimeDuration.hours() + ':' +
+                        connector.RetryTimeDuration.minutes() + ':' +
+                        connector.RetryTimeDuration.seconds();
 
                     SendConnectorService
                         .update(connector)
@@ -121,6 +128,9 @@
 
                     delete connector.Id;
                     delete connector.__adding__;
+                    connector.RetryTime = connector.RetryTimeDuration.hours() + ':' +
+                        connector.RetryTimeDuration.minutes() + ':' +
+                        connector.RetryTimeDuration.seconds();
 
                     SendConnectorService
                         .add(connector)
