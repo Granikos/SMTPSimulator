@@ -34,6 +34,8 @@ namespace HydraCore
         private Stream _stream;
         private StreamWriter _writer;
 
+        public SMTPStatusCode? LastStatus { get; private set; }
+
         protected SMTPClient(ISendSettings settings, string host, int port = 25)
         {
             Contract.Requires<ArgumentNullException>(settings != null, "settings");
@@ -100,41 +102,12 @@ namespace HydraCore
             }
         }
 
-        public SMTPStatusCode? Connect()
+        public bool Connect()
         {
-            _client = new TcpClient(Host, Port);
-            _stream = _client.GetStream();
+            if (!DoConnectionSequence()) return false;
 
-            Log(LogEventType.Connect);
-
-            if (TLSFullTunnel)
-            {
-                var sslStream = new SslStream(_stream, false, UserCertificateValidationCallback,
-                    UserCertificateSelectionCallback, EncryptionPolicy);
-
-                sslStream.AuthenticateAsClient(Host, Certificates, SslProtocols, ValidateCertificateRevocation);
-
-                _stream = sslStream;
-            }
-
-            RefreshWriter();
-            RefreshReader();
-
-            var reponse = ReadResponse();
-
-            if (reponse.Code != SMTPStatusCode.Ready)
-            {
-                return reponse.Code;
-            }
-
-            Write("EHLO {0}", ClientName);
-
-            reponse = ReadResponse();
-
-            if (reponse.Code != SMTPStatusCode.Okay)
-            {
-                return reponse.Code;
-            }
+            SMTPResponse reponse;
+            if (!DoEHLO(out reponse)) return false;
 
             var tlsEnabled = reponse.Args.Contains("STARTTLS", StringComparer.InvariantCultureIgnoreCase);
             var authLine =
@@ -144,7 +117,7 @@ namespace HydraCore
             if (!tlsEnabled && Settings.RequireTLS)
             {
                 Log(LogEventType.Connect, "TLS is required, but the server does not support it.");
-                return reponse.Code;
+                return false;
             }
 
             if (Settings.EnableTLS && tlsEnabled)
@@ -154,13 +127,91 @@ namespace HydraCore
                 if (Settings.RequireTLS && !success)
                 {
                     Log(LogEventType.Connect, "TLS is required, but establishing the TLS layer failed.");
-                    return reponse.Code;
+                    return false;
+                }
+
+                // Restore Connection
+                if (!success && LastStatus == SMTPStatusCode.Ready)
+                {
+                    if (!DoConnectionSequence()) return false;
+                    if (!DoEHLO(out reponse)) return false;
+
                 }
             }
 
             // Auth();
 
-            return null;
+            return true;
+        }
+
+        private bool DoConnectionSequence()
+        {
+            if (!CreateConnection()) return false;
+
+            if (TLSFullTunnel)
+            {
+                if (!CreateTlsLayer()) return false;
+            }
+
+            RefreshWriter();
+            RefreshReader();
+
+            var reponse = ReadResponse();
+
+            if (reponse.Code != SMTPStatusCode.Ready)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool DoEHLO(out SMTPResponse reponse)
+        {
+            Write("EHLO {0}", ClientName);
+
+            reponse = ReadResponse();
+
+            if (reponse.Code != SMTPStatusCode.Okay)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool CreateTlsLayer()
+        {
+            var sslStream = new SslStream(_stream, false, UserCertificateValidationCallback,
+                UserCertificateSelectionCallback, EncryptionPolicy);
+
+            try
+            {
+                sslStream.AuthenticateAsClient(Host, Certificates, SslProtocols, ValidateCertificateRevocation);
+            }
+            catch (AuthenticationException e)
+            {
+                return false;
+            }
+
+            _stream = sslStream;
+            return true;
+        }
+
+        private bool CreateConnection()
+        {
+            try
+            {
+                _client = new TcpClient(Host, Port);
+                _stream = _client.GetStream();
+            }
+            catch (InvalidOperationException)
+            {
+                return false; // TODO: Cleanup
+            }
+
+            Log(LogEventType.Connect);
+
+            return true;
         }
 
         public bool SendMail(string from, string[] recipients, string body)
@@ -286,12 +337,20 @@ namespace HydraCore
                 return false;
             }
 
-            var sslStream = new SslStream(_stream, false, UserCertificateValidationCallback,
-                UserCertificateSelectionCallback, EncryptionPolicy);
+            try
+            {
 
-            sslStream.AuthenticateAsClient(Host, Certificates, SslProtocols, ValidateCertificateRevocation);
+                var sslStream = new SslStream(_stream, false, UserCertificateValidationCallback,
+                    UserCertificateSelectionCallback, EncryptionPolicy);
 
-            _stream = sslStream;
+                sslStream.AuthenticateAsClient(Host, Certificates, SslProtocols, ValidateCertificateRevocation);
+
+                _stream = sslStream;
+            }
+            catch (AuthenticationException e)
+            {
+                return false;
+            }
 
             RefreshWriter();
             RefreshReader();
@@ -423,6 +482,8 @@ namespace HydraCore
                     throw new Exception("Unexpected reply by server");
                 }
             }
+
+            LastStatus = code;
 
             return code == null ? null : new SMTPResponse(code.Value, args.ToArray());
         }

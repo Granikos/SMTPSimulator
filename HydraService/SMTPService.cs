@@ -204,7 +204,7 @@ namespace HydraService
             var parsed = new Mail(from, to, mail.Content);
 
             // TODO
-            parsed.Settings = new DefaultSendSettings(_sendConnectors.DefaultConnector);
+            parsed.Settings = _sendConnectors.DefaultConnector;
 
             _mailQueue.Enqueue(parsed, TimeSpan.Zero);
         }

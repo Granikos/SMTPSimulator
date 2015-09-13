@@ -5,13 +5,10 @@ using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Mail;
-using System.Threading;
-using System.Threading.Tasks;
 using ARSoft.Tools.Net.Dns;
 using HydraCore;
 using HydraCore.Logging;
 using HydraService.Models;
-using HydraService.PriorityQueue;
 using HydraService.Providers;
 
 namespace HydraService
@@ -52,27 +49,28 @@ namespace HydraService
             {
                 var host = recipientGroup.Key;
                 var domain = domains.GetByName(host);
-                var connector = domain != null && domain.SendConnectorId != null
-                    ? sendConnectors.Get((int)domain.SendConnectorId)
-                    : sendConnectors.DefaultConnector;
-
-                string remoteHost = null;
-                int remotePort = 25;
-
-                if (connector != null)
+                var connector = mail.Settings as SendConnector;
+                if (connector == null)
                 {
-                    if (connector.UseSmarthost)
-                    {
-                        var response = DnsClient.Default.Resolve(recipientGroup.Key, RecordType.Mx);
-                        var records = response.AnswerRecords.OfType<MxRecord>();
-                        remoteHost = records.OrderBy(record => record.Preference).First().ExchangeDomainName;
-                        remotePort = 25;
-                    }
-                    else
-                    {
-                        remoteHost = connector.RemoteAddress.ToString();
-                        remotePort = connector.RemotePort;
-                    }
+                    if (domain != null && domain.SendConnectorId != null)
+                        connector = sendConnectors.Get((int)domain.SendConnectorId);
+                    else connector = sendConnectors.DefaultConnector;
+                }
+
+                string remoteHost;
+                int remotePort;
+
+                if (connector.UseSmarthost)
+                {
+                    var response = DnsClient.Default.Resolve(recipientGroup.Key, RecordType.Mx);
+                    var records = response.AnswerRecords.OfType<MxRecord>();
+                    remoteHost = records.OrderBy(record => record.Preference).First().ExchangeDomainName;
+                    remotePort = 25;
+                }
+                else
+                {
+                    remoteHost = connector.RemoteAddress.ToString();
+                    remotePort = connector.RemotePort;
                 }
 
                 yield return new ConnectorInfo
@@ -85,42 +83,41 @@ namespace HydraService
             }
         }
 
-        public delegate void MailErrorHandler(Mail mail, ConnectorInfo info, SMTPStatusCode status);
+        public delegate void MailErrorHandler(Mail mail, ConnectorInfo info, SMTPStatusCode? status, Exception e);
 
         public event MailErrorHandler OnMailError;
 
-        public void ProcessMail(Mail mail)
+        public bool ProcessMail(Mail mail)
         {
-            var badMailAdresses = new List<MailAddress>();
-
+            var success = true;
             foreach (var connInfo in GroupByHost(mail))
             {
                 var addresses = connInfo.Addresses.Select(a => a.Address).ToArray();
                 var connector = connInfo.Connector;
 
-                var settings = new DefaultSendSettings(connector);
+                var client = SMTPClient.Create(_container, connector, connInfo.Host, connInfo.Port);
 
-                var client = SMTPClient.Create(_container, settings, connInfo.Host, connInfo.Port);
-
-                var status = client.Connect();
-
-                if (status != null)
+                if (client.Connect())
                 {
-                    TriggerMailError(mail, connInfo, status.Value);
-                    break;
+                    success = false;
+
+                    TriggerMailError(mail, connInfo, client.LastStatus);
+                    continue;
                 }
 
-                client.SendMail(mail.From.ToString(), addresses, mail.ToString());
+                if (!client.SendMail(mail.From.ToString(), addresses, mail.ToString()))
+                {
+                    success = false;
+
+                    TriggerMailError(mail, connInfo, client.LastStatus);
+                }
+
                 client.Close();
 
                 // TODO
             }
 
-            if (badMailAdresses.Any())
-            {
-                Debug.WriteLine("Error with recipients: " + string.Join(", ", badMailAdresses.Select(m => m.ToString())));
-                // Enqueue(CreateErrorMail(mail, badMailAdresses));
-            }
+            return success;
         }
 
         private void Log(LogEventType type, string data = null)
@@ -131,16 +128,10 @@ namespace HydraService
             }
         }
 
-        private Mail CreateErrorMail(Mail original, IEnumerable<MailAddress> errorAddresses)
-        {
-            // TODO
-            return original;
-        }
-
-        protected virtual void TriggerMailError(Mail mail, ConnectorInfo info, SMTPStatusCode status)
+        protected virtual void TriggerMailError(Mail mail, ConnectorInfo info, SMTPStatusCode? status = null, Exception e = null)
         {
             var handler = OnMailError;
-            if (handler != null) handler(mail, info, status);
+            if (handler != null) handler(mail, info, status, e);
         }
     }
 }

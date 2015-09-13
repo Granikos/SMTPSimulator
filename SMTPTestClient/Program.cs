@@ -15,67 +15,6 @@ namespace SMTPTestClient
 {
     class Program
     {
-        public static string MailToString(MailMessage Message)
-        {
-            Assembly assembly = typeof(SmtpClient).Assembly;
-            Type _mailWriterType =
-              assembly.GetType("System.Net.Mail.MailWriter");
-
-            using (Stream stream = new MemoryStream(500))
-            {
-                // Get reflection info for MailWriter contructor
-                ConstructorInfo _mailWriterContructor =
-                    _mailWriterType.GetConstructor(
-                        BindingFlags.Instance | BindingFlags.NonPublic,
-                        null,
-                        new Type[] { typeof(Stream) },
-                        null);
-
-                // Construct MailWriter object with our FileStream
-                object _mailWriter =
-                  _mailWriterContructor.Invoke(new object[] { stream });
-
-                // Get reflection info for Send() method on MailMessage
-                MethodInfo _sendMethod =
-                    typeof(MailMessage).GetMethod(
-                        "Send",
-                        BindingFlags.Instance | BindingFlags.NonPublic);
-
-                // Call method passing in MailWriter
-                _sendMethod.Invoke(
-                    Message,
-                    BindingFlags.Instance | BindingFlags.NonPublic,
-                    null,
-                    new object[] { _mailWriter, true, false },
-                    null);
-
-                string str;
-
-                stream.Seek(0, SeekOrigin.Begin);
-                using (var reader = new StreamReader(stream, Encoding.ASCII, false, 200, true))
-                {
-                    str = reader.ReadToEnd();
-
-                }
-
-                // Finally get reflection info for Close() method on our MailWriter
-                MethodInfo _closeMethod =
-                    _mailWriter.GetType().GetMethod(
-                        "Close",
-                        BindingFlags.Instance | BindingFlags.NonPublic);
-
-                // Call close method
-                _closeMethod.Invoke(
-                    _mailWriter,
-                    BindingFlags.Instance | BindingFlags.NonPublic,
-                    null,
-                    new object[] { },
-                    null);
-
-                return str;
-        }
-        }
-
         static void Main(string[] args)
         {
             ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) =>
@@ -85,22 +24,25 @@ namespace SMTPTestClient
 
             var container = new CompositionContainer(new AssemblyCatalog(typeof (SMTPCore).Assembly));
 
-            var settings = new DefaultSendSettings(new SendConnector());
             // var client = new SMTPClient("localhost", 1337)
             // var client = new SMTPClient("test.smtp.org")
             // var client = new SMTPClient("mailtrap.io", 2525)
-            var client = SMTPClient.Create(container, settings, "localhost", 25);
+            var client = SMTPClient.Create(container, new SendConnector(), "localhost", 25);
 
             client.Credentials = new NetworkCredential("357045ceeeb05fa28", "07db3fc0f21e46");
 
-            var mailMessage = new MailMessage("manuel.krebber@granikos.eu", "manuel.krebber@outlook.com", "Test", "Fubar.");
+            var from = new MailAddress("manuel.krebber@granikos.eu");
+            var to = new MailAddress("manuel.krebber@outlook.com");
 
-            var str = MailToString(mailMessage);
+            string mail = "Test";
 
+            var mailMessage = new Mail(from, new[] { to }, mail);
 
-            client.Connect();
-            client.SendMail("manuel.krebber@granikos.eu", new[] { "manuel.krebber@outlook.com" }, str);
-            client.Close();
+            if (client.Connect())
+            {
+                client.SendMail("manuel.krebber@granikos.eu", new[] {"manuel.krebber@outlook.com"}, mail);
+                client.Close();
+            }
 
             /*
             using (var client = new SmtpClient("localhost", 1337))

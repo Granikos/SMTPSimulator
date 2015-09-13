@@ -73,6 +73,7 @@ namespace HydraService
                 {
                     if (time > DateTime.Now)
                     {
+                        Console.WriteLine("Greylisting activate, time left: " + (time - DateTime.Now));
                         connect.Cancel = true;
                         connect.ResponseCode = SMTPStatusCode.NotAvailiable;
                     }
@@ -83,6 +84,7 @@ namespace HydraService
                 }
                 else
                 {
+                    Console.WriteLine("Greylisting started, time left: " + Connector.GreylistingTime);
                     _greyList.Add(connect.IP, (DateTime) (DateTime.Now + Connector.GreylistingTime));
                     connect.Cancel = true;
                     connect.ResponseCode = SMTPStatusCode.NotAvailiable;

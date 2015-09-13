@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.Composition.Hosting;
 using System.Threading;
 using HydraCore;
@@ -38,7 +39,7 @@ namespace HydraService
             _processor.OnMailError += HandleMailError;
         }
 
-        public void HandleMailError(Mail mail, MessageProcessor.ConnectorInfo info, SMTPStatusCode status)
+        public void HandleMailError(Mail mail, MessageProcessor.ConnectorInfo info, SMTPStatusCode? status, Exception e)
         {
             var connector = info.Connector;
             if (status == SMTPStatusCode.NotAvailiable)

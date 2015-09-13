@@ -2,11 +2,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Runtime.Serialization;
+using HydraCore;
 
 namespace HydraService.Models
 {
     [DataContract]
-    public class SendConnector : IEntity<int>
+    public class SendConnector : IEntity<int>, ISendSettings
     {
         private TLSSettings _tlsSettings;
 
@@ -63,15 +64,6 @@ namespace HydraService.Models
         }
 
         [DataMember]
-        public bool UseAuth { get; set; }
-
-        [DataMember]
-        public string Username { get; set; }
-
-        [DataMember]
-        public string Password { get; set; }
-
-        [DataMember]
         public TimeSpan RetryTime { get; set; }
 
         [DataMember]
@@ -82,5 +74,24 @@ namespace HydraService.Models
         [DataMember]
         [Range(0, int.MaxValue)]
         public int Id { get; set; }
+
+        [DataMember]
+        public bool UseAuth { get; set; }
+
+        [DataMember]
+        public string Username { get; set; }
+
+        [DataMember]
+        public string Password { get; set; }
+
+        public bool RequireTLS
+        {
+            get { return TLSSettings.Mode == TLSMode.Required; }
+        }
+
+        public bool EnableTLS
+        {
+            get { return TLSSettings.Mode != TLSMode.Disabled && TLSSettings.Mode != TLSMode.FullTunnel; }
+        }
     }
 }
