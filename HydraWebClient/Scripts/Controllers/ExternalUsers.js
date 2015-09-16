@@ -115,14 +115,14 @@
                     });
                 };
 
-                var domainAddCtrl = function($scope, $modalInstance) {
+                var domainAddCtrl = ['$scope', '$modalInstance', function($scope, $modalInstance) {
                     $scope.DomainName = null;
                     $scope.DomainRegexp = DomainRegexp;
 
                     $scope.add = function() {
                         $modalInstance.close($scope.DomainName);
                     };
-                };
+                }];
 
                 $scope.addDomainDialog = function() {
                     $modal

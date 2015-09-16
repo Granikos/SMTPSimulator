@@ -14,7 +14,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.3.15",
+    "angular": "~1.4.5",
     "angular-aria": "~1.3.15",
     "angular-bootstrap": "~0.13.0",
     "angular-enum-flag-directive": "https://github.com/jvdvleuten/angular-enum-flag-directive.git",
@@ -32,6 +32,6 @@
     "papaparse": "~4.1.1"
   },
   "resolutions": {
-    "angular": "1.3.16"
+    "angular": "1.4.5"
   }
 }

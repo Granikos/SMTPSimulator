@@ -77,7 +77,7 @@
                 $scope.test = 'Fubar';
             }
         ])
-        .directive('validateCell', function(uiGridEditConstants) {
+        .directive('validateCell', ['uiGridEditConstants', function(uiGridEditConstants) {
             return {
                 restrict: 'A',
                 scope: false,
@@ -89,8 +89,8 @@
                     });
                 }
             };
-        })
-        .directive('ngTab', function(uiGridEditConstants) {
+        }])
+        .directive('ngTab', ['uiGridEditConstants', function(uiGridEditConstants) {
             return {
                 restrict: 'A',
                 scope: false,
@@ -105,7 +105,7 @@
                     }
                 }
             };
-        })
+        }])
 
     .directive('onReadFile', ['$parse', function ($parse) {
         return {
@@ -134,7 +134,7 @@
         };
     }])
       .directive('ngReallyClick', ['$modal', function ($modal) {
-            var ModalInstanceCtrl = function ($scope, $modalInstance) {
+          var ModalInstanceCtrl = ['$scope', '$modalInstance', function ($scope, $modalInstance) {
                 $scope.ok = function () {
                     $modalInstance.close();
                 };
@@ -142,7 +142,7 @@
                 $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                 };
-            };
+            }];
 
             return {
                 restrict: 'A',

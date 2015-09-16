@@ -273,8 +273,8 @@
     <Content Include="Views\Mail\AddUserDialog.html" />
     <Content Include="Views\Mail\Index.html" />
     <Content Include="Views\Logging\Index.html" />
-    <Content Include="Views\Recieve\AddIPRangeDialog.html" />
-    <Content Include="Views\Recieve\Index.html" />
+    <Content Include="Views\Receive\AddIPRangeDialog.html" />
+    <Content Include="Views\Receive\Index.html" />
     <Content Include="Views\Register.html" />
     <Content Include="Views\Send\Index.html" />
     <Content Include="Views\Server\Index.html" />

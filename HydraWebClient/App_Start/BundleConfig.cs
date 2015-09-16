@@ -16,6 +16,8 @@ namespace HydraWebClient
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/site.css"));
+
+            // BundleTable.EnableOptimizations = true;
         }
     }
 }

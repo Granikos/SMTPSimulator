@@ -23,7 +23,7 @@ namespace HydraService.Providers
                 Enabled = true,
                 Address = IPAddress.Parse("0.0.0.0"),
                 Port = 25,
-                Banner = "This is the banner text!",
+                Banner = "nikos two ready DEFAULT",
                 TLSSettings = new TLSSettings
                 {
                     CertificateName = "cert.pfx",
@@ -44,7 +44,7 @@ namespace HydraService.Providers
                 Enabled = true,
                 Address = IPAddress.Parse("0.0.0.0"),
                 Port = 465,
-                Banner = "This is the banner text!",
+                Banner = "nikos two ready DEFAULT SSL",
                 GreylistingTime = TimeSpan.FromSeconds(30),
                 TLSSettings = new TLSSettings
                 {
