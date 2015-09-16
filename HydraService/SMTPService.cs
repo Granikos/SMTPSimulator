@@ -26,7 +26,7 @@ namespace HydraService
         private ServiceHost _host;
 
         [Import]
-        private IRecieveConnectorProvider _recieveConnectors;
+        private IReceiveConnectorProvider _receiveConnectors;
 
         [Import]
         private ISendConnectorProvider _sendConnectors;
@@ -138,7 +138,7 @@ namespace HydraService
         {
             StopSMTPServers();
 
-            _servers = _recieveConnectors.All().Select(r =>
+            _servers = _receiveConnectors.All().Select(r =>
             {
                 var server = new SMTPServer(r, _core, _container);
                 _container.SatisfyImportsOnce(server);

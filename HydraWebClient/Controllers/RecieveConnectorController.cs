@@ -7,27 +7,27 @@ using HydraWebClient.HydraConfigurationService;
 namespace HydraWebClient.Controllers
 {
     // [Authorize]
-    [RoutePrefix("api/RecieveConnectors")]
-    public class RecieveConnectorsController : ApiController
+    [RoutePrefix("api/ReceiveConnectors")]
+    public class ReceiveConnectorsController : ApiController
     {
         readonly ConfigurationServiceClient _service = new ConfigurationServiceClient();
 
         [HttpGet]
         [Route("Default")]
-        public RecieveConnector Default()
+        public ReceiveConnector Default()
         {
-            return _service.GetDefaultRecieveConnector();
+            return _service.GetDefaultReceiveConnector();
         }
 
-        // GET api/RecieveConnectors
+        // GET api/ReceiveConnectors
         [HttpGet]
         [Route("")]
-        public IEnumerable<RecieveConnector> Get()
+        public IEnumerable<ReceiveConnector> Get()
         {
-            return _service.GetRecieveConnectors();
+            return _service.GetReceiveConnectors();
         }
 
-        // GET api/RecieveConnectors/Certificates
+        // GET api/ReceiveConnectors/Certificates
         [HttpGet]
         [Route("Certificates")]
         public IEnumerable<string> GetCertificates()
@@ -35,59 +35,59 @@ namespace HydraWebClient.Controllers
             return _service.GetCertificateFiles();
         }
 
-        // GET api/RecieveConnectors/5
+        // GET api/ReceiveConnectors/5
         [HttpGet]
         [Route("{id:int}")]
         public HttpResponseMessage Get(int id)
         {
-            var recieveConnector = _service.GetRecieveConnector(id);
+            var ReceiveConnector = _service.GetReceiveConnector(id);
 
-            if (recieveConnector == null)
+            if (ReceiveConnector == null)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Could not find recieve connector.");
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Could not find Receive connector.");
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, recieveConnector);
+            return Request.CreateResponse(HttpStatusCode.OK, ReceiveConnector);
         }
 
-        // POST api/RecieveConnectors
+        // POST api/ReceiveConnectors
         [HttpPost]
         [Route("")]
-        public HttpResponseMessage Post([FromBody]RecieveConnector recieveConnector)
+        public HttpResponseMessage Post([FromBody]ReceiveConnector ReceiveConnector)
         {
-            var added = _service.AddRecieveConnector(recieveConnector);
+            var added = _service.AddReceiveConnector(ReceiveConnector);
 
             if (added == null)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Could not add recieve connector.");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Could not add Receive connector.");
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, added);
         }
 
-        // PUT api/RecieveConnectors/5
+        // PUT api/ReceiveConnectors/5
         [HttpPut]
         [Route("{id:int}")]
-        public HttpResponseMessage Put(int id, [FromBody]RecieveConnector recieveConnector)
+        public HttpResponseMessage Put(int id, [FromBody]ReceiveConnector ReceiveConnector)
         {
-            var updated = _service.UpdateRecieveConnector(recieveConnector);
+            var updated = _service.UpdateReceiveConnector(ReceiveConnector);
 
             if (updated == null)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Could not update recieve connector.");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Could not update Receive connector.");
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, updated);
         }
 
-        // DELETE api/RecieveConnectors/5
+        // DELETE api/ReceiveConnectors/5
         [HttpDelete]
         [Route("{id:int}")]
         public HttpResponseMessage Delete(int id)
         {
-            if (!_service.DeleteRecieveConnector(id))
+            if (!_service.DeleteReceiveConnector(id))
             {
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Could not delete recieve connector.");
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Could not delete Receive connector.");
             }
 
             return Request.CreateResponse(HttpStatusCode.OK);

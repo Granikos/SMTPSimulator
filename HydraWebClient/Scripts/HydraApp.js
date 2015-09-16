@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('Hydra', ['ngRoute', 'ui.bootstrap', 'Server', 'LocalUsers', 'ExternalUsers', 'Send', 'Recieve', 'Timer', 'Mail', 'Logging', 'Register', 'Login', 'enumFlag', 'checklist-model'])
+    angular.module('Hydra', ['ngRoute', 'ui.bootstrap', 'Server', 'LocalUsers', 'ExternalUsers', 'Send', 'Receive', 'Timer', 'Mail', 'Logging', 'Register', 'Login', 'enumFlag', 'checklist-model'])
         .config([
             '$routeProvider', '$httpProvider', '$locationProvider', function($routeProvider, $httpProvider, $locationProvider) {
                 $locationProvider.hashPrefix('!').html5Mode(true);
@@ -21,9 +21,9 @@
                         templateUrl: 'Views/Send/Index.html',
                         controller: 'SendController'
                     })
-                    .when('/Recieve', {
-                        templateUrl: 'Views/Recieve/Index.html',
-                        controller: 'RecieveController'
+                    .when('/Receive', {
+                        templateUrl: 'Views/Receive/Index.html',
+                        controller: 'ReceiveController'
                     })
                     .when('/Mail', {
                         templateUrl: 'Views/Mail/Index.html',

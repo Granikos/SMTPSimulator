@@ -7,17 +7,17 @@ using HydraService.Models;
 
 namespace HydraService.Providers
 {
-    [Export(typeof (IRecieveConnectorProvider))]
-    public class ReceiveConnectorProvider : DefaultProvider<RecieveConnector>, IRecieveConnectorProvider
+    [Export(typeof (IReceiveConnectorProvider))]
+    public class ReceiveConnectorProvider : DefaultProvider<ReceiveConnector>, IReceiveConnectorProvider
     {
         public ReceiveConnectorProvider()
             : base("ReceiveConnectors")
         {
         }
 
-        protected override IEnumerable<RecieveConnector> Initializer()
+        protected override IEnumerable<ReceiveConnector> Initializer()
         {
-            yield return new RecieveConnector
+            yield return new ReceiveConnector
             {
                 Name = "Default",
                 Enabled = true,
@@ -38,7 +38,7 @@ namespace HydraService.Providers
                 }
             };
 
-            yield return new RecieveConnector
+            yield return new ReceiveConnector
             {
                 Name = "Default SSL",
                 Enabled = true,

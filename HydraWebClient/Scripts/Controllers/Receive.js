@@ -2,12 +2,12 @@
     var IPRegexp = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
     var TimeRegexp = /^\d+:([0-5]\d):([0-5]\d)$/;
 
-    angular.module('Recieve', ['ui.bootstrap.modal', 'enumFlag'])
+    angular.module('Receive', ['ui.bootstrap.modal', 'enumFlag'])
 
-        .service("RecieveConnectorService", ["$http", DataService("api/RecieveConnectors")])
+        .service("ReceiveConnectorService", ["$http", DataService("api/ReceiveConnectors")])
 
-        .controller('RecieveController', [
-            '$scope', '$modal', '$q', '$http', 'RecieveConnectorService', function ($scope, $modal, $q, $http, RecieveConnectorService) {
+        .controller('ReceiveController', [
+            '$scope', '$modal', '$q', '$http', 'ReceiveConnectorService', function ($scope, $modal, $q, $http, ReceiveConnectorService) {
                 $scope.connectors = [];
                 $scope.adding = false;
 
@@ -24,7 +24,7 @@
                 $scope.IPRegexp = IPRegexp;
                 $scope.TimeRegexp = TimeRegexp;
 
-                RecieveConnectorService.all()
+                ReceiveConnectorService.all()
                     .success(function (connectors) {
                         $scope.connectors = connectors;
                     })
@@ -32,7 +32,7 @@
                         showError(data.Message);
                     });
 
-                $http.get("api/RecieveConnectors/Certificates")
+                $http.get("api/ReceiveConnectors/Certificates")
                     .success(function (certificates) {
                         $scope.certificates = certificates;
                     })
@@ -42,7 +42,7 @@
 
 
                 $scope.update = function (connector) {
-                    RecieveConnectorService
+                    ReceiveConnectorService
                         .update(connector)
                         .then(function (data) {
                             for (var i = 0; i < $scope.connectors.length; i++) {
@@ -60,7 +60,7 @@
                 };
 
                 $scope.delete = function (connector) {
-                    RecieveConnectorService
+                    ReceiveConnectorService
                         .delete(connector.Id)
                         .then(function (success) {
                             var index = $scope.connectors.indexOf(connector);
@@ -73,7 +73,7 @@
                 };
 
                 $scope.startAdd = function () {
-                    $http.get("api/RecieveConnectors/Default")
+                    $http.get("api/ReceiveConnectors/Default")
                         .then(function (data) {
                             $scope.adding = true;
                             data.data.__adding__ = true;
@@ -89,7 +89,7 @@
                 };
 
                 $scope.add = function (connector) {
-                    RecieveConnectorService
+                    ReceiveConnectorService
                         .add(connector)
                         .then(function (data) {
                             var index = $scope.connectors.indexOf(connector);
@@ -116,7 +116,7 @@
                 $scope.showIPRangeDialog = function (connector) {
                     $modal
                         .open({
-                            templateUrl: 'Views/Recieve/AddIPRangeDialog.html',
+                            templateUrl: 'Views/Receive/AddIPRangeDialog.html',
                             controller: 'AddIPRangeDialogController'
                         })
                         .result.then(function (range) {

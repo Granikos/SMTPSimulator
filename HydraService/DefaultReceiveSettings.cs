@@ -3,11 +3,11 @@ using HydraService.Models;
 
 namespace HydraService
 {
-    public class DefaultRecieveSettings : IReceiveSettings
+    public class DefaultReceiveSettings : IReceiveSettings
     {
-        private readonly RecieveConnector _connector;
+        private readonly ReceiveConnector _connector;
 
-        public DefaultRecieveSettings(RecieveConnector connector)
+        public DefaultReceiveSettings(ReceiveConnector connector)
         {
             _connector = connector;
         }

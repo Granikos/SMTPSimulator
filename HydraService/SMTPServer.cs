@@ -20,14 +20,14 @@ namespace HydraService
         private MessageProcessor _processor;
         private TcpListener _tcpListener;
 
-        public SMTPServer(RecieveConnector connector, SMTPCore core, CompositionContainer container)
+        public SMTPServer(ReceiveConnector connector, SMTPCore core, CompositionContainer container)
         {
             _container = container;
             LocalEndpoint = new IPEndPoint(connector.Address, connector.Port);
             Core = core;
 
             Connector = connector;
-            Settings = new DefaultRecieveSettings(connector);
+            Settings = new DefaultReceiveSettings(connector);
 
             // _processor = new MessageProcessor(container);
 
@@ -60,7 +60,7 @@ namespace HydraService
 
         public SMTPCore Core { get; private set; }
         public IReceiveSettings Settings { get; private set; }
-        public RecieveConnector Connector { get; private set; }
+        public ReceiveConnector Connector { get; private set; }
         public IPEndPoint LocalEndpoint { get; private set; }
 
         private void CheckGreylisting(SMTPCore.ConnectEventArgs connect)

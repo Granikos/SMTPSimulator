@@ -49,48 +49,48 @@ namespace HydraService
         // TODO: Clean up
         [OperationContract]
         [WebGet(
-            UriTemplate = "DefaultRecieveConnector",
+            UriTemplate = "DefaultReceiveConnector",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        RecieveConnector GetDefaultRecieveConnector();
+        ReceiveConnector GetDefaultReceiveConnector();
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "RecieveConnectors",
+            UriTemplate = "ReceiveConnectors",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        IEnumerable<RecieveConnector> GetRecieveConnectors();
+        IEnumerable<ReceiveConnector> GetReceiveConnectors();
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "RecieveConnectors/{id}",
+            UriTemplate = "ReceiveConnectors/{id}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        RecieveConnector GetRecieveConnector(int id);
+        ReceiveConnector GetReceiveConnector(int id);
 
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "RecieveConnectors",
+            UriTemplate = "ReceiveConnectors",
             Method = "PUT",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        RecieveConnector AddRecieveConnector(RecieveConnector connector);
+        ReceiveConnector AddReceiveConnector(ReceiveConnector connector);
 
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "RecieveConnectors",
+            UriTemplate = "ReceiveConnectors",
             Method = "POST",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        RecieveConnector UpdateRecieveConnector(RecieveConnector connector);
+        ReceiveConnector UpdateReceiveConnector(ReceiveConnector connector);
 
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "RecieveConnectors/{id}",
+            UriTemplate = "ReceiveConnectors/{id}",
             Method = "DELETE",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        bool DeleteRecieveConnector(int id);
+        bool DeleteReceiveConnector(int id);
 
         [OperationContract]
         [WebGet(

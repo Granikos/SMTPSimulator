@@ -92,9 +92,9 @@ namespace HydraWebClient.HydraConfigurationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RecieveConnector", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ReceiveConnector", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
     [System.SerializableAttribute()]
-    public partial class RecieveConnector : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class ReceiveConnector : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -1208,6 +1208,9 @@ namespace HydraWebClient.HydraConfigurationService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> ConnectorIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ContentField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1223,6 +1226,19 @@ namespace HydraWebClient.HydraConfigurationService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> ConnectorId {
+            get {
+                return this.ConnectorIdField;
+            }
+            set {
+                if ((this.ConnectorIdField.Equals(value) != true)) {
+                    this.ConnectorIdField = value;
+                    this.RaisePropertyChanged("ConnectorId");
+                }
             }
         }
         
@@ -1315,41 +1331,41 @@ namespace HydraWebClient.HydraConfigurationService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteDomain", ReplyAction="http://tempuri.org/IConfigurationService/DeleteDomainResponse")]
         System.Threading.Tasks.Task<bool> DeleteDomainAsync(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDefaultRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetDefaultRecieveConnectorResponse")]
-        HydraWebClient.HydraConfigurationService.RecieveConnector GetDefaultRecieveConnector();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDefaultReceiveConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetDefaultReceiveConnectorResponse")]
+        HydraWebClient.HydraConfigurationService.ReceiveConnector GetDefaultReceiveConnector();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDefaultRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetDefaultRecieveConnectorResponse")]
-        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> GetDefaultRecieveConnectorAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDefaultReceiveConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetDefaultReceiveConnectorResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ReceiveConnector> GetDefaultReceiveConnectorAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetRecieveConnectors", ReplyAction="http://tempuri.org/IConfigurationService/GetRecieveConnectorsResponse")]
-        HydraWebClient.HydraConfigurationService.RecieveConnector[] GetRecieveConnectors();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetReceiveConnectors", ReplyAction="http://tempuri.org/IConfigurationService/GetReceiveConnectorsResponse")]
+        HydraWebClient.HydraConfigurationService.ReceiveConnector[] GetReceiveConnectors();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetRecieveConnectors", ReplyAction="http://tempuri.org/IConfigurationService/GetRecieveConnectorsResponse")]
-        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector[]> GetRecieveConnectorsAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetReceiveConnectors", ReplyAction="http://tempuri.org/IConfigurationService/GetReceiveConnectorsResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ReceiveConnector[]> GetReceiveConnectorsAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetRecieveConnectorResponse")]
-        HydraWebClient.HydraConfigurationService.RecieveConnector GetRecieveConnector(int id);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetReceiveConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetReceiveConnectorResponse")]
+        HydraWebClient.HydraConfigurationService.ReceiveConnector GetReceiveConnector(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetRecieveConnectorResponse")]
-        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> GetRecieveConnectorAsync(int id);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetReceiveConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetReceiveConnectorResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ReceiveConnector> GetReceiveConnectorAsync(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/AddRecieveConnectorResponse")]
-        HydraWebClient.HydraConfigurationService.RecieveConnector AddRecieveConnector(HydraWebClient.HydraConfigurationService.RecieveConnector connector);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddReceiveConnector", ReplyAction="http://tempuri.org/IConfigurationService/AddReceiveConnectorResponse")]
+        HydraWebClient.HydraConfigurationService.ReceiveConnector AddReceiveConnector(HydraWebClient.HydraConfigurationService.ReceiveConnector connector);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/AddRecieveConnectorResponse")]
-        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> AddRecieveConnectorAsync(HydraWebClient.HydraConfigurationService.RecieveConnector connector);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddReceiveConnector", ReplyAction="http://tempuri.org/IConfigurationService/AddReceiveConnectorResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ReceiveConnector> AddReceiveConnectorAsync(HydraWebClient.HydraConfigurationService.ReceiveConnector connector);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/UpdateRecieveConnectorResponse")]
-        HydraWebClient.HydraConfigurationService.RecieveConnector UpdateRecieveConnector(HydraWebClient.HydraConfigurationService.RecieveConnector connector);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateReceiveConnector", ReplyAction="http://tempuri.org/IConfigurationService/UpdateReceiveConnectorResponse")]
+        HydraWebClient.HydraConfigurationService.ReceiveConnector UpdateReceiveConnector(HydraWebClient.HydraConfigurationService.ReceiveConnector connector);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/UpdateRecieveConnectorResponse")]
-        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> UpdateRecieveConnectorAsync(HydraWebClient.HydraConfigurationService.RecieveConnector connector);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateReceiveConnector", ReplyAction="http://tempuri.org/IConfigurationService/UpdateReceiveConnectorResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ReceiveConnector> UpdateReceiveConnectorAsync(HydraWebClient.HydraConfigurationService.ReceiveConnector connector);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/DeleteRecieveConnectorResponse")]
-        bool DeleteRecieveConnector(int id);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteReceiveConnector", ReplyAction="http://tempuri.org/IConfigurationService/DeleteReceiveConnectorResponse")]
+        bool DeleteReceiveConnector(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteRecieveConnector", ReplyAction="http://tempuri.org/IConfigurationService/DeleteRecieveConnectorResponse")]
-        System.Threading.Tasks.Task<bool> DeleteRecieveConnectorAsync(int id);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteReceiveConnector", ReplyAction="http://tempuri.org/IConfigurationService/DeleteReceiveConnectorResponse")]
+        System.Threading.Tasks.Task<bool> DeleteReceiveConnectorAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetEmptySendConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetEmptySendConnectorResponse")]
         HydraWebClient.HydraConfigurationService.SendConnector GetEmptySendConnector();
@@ -1613,52 +1629,52 @@ namespace HydraWebClient.HydraConfigurationService {
             return base.Channel.DeleteDomainAsync(id);
         }
         
-        public HydraWebClient.HydraConfigurationService.RecieveConnector GetDefaultRecieveConnector() {
-            return base.Channel.GetDefaultRecieveConnector();
+        public HydraWebClient.HydraConfigurationService.ReceiveConnector GetDefaultReceiveConnector() {
+            return base.Channel.GetDefaultReceiveConnector();
         }
         
-        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> GetDefaultRecieveConnectorAsync() {
-            return base.Channel.GetDefaultRecieveConnectorAsync();
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ReceiveConnector> GetDefaultReceiveConnectorAsync() {
+            return base.Channel.GetDefaultReceiveConnectorAsync();
         }
         
-        public HydraWebClient.HydraConfigurationService.RecieveConnector[] GetRecieveConnectors() {
-            return base.Channel.GetRecieveConnectors();
+        public HydraWebClient.HydraConfigurationService.ReceiveConnector[] GetReceiveConnectors() {
+            return base.Channel.GetReceiveConnectors();
         }
         
-        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector[]> GetRecieveConnectorsAsync() {
-            return base.Channel.GetRecieveConnectorsAsync();
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ReceiveConnector[]> GetReceiveConnectorsAsync() {
+            return base.Channel.GetReceiveConnectorsAsync();
         }
         
-        public HydraWebClient.HydraConfigurationService.RecieveConnector GetRecieveConnector(int id) {
-            return base.Channel.GetRecieveConnector(id);
+        public HydraWebClient.HydraConfigurationService.ReceiveConnector GetReceiveConnector(int id) {
+            return base.Channel.GetReceiveConnector(id);
         }
         
-        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> GetRecieveConnectorAsync(int id) {
-            return base.Channel.GetRecieveConnectorAsync(id);
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ReceiveConnector> GetReceiveConnectorAsync(int id) {
+            return base.Channel.GetReceiveConnectorAsync(id);
         }
         
-        public HydraWebClient.HydraConfigurationService.RecieveConnector AddRecieveConnector(HydraWebClient.HydraConfigurationService.RecieveConnector connector) {
-            return base.Channel.AddRecieveConnector(connector);
+        public HydraWebClient.HydraConfigurationService.ReceiveConnector AddReceiveConnector(HydraWebClient.HydraConfigurationService.ReceiveConnector connector) {
+            return base.Channel.AddReceiveConnector(connector);
         }
         
-        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> AddRecieveConnectorAsync(HydraWebClient.HydraConfigurationService.RecieveConnector connector) {
-            return base.Channel.AddRecieveConnectorAsync(connector);
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ReceiveConnector> AddReceiveConnectorAsync(HydraWebClient.HydraConfigurationService.ReceiveConnector connector) {
+            return base.Channel.AddReceiveConnectorAsync(connector);
         }
         
-        public HydraWebClient.HydraConfigurationService.RecieveConnector UpdateRecieveConnector(HydraWebClient.HydraConfigurationService.RecieveConnector connector) {
-            return base.Channel.UpdateRecieveConnector(connector);
+        public HydraWebClient.HydraConfigurationService.ReceiveConnector UpdateReceiveConnector(HydraWebClient.HydraConfigurationService.ReceiveConnector connector) {
+            return base.Channel.UpdateReceiveConnector(connector);
         }
         
-        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.RecieveConnector> UpdateRecieveConnectorAsync(HydraWebClient.HydraConfigurationService.RecieveConnector connector) {
-            return base.Channel.UpdateRecieveConnectorAsync(connector);
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ReceiveConnector> UpdateReceiveConnectorAsync(HydraWebClient.HydraConfigurationService.ReceiveConnector connector) {
+            return base.Channel.UpdateReceiveConnectorAsync(connector);
         }
         
-        public bool DeleteRecieveConnector(int id) {
-            return base.Channel.DeleteRecieveConnector(id);
+        public bool DeleteReceiveConnector(int id) {
+            return base.Channel.DeleteReceiveConnector(id);
         }
         
-        public System.Threading.Tasks.Task<bool> DeleteRecieveConnectorAsync(int id) {
-            return base.Channel.DeleteRecieveConnectorAsync(id);
+        public System.Threading.Tasks.Task<bool> DeleteReceiveConnectorAsync(int id) {
+            return base.Channel.DeleteReceiveConnectorAsync(id);
         }
         
         public HydraWebClient.HydraConfigurationService.SendConnector GetEmptySendConnector() {

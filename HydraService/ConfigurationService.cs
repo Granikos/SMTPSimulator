@@ -29,7 +29,7 @@ namespace HydraService
         private ILocalUserProvider _localUsers;
 
         [Import]
-        private IRecieveConnectorProvider _recieveConnectors;
+        private IReceiveConnectorProvider _receiveConnectors;
 
         [Import]
         private ISendConnectorProvider _sendConnectors;
@@ -139,34 +139,34 @@ namespace HydraService
             return new SendConnector();
         }
 
-        public RecieveConnector GetDefaultRecieveConnector()
+        public ReceiveConnector GetDefaultReceiveConnector()
         {
-            return new RecieveConnector();
+            return new ReceiveConnector();
         }
 
-        public IEnumerable<RecieveConnector> GetRecieveConnectors()
+        public IEnumerable<ReceiveConnector> GetReceiveConnectors()
         {
-            return _recieveConnectors.All();
+            return _receiveConnectors.All();
         }
 
-        public RecieveConnector GetRecieveConnector(int id)
+        public ReceiveConnector GetReceiveConnector(int id)
         {
-            return _recieveConnectors.Get(id);
+            return _receiveConnectors.Get(id);
         }
 
-        public RecieveConnector AddRecieveConnector(RecieveConnector binding)
+        public ReceiveConnector AddReceiveConnector(ReceiveConnector binding)
         {
-            return _recieveConnectors.Add(binding);
+            return _receiveConnectors.Add(binding);
         }
 
-        public RecieveConnector UpdateRecieveConnector(RecieveConnector binding)
+        public ReceiveConnector UpdateReceiveConnector(ReceiveConnector binding)
         {
-            return _recieveConnectors.Update(binding);
+            return _receiveConnectors.Update(binding);
         }
 
-        public bool DeleteRecieveConnector(int id)
+        public bool DeleteReceiveConnector(int id)
         {
-            return _recieveConnectors.Delete(id);
+            return _receiveConnectors.Delete(id);
         }
 
         public EntitiesWithTotal<LocalUser> GetLocalUsers(int page, int perPage)

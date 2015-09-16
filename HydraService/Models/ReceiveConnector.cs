@@ -7,12 +7,12 @@ using HydraCore;
 namespace HydraService.Models
 {
     [DataContract]
-    public class RecieveConnector : IEntity<int>
+    public class ReceiveConnector : IEntity<int>
     {
         private IPRange[] _remoteIPRanges;
         private TLSSettings _tlsSettings;
 
-        public RecieveConnector()
+        public ReceiveConnector()
         {
             Address = IPAddress.Any;
             Port = 25;

@@ -188,7 +188,7 @@
   <ItemGroup>
     <Compile Include="ClientHandler.cs" />
     <Compile Include="ConfigurationService.cs" />
-    <Compile Include="DefaultRecieveSettings.cs" />
+    <Compile Include="DefaultReceiveSettings.cs" />
     <Compile Include="IMailQueueProvider.cs" />
     <Compile Include="MessageSender.cs" />
     <Compile Include="Models\EntitiesWithTotal.cs" />
@@ -223,9 +223,9 @@
     <Compile Include="Providers\ILocalUserProvider.cs" />
     <Compile Include="Providers\InMemoryProvider.cs" />
     <Compile Include="Providers\IPRangeConverter.cs" />
-    <Compile Include="Providers\IRecieveConnectorProvider.cs" />
+    <Compile Include="Providers\IReceiveConnectorProvider.cs" />
     <Compile Include="Models\LocalUser.cs" />
-    <Compile Include="Models\RecieveConnector.cs" />
+    <Compile Include="Models\ReceiveConnector.cs" />
     <Compile Include="Providers\ISendConnectorProvider.cs" />
     <Compile Include="Providers\IUserTemplate.cs" />
     <Compile Include="Providers\IUserTemplateProvider.cs" />

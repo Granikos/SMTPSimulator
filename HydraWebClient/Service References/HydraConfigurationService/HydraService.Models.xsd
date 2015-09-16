@@ -19,7 +19,7 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Domain" nillable="true" type="tns:Domain" />
-  <xs:complexType name="RecieveConnector">
+  <xs:complexType name="ReceiveConnector">
     <xs:sequence>
       <xs:element minOccurs="0" name="AddressString" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AuthPassword" nillable="true" type="xs:string" />
@@ -35,7 +35,7 @@
       <xs:element minOccurs="0" name="TLSSettings" nillable="true" type="tns:TLSSettings" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="RecieveConnector" nillable="true" type="tns:RecieveConnector" />
+  <xs:element name="ReceiveConnector" nillable="true" type="tns:ReceiveConnector" />
   <xs:complexType name="TLSSettings">
     <xs:sequence>
       <xs:element minOccurs="0" name="AuthLevel" type="tns:TLSAuthLevel" />
@@ -67,12 +67,12 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="TLSMode" nillable="true" type="tns:TLSMode" />
-  <xs:complexType name="ArrayOfRecieveConnector">
+  <xs:complexType name="ArrayOfReceiveConnector">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="RecieveConnector" nillable="true" type="tns:RecieveConnector" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ReceiveConnector" nillable="true" type="tns:ReceiveConnector" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfRecieveConnector" nillable="true" type="tns:ArrayOfRecieveConnector" />
+  <xs:element name="ArrayOfReceiveConnector" nillable="true" type="tns:ArrayOfReceiveConnector" />
   <xs:complexType name="SendConnector">
     <xs:sequence>
       <xs:element minOccurs="0" name="Id" type="xs:int" />
@@ -173,6 +173,7 @@
   <xs:element name="ExternalUser" nillable="true" type="tns:ExternalUser" />
   <xs:complexType name="MailMessage">
     <xs:sequence>
+      <xs:element minOccurs="0" name="ConnectorId" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="Content" nillable="true" type="xs:string" />
       <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Recipients" nillable="true" type="q4:ArrayOfstring" />
       <xs:element minOccurs="0" name="Sender" nillable="true" type="xs:string" />
