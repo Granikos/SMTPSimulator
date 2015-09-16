@@ -16,7 +16,7 @@
                 var columnDefs = [
                     { name: 'firstName', field: 'FirstName', editableCellTemplate: simpleEditTemplate('required') },
                     { name: 'lastName', field: 'LastName', editableCellTemplate: simpleEditTemplate('required') },
-                    { name: 'mailbox', field: 'Mailbox', editableCellTemplate: simpleEditTemplate('required', 'email'), type: 'email' }
+                    { name: 'mailbox', field: 'Mailbox', displayName: 'Email Address', editableCellTemplate: simpleEditTemplate('required', 'email'), type: 'email' }
                 ];
 
                 $scope.gridOptions = {

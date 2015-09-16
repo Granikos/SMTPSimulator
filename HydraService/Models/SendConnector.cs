@@ -14,7 +14,7 @@ namespace HydraService.Models
         public SendConnector(IPAddress remoteIP = null)
         {
             RemoteAddress = remoteIP;
-            UseSmarthost = RemoteAddress == null;
+            UseSmarthost = RemoteAddress != null;
             LocalAddress = IPAddress.Any;
             RemotePort = 25;
             TLSSettings = new TLSSettings();

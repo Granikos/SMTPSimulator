@@ -60,7 +60,7 @@ namespace HydraService
                 string remoteHost;
                 int remotePort;
 
-                if (connector.UseSmarthost)
+                if (!connector.UseSmarthost)
                 {
                     var response = DnsClient.Default.Resolve(recipientGroup.Key, RecordType.Mx);
                     var records = response.AnswerRecords.OfType<MxRecord>();
