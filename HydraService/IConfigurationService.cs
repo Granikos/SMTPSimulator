@@ -208,7 +208,15 @@ namespace HydraService
             Method = "PUT",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        void ImportLocalUsers(Stream stream);
+        ImportResult ImportLocalUsers(Stream stream);
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "LocalUsers/ImportWithOverwrite",
+            Method = "PUT",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        ImportResult ImportLocalUsersWithOverwrite(Stream stream);
 
         [OperationContract]
         [WebInvoke(
@@ -283,7 +291,15 @@ namespace HydraService
             Method = "PUT",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        void ImportExternalUsers(Stream stream);
+        ImportResult ImportExternalUsers(Stream stream);
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "ExternalUsers/ImportWithOverwrite",
+            Method = "PUT",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        ImportResult ImportExternalUsersWithOverwrite(Stream stream);
 
         [OperationContract]
         [WebGet(

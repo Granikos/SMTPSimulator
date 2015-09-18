@@ -22,22 +22,31 @@ namespace HydraService.Providers
         {
         }
 
-        public int ImportFromCSV(Stream stream)
+        public int ImportFromCSV(Stream stream, bool overwrite)
         {
             try
             {
+                var users = new List<LocalUser>();
+
                 using (var reader = new StreamReader(stream, Encoding.UTF8))
                 {
                     var config = new CsvConfiguration
                     {
-                        Delimiter = ";"
+                        Delimiter = ";",
+                        IgnoreReadingExceptions = true
                     };
                     config.RegisterClassMap<CsvMap>();
 
                     var csv = new CsvReader(reader, config);
+                    var records = csv.GetRecords<LocalUser>().ToList();
+
+                    if (overwrite)
+                    {
+                        Clear();
+                    }
 
                     var count = 0;
-                    foreach (var user in csv.GetRecords<LocalUser>())
+                    foreach (var user in records)
                     {
                         if (Add(user) != null)
                         {

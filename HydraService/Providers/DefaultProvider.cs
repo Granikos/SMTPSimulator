@@ -60,6 +60,11 @@ namespace HydraService.Providers
             }
 
             OnUpdated += Store;
+            OnClear += () =>
+            {
+                _id = 0;
+                Store();
+            };
         }
 
         public string FileName { get; private set; }

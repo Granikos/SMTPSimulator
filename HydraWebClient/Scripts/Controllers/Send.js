@@ -112,6 +112,7 @@
                             $scope.adding = true;
                             data.data.__adding__ = true;
                             data.data.Id = 'Add';
+                            data.data.RetryTimeDuration = moment.duration(data.data.RetryTime);
                             $scope.connectors.push(data.data);
                             window.setTimeout(function () {
                                 $('#collapseAdd').addClass('in');

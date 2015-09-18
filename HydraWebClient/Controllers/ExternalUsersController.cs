@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -53,10 +54,28 @@ namespace HydraWebClient.Controllers
 
             return response;
         }
-        // GET api/ExternalUsers/Export
+
+        // POST api/ExternalUsers/Import
         [HttpPost]
         [Route("Import")]
-        public async Task<HttpResponseMessage> Import()
+        public async Task<ImportResult> Import()
+        {
+            var stream = await GetUploadedFileStream();
+
+            return await _service.ImportExternalUsersAsync(stream);
+        }
+
+        // POST api/ExternalUsers/ImportWithOverwrite
+        [HttpPost]
+        [Route("ImportWithOverwrite")]
+        public async Task<ImportResult> ImportWithOverwrite()
+        {
+            var stream = await GetUploadedFileStream();
+
+            return await _service.ImportExternalUsersWithOverwriteAsync(stream);
+        }
+
+        private async Task<Stream> GetUploadedFileStream()
         {
             if (!Request.Content.IsMimeMultipartContent())
             {
@@ -67,10 +86,7 @@ namespace HydraWebClient.Controllers
 
             var reader = await Request.Content.ReadAsMultipartAsync(provider);
             var stream = await reader.Contents.First().ReadAsStreamAsync();
-
-            _service.ImportExternalUsers(stream);
-
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            return stream;
         }
 
         // GET api/ExternalUsers/5

@@ -126,6 +126,13 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="LocalUser" nillable="true" type="tns:LocalUser" />
+  <xs:complexType name="ImportResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ImportCount" type="xs:int" />
+      <xs:element minOccurs="0" name="OverwrittenCount" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ImportResult" nillable="true" type="tns:ImportResult" />
   <xs:complexType name="ArrayOfUserTemplate">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="UserTemplate" nillable="true" type="tns:UserTemplate" />

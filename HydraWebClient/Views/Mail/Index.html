@@ -1,5 +1,6 @@
 ﻿<script type="text/ng-template" id="escapingTemplate">
-    <a href tabindex="-1" bind-html-unsafe="match.label | escapeHTML| typeaheadHighlight:query"></a>
+    <a href tabindex="-1" ng-bind-html="match.label | escapeHTML| typeaheadHighlightSafe:query"></a>
+
 </script>
 
 <div class="container-fluid">
@@ -16,7 +17,7 @@
             <label class="col-sm-4 control-label">From</label>
             <div class="col-sm-8">
                 <input type="text" ng-model="Mail.Sender" typeahead="user as user for user in searchLocalUsers($viewValue)" typeahead-loading="loadingLocalUsers" typeahead-no-results="noResults"
-                       typeahead-template-url="escapingTemplate" class="form-control" ng-pattern="MailRegexp" required>
+                       class="form-control" typeahead-template-url="escapingTemplate" ng-pattern="MailRegexp" required>
                 <i class="glyphicon form-control-feedback" ng-class="{'glyphicon-refresh': loadingLocalUsers, 'glyphicon-envelope': !loadingLocalUsers}"></i>
             </div>
         </div>

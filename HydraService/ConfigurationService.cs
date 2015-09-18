@@ -212,9 +212,19 @@ namespace HydraService
             return stream;
         }
 
-        public void ImportLocalUsers(Stream stream)
+        public ImportResult ImportLocalUsers(Stream stream)
         {
-            _localUsers.ImportFromCSV(stream);
+            var count = _localUsers.ImportFromCSV(stream, false);
+
+            return new ImportResult(count, 0);
+        }
+
+        public ImportResult ImportLocalUsersWithOverwrite(Stream stream)
+        {
+            var before = _localUsers.Total;
+            var count = _localUsers.ImportFromCSV(stream, true);
+
+            return new ImportResult(count, before);
         }
 
         public bool GenerateLocalUsers(string template, string pattern, string domain, int count)
@@ -267,9 +277,19 @@ namespace HydraService
             return stream;
         }
 
-        public void ImportExternalUsers(Stream stream)
+        public ImportResult ImportExternalUsers(Stream stream)
         {
-            _externalUsers.ImportFromCSV(stream, DomainSource);
+            var count = _externalUsers.ImportFromCSV(stream, DomainSource, false);
+
+            return new ImportResult(count, 0);
+        }
+
+        public ImportResult ImportExternalUsersWithOverwrite(Stream stream)
+        {
+            var before = _localUsers.Total;
+            var count = _externalUsers.ImportFromCSV(stream, DomainSource, true);
+
+            return new ImportResult(count, before);
         }
 
         public string[] GetCertificateFiles()

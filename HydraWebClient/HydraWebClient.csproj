@@ -257,6 +257,9 @@
     <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.ReceiveConnector.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.ImportResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\HydraConfigurationService\Message.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -265,6 +268,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="Views\ExternalUsers\AddDomainDialog.html" />
+    <Content Include="Views\ExternalUsers\ImportDialog.html" />
     <Content Include="Views\ExternalUsers\Index.html" />
     <Content Include="Views\LocalUsers\GenerateDialog.html" />
     <Content Include="Views\LocalUsers\ImportDialog.html" />

@@ -84,21 +84,45 @@
                         });
                 };
 
-                $scope.import = function(files) {
-                    if (files && files.length) {
+                function doImport(file, overwrite) {
+                    $scope.importDone = false;
+                    $modal.open({
+                        templateUrl: 'Views/ExternalUsers/ImportDialog.html',
+                        scope: $scope
+                    });
+
+                    Upload.upload({
+                        url: 'api/ExternalUsers/Import' + (overwrite ? 'WithOverwrite' : ''),
+                        file: file
+                    }).success(function (data, status, headers, config) {
+                        $scope.importDone = true;
+                        $scope.importedUsers = data.ImportCount;
+                        $scope.overwrittenUsers = data.OverwrittenCount;
+
+                        $scope.refreshDomains();
+                        $scope.refresh();
+                    });
+                }
+
+                $scope.import = function (files) {
+                    if (files && files.length > 0) {
                         var file = files[0];
-                        Upload.upload({
-                            url: 'api/ExternalUsers/Import',
-                            // fields: { 'username': $scope.username },
-                            file: file
-                        }).progress(function(evt) {
-                            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                            console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
-                        }).success(function(data, status, headers, config) {
-                            console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
-                            $scope.refreshDomains();
-                            $scope.refresh();
-                        });
+
+                        if ($scope.gridOptions.totalItems > 0) {
+                            BootstrapDialog.confirm({
+                                type: BootstrapDialog.TYPE_PRIMARY,
+                                title: 'Overwrite Existing Users',
+                                message: 'Do you want to delete all existing users?',
+                                btnCancelLabel: 'No',
+                                btnOKLabel: 'Yes',
+                                btnOKClass: 'btn-danger',
+                                callback: function (overwrite) {
+                                    doImport(file, overwrite);
+                                }
+                            });
+                        } else {
+                            doImport(file, false);
+                        }
                     }
                 };
 

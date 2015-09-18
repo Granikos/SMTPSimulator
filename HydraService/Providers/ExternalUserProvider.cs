@@ -19,7 +19,7 @@ namespace HydraService.Providers
         {
         }
 
-        public int ImportFromCSV(Stream stream, Func<string, int> domainSource)
+        public int ImportFromCSV(Stream stream, Func<string, int> domainSource, bool overwrite)
         {
             try
             {
@@ -27,14 +27,21 @@ namespace HydraService.Providers
                 {
                     var config = new CsvConfiguration
                     {
-                        Delimiter = ";"
+                        Delimiter = ";",
+                        IgnoreReadingExceptions = true
                     };
                     config.RegisterClassMap<CsvMap>();
 
                     var csv = new CsvReader(reader, config);
+                    var records = csv.GetRecords<ExternalUser>().ToList();
+
+                    if (overwrite)
+                    {
+                        Clear();
+                    }
 
                     var count = 0;
-                    foreach (var user in csv.GetRecords<ExternalUser>())
+                    foreach (var user in records)
                     {
                         var parts = user.Mailbox.Split(new[] { '@' }, 2);
                         user.Mailbox = parts[0];

@@ -192,6 +192,12 @@
   <wsdl:message name="IConfigurationService_ImportLocalUsers_OutputMessage">
     <wsdl:part name="parameters" element="tns:ImportLocalUsersResponse" />
   </wsdl:message>
+  <wsdl:message name="IConfigurationService_ImportLocalUsersWithOverwrite_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportLocalUsersWithOverwrite" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_ImportLocalUsersWithOverwrite_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportLocalUsersWithOverwriteResponse" />
+  </wsdl:message>
   <wsdl:message name="IConfigurationService_GenerateLocalUsers_InputMessage">
     <wsdl:part name="parameters" element="tns:GenerateLocalUsers" />
   </wsdl:message>
@@ -251,6 +257,12 @@
   </wsdl:message>
   <wsdl:message name="IConfigurationService_ImportExternalUsers_OutputMessage">
     <wsdl:part name="parameters" element="tns:ImportExternalUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_ImportExternalUsersWithOverwrite_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportExternalUsersWithOverwrite" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_ImportExternalUsersWithOverwrite_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportExternalUsersWithOverwriteResponse" />
   </wsdl:message>
   <wsdl:message name="IConfigurationService_GetCertificateFiles_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCertificateFiles" />
@@ -395,6 +407,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/ImportLocalUsers" message="tns:IConfigurationService_ImportLocalUsers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/ImportLocalUsersResponse" message="tns:IConfigurationService_ImportLocalUsers_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="ImportLocalUsersWithOverwrite">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/ImportLocalUsersWithOverwrite" message="tns:IConfigurationService_ImportLocalUsersWithOverwrite_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/ImportLocalUsersWithOverwriteResponse" message="tns:IConfigurationService_ImportLocalUsersWithOverwrite_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GenerateLocalUsers">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GenerateLocalUsers" message="tns:IConfigurationService_GenerateLocalUsers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GenerateLocalUsersResponse" message="tns:IConfigurationService_GenerateLocalUsers_OutputMessage" />
@@ -434,6 +450,10 @@
     <wsdl:operation name="ImportExternalUsers">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/ImportExternalUsers" message="tns:IConfigurationService_ImportExternalUsers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/ImportExternalUsersResponse" message="tns:IConfigurationService_ImportExternalUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportExternalUsersWithOverwrite">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/ImportExternalUsersWithOverwrite" message="tns:IConfigurationService_ImportExternalUsersWithOverwrite_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/ImportExternalUsersWithOverwriteResponse" message="tns:IConfigurationService_ImportExternalUsersWithOverwrite_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetCertificateFiles">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetCertificateFiles" message="tns:IConfigurationService_GetCertificateFiles_InputMessage" />
@@ -712,6 +732,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ImportLocalUsersWithOverwrite">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/ImportLocalUsersWithOverwrite" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GenerateLocalUsers">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GenerateLocalUsers" style="document" />
       <wsdl:input>
@@ -795,6 +824,15 @@
     </wsdl:operation>
     <wsdl:operation name="ImportExternalUsers">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/ImportExternalUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportExternalUsersWithOverwrite">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/ImportExternalUsersWithOverwrite" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -135,6 +135,16 @@ namespace HydraService.Providers
             return true;
         }
 
+        protected void Clear()
+        {
+            _entities.Clear();
+
+            if (OnClear != null)
+            {
+                OnClear();
+            }
+        }
+
         protected virtual IOrderedEnumerable<TEntity> ApplyOrder(IEnumerable<TEntity> entities)
         {
             return entities.OrderBy(e => e.Id);
@@ -143,6 +153,7 @@ namespace HydraService.Providers
         public event PostHandler OnAdded;
         public event PostHandler OnRemoved;
         public event UpdateHandler OnUpdated;
+        public event UpdateHandler OnClear;
 
         protected virtual bool CanRemove(TKey id)
         {

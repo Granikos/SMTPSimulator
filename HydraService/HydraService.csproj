@@ -192,6 +192,7 @@
     <Compile Include="IMailQueueProvider.cs" />
     <Compile Include="MessageSender.cs" />
     <Compile Include="Models\EntitiesWithTotal.cs" />
+    <Compile Include="Models\ImportResult.cs" />
     <Compile Include="Models\MailMessage.cs" />
     <Compile Include="PriorityQueue\DelayedQueue.cs" />
     <Compile Include="IConfigurationService.cs" />

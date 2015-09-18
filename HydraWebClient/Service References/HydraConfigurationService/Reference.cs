@@ -953,6 +953,67 @@ namespace HydraWebClient.HydraConfigurationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ImportResult", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
+    [System.SerializableAttribute()]
+    public partial class ImportResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ImportCountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int OverwrittenCountField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ImportCount {
+            get {
+                return this.ImportCountField;
+            }
+            set {
+                if ((this.ImportCountField.Equals(value) != true)) {
+                    this.ImportCountField = value;
+                    this.RaisePropertyChanged("ImportCount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int OverwrittenCount {
+            get {
+                return this.OverwrittenCountField;
+            }
+            set {
+                if ((this.OverwrittenCountField.Equals(value) != true)) {
+                    this.OverwrittenCountField = value;
+                    this.RaisePropertyChanged("OverwrittenCount");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="UserTemplate", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
     [System.SerializableAttribute()]
     public partial class UserTemplate : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1458,10 +1519,16 @@ namespace HydraWebClient.HydraConfigurationService {
         System.Threading.Tasks.Task<System.IO.Stream> ExportLocalUsersAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/ImportLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/ImportLocalUsersResponse")]
-        void ImportLocalUsers(System.IO.Stream stream);
+        HydraWebClient.HydraConfigurationService.ImportResult ImportLocalUsers(System.IO.Stream stream);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/ImportLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/ImportLocalUsersResponse")]
-        System.Threading.Tasks.Task ImportLocalUsersAsync(System.IO.Stream stream);
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ImportResult> ImportLocalUsersAsync(System.IO.Stream stream);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/ImportLocalUsersWithOverwrite", ReplyAction="http://tempuri.org/IConfigurationService/ImportLocalUsersWithOverwriteResponse")]
+        HydraWebClient.HydraConfigurationService.ImportResult ImportLocalUsersWithOverwrite(System.IO.Stream stream);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/ImportLocalUsersWithOverwrite", ReplyAction="http://tempuri.org/IConfigurationService/ImportLocalUsersWithOverwriteResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ImportResult> ImportLocalUsersWithOverwriteAsync(System.IO.Stream stream);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GenerateLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/GenerateLocalUsersResponse")]
         bool GenerateLocalUsers(string template, string pattern, string domain, int count);
@@ -1518,10 +1585,18 @@ namespace HydraWebClient.HydraConfigurationService {
         System.Threading.Tasks.Task<System.IO.Stream> ExportExternalUsersAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/ImportExternalUsers", ReplyAction="http://tempuri.org/IConfigurationService/ImportExternalUsersResponse")]
-        void ImportExternalUsers(System.IO.Stream stream);
+        HydraWebClient.HydraConfigurationService.ImportResult ImportExternalUsers(System.IO.Stream stream);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/ImportExternalUsers", ReplyAction="http://tempuri.org/IConfigurationService/ImportExternalUsersResponse")]
-        System.Threading.Tasks.Task ImportExternalUsersAsync(System.IO.Stream stream);
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ImportResult> ImportExternalUsersAsync(System.IO.Stream stream);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/ImportExternalUsersWithOverwrite", ReplyAction="http://tempuri.org/IConfigurationService/ImportExternalUsersWithOverwriteResponse" +
+            "")]
+        HydraWebClient.HydraConfigurationService.ImportResult ImportExternalUsersWithOverwrite(System.IO.Stream stream);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/ImportExternalUsersWithOverwrite", ReplyAction="http://tempuri.org/IConfigurationService/ImportExternalUsersWithOverwriteResponse" +
+            "")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ImportResult> ImportExternalUsersWithOverwriteAsync(System.IO.Stream stream);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetCertificateFiles", ReplyAction="http://tempuri.org/IConfigurationService/GetCertificateFilesResponse")]
         string[] GetCertificateFiles();
@@ -1797,12 +1872,20 @@ namespace HydraWebClient.HydraConfigurationService {
             return base.Channel.ExportLocalUsersAsync();
         }
         
-        public void ImportLocalUsers(System.IO.Stream stream) {
-            base.Channel.ImportLocalUsers(stream);
+        public HydraWebClient.HydraConfigurationService.ImportResult ImportLocalUsers(System.IO.Stream stream) {
+            return base.Channel.ImportLocalUsers(stream);
         }
         
-        public System.Threading.Tasks.Task ImportLocalUsersAsync(System.IO.Stream stream) {
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ImportResult> ImportLocalUsersAsync(System.IO.Stream stream) {
             return base.Channel.ImportLocalUsersAsync(stream);
+        }
+        
+        public HydraWebClient.HydraConfigurationService.ImportResult ImportLocalUsersWithOverwrite(System.IO.Stream stream) {
+            return base.Channel.ImportLocalUsersWithOverwrite(stream);
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ImportResult> ImportLocalUsersWithOverwriteAsync(System.IO.Stream stream) {
+            return base.Channel.ImportLocalUsersWithOverwriteAsync(stream);
         }
         
         public bool GenerateLocalUsers(string template, string pattern, string domain, int count) {
@@ -1877,12 +1960,20 @@ namespace HydraWebClient.HydraConfigurationService {
             return base.Channel.ExportExternalUsersAsync();
         }
         
-        public void ImportExternalUsers(System.IO.Stream stream) {
-            base.Channel.ImportExternalUsers(stream);
+        public HydraWebClient.HydraConfigurationService.ImportResult ImportExternalUsers(System.IO.Stream stream) {
+            return base.Channel.ImportExternalUsers(stream);
         }
         
-        public System.Threading.Tasks.Task ImportExternalUsersAsync(System.IO.Stream stream) {
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ImportResult> ImportExternalUsersAsync(System.IO.Stream stream) {
             return base.Channel.ImportExternalUsersAsync(stream);
+        }
+        
+        public HydraWebClient.HydraConfigurationService.ImportResult ImportExternalUsersWithOverwrite(System.IO.Stream stream) {
+            return base.Channel.ImportExternalUsersWithOverwrite(stream);
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.ImportResult> ImportExternalUsersWithOverwriteAsync(System.IO.Stream stream) {
+            return base.Channel.ImportExternalUsersWithOverwriteAsync(stream);
         }
         
         public string[] GetCertificateFiles() {

@@ -191,5 +191,47 @@
                 }
                 return '';
             };
-        });
+    })
+    .filter('typeaheadHighlightSafe', ['$sce', '$injector', '$log', function ($sce, $injector, $log) {
+            var isSanitizePresent = $injector.has('$sanitize');
+
+        function escapeRegexp(queryToEscape) {
+            // Regex: capture the whole query string and replace it with the string that will be used to match
+            // the results, for example if the capture is "a" the result will be \a
+            return queryToEscape.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
+        }
+
+        function containsHtml(matchItem) {
+            return /<.*>/g.test(matchItem);
+        }
+
+        return function (matchItem, query) {
+            if (!isSanitizePresent && containsHtml(matchItem)) {
+                $log.warn('Unsafe use of typeahead please use ngSanitize'); // Warn the user about the danger
+            }
+
+
+            if (query) {
+                var escapedQuery = escapeRegexp(query);
+
+                if (/\W/.test(query)) {
+                    // Replaces the capture string with a the same string inside of a "strong" tag
+                    matchItem = ('' + matchItem).replace(new RegExp(escapedQuery, 'gi'), '<strong>$&</strong>');
+                } else {
+                    var re1 = new RegExp(escapedQuery + '(?!\\w*;)', 'gi');
+                    var re2 = new RegExp('([^&\\w]\w*)(' + escapedQuery + ')(\\w*;)', 'gi');
+
+                    // Replaces the capture string with a the same string inside of a "strong" tag
+                    matchItem = ('' + matchItem).replace(re1, '<strong>$&</strong>');
+                    matchItem = matchItem.replace(re2, '$1<strong>$2</strong>$2');
+                }
+
+                if (!isSanitizePresent) {
+                    matchItem = $sce.trustAsHtml(matchItem); // If $sanitize is not present we pack the string in a $sce object for the ng-bind-html directive
+                }
+            }
+
+            return matchItem;
+        };
+    }]);
 })();

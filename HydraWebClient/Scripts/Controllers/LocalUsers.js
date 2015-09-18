@@ -57,15 +57,44 @@
                         showError(data.data.Message);
                     });
 
-                $scope.import = function (files) {
-                    if (files && files.length) {
-                        var file = files[0];
-                        Upload.upload({
-                            url: 'api/LocalUsers/Import',
-                            file: file
-                        }).success(function (data, status, headers, config) {
-                            $scope.refresh();
+                function doImport(file, overwrite) {
+                    $scope.importDone = false;
+                    $modal.open({
+                            templateUrl: 'Views/LocalUsers/ImportDialog.html',
+                            scope: $scope
                         });
+
+                    Upload.upload({
+                        url: 'api/LocalUsers/Import' + (overwrite? 'WithOverwrite' : ''),
+                        file: file
+                    }).success(function (data, status, headers, config) {
+                        $scope.importDone = true;
+                        $scope.importedUsers = data.ImportCount;
+                        $scope.overwrittenUsers = data.OverwrittenCount;
+
+                        $scope.refresh();
+                    });
+                }
+
+                $scope.import = function (files) {
+                    if (files && files.length > 0) {
+                        var file = files[0];
+
+                        if ($scope.gridOptions.totalItems > 0) {
+                            BootstrapDialog.confirm({
+                                type: BootstrapDialog.TYPE_PRIMARY,
+                                title: 'Overwrite Existing Users',
+                                message: 'Do you want to delete all existing users?',
+                                btnCancelLabel: 'No',
+                                btnOKLabel: 'Yes',
+                                btnOKClass: 'btn-danger',
+                                callback: function(overwrite) {
+                                    doImport(file, overwrite);
+                                }
+                            });
+                        } else {
+                            doImport(file, false);
+                        }
                     }
                 };
 
