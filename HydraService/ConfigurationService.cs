@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.ServiceModel;
 using HydraCore;
 using HydraService.Models;
@@ -127,6 +128,19 @@ namespace HydraService
             }
 
             return true;
+        }
+
+        public VersionInfo GetVersionInfo()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var version = assembly.GetName().Version;
+            var date = assembly.GetBuildDate();
+
+            return new VersionInfo
+            {
+                BuildDate = date,
+                Version = version
+            };
         }
 
         public void SetProperty(string name, string value)

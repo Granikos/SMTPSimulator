@@ -32,5 +32,13 @@ namespace HydraWebClient.Controllers
         {
             return _service.IsRunning();
         }
+
+        // GET api/Server/Version
+        [HttpGet]
+        [Route("Version")]
+        public VersionInfo GetVersion()
+        {
+            return _service.GetVersionInfo();
+        }
     }
 }

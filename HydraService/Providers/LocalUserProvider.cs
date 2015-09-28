@@ -8,6 +8,7 @@ using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
 using HydraService.Models;
+using log4net;
 
 namespace HydraService.Providers
 {
@@ -79,6 +80,8 @@ namespace HydraService.Providers
             }
         }
 
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(LocalUserProvider));
+
         public bool Generate(string templateName, string pattern, string domain, int count)
         {
             var parts = templateName.Split(new[] { '/' }, 2);
@@ -97,10 +100,19 @@ namespace HydraService.Providers
 
         public IEnumerable<UserTemplate> GetTemplates()
         {
-            return _templateProviders
-                .SelectMany(t => t.All())
-                .Select(t => new UserTemplate(t.GetType().Name + "/" + t.Name, t.DisplayName, t.SupportsPattern))
-                .OrderBy(t => t.DisplayName);
+            try
+            {
+                return _templateProviders
+                    .SelectMany(t => t.All())
+                    .Select(t => new UserTemplate(t.GetType().Name + "/" + t.Name, t.DisplayName, t.SupportsPattern))
+                    .OrderBy(t => t.DisplayName);
+            }
+            catch (Exception e)
+            {
+                Logger.Error("Template error", e);
+                // TODO
+                return new UserTemplate[0];
+            }
         }
 
         public IEnumerable<string> SearchMailboxes(string search, int max)

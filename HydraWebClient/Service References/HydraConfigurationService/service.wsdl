@@ -17,6 +17,7 @@
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/HydraService.Models" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/HydraCore" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Net.Security" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Security.Authentication" />
@@ -24,6 +25,12 @@
       <xsd:import namespace="http://schemas.microsoft.com/Message" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="IConfigurationService_GetVersionInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetVersionInfo" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetVersionInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetVersionInfoResponse" />
+  </wsdl:message>
   <wsdl:message name="IConfigurationService_SetProperty_InputMessage">
     <wsdl:part name="parameters" element="tns:SetProperty" />
   </wsdl:message>
@@ -295,6 +302,10 @@
     <wsdl:part name="parameters" element="tns:SendMailResponse" />
   </wsdl:message>
   <wsdl:portType name="IConfigurationService">
+    <wsdl:operation name="GetVersionInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetVersionInfo" message="tns:IConfigurationService_GetVersionInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetVersionInfoResponse" message="tns:IConfigurationService_GetVersionInfo_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="SetProperty">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/SetProperty" message="tns:IConfigurationService_SetProperty_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/SetPropertyResponse" message="tns:IConfigurationService_SetProperty_OutputMessage" />
@@ -480,6 +491,15 @@
     <wsp:PolicyReference URI="#NetTcpBinding_IConfigurationService_policy">
     </wsp:PolicyReference>
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="GetVersionInfo">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetVersionInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="SetProperty">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/SetProperty" style="document" />
       <wsdl:input>

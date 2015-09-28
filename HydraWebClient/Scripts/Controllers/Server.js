@@ -16,15 +16,17 @@
         .controller("ServerController", [
             "$scope", "$modal", "$q", "$http", function ($scope, $modal, $q, $http) {
                 $scope.running = null;
-                $scope.status = '???';
+                $scope.status = "???";
+                $scope.version = "???";
+                $scope.buildDate = "???";
 
                 $http.get("api/Server/IsRunning")
                     .success(function(running) {
                         $scope.running = running;
-                        $scope.status = running ? 'Running' : 'Stopped';
+                        $scope.status = running ? "Running" : "Stopped";
                     })
                     .error(function(data) {
-                        $scope.status = 'Error';
+                        $scope.status = "Error";
                         showError(data.Message);
                     });
 
@@ -32,23 +34,35 @@
                     $http.get("api/Server/Start")
                         .success(function() {
                             $scope.running = true;
-                            $scope.status = 'Running';
+                            $scope.status = "Running";
                         })
                         .error(function(data) {
                             showError(data.Message);
                         });
-                }
+                };
 
                 $scope.stop = function() {
                     $http.get("api/Server/Stop")
                         .success(function() {
                             $scope.running = false;
-                            $scope.status = 'Stopped';
+                            $scope.status = "Stopped";
                         })
                         .error(function(data) {
                             showError(data.Message);
                         });
-                }
+                };
+
+                $http.get("api/Server/Version")
+                    .success(function (versionInfo) {
+                        var v = versionInfo.Version;
+                        $scope.version = v._Major + "." + v._Minor + "." + v._Build + "." + v._Revision;
+                        $scope.buildDate = versionInfo.BuildDate;
+                    })
+                    .error(function (data) {
+                        $scope.version = "Error";
+                        $scope.buildDate = "Error";
+                        showError(data.Message);
+                    });
             }
         ]);
 })();

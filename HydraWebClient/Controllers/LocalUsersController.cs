@@ -19,7 +19,7 @@ namespace HydraWebClient.Controllers
         // GET api/LocalUsers/Templates
         [HttpGet]
         [Route("Templates")]
-        public IEnumerable<UserTemplate> GetTemplates()
+        public UserTemplate[] GetTemplates()
         {
             return _service.GetLocalUserTemplates();
         }

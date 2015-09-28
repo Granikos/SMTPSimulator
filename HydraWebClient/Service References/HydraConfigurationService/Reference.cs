@@ -15,6 +15,155 @@ namespace HydraWebClient.HydraConfigurationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="VersionInfo", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
+    [System.SerializableAttribute()]
+    public partial struct VersionInfo : System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime BuildDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HydraWebClient.HydraConfigurationService.Version VersionField;
+        
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime BuildDate {
+            get {
+                return this.BuildDateField;
+            }
+            set {
+                if ((this.BuildDateField.Equals(value) != true)) {
+                    this.BuildDateField = value;
+                    this.RaisePropertyChanged("BuildDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HydraWebClient.HydraConfigurationService.Version Version {
+            get {
+                return this.VersionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VersionField, value) != true)) {
+                    this.VersionField = value;
+                    this.RaisePropertyChanged("Version");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Version", Namespace="http://schemas.datacontract.org/2004/07/System")]
+    [System.SerializableAttribute()]
+    public partial class Version : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int _BuildField;
+        
+        private int _MajorField;
+        
+        private int _MinorField;
+        
+        private int _RevisionField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int _Build {
+            get {
+                return this._BuildField;
+            }
+            set {
+                if ((this._BuildField.Equals(value) != true)) {
+                    this._BuildField = value;
+                    this.RaisePropertyChanged("_Build");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int _Major {
+            get {
+                return this._MajorField;
+            }
+            set {
+                if ((this._MajorField.Equals(value) != true)) {
+                    this._MajorField = value;
+                    this.RaisePropertyChanged("_Major");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int _Minor {
+            get {
+                return this._MinorField;
+            }
+            set {
+                if ((this._MinorField.Equals(value) != true)) {
+                    this._MinorField = value;
+                    this.RaisePropertyChanged("_Minor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int _Revision {
+            get {
+                return this._RevisionField;
+            }
+            set {
+                if ((this._RevisionField.Equals(value) != true)) {
+                    this._RevisionField = value;
+                    this.RaisePropertyChanged("_Revision");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Domain", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
     [System.SerializableAttribute()]
     public partial class Domain : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1356,6 +1505,12 @@ namespace HydraWebClient.HydraConfigurationService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="HydraConfigurationService.IConfigurationService")]
     public interface IConfigurationService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetVersionInfo", ReplyAction="http://tempuri.org/IConfigurationService/GetVersionInfoResponse")]
+        HydraWebClient.HydraConfigurationService.VersionInfo GetVersionInfo();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetVersionInfo", ReplyAction="http://tempuri.org/IConfigurationService/GetVersionInfoResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.VersionInfo> GetVersionInfoAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/SetProperty", ReplyAction="http://tempuri.org/IConfigurationService/SetPropertyResponse")]
         void SetProperty(string name, string value);
         
@@ -1654,6 +1809,14 @@ namespace HydraWebClient.HydraConfigurationService {
         
         public ConfigurationServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public HydraWebClient.HydraConfigurationService.VersionInfo GetVersionInfo() {
+            return base.Channel.GetVersionInfo();
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.VersionInfo> GetVersionInfoAsync() {
+            return base.Channel.GetVersionInfoAsync();
         }
         
         public void SetProperty(string name, string value) {

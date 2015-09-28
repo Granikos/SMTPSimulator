@@ -52,6 +52,11 @@
                     .otherwise({ redirectTo: '/Server' });
 
                 $httpProvider.interceptors.push('AuthHttpResponseInterceptor');
+
+                $httpProvider.defaults.transformResponse.push(function (responseData) {
+                    convertDateStringsToDates(responseData);
+                    return responseData;
+                });
             }
         ])
         .run([

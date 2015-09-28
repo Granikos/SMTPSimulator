@@ -10,6 +10,13 @@ namespace HydraService
     public interface IConfigurationService
     {
         [OperationContract]
+        [WebGet(
+            UriTemplate = "Version",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        VersionInfo GetVersionInfo();
+
+        [OperationContract]
         void SetProperty(string name, string value);
 
         [OperationContract]

@@ -54,7 +54,7 @@
                         $scope.templates = data;
                     })
                     .error(function (data) {
-                        showError(data.data.Message);
+                        showError(data.Message || data.data.Message);
                     });
 
                 function doImport(file, overwrite) {
