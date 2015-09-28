@@ -2,25 +2,23 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Runtime.Serialization;
 using HydraService.Models;
 using log4net;
 using Newtonsoft.Json;
 
 namespace HydraService.Providers
 {
-    [DataContract]
-    internal class DataContainer<TEntity>
+    public class DefaultProvider<TEntity> : MemoryProviderWithStorageProvider<TEntity,DataContainer<TEntity>>
+        where TEntity : class, IEntity<int>
     {
-        [DataMember]
-        public IEnumerable<TEntity> Entities { get; set; }
-
-        [DataMember]
-        public int AutoId { get; set; }
+        public DefaultProvider(string name = null) : base(name)
+        {
+        }
     }
 
-    public class DefaultProvider<TEntity> : InMemoryProvider<TEntity, int>
+    public class MemoryProviderWithStorageProvider<TEntity,TContainer> : InMemoryProvider<TEntity, int>
         where TEntity : class, IEntity<int>
+        where TContainer : DataContainer<TEntity>, new()
     {
         private readonly JsonSerializer _serializer = new JsonSerializer
         {
@@ -30,7 +28,7 @@ namespace HydraService.Providers
 
         private int _id;
 
-        public DefaultProvider(string name = null)
+        public MemoryProviderWithStorageProvider(string name = null)
         {
             _serializer.Converters.Add(new IPRangeConverter());
 
@@ -41,7 +39,6 @@ namespace HydraService.Providers
             var logger = LogManager.GetLogger(GetType());
 
             logger.Debug("Data Folder: " + folderPath);
-
 
             if (!File.Exists(folderPath)) Directory.CreateDirectory(folderPath);
 
@@ -74,18 +71,31 @@ namespace HydraService.Providers
             return new List<TEntity>(0);
         }
 
-        private void Store()
+        protected virtual void OnStore(TContainer container)
         {
+            
+        }
+
+        protected void Store()
+        {
+            var container = new TContainer
+            {
+                Entities = All(),
+                AutoId = _id
+            };
+            OnStore(container);
+
             // TODO: Make more robust
             using (var sw = new StreamWriter(FileName))
             using (JsonWriter writer = new JsonTextWriter(sw))
             {
-                _serializer.Serialize(writer, new DataContainer<TEntity>
-                {
-                    Entities = All(),
-                    AutoId = _id
-                });
+                _serializer.Serialize(writer, container);
             }
+        }
+
+        protected virtual void OnLoad(TContainer container)
+        {
+
         }
 
         private bool Load()
@@ -93,9 +103,11 @@ namespace HydraService.Providers
             using (var sr = new StreamReader(FileName))
             using (JsonReader reader = new JsonTextReader(sr))
             {
-                var container = _serializer.Deserialize<DataContainer<TEntity>>(reader);
+                var container = _serializer.Deserialize<TContainer>(reader);
 
                 if (container == null) return false;
+
+                OnLoad(container);
 
                 _id = container.AutoId;
                 foreach (var entity in container.Entities)

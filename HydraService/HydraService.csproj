@@ -214,6 +214,7 @@
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
+    <Compile Include="Providers\DataContainer.cs" />
     <Compile Include="Providers\DefaultProvider.cs" />
     <Compile Include="Models\Domain.cs" />
     <Compile Include="Providers\DomainProvider.cs" />
