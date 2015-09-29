@@ -17,6 +17,20 @@ namespace HydraService
         VersionInfo GetVersionInfo();
 
         [OperationContract]
+        [WebGet(
+            UriTemplate = "Logs",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        string[] GetLogNames();
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "Logs/{name}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        Stream GetLogFile(string name);
+
+        [OperationContract]
         void SetProperty(string name, string value);
 
         [OperationContract]

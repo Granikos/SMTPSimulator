@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using HydraService.Models;
 using Newtonsoft.Json;
@@ -13,11 +14,19 @@ namespace HydraService.Providers
     [Export(typeof (IUserTemplateProvider))]
     public class NamedUserTemplates : IUserTemplateProvider
     {
+        private string TemplateFolder
+        {
+            get
+            {
+                var folder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var logFolder = ConfigurationManager.AppSettings["UserTemplates"];
+                return Path.Combine(folder, logFolder);
+            }
+        }
+
         public IEnumerable<IUserTemplate> All()
         {
-            var templateFolder = ConfigurationManager.AppSettings["UserTemplates"];
-
-            return Directory.GetFiles(templateFolder, "*.json")
+            return Directory.GetFiles(TemplateFolder, "*.json")
                 .Select(p => new NamedTemplate(Path.GetFileNameWithoutExtension(p), p));
         }
 

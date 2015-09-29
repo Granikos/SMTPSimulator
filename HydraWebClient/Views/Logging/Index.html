@@ -1,2 +1,15 @@
 ﻿<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span-12">
+            <select ng-change="load()" ng-options="name for name in logs" ng-model="logName" class="form-control">
+                <option value="" ng-hide="logName">-- Select a log file --</option>
+            </select>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span-12">
+            <p ng-show="loading">Loading...</p>
+            <textarea ng-show="log && !loading" readonly="readonly" rows="20" class="form-control">{{log}}</textarea>
+        </div>
+    </div>
 </div>

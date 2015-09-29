@@ -168,6 +168,7 @@
     <Compile Include="Logging\CsvPatternLayout.cs" />
     <Compile Include="Logging\CsvTextWriter.cs" />
     <Compile Include="Logging\EndRowConverter.cs" />
+    <Compile Include="Logging\HeaderOnceAppender.cs" />
     <Compile Include="Logging\ISMTPLogger.cs" />
     <Compile Include="Logging\Log4NetLogger.cs" />
     <Compile Include="Logging\LogEnumExtensions.cs" />

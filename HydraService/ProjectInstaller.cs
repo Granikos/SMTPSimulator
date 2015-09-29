@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Configuration.Install;
 using System.ServiceProcess;
 
@@ -14,7 +15,13 @@ namespace HydraService
 
         private void serviceInstaller1_AfterInstall(object sender, InstallEventArgs e)
         {
-            new ServiceController(serviceInstaller1.ServiceName).Start();
+            try
+            {
+                new ServiceController(serviceInstaller1.ServiceName).Start();
+            }
+            catch (InvalidOperationException)
+            {
+            }
         }
     }
 }

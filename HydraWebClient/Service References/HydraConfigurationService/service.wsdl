@@ -18,11 +18,11 @@
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/HydraService.Models" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import namespace="http://schemas.microsoft.com/Message" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/HydraCore" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Net.Security" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Security.Authentication" />
-      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-      <xsd:import namespace="http://schemas.microsoft.com/Message" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IConfigurationService_GetVersionInfo_InputMessage">
@@ -30,6 +30,18 @@
   </wsdl:message>
   <wsdl:message name="IConfigurationService_GetVersionInfo_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetVersionInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetLogNames_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogNames" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetLogNames_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogNamesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetLogFile_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogFile" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetLogFile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogFileResponse" />
   </wsdl:message>
   <wsdl:message name="IConfigurationService_SetProperty_InputMessage">
     <wsdl:part name="parameters" element="tns:SetProperty" />
@@ -306,6 +318,14 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetVersionInfo" message="tns:IConfigurationService_GetVersionInfo_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetVersionInfoResponse" message="tns:IConfigurationService_GetVersionInfo_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetLogNames">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetLogNames" message="tns:IConfigurationService_GetLogNames_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetLogNamesResponse" message="tns:IConfigurationService_GetLogNames_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLogFile">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetLogFile" message="tns:IConfigurationService_GetLogFile_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetLogFileResponse" message="tns:IConfigurationService_GetLogFile_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="SetProperty">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/SetProperty" message="tns:IConfigurationService_SetProperty_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/SetPropertyResponse" message="tns:IConfigurationService_SetProperty_OutputMessage" />
@@ -493,6 +513,24 @@
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
     <wsdl:operation name="GetVersionInfo">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetVersionInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLogNames">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetLogNames" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLogFile">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetLogFile" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

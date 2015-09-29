@@ -1511,6 +1511,18 @@ namespace HydraWebClient.HydraConfigurationService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetVersionInfo", ReplyAction="http://tempuri.org/IConfigurationService/GetVersionInfoResponse")]
         System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.VersionInfo> GetVersionInfoAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLogNames", ReplyAction="http://tempuri.org/IConfigurationService/GetLogNamesResponse")]
+        string[] GetLogNames();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLogNames", ReplyAction="http://tempuri.org/IConfigurationService/GetLogNamesResponse")]
+        System.Threading.Tasks.Task<string[]> GetLogNamesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLogFile", ReplyAction="http://tempuri.org/IConfigurationService/GetLogFileResponse")]
+        System.IO.Stream GetLogFile(string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLogFile", ReplyAction="http://tempuri.org/IConfigurationService/GetLogFileResponse")]
+        System.Threading.Tasks.Task<System.IO.Stream> GetLogFileAsync(string name);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/SetProperty", ReplyAction="http://tempuri.org/IConfigurationService/SetPropertyResponse")]
         void SetProperty(string name, string value);
         
@@ -1817,6 +1829,22 @@ namespace HydraWebClient.HydraConfigurationService {
         
         public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.VersionInfo> GetVersionInfoAsync() {
             return base.Channel.GetVersionInfoAsync();
+        }
+        
+        public string[] GetLogNames() {
+            return base.Channel.GetLogNames();
+        }
+        
+        public System.Threading.Tasks.Task<string[]> GetLogNamesAsync() {
+            return base.Channel.GetLogNamesAsync();
+        }
+        
+        public System.IO.Stream GetLogFile(string name) {
+            return base.Channel.GetLogFile(name);
+        }
+        
+        public System.Threading.Tasks.Task<System.IO.Stream> GetLogFileAsync(string name) {
+            return base.Channel.GetLogFileAsync(name);
         }
         
         public void SetProperty(string name, string value) {

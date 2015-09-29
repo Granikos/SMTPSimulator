@@ -208,6 +208,10 @@ namespace HydraCore
             {
                 return false; // TODO: Cleanup
             }
+            catch (SocketException)
+            {
+                return false; // TODO: Cleanup
+            }
 
             Log(LogEventType.Connect);
 

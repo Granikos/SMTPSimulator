@@ -224,6 +224,7 @@
     <Compile Include="Providers\IDomainProvider.cs" />
     <Compile Include="Providers\IExternalUserProvider.cs" />
     <Compile Include="Providers\ILocalUserProvider.cs" />
+    <Compile Include="Providers\ILogProvider.cs" />
     <Compile Include="Providers\InMemoryProvider.cs" />
     <Compile Include="Providers\IPRangeConverter.cs" />
     <Compile Include="Providers\IReceiveConnectorProvider.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Providers\IUserTemplate.cs" />
     <Compile Include="Providers\IUserTemplateProvider.cs" />
     <Compile Include="Providers\LocalUserProvider.cs" />
+    <Compile Include="Providers\LogProvider.cs" />
     <Compile Include="Providers\NamedUserTemplates.cs" />
     <Compile Include="Providers\ReceiveConnectorProvider.cs" />
     <Compile Include="Providers\SendConnectorProvider.cs" />

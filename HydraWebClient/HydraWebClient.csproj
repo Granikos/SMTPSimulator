@@ -175,6 +175,7 @@
     <Compile Include="Controllers\DomainsController.cs" />
     <Compile Include="Controllers\ExternalUsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\PagedFilter.cs" />
     <Compile Include="Controllers\SendConnectorsController.cs" />

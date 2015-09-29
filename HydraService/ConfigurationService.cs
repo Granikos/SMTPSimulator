@@ -35,6 +35,9 @@ namespace HydraService
         [Import]
         private ISendConnectorProvider _sendConnectors;
 
+        [Import]
+        private ILogProvider _logs;
+
         public ConfigurationService(SMTPCore core, ISMTPServerContainer servers, IMailQueueProvider mailQueue)
         {
             Contract.Requires<ArgumentNullException>(core != null, "core");
@@ -141,6 +144,21 @@ namespace HydraService
                 BuildDate = date,
                 Version = version
             };
+        }
+
+        public string[] GetLogNames()
+        {
+            return _logs.FileNames;
+        }
+
+        public Stream GetLogFile(string name)
+        {
+            var stream = new MemoryStream();
+            _logs.GetFile(stream, name);
+
+            stream.Position = 0;
+
+            return stream;
         }
 
         public void SetProperty(string name, string value)
