@@ -32,7 +32,11 @@ namespace HydraWebClient.Controllers
                 Content = new StreamContent(stream)
             };
 
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/plain");
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue(name.EndsWith(".csv") ? "text/csv" : "text/plain");
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = name
+            };
 
             return response;
         }

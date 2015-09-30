@@ -1,15 +1,29 @@
 ﻿<div class="container-fluid">
-    <div class="row-fluid">
+    <div class="row-fluid form-group">
         <div class="span-12">
             <select ng-change="load()" ng-options="name for name in logs" ng-model="logName" class="form-control">
                 <option value="" ng-hide="logName">-- Select a log file --</option>
             </select>
         </div>
     </div>
-    <div class="row-fluid">
+    <div class="row-fluid form-group">
         <div class="span-12">
-            <p ng-show="loading">Loading...</p>
-            <textarea ng-show="log && !loading" readonly="readonly" rows="20" class="form-control">{{log}}</textarea>
+            <p ng-show="loading"><i class="glyphicon glyphicon-refresh glyphicon-spin"></i> Loading...</p>
+            <textarea ng-show="log && !loading && !isCSV" readonly="readonly" rows="20" class="form-control">{{log}}</textarea>
+
+            <div id="csvGrid" ng-show="log && !loading && isCSV" ng-if="!refreshGrid" ui-grid="gridOptions" style="height: 400px;">
+
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid form-group" ng-show="logName">
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-success" ng-click="load()" ng-disabled="running">
+                <i class="glyphicon glyphicon-refresh"></i> Refresh
+            </button>
+            <a class="btn btn-default" target="_self" href="/api/Logs/Get/{{logName}}">
+                <i class="glyphicon glyphicon-download"></i> Download
+            </a>
         </div>
     </div>
 </div>
