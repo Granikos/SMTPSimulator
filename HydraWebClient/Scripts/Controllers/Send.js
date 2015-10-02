@@ -29,7 +29,7 @@
                         $scope.defaultId = connector.Id;
                     })
                     .error(function (data) {
-                        showError(data.data.Message);
+                        showError(data.Message || data.data.Message);
                     });
 
                 SendConnectorService.all()
@@ -40,7 +40,7 @@
                         $scope.connectors = connectors;
                     })
                     .error(function (data) {
-                        showError(data.data.Message);
+                        showError(data.Message || data.data.Message);
                     });
 
                 $http.get("api/SendConnectors/Certificates")
@@ -48,7 +48,7 @@
                         $scope.certificates = certificates;
                     })
                     .error(function (data) {
-                        showError(data.data.Message);
+                        showError(data.Message || data.data.Message);
                     });
 
                 DomainService.all()
@@ -56,7 +56,7 @@
                         $scope.domains = domains;
                     })
                     .error(function (data) {
-                        showError(data.data.Message);
+                        showError(data.Message || data.data.Message);
                     });
 
 
@@ -66,7 +66,7 @@
                             $scope.defaultId = connector.Id;
                         })
                         .error(function (data) {
-                            showError(data.data.Message);
+                            showError(data.Message || data.data.Message);
                         });
                 };
 
@@ -89,7 +89,7 @@
                                 $('#collapse' + connector.Id).addClass('in');
                             }, 10);
                         }, function (data) {
-                            showError(data.data.Message);
+                            showError(data.Message || data.data.Message);
                         });
                 };
 
@@ -102,7 +102,7 @@
                                 $scope.connectors.splice(index, 1);
                             }
                         }, function (data) {
-                            showError(data.data.Message);
+                            showError(data.Message || data.data.Message);
                         });
                 };
 
@@ -119,7 +119,7 @@
                                 $('#connectorFormAdd :input').first().focus();
                             }, 10);
                         }, function (data) {
-                            showError(data.data.Message);
+                            showError(data.Message || data.data.Message);
                         });
                 };
 
@@ -145,7 +145,7 @@
                             }, 10);
                             $scope.adding = false;
                         }, function (data) {
-                            showError(data.data.Message);
+                            showError(data.Message || data.data.Message);
                         });
                 };
 

@@ -57,7 +57,7 @@
                         $scope.connectors = connectors;
                     })
                     .error(function(data) {
-                        showError(data.data.Message);
+                        showError(data.Message || data.data.Message);
                     });
 
 
@@ -73,14 +73,14 @@
                             });
                         })
                         .error(function(data) {
-                            showError(data.data.Message);
+                            showError(data.Message || data.data.Message);
                         });
                 };
 
                 $scope.updateDomain = function(domain) {
                     DomainService.update(domain)
                         .error(function(data) {
-                            showError(data.data.Message);
+                            showError(data.Message || data.data.Message);
                         });
                 };
 
@@ -176,7 +176,7 @@
                             $scope.refresh();
                         })
                         .error(function(data) {
-                            showError(data.data.Message);
+                            showError(data.Message || data.data.Message);
                         });
                 };
 

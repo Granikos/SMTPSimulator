@@ -1,7 +1,7 @@
 ﻿<div class="container-fluid">
     <form role="form" class="form-horizontal clearfix" name="serverConfigForm" ng-submit="serverConfigForm.$valid && submit()">
         <div class="form-group">
-            <label class="control-label col-sm-3">Server Status</label>
+            <label class="control-label col-sm-3">SMTP Server Status</label>
             <div class="col-sm-2">
                 <p class="form-control-static">{{status}}</p>
             </div>
@@ -17,13 +17,13 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">Server Version</label>
+            <label class="control-label col-sm-3">Service Version</label>
             <div class="col-sm-7">
                 <p class="form-control-static">{{version}}</p>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">Server Build Date</label>
+            <label class="control-label col-sm-3">Service Build Date</label>
             <div class="col-sm-7">
                 <p class="form-control-static">{{buildDate | date : 'medium' }}</p>
             </div>

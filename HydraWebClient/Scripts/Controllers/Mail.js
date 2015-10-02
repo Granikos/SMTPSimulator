@@ -23,7 +23,7 @@
                         $scope.connectors = connectors;
                     })
                     .error(function (data) {
-                        showError(data.data.Message);
+                        showError(data.Message || data.data.Message);
                     });
 
                 $scope.searchLocalUsers = function(search) {
@@ -39,7 +39,7 @@
                         // TODO
                     })
                     .error(function (data) {
-                        showError(data.data.Message);
+                        showError(data.Message || data.data.Message);
                     });
                 };
 

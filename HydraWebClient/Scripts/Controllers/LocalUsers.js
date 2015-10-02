@@ -123,7 +123,7 @@
                                 $scope.refresh();
                             })
                             .error(function (data) {
-                                showError(data.data.Message);
+                                showError(data.Message || data.data.Message);
                             });
                     };
                 };
