@@ -213,6 +213,7 @@
     <Content Include="Scripts\Controllers\LocalUsers.js" />
     <Content Include="Scripts\Controllers\Login.js" />
     <Content Include="Scripts\Controllers\Register.js" />
+    <Content Include="Scripts\FontDetector.js" />
     <Content Include="Scripts\helpers.js" />
     <Content Include="Scripts\HydraApp.js" />
     <Content Include="bower.json" />

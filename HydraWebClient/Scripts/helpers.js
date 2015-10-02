@@ -114,7 +114,7 @@ function exportToCsv(filename, rows) {
     for (var i = 0; i < rows.length; i++) {
         csvFile += processRow(rows[i]);
     }
-    
+
     var blob = new Blob(['\ufeff' + csvFile], { type: 'text/csv;charset=utf-8;' });
     if (navigator.msSaveBlob) { // IE 10+
         navigator.msSaveBlob(blob, filename);
@@ -137,7 +137,7 @@ var regexIso8601 = /^(\d{4}|\+\d{6})(?:-(\d{2})(?:-(\d{2})(?:T(\d{2}):(\d{2}):(\
 
 function convertDateStringsToDates(input) {
     // Ignore things that aren't objects.
-    if (typeof input !== "object") return input;
+    if (typeof input !== "object") return;
 
     for (var key in input) {
         if (!input.hasOwnProperty(key)) continue;
@@ -156,3 +156,35 @@ function convertDateStringsToDates(input) {
         }
     }
 }
+
+function getTextWidth(text, font) {
+    // re-use canvas object for better performance
+    var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+    var context = canvas.getContext("2d");
+    context.font = font;
+    var metrics = context.measureText(text);
+    return metrics.width;
+};
+
+function getTextWidth2(text, fontFamily, fontSize) {
+    var span;
+    if (!getTextWidth2.span) {
+        span = document.createElement("span");
+
+        span.style.position = 'absolute';
+        span.style.visibility = 'hidden';
+        span.style.height = 'auto';
+        span.style.width = 'auto';
+        span.style.whiteSpace = 'nowrap';
+
+        getTextWidth2.span = span;
+        document.body.appendChild(span);
+    } else {
+        span = getTextWidth2.span;
+    }
+
+    span.style.fontFamily = fontFamily;
+    span.style.fontSize = fontSize;
+    $(span).text(text);
+    return span.clientWidth;
+};

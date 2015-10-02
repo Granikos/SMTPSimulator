@@ -12,6 +12,7 @@ namespace HydraWebClient
                 .Include("~/Scripts/helpers.js")
                 .IncludeDirectory("~/Scripts/Controllers", "*.js")
                 .Include("~/Scripts/HydraApp.js")
+                .Include("~/Scripts/FontDetector.js")
             );
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
