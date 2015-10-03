@@ -1,8 +1,21 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Reflection;
+using System.Web.Http;
 using HydraWebClient.HydraConfigurationService;
 
 namespace HydraWebClient.Controllers
 {
+    public struct ExtendedVersionInfo
+    {
+        public DateTime ServiceBuildDate { get; set; }
+
+        public System.Version ServiceVersion { get; set; }
+
+        public DateTime UiBuildDate { get; set; }
+
+        public System.Version UiVersion { get; set; }
+    }
+
     // [Authorize]
     [RoutePrefix("api/Server")]
     public class ServerController : ApiController
@@ -36,9 +49,20 @@ namespace HydraWebClient.Controllers
         // GET api/Server/Version
         [HttpGet]
         [Route("Version")]
-        public VersionInfo GetVersion()
+        public ExtendedVersionInfo GetVersion()
         {
-            return _service.GetVersionInfo();
+            var version = _service.GetVersionInfo();
+            var assembly = typeof(ServerController).Assembly;
+            var uiVersion = assembly.GetName().Version;
+            var date = assembly.GetBuildDate();
+
+            return new ExtendedVersionInfo
+            {
+                ServiceBuildDate = version.BuildDate,
+                ServiceVersion = new System.Version(version.Version._Major, version.Version._Minor, version.Version._Build, version.Version._Revision),
+                UiBuildDate = date,
+                UiVersion = uiVersion
+            };
         }
     }
 }

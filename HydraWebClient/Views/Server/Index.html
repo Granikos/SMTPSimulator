@@ -19,13 +19,25 @@
         <div class="form-group">
             <label class="control-label col-sm-3">Service Version</label>
             <div class="col-sm-7">
-                <p class="form-control-static">{{version}}</p>
+                <p class="form-control-static">{{serviceVersion}}</p>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-3">Service Build Date</label>
             <div class="col-sm-7">
-                <p class="form-control-static">{{buildDate | date : 'medium' }}</p>
+                <p class="form-control-static">{{serviceBuildDate | date : 'medium' }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">UI Version</label>
+            <div class="col-sm-7">
+                <p class="form-control-static">{{uiVersion}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">UI Build Date</label>
+            <div class="col-sm-7">
+                <p class="form-control-static">{{uiBuildDate | date : 'medium' }}</p>
             </div>
         </div>
     </form>

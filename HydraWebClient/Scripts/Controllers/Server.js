@@ -17,8 +17,10 @@
             "$scope", "$modal", "$q", "$http", function ($scope, $modal, $q, $http) {
                 $scope.running = null;
                 $scope.status = "???";
-                $scope.version = "???";
-                $scope.buildDate = "???";
+                $scope.serviceVersion = "???";
+                $scope.serviceBuildDate = "???";
+                $scope.uiVersion = "???";
+                $scope.uiBuildDate = "???";
 
                 $http.get("api/Server/IsRunning")
                     .success(function(running) {
@@ -54,9 +56,12 @@
 
                 $http.get("api/Server/Version")
                     .success(function (versionInfo) {
-                        var v = versionInfo.Version;
-                        $scope.version = v._Major + "." + v._Minor + "." + v._Build + "." + v._Revision;
-                        $scope.buildDate = versionInfo.BuildDate;
+                        var v = versionInfo.ServiceVersion;
+                        $scope.serviceVersion = v._Major + "." + v._Minor + "." + v._Build + "." + v._Revision;
+                        $scope.serviceBuildDate = versionInfo.ServiceBuildDate;
+                        v = versionInfo.UiVersion;
+                        $scope.uiVersion = v._Major + "." + v._Minor + "." + v._Build + "." + v._Revision;
+                        $scope.uiBuildDate = versionInfo.UiBuildDate;
                     })
                     .error(function (data) {
                         $scope.version = "Error";
