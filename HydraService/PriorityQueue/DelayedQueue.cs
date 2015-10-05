@@ -25,22 +25,34 @@ namespace HydraService.PriorityQueue
 
         public void Enqueue(T item, TimeSpan delay)
         {
-            _queue.Enqueue(new QueueItem {Value = item}, DateTime.Now + delay);
+            lock (_queue)
+            {
+                _queue.Enqueue(new QueueItem { Value = item }, DateTime.Now + delay);
+            }
         }
 
         public T Peek()
         {
-            return _queue.First != null ? _queue.First.Value : default(T);
+            var first = _queue.First;
+            if (first == null) return default(T);
+
+            return first.Priority <= DateTime.Now ? first.Value : default(T);
         }
 
         public T Dequeue()
         {
-            return _queue.Dequeue().Value;
+            lock (_queue)
+            {
+                return Peek() != null? _queue.Dequeue().Value : default(T);
+            }
         }
 
         public void Clear()
         {
-            _queue.Clear();
+            lock (_queue)
+            {
+                _queue.Clear();
+            }
         }
 
         private class QueueItem : PriorityQueueNode<DateTime>

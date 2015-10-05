@@ -1,30 +1,40 @@
 ﻿using System;
 using System.ServiceProcess;
+using log4net;
 using log4net.Config;
 
 namespace HydraService
 {
     internal static class Program
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(Program));
+
         /// <summary>
         ///     The main entry point for the application.
         /// </summary>
         private static void Main(string[] args)
         {
-            XmlConfigurator.Configure();
-            if (Environment.UserInteractive)
+            try
             {
-                var service = new SMTPService();
-                service.TestStartupAndStop(args);
-            }
-            else
-            {
-                ServiceBase[] ServicesToRun;
-                ServicesToRun = new ServiceBase[]
+                XmlConfigurator.Configure();
+                if (Environment.UserInteractive)
                 {
-                    new SMTPService()
-                };
-                ServiceBase.Run(ServicesToRun);
+                    var service = new SMTPService();
+                    service.TestStartupAndStop(args);
+                }
+                else
+                {
+                    ServiceBase[] ServicesToRun;
+                    ServicesToRun = new ServiceBase[]
+                    {
+                        new SMTPService()
+                    };
+                    ServiceBase.Run(ServicesToRun);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error("An error occured.", e);
             }
         }
     }

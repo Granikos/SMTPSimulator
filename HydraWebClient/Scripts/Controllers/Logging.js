@@ -1,4 +1,6 @@
 ﻿(function () {
+    var fieldsRegex = /^#Fields:\s*(.*)$/mi;
+
     angular.module('Logging', ['ui.bootstrap.modal', 'ui.grid', 'ui.grid.resizeColumns'])
 
         .controller('LoggingController', [
@@ -22,11 +24,14 @@
                     });
 
                 function calculateColumnAutoWidths(columns, data, fontFamily, fontSize) {
-                    var maximumChars = {};
                     var maximumsPixels = {};
 
                     var cell = $('<div class="ui-grid-cell-contents" />');
                     var padding = cell.innerWidth() - cell.width();
+
+                    // TODO: Cleanup
+                    var menuButton = $('<div class="ui-grid-column-menu-button" style="width: 2.2em"></div>');
+                    var buttonWidth = menuButton.outerWidth();
 
                     var detector = new FontDetector();
                     var fonts = fontFamily.split(/,/);
@@ -43,11 +48,7 @@
                     for (var i = 0; i < data.length; i++) {
                         for (var j = 0; j < columns.length; j++) {
                             var field = columns[j].field;
-                            var v = new String(data[i][field]);
-
-                            var chars = v.length;
-                            if ((maximumChars[field] || 0) < chars)
-                                maximumChars[field] = chars;
+                            var v = new String(eval('data[i].'+field));
 
                             var pixels = getTextWidth(v, fontSize + ' ' + font);
                             if ((maximumsPixels[field] || 0) < pixels)
@@ -55,26 +56,19 @@
                         }
                     }
 
-                    var totalChars = 0;
                     for (var j = 0; j < columns.length; j++) {
                         var field = columns[j].field;
-                        if (field.length > maximumChars[field])
-                            maximumChars[field] = field.length;
-                        totalChars += maximumChars[field];
 
-                        var pixels = getTextWidth(field, fontSize + ' ' + font);
-                        if (maximumsPixels[field] < pixels)
+                        var pixels = getTextWidth(columns[j].name, fontSize + ' ' + font);
+                        pixels += buttonWidth;
+                        if ((maximumsPixels[field] || 0) < pixels)
                             maximumsPixels[field] = pixels;
 
                     }
 
                     for (var j = 0; j < columns.length; j++) {
-                        var chars = maximumChars[columns[j].field];
                         var pixels = maximumsPixels[columns[j].field];
-                        columns[j].width = (chars * 100 / totalChars) + '%';
                         columns[j].minWidth = pixels + padding + 1;
-
-                        if (j === columns.length - 1) delete columns[j].width;
                     }
                 }
 
@@ -88,10 +82,14 @@
                                 var style = window.getComputedStyle($('#csvGrid')[0], null);
                                 var fontSize = style.getPropertyValue('font-size');
                                 var fontFamily = style.getPropertyValue('font-family');
-                                var csv = Papa.parse(data, { header: true, skipEmptyLines: true });
-                                var csvFields = csv.meta.fields;
-                                $scope.gridOptions.columnDefs = angular.copy(csvFields.map(function (f) { return { field: f, name: f }; }));
-                                $scope.gridOptions.data = angular.copy(csv.data);
+                                var csvFields, match;
+                                if ((match = fieldsRegex.exec(data)) !== null) {
+                                    var fields = match[1].split(/,/);
+                                    csvFields = fields.map(function(f, i) { return { field: 'values['+i+']', name: f }; });
+                                }
+                                var csv = Papa.parse(data, { comments: '#', skipEmptyLines: true });
+                                $scope.gridOptions.columnDefs = angular.copy(csvFields);
+                                $scope.gridOptions.data = angular.copy(csv.data.map(function (v) { return { values: v }; }));
                                 calculateColumnAutoWidths($scope.gridOptions.columnDefs, $scope.gridOptions.data, fontFamily, fontSize);
                                 $scope.refreshGrid = true;
                                 $timeout(function () {

@@ -95,6 +95,11 @@ namespace HydraCore
                 _session = Guid.NewGuid().ToString("N").Substring(0, 10);
                 _localEndpoint = (IPEndPoint) _client.Client.LocalEndPoint;
                 _remoteEndpoint = (IPEndPoint) _client.Client.RemoteEndPoint;
+
+                foreach (var logger in _loggers)
+                {
+                    logger.StartSession(_session);
+                }
             }
             foreach (var logger in _loggers)
             {
@@ -102,12 +107,29 @@ namespace HydraCore
             }
         }
 
+        private void EndSession()
+        {
+            foreach (var logger in _loggers)
+            {
+                logger.EndSession(_session);
+            }
+            _session = null;
+        }
+
         public bool Connect()
         {
-            if (!DoConnectionSequence()) return false;
+            if (!DoConnectionSequence())
+            {
+                EndSession();
+                return false;
+            }
 
             SMTPResponse reponse;
-            if (!DoEHLO(out reponse)) return false;
+            if (!DoEHLO(out reponse))
+            {
+                EndSession();
+                return false;
+            }
 
             var tlsEnabled = reponse.Args.Contains("STARTTLS", StringComparer.InvariantCultureIgnoreCase);
             var authLine =
@@ -117,6 +139,7 @@ namespace HydraCore
             if (!tlsEnabled && Settings.RequireTLS)
             {
                 Log(LogEventType.Connect, "TLS is required, but the server does not support it.");
+                EndSession();
                 return false;
             }
 
@@ -127,14 +150,23 @@ namespace HydraCore
                 if (Settings.RequireTLS && !success)
                 {
                     Log(LogEventType.Connect, "TLS is required, but establishing the TLS layer failed.");
+                    EndSession();
                     return false;
                 }
 
                 // Restore Connection
                 if (!success && LastStatus == SMTPStatusCode.Ready)
                 {
-                    if (!DoConnectionSequence()) return false;
-                    if (!DoEHLO(out reponse)) return false;
+                    if (!DoConnectionSequence())
+                    {
+                        EndSession();
+                        return false;
+                    }
+                    if (!DoEHLO(out reponse))
+                    {
+                        EndSession();
+                        return false;
+                    }
 
                 }
             }
@@ -504,6 +536,7 @@ namespace HydraCore
 
                     if (reponse != null && reponse.Code != SMTPStatusCode.Closing)
                     {
+                        EndSession();
                         throw new Exception("Server did not respond correctly to QUIT command.");
                     }
                 }
@@ -534,6 +567,7 @@ namespace HydraCore
             }
 
             Log(LogEventType.Disconnect);
+            EndSession();
         }
 
         private X509Certificate UserCertificateSelectionCallback(object sender, string targetHost,

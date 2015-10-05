@@ -97,7 +97,7 @@ namespace HydraService
 
                 var client = SMTPClient.Create(_container, connector, connInfo.Host, connInfo.Port);
 
-                if (client.Connect())
+                if (!client.Connect())
                 {
                     success = false;
 

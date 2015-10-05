@@ -22,7 +22,7 @@ namespace HydraWebClient.Controllers
 
         // GET api/Logs/Get/{name}
         [HttpGet]
-        [Route("Get/{name}")]
+        [Route("Get/{*name}")]
         public HttpResponseMessage Get(string name)
         {
             var stream = _service.GetLogFile(name);

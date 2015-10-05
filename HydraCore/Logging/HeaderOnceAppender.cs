@@ -2,7 +2,7 @@ using log4net.Appender;
 
 namespace HydraCore.Logging
 {
-    public class HeaderOnceAppender : FileAppender
+    public class HeaderOnceAppender : RollingFileAppender
     {
         protected override void WriteHeader()
         {

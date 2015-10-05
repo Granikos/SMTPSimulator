@@ -25,8 +25,10 @@ namespace HydraService.Providers
         {
             get
             {
-                return Directory.GetFiles(LogFolder)
-                    .Select(Path.GetFileName)
+                var length = Path.GetFullPath(LogFolder).Length + 1;
+
+                return Directory.GetFiles(LogFolder, "*", SearchOption.AllDirectories)
+                    .Select(p => p.Substring(length))
                     .ToArray();
             }
         }

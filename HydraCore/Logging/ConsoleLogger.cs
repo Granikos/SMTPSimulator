@@ -7,6 +7,10 @@ namespace HydraCore.Logging
     [Export(typeof(ISMTPLogger))]
     public class ConsoleLogger : ISMTPLogger
     {
+        public void StartSession(string session)
+        {
+        }
+
         public void Log(string connectorId, string session, IPEndPoint local, IPEndPoint remote, LogPartType part, LogEventType type,
             string data)
         {
@@ -23,6 +27,10 @@ namespace HydraCore.Logging
                 }
 
             }
+        }
+
+        public void EndSession(string session)
+        {
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using HydraCore;
 using HydraCore.Logging;
 using HydraService.Models;
+using log4net;
 
 namespace HydraService
 {
@@ -19,7 +20,7 @@ namespace HydraService
         private readonly IPEndPoint _localEndpoint;
         private readonly string _name;
         private readonly IPEndPoint _remoteEndpoint;
-        private readonly string _session;
+        private string _session;
         private readonly SMTPServer _smtpServer;
         private readonly TLSConnector _tlsConnector;
 
@@ -32,6 +33,8 @@ namespace HydraService
         private SMTPTransaction _transaction;
         private StreamWriter _writer;
 
+        private static readonly ILog Logger = LogManager.GetLogger(typeof (ClientHandler));
+
         public ClientHandler(TcpClient client, SMTPServer smtpServer)
         {
             _client = client;
@@ -40,7 +43,6 @@ namespace HydraService
             _tlsConnector = new TLSConnector(_smtpServer.Connector.TLSSettings, CertificateLog);
             _localEndpoint = (IPEndPoint) _client.Client.LocalEndPoint;
             _remoteEndpoint = (IPEndPoint) _client.Client.RemoteEndPoint;
-            _session = Guid.NewGuid().ToString("N").Substring(0, 10);
             _name = _localEndpoint.Address.ToString();
             _stream = _client.GetStream();
             _startTLS = false;
@@ -51,8 +53,31 @@ namespace HydraService
             Log(LogEventType.Certificate, msg);
         }
 
+        private void StartSession()
+        {
+            _session = Guid.NewGuid().ToString("N").Substring(0, 10);
+
+            foreach (var logger in _loggers)
+            {
+                logger.StartSession(_session);
+            }
+        }
+
+        private void EndSession()
+        {
+            foreach (var logger in _loggers)
+            {
+                logger.EndSession(_session);
+            }
+        }
+
         private void Log(LogEventType type, string data = null)
         {
+            if (_session == null)
+            {
+                StartSession();
+            }
+
             foreach (var logger in _loggers)
             {
                 logger.Log(_name, _session, _localEndpoint, _remoteEndpoint, LogPartType.Server, type, data);
@@ -61,55 +86,63 @@ namespace HydraService
 
         public async Task Process()
         {
-            Log(LogEventType.Connect);
-
-            SMTPResponse response;
-            _transaction = _smtpServer.Core.StartTransaction(_remoteEndpoint.Address, _smtpServer.Settings, out response);
-
-            if (_tlsConnector.Settings.Mode == TLSMode.FullTunnel)
-            {
-                await StartTLS();
-            }
-
-            RefreshReaderAndWriter();
-
-            _transaction.OnStartTLS += OnStartTLS;
-            _transaction.OnClose += OnCloseHandler;
-
-            await Write(response);
-
             try
             {
-                while (!_reader.EndOfStream && !_transaction.Closed)
+                Log(LogEventType.Connect);
+
+                SMTPResponse response;
+                _transaction = _smtpServer.Core.StartTransaction(_remoteEndpoint.Address, _smtpServer.Settings,
+                    out response);
+
+                if (_tlsConnector.Settings.Mode == TLSMode.FullTunnel)
                 {
-                    await Write(_transaction.ExecuteCommand(await Read()));
+                    await StartTLS();
+                }
 
-                    while (_transaction.InDataMode)
+                RefreshReaderAndWriter();
+
+                _transaction.OnStartTLS += OnStartTLS;
+                _transaction.OnClose += OnCloseHandler;
+
+                await Write(response);
+
+                try
+                {
+                    while (!_reader.EndOfStream && !_transaction.Closed)
                     {
-                        string line;
-                        var data = new StringBuilder();
+                        await Write(_transaction.ExecuteCommand(await Read()));
 
-                        do
+                        while (_transaction.InDataMode)
                         {
-                            line = await _reader.ReadLineAsync();
-                        } while (_transaction.HandleDataLine(line, data));
+                            string line;
+                            var data = new StringBuilder();
 
-                        await Write(_transaction.HandleData(data.ToString()));
-                    }
+                            do
+                            {
+                                line = await _reader.ReadLineAsync();
+                            } while (_transaction.HandleDataLine(line, data));
 
-                    if (_startTLS)
-                    {
-                        await StartTLS();
+                            await Write(_transaction.HandleData(data.ToString()));
+                        }
 
-                        RefreshReaderAndWriter();
-                        RefreshTransaction();
+                        if (_startTLS)
+                        {
+                            await StartTLS();
 
-                        _startTLS = false;
+                            RefreshReaderAndWriter();
+                            RefreshTransaction();
+
+                            _startTLS = false;
+                        }
                     }
                 }
+                catch (IOException)
+                {
+                }
             }
-            catch (IOException)
+            catch (Exception e)
             {
+                Logger.Error("Error while handling client connection.", e);
             }
             finally
             {
@@ -130,11 +163,14 @@ namespace HydraService
 
         private void Close()
         {
-            _transaction.Close();
-            _writer.Close();
-            _reader.Close();
-            _stream.Close();
-            _client.Close();
+            if (_transaction != null) _transaction.Close();
+
+            if (_writer != null) _writer.Close();
+            if (_reader != null) _reader.Close();
+            if (_stream != null) _stream.Close();
+            if (_client != null) _client.Close();
+
+            EndSession();
         }
 
         private async Task<SMTPCommand> Read()

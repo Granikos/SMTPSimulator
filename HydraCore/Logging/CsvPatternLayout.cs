@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Reflection;
 using log4net.Core;
@@ -31,6 +32,18 @@ namespace HydraCore.Logging
             // write the starting quote for the first field
             ctw.WriteQuote();
             base.Format(ctw, loggingEvent);
+        }
+
+        public override string Header
+        {
+            get
+            {
+                var version = Assembly.GetExecutingAssembly().GetName().Version;
+                return base.Header.Replace("%date", DateTime.Now.ToString("o"))
+                    .Replace("%version", version.ToString());
+            }
+
+            set { base.Header = value; }
         }
     }
 }

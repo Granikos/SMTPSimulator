@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Threading;
 using HydraCore;
 using HydraService.Models;
+using log4net;
 
 namespace HydraService
 {
@@ -19,6 +20,8 @@ namespace HydraService
         private Thread _processThread;
         private MessageProcessor _processor;
         private TcpListener _tcpListener;
+
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(SMTPServer));
 
         public SMTPServer(ReceiveConnector connector, SMTPCore core, CompositionContainer container)
         {
@@ -85,7 +88,7 @@ namespace HydraService
                 else
                 {
                     Console.WriteLine("Greylisting started, time left: " + Connector.GreylistingTime);
-                    _greyList.Add(connect.IP, (DateTime) (DateTime.Now + Connector.GreylistingTime));
+                    _greyList.Add(connect.IP, (DateTime)(DateTime.Now + Connector.GreylistingTime));
                     connect.Cancel = true;
                     connect.ResponseCode = SMTPStatusCode.NotAvailiable;
                 }
@@ -138,10 +141,17 @@ namespace HydraService
 
                 while (true)
                 {
-                    var client = _tcpListener.AcceptTcpClient();
+                    try
+                    {
+                        var client = _tcpListener.AcceptTcpClient();
 
-                    var clientThread = new Thread(HandleClientConnection);
-                    clientThread.Start(client);
+                        var clientThread = new Thread(HandleClientConnection);
+                        clientThread.Start(client);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Error("An error while listening for clients.", e);
+                    }
                 }
             }
             catch (SocketException e)
@@ -152,9 +162,16 @@ namespace HydraService
 
         private void HandleClientConnection(object obj)
         {
-            var handler = new ClientHandler((TcpClient) obj, this);
-            _container.SatisfyImportsOnce(handler);
-            handler.Process().Wait();
+            try
+            {
+                var handler = new ClientHandler((TcpClient)obj, this);
+                _container.SatisfyImportsOnce(handler);
+                handler.Process().Wait();
+            }
+            catch (Exception e)
+            {
+                Logger.Error("An error while handling a client connection.", e);
+            }
         }
 
         private void ProcessMail()

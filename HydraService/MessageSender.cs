@@ -3,6 +3,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.Threading;
 using HydraCore;
 using HydraService.PriorityQueue;
+using log4net;
 
 namespace HydraService
 {
@@ -19,6 +20,8 @@ namespace HydraService
 
         private readonly MessageProcessor _processor;
         private readonly DelayedQueue<Mail> _mailQueue;
+
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(MessageSender));
 
         private void RaiseFinishedEvent()
         {
@@ -44,8 +47,9 @@ namespace HydraService
             var connector = info.Connector;
             if (status == SMTPStatusCode.NotAvailiable)
             {
-                if (mail.RetryCount > connector.RetryCount)
+                if (mail.RetryCount < connector.RetryCount)
                 {
+                    Logger.InfoFormat("Remote host was not availiable, retrying to send mail in {0} (try {1}/{2})", connector.RetryTime, mail.RetryCount + 1, connector.RetryCount + 1);
                     mail.RetryCount++;
                     lock (_mailQueue)
                     {
@@ -54,14 +58,7 @@ namespace HydraService
                 }
                 else
                 {
-                    // TODO
-                    /*
-                    Log(LogEventType.Other,
-                        string.Format("Retry count '{0}' exceeded while trying to deliver via '{1}'",
-                            connector.RetryCount, connector.Name));
-
-                    // Error mail?
-                    */
+                    Logger.InfoFormat("Remote host was not availiable, but retry count exceeded (try {0}/{0}).", connector.RetryCount + 1);
                 }
             }
 
@@ -90,26 +87,33 @@ namespace HydraService
         {
             while (true)
             {
-                Mail mail = null;
-                lock (_mailQueue)
+                try
                 {
-                    if (_mailQueue.Peek() != null)
+                    Mail mail = null;
+                    lock (_mailQueue)
                     {
-                        mail = _mailQueue.Dequeue();
+                        if (_mailQueue.Peek() != null)
+                        {
+                            mail = _mailQueue.Dequeue();
+                        }
+                    }
+
+                    if (mail != null)
+                    {
+                        _processor.ProcessMail(mail);
+                    }
+
+                    Thread.Sleep(TickDefaultMilliseconds);
+
+                    if (_askStop.WaitOne(0, true))
+                    {
+                        _informStopped.Set();
+                        break;
                     }
                 }
-
-                if (mail != null)
+                catch (Exception e)
                 {
-                    _processor.ProcessMail(mail);
-                }
-
-                Thread.Sleep(TickDefaultMilliseconds);
-
-                if (_askStop.WaitOne(0, true))
-                {
-                    _informStopped.Set();
-                    break;
+                    Logger.Error("An exception occured while sending a mail.", e);
                 }
             }
 
