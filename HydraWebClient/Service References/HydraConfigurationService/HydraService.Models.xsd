@@ -32,6 +32,19 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Domain" nillable="true" type="tns:Domain" />
+  <xs:complexType name="ArrayOfDomainWithMailboxCount">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DomainWithMailboxCount" nillable="true" type="tns:DomainWithMailboxCount" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDomainWithMailboxCount" nillable="true" type="tns:ArrayOfDomainWithMailboxCount" />
+  <xs:complexType name="DomainWithMailboxCount">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DomainName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MailboxCount" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DomainWithMailboxCount" nillable="true" type="tns:DomainWithMailboxCount" />
   <xs:complexType name="ReceiveConnector">
     <xs:sequence>
       <xs:element minOccurs="0" name="AddressString" nillable="true" type="xs:string" />
@@ -191,6 +204,22 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ExternalUser" nillable="true" type="tns:ExternalUser" />
+  <xs:complexType name="ArrayOfTimeTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TimeTable" nillable="true" type="tns:TimeTable" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTimeTable" nillable="true" type="tns:ArrayOfTimeTable" />
+  <xs:complexType name="TimeTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Active" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="MailContent" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SendConnector" nillable="true" type="tns:SendConnector" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TimeTable" nillable="true" type="tns:TimeTable" />
   <xs:complexType name="MailMessage">
     <xs:sequence>
       <xs:element minOccurs="0" name="ConnectorId" nillable="true" type="xs:int" />

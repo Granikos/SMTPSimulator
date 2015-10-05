@@ -105,3 +105,15 @@ input.ng-valid.ng-dirty {
     transform: rotate(359deg);
   }
 }
+
+.badge-success {
+    background-color: #5cb85c;
+}
+
+.badge-danger {
+    background-color: #d9534f;
+}
+
+.list-group-item > .badge ~ .badge {
+    margin-right: 5px;
+}

@@ -38,6 +38,9 @@ namespace HydraService
         [Import]
         private ILogProvider _logs;
 
+        [Import]
+        private ITimeTableProvider _timeTables;
+
         public ConfigurationService(SMTPCore core, ISMTPServerContainer servers, IMailQueueProvider mailQueue)
         {
             Contract.Requires<ArgumentNullException>(core != null, "core");
@@ -54,6 +57,18 @@ namespace HydraService
         public IEnumerable<Domain> GetDomains()
         {
             return _domains.All();
+        }
+
+        public IEnumerable<DomainWithMailboxCount> GetDomainsWithMailboxCount()
+        {
+            var domains = _domains.All().ToDictionary(d => d.Id, d => new DomainWithMailboxCount { DomainName =  d.DomainName });
+
+            foreach (var user in _externalUsers.All())
+            {
+                domains[user.DomainId].MailboxCount++;
+            }
+
+            return domains.Values;
         }
 
         public Domain GetDomain(string domain)
@@ -99,14 +114,14 @@ namespace HydraService
             return _sendConnectors.Get(id);
         }
 
-        public SendConnector AddSendConnector(SendConnector binding)
+        public SendConnector AddSendConnector(SendConnector connector)
         {
-            return _sendConnectors.Add(binding);
+            return _sendConnectors.Add(connector);
         }
 
-        public SendConnector UpdateSendConnector(SendConnector binding)
+        public SendConnector UpdateSendConnector(SendConnector connector)
         {
-            return _sendConnectors.Update(binding);
+            return _sendConnectors.Update(connector);
         }
 
         public bool DeleteSendConnector(int id)
@@ -186,14 +201,14 @@ namespace HydraService
             return _receiveConnectors.Get(id);
         }
 
-        public ReceiveConnector AddReceiveConnector(ReceiveConnector binding)
+        public ReceiveConnector AddReceiveConnector(ReceiveConnector connector)
         {
-            return _receiveConnectors.Add(binding);
+            return _receiveConnectors.Add(connector);
         }
 
-        public ReceiveConnector UpdateReceiveConnector(ReceiveConnector binding)
+        public ReceiveConnector UpdateReceiveConnector(ReceiveConnector connector)
         {
-            return _receiveConnectors.Update(binding);
+            return _receiveConnectors.Update(connector);
         }
 
         public bool DeleteReceiveConnector(int id)
@@ -219,14 +234,14 @@ namespace HydraService
             return _localUsers.Get(id);
         }
 
-        public LocalUser AddLocalUser(LocalUser binding)
+        public LocalUser AddLocalUser(LocalUser connector)
         {
-            return _localUsers.Add(binding);
+            return _localUsers.Add(connector);
         }
 
-        public LocalUser UpdateLocalUser(LocalUser binding)
+        public LocalUser UpdateLocalUser(LocalUser connector)
         {
-            return _localUsers.Update(binding);
+            return _localUsers.Update(connector);
         }
 
         public bool DeleteLocalUser(int id)
@@ -297,6 +312,31 @@ namespace HydraService
         public bool DeleteExternalUser(int id)
         {
             return _externalUsers.Delete(id);
+        }
+
+        public IEnumerable<TimeTable> GetTimeTables()
+        {
+            return _timeTables.All();
+        }
+
+        public TimeTable GetTimeTable(int id)
+        {
+            return _timeTables.Get(id);
+        }
+
+        public TimeTable AddTimeTable(TimeTable timeTable)
+        {
+            return _timeTables.Add(timeTable);
+        }
+
+        public TimeTable UpdateTimeTable(TimeTable timeTable)
+        {
+            return _timeTables.Update(timeTable);
+        }
+
+        public bool DeleteTimeTable(int id)
+        {
+            return _timeTables.Delete(id);
         }
 
         public Stream ExportExternalUsers()

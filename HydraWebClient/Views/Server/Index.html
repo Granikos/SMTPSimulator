@@ -1,11 +1,11 @@
 ﻿<div class="container-fluid">
     <form role="form" class="form-horizontal clearfix" name="serverConfigForm" ng-submit="serverConfigForm.$valid && submit()">
         <div class="form-group">
-            <label class="control-label col-sm-3">SMTP Server Status</label>
+            <label class="control-label col-sm-4">SMTP Server Status</label>
             <div class="col-sm-2">
                 <p class="form-control-static">{{status}}</p>
             </div>
-            <div class="col-sm-5">
+            <div class="col-sm-4">
                 <div class="btn-group pull-right">
                     <button type="button" class="btn btn-success" ng-click="start()" ng-disabled="running">
                         <i class="glyphicon glyphicon-play"></i> Start
@@ -17,27 +17,69 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">Service Version</label>
-            <div class="col-sm-7">
+            <label class="control-label col-sm-4">Service Version</label>
+            <div class="col-sm-6">
                 <p class="form-control-static">{{serviceVersion}}</p>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">Service Build Date</label>
-            <div class="col-sm-7">
+            <label class="control-label col-sm-4">Service Build Date</label>
+            <div class="col-sm-6">
                 <p class="form-control-static">{{serviceBuildDate | date : 'medium' }}</p>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">UI Version</label>
-            <div class="col-sm-7">
+            <label class="control-label col-sm-4">UI Version</label>
+            <div class="col-sm-6">
                 <p class="form-control-static">{{uiVersion}}</p>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">UI Build Date</label>
-            <div class="col-sm-7">
+            <label class="control-label col-sm-4">UI Build Date</label>
+            <div class="col-sm-6">
                 <p class="form-control-static">{{uiBuildDate | date : 'medium' }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">Local Email-Addresses</label>
+            <div class="col-sm-4">
+                <p class="form-control-static">TODO</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">External Domains/Email-Addresses</label>
+            <div class="col-sm-4">
+                <ul ng-show="domains" class="form-control-static list-group">
+                    <li ng-repeat="domain in domains | orderBy:'DomainName'" class="list-group-item">
+                        <span class="badge" tooltip="This domain has {{domain.MailboxCount}} email addresses configured">{{domain.MailboxCount}}</span>
+                        {{domain.DomainName}}
+                    </li>
+                </ul>
+                <p class="form-control-static" ng-hide="domains">No domains configured</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">Active Time Tables</label>
+            <div class="col-sm-4">
+                <ul ng-show="(at = (timeTables | filter:{Active:true})).length" class="form-control-static list-group">
+                    <li ng-repeat="timeTable in at | orderBy:'Name'" class="list-group-item">
+                        <span class="badge badge-success" tooltip="For this time table, {{timeTable.SentCount || 'no'}} emails were sent successfully">{{timeTable.SentCount || 0}}</span>
+                        <span class="badge badge-danger" tooltip="For this time table, {{timeTable.ErrorCount || 'no'}} emails resulted in an error">{{timeTable.ErrorCount || 0}}</span>
+                        {{timeTable.Name}}
+                    </li>
+                </ul>
+                <p class="form-control-static" ng-hide="at.length">No active time tables</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">Inactive Time Tables</label>
+            <div class="col-sm-4" ng-init="">
+                <ul ng-show="(iat = (timeTables | filter:{Active:false})).length" class="form-control-static list-group">
+                    <li ng-repeat="timeTable in iat | orderBy:'Name'" class="list-group-item disabled">
+                        {{timeTable.Name}}
+                    </li>
+                </ul>
+                <p class="form-control-static" ng-hide="iat.length">No inactive time tables</p>
             </div>
         </div>
     </form>

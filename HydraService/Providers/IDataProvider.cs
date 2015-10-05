@@ -8,8 +8,8 @@ namespace HydraService.Providers
         IEnumerable<TEntity> All();
         IEnumerable<TEntity> Paged(int page, int pageSize);
         TEntity Get(TKey id);
-        TEntity Add(TEntity binding);
-        TEntity Update(TEntity binding);
+        TEntity Add(TEntity entity);
+        TEntity Update(TEntity entity);
         bool Delete(TKey id);
     }
 }

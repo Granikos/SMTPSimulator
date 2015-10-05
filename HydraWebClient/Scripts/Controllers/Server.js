@@ -1,7 +1,10 @@
 ﻿(function () {
-    angular.module("Server", ["ui.grid", "ui.grid.edit", "ui.grid.rowEdit", "ui.grid.selection", "ui.bootstrap.modal"])
+    angular.module("Server", ["ui.grid", "ui.grid.edit", "ui.grid.rowEdit", "ui.grid.selection", "ui.bootstrap.modal", "ui.bootstrap.tooltip"])
         .service("BindingService", ["$http", DataService("api/ReceiveConnectors")])
         .service("SubnetService", ["$http", DataService("api/ServerSubnets")])
+
+        .service("TimeTableService", ["$http", DataService("api/TimeTables")])
+
         .service("ServerService", [
             "$http", function($http) {
                 this.get = function() {
@@ -14,13 +17,15 @@
             }
         ])
         .controller("ServerController", [
-            "$scope", "$modal", "$q", "$http", function ($scope, $modal, $q, $http) {
+            "$scope", "$modal", "TimeTableService", "$http", function ($scope, $modal, TimeTableService, $http) {
                 $scope.running = null;
                 $scope.status = "???";
                 $scope.serviceVersion = "???";
                 $scope.serviceBuildDate = "???";
                 $scope.uiVersion = "???";
                 $scope.uiBuildDate = "???";
+                $scope.domains = [];
+                $scope.timeTables = [];
 
                 $http.get("api/Server/IsRunning")
                     .success(function(running) {
@@ -67,6 +72,22 @@
                         $scope.version = "Error";
                         $scope.buildDate = "Error";
                         showError(data.Message);
+                    });
+
+                $http.get("api/Domains/WithMailboxCount")
+                    .success(function (domains) {
+                        $scope.domains = domains;
+                    })
+                    .error(function (data) {
+                        showError(data.Message || data.data.Message);
+                    });
+
+                TimeTableService.all()
+                    .success(function (timeTables) {
+                        $scope.timeTables = timeTables;
+                    })
+                    .error(function (data) {
+                        showError(data.Message || data.data.Message);
                     });
             }
         ]);

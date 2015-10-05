@@ -13,7 +13,6 @@ namespace HydraWebClient.Controllers
     {
         readonly ConfigurationServiceClient _service = new ConfigurationServiceClient();
 
-        // GET api/Domains
         [HttpGet]
         [Route("")]
         public IEnumerable<Domain> Get()
@@ -21,7 +20,13 @@ namespace HydraWebClient.Controllers
             return _service.GetDomains();
         }
 
-        // GET api/Domains/5
+        [HttpGet]
+        [Route("WithMailboxCount")]
+        public IEnumerable<DomainWithMailboxCount> GetWithMailboxCount()
+        {
+            return _service.GetDomainsWithMailboxCount();
+        }
+
         [HttpGet]
         [Route("{domainName}")]
         public HttpResponseMessage Get(string domainName)
@@ -38,7 +43,6 @@ namespace HydraWebClient.Controllers
 
         static readonly Regex DomainRegex = new Regex(@"^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        // POST api/Domains
         [HttpPost]
         [Route("{*domainName}")]
         public HttpResponseMessage Post(string domainName)
@@ -58,7 +62,6 @@ namespace HydraWebClient.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, added);
         }
 
-        // PUT api/Domains/5
         [HttpPut]
         [Route("{id:int}")]
         public HttpResponseMessage Put(int id, [FromBody]Domain domain)
@@ -73,7 +76,6 @@ namespace HydraWebClient.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, updated);
         }
 
-        // DELETE api/Domains/5
         [HttpDelete]
         [Route("{id:int}")]
         public HttpResponseMessage Delete(int id)

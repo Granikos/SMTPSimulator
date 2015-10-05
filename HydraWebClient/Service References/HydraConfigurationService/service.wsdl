@@ -55,6 +55,12 @@
   <wsdl:message name="IConfigurationService_GetDomains_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetDomainsResponse" />
   </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetDomainsWithMailboxCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDomainsWithMailboxCount" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetDomainsWithMailboxCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDomainsWithMailboxCountResponse" />
+  </wsdl:message>
   <wsdl:message name="IConfigurationService_GetDomain_InputMessage">
     <wsdl:part name="parameters" element="tns:GetDomain" />
   </wsdl:message>
@@ -265,6 +271,36 @@
   <wsdl:message name="IConfigurationService_DeleteExternalUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteExternalUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetTimeTables_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTimeTables" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetTimeTables_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTimeTablesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetTimeTable_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTimeTable" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetTimeTable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTimeTableResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_AddTimeTable_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddTimeTable" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_AddTimeTable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddTimeTableResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_UpdateTimeTable_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTimeTable" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_UpdateTimeTable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTimeTableResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_DeleteTimeTable_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteTimeTable" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_DeleteTimeTable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteTimeTableResponse" />
+  </wsdl:message>
   <wsdl:message name="IConfigurationService_ExportExternalUsers_InputMessage">
     <wsdl:part name="parameters" element="tns:ExportExternalUsers" />
   </wsdl:message>
@@ -333,6 +369,10 @@
     <wsdl:operation name="GetDomains">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetDomains" message="tns:IConfigurationService_GetDomains_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetDomainsResponse" message="tns:IConfigurationService_GetDomains_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDomainsWithMailboxCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetDomainsWithMailboxCount" message="tns:IConfigurationService_GetDomainsWithMailboxCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetDomainsWithMailboxCountResponse" message="tns:IConfigurationService_GetDomainsWithMailboxCount_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetDomain">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetDomain" message="tns:IConfigurationService_GetDomain_InputMessage" />
@@ -474,6 +514,26 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DeleteExternalUser" message="tns:IConfigurationService_DeleteExternalUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DeleteExternalUserResponse" message="tns:IConfigurationService_DeleteExternalUser_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetTimeTables">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetTimeTables" message="tns:IConfigurationService_GetTimeTables_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetTimeTablesResponse" message="tns:IConfigurationService_GetTimeTables_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimeTable">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetTimeTable" message="tns:IConfigurationService_GetTimeTable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetTimeTableResponse" message="tns:IConfigurationService_GetTimeTable_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddTimeTable">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/AddTimeTable" message="tns:IConfigurationService_AddTimeTable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/AddTimeTableResponse" message="tns:IConfigurationService_AddTimeTable_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTimeTable">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/UpdateTimeTable" message="tns:IConfigurationService_UpdateTimeTable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/UpdateTimeTableResponse" message="tns:IConfigurationService_UpdateTimeTable_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTimeTable">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DeleteTimeTable" message="tns:IConfigurationService_DeleteTimeTable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DeleteTimeTableResponse" message="tns:IConfigurationService_DeleteTimeTable_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="ExportExternalUsers">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/ExportExternalUsers" message="tns:IConfigurationService_ExportExternalUsers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/ExportExternalUsersResponse" message="tns:IConfigurationService_ExportExternalUsers_OutputMessage" />
@@ -549,6 +609,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetDomains">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetDomains" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDomainsWithMailboxCount">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetDomainsWithMailboxCount" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -864,6 +933,51 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteExternalUser">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/DeleteExternalUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTimeTables">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetTimeTables" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTimeTable">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetTimeTable" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTimeTable">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/AddTimeTable" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTimeTable">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/UpdateTimeTable" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTimeTable">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/DeleteTimeTable" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

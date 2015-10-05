@@ -241,6 +241,67 @@ namespace HydraWebClient.HydraConfigurationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DomainWithMailboxCount", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
+    [System.SerializableAttribute()]
+    public partial class DomainWithMailboxCount : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DomainNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int MailboxCountField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DomainName {
+            get {
+                return this.DomainNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DomainNameField, value) != true)) {
+                    this.DomainNameField = value;
+                    this.RaisePropertyChanged("DomainName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int MailboxCount {
+            get {
+                return this.MailboxCountField;
+            }
+            set {
+                if ((this.MailboxCountField.Equals(value) != true)) {
+                    this.MailboxCountField = value;
+                    this.RaisePropertyChanged("MailboxCount");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ReceiveConnector", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
     [System.SerializableAttribute()]
     public partial class ReceiveConnector : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1410,6 +1471,115 @@ namespace HydraWebClient.HydraConfigurationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TimeTable", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
+    [System.SerializableAttribute()]
+    public partial class TimeTable : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ActiveField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MailContentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HydraWebClient.HydraConfigurationService.SendConnector SendConnectorField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Active {
+            get {
+                return this.ActiveField;
+            }
+            set {
+                if ((this.ActiveField.Equals(value) != true)) {
+                    this.ActiveField = value;
+                    this.RaisePropertyChanged("Active");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MailContent {
+            get {
+                return this.MailContentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MailContentField, value) != true)) {
+                    this.MailContentField = value;
+                    this.RaisePropertyChanged("MailContent");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HydraWebClient.HydraConfigurationService.SendConnector SendConnector {
+            get {
+                return this.SendConnectorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SendConnectorField, value) != true)) {
+                    this.SendConnectorField = value;
+                    this.RaisePropertyChanged("SendConnector");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MailMessage", Namespace="http://schemas.datacontract.org/2004/07/HydraService.Models")]
     [System.SerializableAttribute()]
     public partial class MailMessage : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1534,6 +1704,12 @@ namespace HydraWebClient.HydraConfigurationService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDomains", ReplyAction="http://tempuri.org/IConfigurationService/GetDomainsResponse")]
         System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.Domain[]> GetDomainsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDomainsWithMailboxCount", ReplyAction="http://tempuri.org/IConfigurationService/GetDomainsWithMailboxCountResponse")]
+        HydraWebClient.HydraConfigurationService.DomainWithMailboxCount[] GetDomainsWithMailboxCount();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDomainsWithMailboxCount", ReplyAction="http://tempuri.org/IConfigurationService/GetDomainsWithMailboxCountResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.DomainWithMailboxCount[]> GetDomainsWithMailboxCountAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDomain", ReplyAction="http://tempuri.org/IConfigurationService/GetDomainResponse")]
         HydraWebClient.HydraConfigurationService.Domain GetDomain(string domain);
@@ -1745,6 +1921,36 @@ namespace HydraWebClient.HydraConfigurationService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/DeleteExternalUserResponse")]
         System.Threading.Tasks.Task<bool> DeleteExternalUserAsync(int id);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetTimeTables", ReplyAction="http://tempuri.org/IConfigurationService/GetTimeTablesResponse")]
+        HydraWebClient.HydraConfigurationService.TimeTable[] GetTimeTables();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetTimeTables", ReplyAction="http://tempuri.org/IConfigurationService/GetTimeTablesResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.TimeTable[]> GetTimeTablesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetTimeTable", ReplyAction="http://tempuri.org/IConfigurationService/GetTimeTableResponse")]
+        HydraWebClient.HydraConfigurationService.TimeTable GetTimeTable(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetTimeTable", ReplyAction="http://tempuri.org/IConfigurationService/GetTimeTableResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.TimeTable> GetTimeTableAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddTimeTable", ReplyAction="http://tempuri.org/IConfigurationService/AddTimeTableResponse")]
+        HydraWebClient.HydraConfigurationService.TimeTable AddTimeTable(HydraWebClient.HydraConfigurationService.TimeTable timeTable);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddTimeTable", ReplyAction="http://tempuri.org/IConfigurationService/AddTimeTableResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.TimeTable> AddTimeTableAsync(HydraWebClient.HydraConfigurationService.TimeTable timeTable);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateTimeTable", ReplyAction="http://tempuri.org/IConfigurationService/UpdateTimeTableResponse")]
+        HydraWebClient.HydraConfigurationService.TimeTable UpdateTimeTable(HydraWebClient.HydraConfigurationService.TimeTable timeTable);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateTimeTable", ReplyAction="http://tempuri.org/IConfigurationService/UpdateTimeTableResponse")]
+        System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.TimeTable> UpdateTimeTableAsync(HydraWebClient.HydraConfigurationService.TimeTable timeTable);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteTimeTable", ReplyAction="http://tempuri.org/IConfigurationService/DeleteTimeTableResponse")]
+        bool DeleteTimeTable(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteTimeTable", ReplyAction="http://tempuri.org/IConfigurationService/DeleteTimeTableResponse")]
+        System.Threading.Tasks.Task<bool> DeleteTimeTableAsync(int id);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/ExportExternalUsers", ReplyAction="http://tempuri.org/IConfigurationService/ExportExternalUsersResponse")]
         System.IO.Stream ExportExternalUsers();
         
@@ -1861,6 +2067,14 @@ namespace HydraWebClient.HydraConfigurationService {
         
         public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.Domain[]> GetDomainsAsync() {
             return base.Channel.GetDomainsAsync();
+        }
+        
+        public HydraWebClient.HydraConfigurationService.DomainWithMailboxCount[] GetDomainsWithMailboxCount() {
+            return base.Channel.GetDomainsWithMailboxCount();
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.DomainWithMailboxCount[]> GetDomainsWithMailboxCountAsync() {
+            return base.Channel.GetDomainsWithMailboxCountAsync();
         }
         
         public HydraWebClient.HydraConfigurationService.Domain GetDomain(string domain) {
@@ -2141,6 +2355,46 @@ namespace HydraWebClient.HydraConfigurationService {
         
         public System.Threading.Tasks.Task<bool> DeleteExternalUserAsync(int id) {
             return base.Channel.DeleteExternalUserAsync(id);
+        }
+        
+        public HydraWebClient.HydraConfigurationService.TimeTable[] GetTimeTables() {
+            return base.Channel.GetTimeTables();
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.TimeTable[]> GetTimeTablesAsync() {
+            return base.Channel.GetTimeTablesAsync();
+        }
+        
+        public HydraWebClient.HydraConfigurationService.TimeTable GetTimeTable(int id) {
+            return base.Channel.GetTimeTable(id);
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.TimeTable> GetTimeTableAsync(int id) {
+            return base.Channel.GetTimeTableAsync(id);
+        }
+        
+        public HydraWebClient.HydraConfigurationService.TimeTable AddTimeTable(HydraWebClient.HydraConfigurationService.TimeTable timeTable) {
+            return base.Channel.AddTimeTable(timeTable);
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.TimeTable> AddTimeTableAsync(HydraWebClient.HydraConfigurationService.TimeTable timeTable) {
+            return base.Channel.AddTimeTableAsync(timeTable);
+        }
+        
+        public HydraWebClient.HydraConfigurationService.TimeTable UpdateTimeTable(HydraWebClient.HydraConfigurationService.TimeTable timeTable) {
+            return base.Channel.UpdateTimeTable(timeTable);
+        }
+        
+        public System.Threading.Tasks.Task<HydraWebClient.HydraConfigurationService.TimeTable> UpdateTimeTableAsync(HydraWebClient.HydraConfigurationService.TimeTable timeTable) {
+            return base.Channel.UpdateTimeTableAsync(timeTable);
+        }
+        
+        public bool DeleteTimeTable(int id) {
+            return base.Channel.DeleteTimeTable(id);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteTimeTableAsync(int id) {
+            return base.Channel.DeleteTimeTableAsync(id);
         }
         
         public System.IO.Stream ExportExternalUsers() {

@@ -40,6 +40,13 @@ namespace HydraService
             ResponseFormat = WebMessageFormat.Json)]
         IEnumerable<Domain> GetDomains();
 
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "DomainsWithMailboxCount",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<DomainWithMailboxCount> GetDomainsWithMailboxCount();
+
         [WebGet(
             UriTemplate = "Domains/{domain}",
             RequestFormat = WebMessageFormat.Json,
@@ -298,6 +305,44 @@ namespace HydraService
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         bool DeleteExternalUser(int id);
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "TimeTables",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<TimeTable> GetTimeTables();
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "TimeTables/{id}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        TimeTable GetTimeTable(int id);
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "TimeTables",
+            Method = "PUT",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        TimeTable AddTimeTable(TimeTable timeTable);
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "TimeTables",
+            Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        TimeTable UpdateTimeTable(TimeTable timeTable);
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "TimeTables/{id}",
+            Method = "DELETE",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool DeleteTimeTable(int id);
 
         [OperationContract]
         [WebGet(

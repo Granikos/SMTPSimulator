@@ -43,11 +43,11 @@ namespace HydraService.Providers
 
         public TEntity Get(TKey id)
         {
-            TEntity binding;
+            TEntity entity;
 
-            _entities.TryGetValue(id, out binding);
+            _entities.TryGetValue(id, out entity);
 
-            return binding;
+            return entity;
         }
 
         public TEntity Add(TEntity entity)

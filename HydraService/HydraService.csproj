@@ -192,9 +192,11 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="IMailQueueProvider.cs" />
     <Compile Include="MessageSender.cs" />
+    <Compile Include="Models\DomainWithMailboxCount.cs" />
     <Compile Include="Models\EntitiesWithTotal.cs" />
     <Compile Include="Models\ImportResult.cs" />
     <Compile Include="Models\MailMessage.cs" />
+    <Compile Include="Models\TimeTable.cs" />
     <Compile Include="PriorityQueue\DelayedQueue.cs" />
     <Compile Include="IConfigurationService.cs" />
     <Compile Include="ISMTPServerContainer.cs" />
@@ -231,6 +233,7 @@
     <Compile Include="Models\LocalUser.cs" />
     <Compile Include="Models\ReceiveConnector.cs" />
     <Compile Include="Providers\ISendConnectorProvider.cs" />
+    <Compile Include="Providers\ITimeTableProvider.cs" />
     <Compile Include="Providers\IUserTemplate.cs" />
     <Compile Include="Providers\IUserTemplateProvider.cs" />
     <Compile Include="Providers\LocalUserProvider.cs" />
@@ -240,6 +243,7 @@
     <Compile Include="Providers\SendConnectorProvider.cs" />
     <Compile Include="Models\UserTemplate.cs" />
     <Compile Include="Providers\TechnicalUserTemplates.cs" />
+    <Compile Include="Providers\TimeTableProvider.cs" />
     <Compile Include="SMTPServer.cs" />
     <Compile Include="SMTPService.cs">
       <SubType>Component</SubType>

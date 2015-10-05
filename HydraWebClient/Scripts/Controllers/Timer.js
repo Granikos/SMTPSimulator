@@ -1,8 +1,19 @@
 ﻿(function () {
     angular.module('Timer', ['ui.bootstrap.modal'])
 
+        .service("TimeTableService", ["$http", DataService("api/TimeTables")])
+
         .controller('TimerController', [
-            '$scope', '$modal', '$q', function ($scope, $modal, $q) {
+            '$scope', '$modal', 'TimeTableService', function ($scope, $modal, TimeTableService) {
+                $scope.timeTables = [];
+
+                TimeTableService.all()
+                    .success(function (timeTables) {
+                        $scope.timeTables = timeTables;
+                    })
+                    .error(function (data) {
+                        showError(data.Message || data.data.Message);
+                    });
             }
         ]);
 })();
