@@ -1,13 +1,10 @@
-﻿using System;
-using System.ComponentModel.Composition.Hosting;
-using System.IO;
+﻿using System.ComponentModel.Composition.Hosting;
 using System.Net;
 using System.Net.Mail;
-using System.Reflection;
-using System.Text;
-using HydraCore;
-using HydraService;
-using HydraService.Models;
+using Granikos.Hydra.Core;
+using Granikos.Hydra.Service.Models;
+using Granikos.Hydra.SmtpClient;
+using Granikos.Hydra.SmtpServer;
 
 // using System.Net.Mail;
 

@@ -198,8 +198,8 @@ FakesAssemblies/
 # Visual Studio 6 workspace options file
 *.opt
 
-/HydraWebClient/Content/dist
-/HydraWebClient/Scripts/maps
-/HydraWebClient/Scripts/*.min.js
-/HydraService/AppData/*.json
+/Granikos.Hydra.WebClient/Content/dist
+/Granikos.Hydra.WebClient/Scripts/maps
+/Granikos.Hydra.WebClient/Scripts/*.min.js
+/Granikos.Hydra.Service/AppData/*.json
 /WebDeploy

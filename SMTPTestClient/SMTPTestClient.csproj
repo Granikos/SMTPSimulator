@@ -49,13 +49,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HydraCore\HydraCore.csproj">
-      <Project>{1109925f-690b-4e73-99f8-dc1fce96ca97}</Project>
-      <Name>HydraCore</Name>
+    <ProjectReference Include="..\Granikos.Hydra.Core\Granikos.Hydra.Core.csproj">
+      <Project>{6c923248-1b40-4a27-80f7-ddeeb9f6d4d5}</Project>
+      <Name>Granikos.Hydra.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HydraService\HydraService.csproj">
-      <Project>{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}</Project>
-      <Name>HydraService</Name>
+    <ProjectReference Include="..\Granikos.Hydra.SmtpClient\Granikos.Hydra.SmtpClient.csproj">
+      <Project>{e149ba1d-5095-4f46-bb16-a113757adcc9}</Project>
+      <Name>Granikos.Hydra.SmtpClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Granikos.Hydra.SmtpServer\Granikos.Hydra.SmtpServer.csproj">
+      <Project>{1109925f-690b-4e73-99f8-dc1fce96ca97}</Project>
+      <Name>Granikos.Hydra.SmtpServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Granikos.Hydra.Service\Granikos.Hydra.Service.csproj">
+      <Project>{4606e839-7049-4ef3-b6e2-ef0ea0fea065}</Project>
+      <Name>Granikos.Hydra.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

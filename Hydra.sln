@@ -3,24 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HydraService", "HydraService\HydraService.csproj", "{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.Service", "Granikos.Hydra.Service\Granikos.Hydra.Service.csproj", "{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1109925F-690B-4E73-99F8-DC1FCE96CA97} = {1109925F-690B-4E73-99F8-DC1FCE96CA97}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HydraCore", "HydraCore\HydraCore.csproj", "{1109925F-690B-4E73-99F8-DC1FCE96CA97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.SmtpServer", "Granikos.Hydra.SmtpServer\Granikos.Hydra.SmtpServer.csproj", "{1109925F-690B-4E73-99F8-DC1FCE96CA97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HydraTest", "HydraTest\HydraTest.csproj", "{EB600132-5484-4537-977A-86D5FDFD6CB5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.Test", "Granikos.Hydra.Test\Granikos.Hydra.Test.csproj", "{EB600132-5484-4537-977A-86D5FDFD6CB5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMTPTestClient", "SMTPTestClient\SMTPTestClient.csproj", "{6F4987FD-D183-47F6-92AD-7DB28386E384}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bbv.Common.EventBroker", "EventBroker\bbv.Common.EventBroker.csproj", "{81DE807D-D637-4B10-8AE1-13EA5AC1A80D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HydraClient", "HydraClient\HydraClient.csproj", "{1D50A0F9-360F-40B5-BC89-C5CE9ED5E38E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.WebClient", "Granikos.Hydra.WebClient\HydraWebClient.csproj", "{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HydraWebClient", "HydraWebClient\HydraWebClient.csproj", "{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Granikos.Hydra.Setup", "Granikos.Hydra.Setup\Hydra Setup.vdproj", "{042F26B5-6DBD-4E49-814D-6B2B6647606E}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Hydra Setup", "Hydra Setup\Hydra Setup.vdproj", "{042F26B5-6DBD-4E49-814D-6B2B6647606E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.SmtpClient", "Granikos.Hydra.SmtpClient\Granikos.Hydra.SmtpClient.csproj", "{E149BA1D-5095-4F46-BB16-A113757ADCC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.Core", "Granikos.Hydra.Core\Granikos.Hydra.Core.csproj", "{6C923248-1B40-4A27-80F7-DDEEB9F6D4D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,16 +50,20 @@ Global
 		{81DE807D-D637-4B10-8AE1-13EA5AC1A80D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81DE807D-D637-4B10-8AE1-13EA5AC1A80D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81DE807D-D637-4B10-8AE1-13EA5AC1A80D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1D50A0F9-360F-40B5-BC89-C5CE9ED5E38E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1D50A0F9-360F-40B5-BC89-C5CE9ED5E38E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1D50A0F9-360F-40B5-BC89-C5CE9ED5E38E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1D50A0F9-360F-40B5-BC89-C5CE9ED5E38E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{042F26B5-6DBD-4E49-814D-6B2B6647606E}.Debug|Any CPU.ActiveCfg = Debug
 		{042F26B5-6DBD-4E49-814D-6B2B6647606E}.Release|Any CPU.ActiveCfg = Release
+		{E149BA1D-5095-4F46-BB16-A113757ADCC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E149BA1D-5095-4F46-BB16-A113757ADCC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E149BA1D-5095-4F46-BB16-A113757ADCC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E149BA1D-5095-4F46-BB16-A113757ADCC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C923248-1B40-4A27-80F7-DDEEB9F6D4D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C923248-1B40-4A27-80F7-DDEEB9F6D4D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C923248-1B40-4A27-80F7-DDEEB9F6D4D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C923248-1B40-4A27-80F7-DDEEB9F6D4D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
