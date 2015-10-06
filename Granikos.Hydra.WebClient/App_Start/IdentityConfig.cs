@@ -10,9 +10,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using HydraWebClient.Models;
+using Granikos.Hydra.WebClient.Models;
 
-namespace HydraWebClient
+namespace Granikos.Hydra.WebClient
 {
     public class EmailService : IIdentityMessageService
     {

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace HydraWebClient
+namespace Granikos.Hydra.WebClient
 {
     public static class Helpers
     {

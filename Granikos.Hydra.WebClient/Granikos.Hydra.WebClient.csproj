@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HydraWebClient</RootNamespace>
-    <AssemblyName>HydraWebClient</AssemblyName>
+    <RootNamespace>Granikos.Hydra.WebClient</RootNamespace>
+    <AssemblyName>Granikos.Hydra.WebClient</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -231,48 +231,48 @@
     <Content Include="Scripts\_references.js" />
     <None Include="Service References\HydraConfigurationService\configuration91.svcinfo" />
     <None Include="Service References\HydraConfigurationService\configuration.svcinfo" />
-    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.LocalUser.datasource">
+    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.Domain.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Service References\HydraConfigurationService\HydraCore.xsd">
+    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.DomainWithMailboxCount.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUsersWithTotal.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.ImportResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.LocalUsersWithTotal.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.ReceiveConnector.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.SendConnector.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.TimeTable.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.UserTemplate.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.VersionInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\HydraConfigurationService\Granikos.Hydra.Core.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\HydraConfigurationService\HydraService.Models.xsd">
+    <None Include="Service References\HydraConfigurationService\Granikos.Hydra.Service.Models.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.SendConnector.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.Domain.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.ExternalUser.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.UserTemplate.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.ExternalUsersWithTotal.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.LocalUsersWithTotal.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.ReceiveConnector.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.ImportResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.VersionInfo.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.TimeTable.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\HydraWebClient.HydraConfigurationService.DomainWithMailboxCount.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <None Include="Service References\HydraConfigurationService\Message.xsd">
       <SubType>Designer</SubType>
     </None>

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reflection;
 using System.Web.Http;
-using HydraWebClient.HydraConfigurationService;
+using Granikos.Hydra.WebClient.HydraConfigurationService;
 
-namespace HydraWebClient.Controllers
+namespace Granikos.Hydra.WebClient.Controllers
 {
     public struct ExtendedVersionInfo
     {

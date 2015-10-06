@@ -3,9 +3,9 @@ using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Web.Http;
-using HydraWebClient.HydraConfigurationService;
+using Granikos.Hydra.WebClient.HydraConfigurationService;
 
-namespace HydraWebClient.Controllers
+namespace Granikos.Hydra.WebClient.Controllers
 {
     // [Authorize]
     [RoutePrefix("api/Domains")]

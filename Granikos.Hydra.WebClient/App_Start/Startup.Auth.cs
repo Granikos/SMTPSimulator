@@ -5,9 +5,9 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using HydraWebClient.Models;
+using Granikos.Hydra.WebClient.Models;
 
-namespace HydraWebClient
+namespace Granikos.Hydra.WebClient
 {
     public partial class Startup
     {

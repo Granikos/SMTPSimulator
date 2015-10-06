@@ -2,9 +2,9 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using HydraWebClient.HydraConfigurationService;
+using Granikos.Hydra.WebClient.HydraConfigurationService;
 
-namespace HydraWebClient.Controllers
+namespace Granikos.Hydra.WebClient.Controllers
 {
     // [Authorize]
     [RoutePrefix("api/Logs")]

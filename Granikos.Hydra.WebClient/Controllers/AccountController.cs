@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
 using System.Web;
 using System.Web.Http;
-using HydraWebClient.Models;
+using Granikos.Hydra.WebClient.Models;
 using Microsoft.Owin.Security;
 
-namespace HydraWebClient.Controllers
+namespace Granikos.Hydra.WebClient.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]

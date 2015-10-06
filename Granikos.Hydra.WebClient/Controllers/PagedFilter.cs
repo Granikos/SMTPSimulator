@@ -1,6 +1,6 @@
 using System;
 
-namespace HydraWebClient.Controllers
+namespace Granikos.Hydra.WebClient.Controllers
 {
     public class PagedFilter
     {
