@@ -13,21 +13,23 @@ namespace Granikos.Hydra.Core
         public Mail(MailAddress from, IEnumerable<MailAddress> recipients, string mail)
         {
             From = from;
-            Recipients = new MailAddressCollection();
-            foreach (var recipient in recipients)
-            {
-                Recipients.Add(recipient);
-            }
+            Recipients = recipients.ToMailAddressCollection();
             Headers = new Dictionary<string, string>();
             Parse(mail);
+        }
+
+        protected Mail(MailAddress from, IEnumerable<MailAddress> recipients, Dictionary<string, string> headers, string content)
+        {
+            From = from;
+            Recipients = recipients.ToMailAddressCollection();
+            Headers = headers;
+            Body = content;
         }
 
         public MailAddress From { get; set; }
         public MailAddressCollection Recipients { get; private set; }
         public Dictionary<string, string> Headers { get; private set; }
         public string Body { get; set; }
-        public int RetryCount { get; set; }
-        public ISendSettings Settings { get; set; }
 
         private void Parse(string mail)
         {

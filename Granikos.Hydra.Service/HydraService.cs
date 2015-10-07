@@ -12,6 +12,7 @@ using System.ServiceProcess;
 using Granikos.Hydra.Core;
 using Granikos.Hydra.Service.PriorityQueue;
 using Granikos.Hydra.Service.Providers;
+using Granikos.Hydra.SmtpClient;
 using Granikos.Hydra.SmtpServer;
 using Granikos.Hydra.SmtpServer.CommandHandlers;
 using MailMessage = Granikos.Hydra.Service.Models.MailMessage;
@@ -25,7 +26,7 @@ namespace Granikos.Hydra.Service
 
         private readonly CompositionContainer _container;
         private readonly SMTPServer _smtpServer;
-        private readonly DelayedQueue<Mail> _mailQueue = new DelayedQueue<Mail>(1000);
+        private readonly DelayedQueue<SendableMail> _mailQueue = new DelayedQueue<SendableMail>(1000);
         private ServiceHost _host;
 
         [Import]
@@ -87,11 +88,9 @@ namespace Granikos.Hydra.Service
             var from = new MailAddress(mail.Sender);
             var to = mail.Recipients.Select(r => new MailAddress(r)).ToArray();
             var parsed = new Mail(from, to, mail.Content);
+            var sendableMail = new SendableMail(parsed, _sendConnectors.DefaultConnector);
 
-            // TODO
-            parsed.Settings = _sendConnectors.DefaultConnector;
-
-            _mailQueue.Enqueue(parsed, TimeSpan.Zero);
+            _mailQueue.Enqueue(sendableMail, TimeSpan.Zero);
         }
 
         public bool Running { get; private set; }

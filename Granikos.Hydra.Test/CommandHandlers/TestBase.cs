@@ -24,15 +24,15 @@ namespace HydraTest.CommandHandlers
         {
             _context = ShimsContext.Create();
             Transaction = new ShimSMTPTransaction();
-            Core = new ShimSMTPCore();
+            Core = new ShimSMTPServer();
 
             Transaction.ServerGet = () => Core;
 
             ShimSMTPTransaction.BehaveAsNotImplemented();
-            ShimSMTPCore.BehaveAsNotImplemented();
+            ShimSMTPServer.BehaveAsNotImplemented();
         }
 
-        protected ShimSMTPCore Core { get; set; }
+        protected ShimSMTPServer Core { get; set; }
         protected ShimSMTPTransaction Transaction { get; set; }
 
         public void Dispose()

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Runtime.Serialization;
-using Granikos.Hydra.Core;
+using Granikos.Hydra.SmtpClient;
 
 namespace Granikos.Hydra.Service.Models
 {

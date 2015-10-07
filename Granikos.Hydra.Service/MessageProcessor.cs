@@ -15,7 +15,7 @@ namespace Granikos.Hydra.Service
 {
     internal class MessageProcessor
     {
-        public delegate void MailErrorHandler(Mail mail, ConnectorInfo info, SMTPStatusCode? status, Exception e);
+        public delegate void MailErrorHandler(SendableMail mail, ConnectorInfo info, SMTPStatusCode? status, Exception e);
 
         private readonly CompositionContainer _container;
 
@@ -35,7 +35,7 @@ namespace Granikos.Hydra.Service
             container.SatisfyImportsOnce(this);
         }
 
-        private IEnumerable<ConnectorInfo> GroupByHost(Mail mail)
+        private IEnumerable<ConnectorInfo> GroupByHost(SendableMail mail)
         {
             foreach (var recipientGroup in
                 mail.Recipients
@@ -79,7 +79,7 @@ namespace Granikos.Hydra.Service
 
         public event MailErrorHandler OnMailError;
 
-        public bool ProcessMail(Mail mail)
+        public bool ProcessMail(SendableMail mail)
         {
             var success = true;
             foreach (var connInfo in GroupByHost(mail))
@@ -120,7 +120,7 @@ namespace Granikos.Hydra.Service
             }
         }
 
-        protected virtual void TriggerMailError(Mail mail, ConnectorInfo info, SMTPStatusCode? status = null,
+        protected virtual void TriggerMailError(SendableMail mail, ConnectorInfo info, SMTPStatusCode? status = null,
             Exception e = null)
         {
             var handler = OnMailError;

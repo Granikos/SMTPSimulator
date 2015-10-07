@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Net.Mail;
 using System.Text;
 
 namespace Granikos.Hydra.Core
@@ -52,6 +54,17 @@ namespace Granikos.Hydra.Core
             }
 
             return sb.ToString();
+        }
+
+        public static MailAddressCollection ToMailAddressCollection(this IEnumerable<MailAddress> addresses)
+        {
+            var collection = new MailAddressCollection();
+            foreach (var address in addresses)
+            {
+                collection.Add(address);
+            }
+
+            return collection;
         }
     }
 }

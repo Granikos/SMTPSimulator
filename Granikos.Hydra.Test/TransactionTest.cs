@@ -17,7 +17,7 @@ namespace HydraTest
         {
             using (ShimsContext.Create())
             {
-                var server = new ShimSMTPCore();
+                var server = new ShimSMTPServer();
                 var settings = new StubIReceiveSettings();
 
                 var transaction = new SMTPTransaction(server, settings);
@@ -36,7 +36,7 @@ namespace HydraTest
         {
             using (ShimsContext.Create())
             {
-                var server = new ShimSMTPCore();
+                var server = new ShimSMTPServer();
                 var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
@@ -70,7 +70,7 @@ namespace HydraTest
         {
             using (ShimsContext.Create())
             {
-                var server = new ShimSMTPCore();
+                var server = new ShimSMTPServer();
                 var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
@@ -100,7 +100,7 @@ namespace HydraTest
         {
             using (ShimsContext.Create())
             {
-                var server = new ShimSMTPCore();
+                var server = new ShimSMTPServer();
                 var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
@@ -126,7 +126,7 @@ namespace HydraTest
         {
             using (ShimsContext.Create())
             {
-                var server = new ShimSMTPCore();
+                var server = new ShimSMTPServer();
                 var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
@@ -151,7 +151,7 @@ namespace HydraTest
         {
             using (ShimsContext.Create())
             {
-                var server = new ShimSMTPCore();
+                var server = new ShimSMTPServer();
                 var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
@@ -166,7 +166,7 @@ namespace HydraTest
         {
             using (ShimsContext.Create())
             {
-                var server = new ShimSMTPCore();
+                var server = new ShimSMTPServer();
                 var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
@@ -190,7 +190,7 @@ namespace HydraTest
         {
             using (ShimsContext.Create())
             {
-                var server = new ShimSMTPCore();
+                var server = new ShimSMTPServer();
                 var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
@@ -209,7 +209,7 @@ namespace HydraTest
         {
             using (ShimsContext.Create())
             {
-                var server = new ShimSMTPCore();
+                var server = new ShimSMTPServer();
                 var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
@@ -224,7 +224,7 @@ namespace HydraTest
         {
             using (ShimsContext.Create())
             {
-                var server = new ShimSMTPCore();
+                var server = new ShimSMTPServer();
                 var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
@@ -246,7 +246,7 @@ namespace HydraTest
         {
             using (ShimsContext.Create())
             {
-                var server = new ShimSMTPCore();
+                var server = new ShimSMTPServer();
                 var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
@@ -270,7 +270,7 @@ namespace HydraTest
 
             using (ShimsContext.Create())
             {
-                var server = new ShimSMTPCore();
+                var server = new ShimSMTPServer();
                 var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
@@ -307,7 +307,7 @@ namespace HydraTest
         {
             using (ShimsContext.Create())
             {
-                var server = new ShimSMTPCore();
+                var server = new ShimSMTPServer();
                 var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
@@ -324,7 +324,7 @@ namespace HydraTest
         {
             using (ShimsContext.Create())
             {
-                var server = new ShimSMTPCore();
+                var server = new ShimSMTPServer();
                 var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 
@@ -355,7 +355,7 @@ namespace HydraTest
         {
             using (ShimsContext.Create())
             {
-                var server = new ShimSMTPCore();
+                var server = new ShimSMTPServer();
                 var settings = new StubIReceiveSettings();
                 var transaction = new SMTPTransaction(server, settings);
 

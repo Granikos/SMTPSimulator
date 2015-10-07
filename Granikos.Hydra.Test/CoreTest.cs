@@ -22,7 +22,7 @@ namespace HydraTest
 
             var handler = new StubICommandHandler
             {
-                InitializeSMTPCore = c =>
+                InitializeSMTPServer = c =>
                 {
                     actualCore = c;
                     initialized = true;
@@ -188,7 +188,7 @@ namespace HydraTest
 
                 SMTPServer actualCore = null;
 
-                ShimSMTPTransaction.ConstructorSMTPCoreIReceiveSettings = (transaction, smtpCore, settings) =>
+                ShimSMTPTransaction.ConstructorSMTPServerIReceiveSettings = (transaction, smtpCore, settings) =>
                 {
                     actualSettings = settings;
                     actualCore = smtpCore;

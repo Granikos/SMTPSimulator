@@ -3,6 +3,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.Threading;
 using Granikos.Hydra.Core;
 using Granikos.Hydra.Service.PriorityQueue;
+using Granikos.Hydra.SmtpClient;
 using log4net;
 
 namespace Granikos.Hydra.Service
@@ -15,12 +16,12 @@ namespace Granikos.Hydra.Service
         private readonly ManualResetEvent _askStop;
         private readonly ManualResetEvent _informStopped;
         private readonly object _lockObject = new object();
-        private readonly DelayedQueue<Mail> _mailQueue;
+        private readonly DelayedQueue<SendableMail> _mailQueue;
         private readonly MessageProcessor _processor;
         private Thread _thread;
         protected int TickDefaultMilliseconds = 1000;
 
-        public MessageSender(CompositionContainer container, DelayedQueue<Mail> queue)
+        public MessageSender(CompositionContainer container, DelayedQueue<SendableMail> queue)
         {
             _askStop = new ManualResetEvent(false);
             _informStopped = new ManualResetEvent(false);
@@ -46,7 +47,7 @@ namespace Granikos.Hydra.Service
             }
         }
 
-        public void HandleMailError(Mail mail, MessageProcessor.ConnectorInfo info, SMTPStatusCode? status, Exception e)
+        public void HandleMailError(SendableMail mail, MessageProcessor.ConnectorInfo info, SMTPStatusCode? status, Exception e)
         {
             var connector = info.Connector;
             if (status == SMTPStatusCode.NotAvailiable)
@@ -93,7 +94,7 @@ namespace Granikos.Hydra.Service
             {
                 try
                 {
-                    Mail mail = null;
+                    SendableMail mail = null;
                     lock (_mailQueue)
                     {
                         if (_mailQueue.Peek() != null)

@@ -1,4 +1,4 @@
-﻿namespace Granikos.Hydra.Core
+﻿namespace Granikos.Hydra.SmtpClient
 {
     public interface ISendSettings
     {
