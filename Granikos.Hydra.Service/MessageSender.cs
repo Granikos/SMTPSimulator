@@ -69,6 +69,11 @@ namespace Granikos.Hydra.Service
                 }
             }
 
+            if (e != null)
+            {
+                Logger.Error("An error occured while sending a mail:", e);
+            }
+
             // TODO
         }
 

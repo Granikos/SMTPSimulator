@@ -93,7 +93,7 @@ namespace Granikos.Hydra.Service
                 {
                     success = false;
 
-                    TriggerMailError(mail, connInfo, client.LastStatus);
+                    TriggerMailError(mail, connInfo, client.LastStatus, client.LastException);
                     continue;
                 }
 
@@ -101,7 +101,7 @@ namespace Granikos.Hydra.Service
                 {
                     success = false;
 
-                    TriggerMailError(mail, connInfo, client.LastStatus);
+                    TriggerMailError(mail, connInfo, client.LastStatus, client.LastException);
                 }
 
                 client.Close();

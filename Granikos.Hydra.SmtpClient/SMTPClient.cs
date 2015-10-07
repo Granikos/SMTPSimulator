@@ -7,7 +7,6 @@ using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Mail;
 using System.Net.Security;
 using System.Net.Sockets;
 using System.Security.Authentication;
@@ -29,31 +28,28 @@ namespace Granikos.Hydra.SmtpClient
         [ImportMany]
         private IEnumerable<ISMTPLogger> _loggers;
 
-        private int _port;
         private StreamReader _reader;
         private IPEndPoint _remoteEndpoint;
         private string _session;
         private Stream _stream;
         private StreamWriter _writer;
+        private bool _tlsEnabled;
 
         protected SMTPClient(ISendSettings settings, string host, int port = 25)
         {
             Contract.Requires<ArgumentNullException>(settings != null, "settings");
-            Contract.Requires<ArgumentNullException>(host != null, "host");
+            Contract.Requires<ArgumentNullException>(!String.IsNullOrWhiteSpace(host), "host");
             Contract.Requires<ArgumentOutOfRangeException>(port >= 0, "port");
 
             Settings = settings;
             Host = host;
             Port = port;
-
-            EncryptionPolicy = EncryptionPolicy.RequireEncryption;
-            SslProtocols = SslProtocols.Default;
-            ValidateCertificateRevocation = true;
         }
 
         public SMTPStatusCode? LastStatus { get; private set; }
+        public Exception LastException { get; private set; }
         public ISendSettings Settings { get; private set; }
-        public string Host { get; set; }
+        public string Host { get; private set; }
 
         public string ClientName
         {
@@ -61,26 +57,18 @@ namespace Granikos.Hydra.SmtpClient
             set { _clientName = value; }
         }
 
-        public int Port
-        {
-            get { return _port; }
-            set
-            {
-                Contract.Requires<ArgumentOutOfRangeException>(value >= 0, "value");
-                _port = value;
-            }
-        }
+        public int Port { get; private set; }
 
-        public bool TLSFullTunnel { get; set; }
-        public ICredentials Credentials { get; set; }
         public X509Certificate2Collection Certificates { get; set; }
-        public EncryptionPolicy EncryptionPolicy { get; set; }
-        public SslProtocols SslProtocols { get; set; }
-        public bool ValidateCertificateRevocation { get; set; }
 
         public static SMTPClient Create(CompositionContainer container, ISendSettings settings, string host,
             int port = 25)
         {
+            Contract.Requires<ArgumentNullException>(container != null, "container");
+            Contract.Requires<ArgumentNullException>(settings != null, "settings");
+            Contract.Requires<ArgumentNullException>(!String.IsNullOrWhiteSpace(host), "host");
+            Contract.Requires<ArgumentOutOfRangeException>(port >= 0, "port");
+
             var client = new SMTPClient(settings, host, port);
 
             container.SatisfyImportsOnce(client);
@@ -118,60 +106,72 @@ namespace Granikos.Hydra.SmtpClient
 
         public bool Connect()
         {
+            if (!Connected)
+            {
+                Connected = DoConnect();
+
+                if (!Connected) EndSession();
+            }
+
+            return Connected;
+        }
+
+        public bool Connected { get; private set; }
+
+        public bool DoConnect()
+        {
             if (!DoConnectionSequence())
             {
-                EndSession();
                 return false;
             }
 
+            if (!DoandParseEHLO())
+            {
+                return false;
+            }
+
+            if (!_tlsEnabled && Settings.RequireTLS)
+            {
+                Log(LogEventType.Connect, "TLS is required, but the server does not support it.");
+                return false;
+            }
+
+            if (!Settings.EnableTLS || !_tlsEnabled) return true;
+            if (!TryStartTLS())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool TryStartTLS()
+        {
+            var success = StartTLS();
+
+            if (Settings.RequireTLS && !success)
+            {
+                Log(LogEventType.Connect, "TLS is required, but establishing the TLS layer failed.");
+                return false;
+            }
+
+            if (success || LastStatus != SMTPStatusCode.Ready) return true;
+
+            return DoConnectionSequence() && DoandParseEHLO();
+        }
+
+        private bool DoandParseEHLO()
+        {
             SMTPResponse reponse;
             if (!DoEHLO(out reponse))
             {
-                EndSession();
                 return false;
             }
 
-            var tlsEnabled = reponse.Args.Contains("STARTTLS", StringComparer.InvariantCultureIgnoreCase);
+            _tlsEnabled = reponse.Args.Contains("STARTTLS", StringComparer.InvariantCultureIgnoreCase);
             var authLine =
                 reponse.Args.FirstOrDefault(a => a.StartsWith("AUTH ", StringComparison.InvariantCultureIgnoreCase));
             _authMethods = (authLine ?? "").Split(' ').Skip(1).ToArray();
-
-            if (!tlsEnabled && Settings.RequireTLS)
-            {
-                Log(LogEventType.Connect, "TLS is required, but the server does not support it.");
-                EndSession();
-                return false;
-            }
-
-            if (Settings.EnableTLS && tlsEnabled)
-            {
-                var success = StartTLS();
-
-                if (Settings.RequireTLS && !success)
-                {
-                    Log(LogEventType.Connect, "TLS is required, but establishing the TLS layer failed.");
-                    EndSession();
-                    return false;
-                }
-
-                // Restore Connection
-                if (!success && LastStatus == SMTPStatusCode.Ready)
-                {
-                    if (!DoConnectionSequence())
-                    {
-                        EndSession();
-                        return false;
-                    }
-                    if (!DoEHLO(out reponse))
-                    {
-                        EndSession();
-                        return false;
-                    }
-                }
-            }
-
-            // Auth();
-
             return true;
         }
 
@@ -179,7 +179,7 @@ namespace Granikos.Hydra.SmtpClient
         {
             if (!CreateConnection()) return false;
 
-            if (TLSFullTunnel)
+            if (Settings.TLSFullTunnel)
             {
                 if (!CreateTlsLayer()) return false;
             }
@@ -203,24 +203,21 @@ namespace Granikos.Hydra.SmtpClient
 
             reponse = ReadResponse();
 
-            if (reponse.Code != SMTPStatusCode.Okay)
-            {
-                return false;
-            }
-            return true;
+            return reponse.Code == SMTPStatusCode.Okay;
         }
 
         private bool CreateTlsLayer()
         {
             var sslStream = new SslStream(_stream, false, UserCertificateValidationCallback,
-                UserCertificateSelectionCallback, EncryptionPolicy);
+                UserCertificateSelectionCallback, Settings.TLSEncryptionPolicy);
 
             try
             {
-                sslStream.AuthenticateAsClient(Host, Certificates, SslProtocols, ValidateCertificateRevocation);
+                sslStream.AuthenticateAsClient(Host, Certificates, Settings.SslProtocols, Settings.ValidateCertificateRevocation);
             }
             catch (AuthenticationException e)
             {
+                LastException = e;
                 return false;
             }
 
@@ -235,12 +232,14 @@ namespace Granikos.Hydra.SmtpClient
                 _client = new TcpClient(Host, Port);
                 _stream = _client.GetStream();
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException e)
             {
+                LastException = e;
                 return false; // TODO: Cleanup
             }
-            catch (SocketException)
+            catch (SocketException e)
             {
+                LastException = e;
                 return false; // TODO: Cleanup
             }
 
@@ -317,7 +316,7 @@ namespace Granikos.Hydra.SmtpClient
         {
             if (_authenticated) return true;
 
-            if (Credentials != null)
+            if (Settings.Credentials != null)
             {
                 if (_authMethods.Contains("PLAIN", StringComparer.InvariantCultureIgnoreCase))
                 {
@@ -375,14 +374,15 @@ namespace Granikos.Hydra.SmtpClient
             try
             {
                 var sslStream = new SslStream(_stream, false, UserCertificateValidationCallback,
-                    UserCertificateSelectionCallback, EncryptionPolicy);
+                    UserCertificateSelectionCallback, Settings.TLSEncryptionPolicy);
 
-                sslStream.AuthenticateAsClient(Host, Certificates, SslProtocols, ValidateCertificateRevocation);
+                sslStream.AuthenticateAsClient(Host, Certificates, Settings.SslProtocols, Settings.ValidateCertificateRevocation);
 
                 _stream = sslStream;
             }
             catch (AuthenticationException e)
             {
+                LastException = e;
                 return false;
             }
 
@@ -400,7 +400,7 @@ namespace Granikos.Hydra.SmtpClient
 
         private bool AuthLogin()
         {
-            var nc = Credentials as NetworkCredential;
+            var nc = Settings.Credentials as NetworkCredential;
 
             if (nc != null)
             {
@@ -438,7 +438,7 @@ namespace Granikos.Hydra.SmtpClient
 
         private bool AuthPlain()
         {
-            var nc = Credentials as NetworkCredential;
+            var nc = Settings.Credentials as NetworkCredential;
 
             if (nc != null)
             {
@@ -472,8 +472,9 @@ namespace Granikos.Hydra.SmtpClient
             {
                 line = _reader.ReadLine();
             }
-            catch (IOException)
+            catch (IOException e)
             {
+                LastException = e;
                 return null;
             }
 

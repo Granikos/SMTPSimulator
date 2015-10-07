@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
+using System.Net.Security;
 using System.Runtime.Serialization;
+using System.Security.Authentication;
 using Granikos.Hydra.SmtpClient;
 
 namespace Granikos.Hydra.Service.Models
@@ -93,5 +95,11 @@ namespace Granikos.Hydra.Service.Models
         {
             get { return TLSSettings.Mode != TLSMode.Disabled && TLSSettings.Mode != TLSMode.FullTunnel; }
         }
+
+        public bool TLSFullTunnel { get { return TLSSettings.Mode == TLSMode.FullTunnel; } }
+        public ICredentials Credentials { get { return Username != null? new NetworkCredential(Username, Password) : null;}}
+        public EncryptionPolicy TLSEncryptionPolicy { get { return TLSSettings.EncryptionPolicy; }}
+        public SslProtocols SslProtocols { get { return TLSSettings.SslProtocols; } }
+        public bool ValidateCertificateRevocation { get { return TLSSettings.ValidateCertificateRevocation; } }
     }
 }
