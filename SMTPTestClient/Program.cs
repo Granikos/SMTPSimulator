@@ -19,7 +19,7 @@ namespace SMTPTestClient
                 return true;
             };
 
-            var container = new CompositionContainer(new AssemblyCatalog(typeof (SMTPCore).Assembly));
+            var container = new CompositionContainer(new AssemblyCatalog(typeof (SMTPServer).Assembly));
 
             // var client = new SMTPClient("localhost", 1337)
             // var client = new SMTPClient("test.smtp.org")

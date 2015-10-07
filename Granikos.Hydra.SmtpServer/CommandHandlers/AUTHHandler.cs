@@ -45,15 +45,15 @@ namespace Granikos.Hydra.SmtpServer.CommandHandlers
             }
         }
 
-        public override void Initialize(SMTPCore core)
+        public override void Initialize(SMTPServer server)
         {
-            base.Initialize(core);
+            base.Initialize(server);
 
             if (_authMethods.Any())
             {
                 var methods = string.Join(" ", _authMethods.Keys);
 
-                core.GetListProperty<Func<SMTPTransaction, string>>("EHLOLines").Add(transaction => "AUTH " + methods);
+                server.GetListProperty<Func<SMTPTransaction, string>>("EHLOLines").Add(transaction => "AUTH " + methods);
             }
         }
 

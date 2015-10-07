@@ -165,7 +165,7 @@ namespace HydraTest.CommandHandlers
         [UnsecureAllowed]
         private class HandlerWithUnsecureAllowed : ICommandHandler
         {
-            public void Initialize(SMTPCore core)
+            public void Initialize(SMTPServer server)
             {
                 throw new NotImplementedException();
             }

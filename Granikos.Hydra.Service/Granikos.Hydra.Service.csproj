@@ -244,12 +244,12 @@
     <Compile Include="Models\UserTemplate.cs" />
     <Compile Include="Providers\TechnicalUserTemplates.cs" />
     <Compile Include="Providers\TimeTableProvider.cs" />
-    <Compile Include="SMTPServer.cs" />
-    <Compile Include="SMTPService.cs">
+    <Compile Include="SMTPService.cs" />
+    <Compile Include="HydraService.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SMTPService.Designer.cs">
-      <DependentUpon>SMTPService.cs</DependentUpon>
+    <Compile Include="HydraService.Designer.cs">
+      <DependentUpon>HydraService.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

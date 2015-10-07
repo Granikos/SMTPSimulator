@@ -4,7 +4,7 @@ namespace Granikos.Hydra.SmtpServer.CommandHandlers
 {
     public interface ICommandHandler
     {
-        void Initialize(SMTPCore core);
+        void Initialize(SMTPServer server);
         SMTPResponse Execute(SMTPTransaction transaction, string parameters);
     }
 }

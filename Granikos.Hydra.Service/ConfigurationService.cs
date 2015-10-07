@@ -40,18 +40,18 @@ namespace Granikos.Hydra.Service
         [Import]
         private ITimeTableProvider _timeTables;
 
-        public ConfigurationService(SMTPCore core, ISMTPServerContainer servers, IMailQueueProvider mailQueue)
+        public ConfigurationService(SMTPServer server, ISMTPServerContainer servers, IMailQueueProvider mailQueue)
         {
-            Contract.Requires<ArgumentNullException>(core != null, "core");
+            Contract.Requires<ArgumentNullException>(server != null, "server");
             Contract.Requires<ArgumentNullException>(servers != null, "servers");
             Contract.Requires<ArgumentNullException>(mailQueue != null, "mailQueue");
 
             _servers = servers;
             _mailQueue = mailQueue;
-            Core = core;
+            SmtpServer = server;
         }
 
-        public SMTPCore Core { get; private set; }
+        public SMTPServer SmtpServer { get; private set; }
 
         public IEnumerable<Domain> GetDomains()
         {

@@ -18,7 +18,7 @@ namespace HydraTest
         public void TestHandlers()
         {
             var initialized = false;
-            SMTPCore actualCore = null;
+            SMTPServer actualCore = null;
 
             var handler = new StubICommandHandler
             {
@@ -37,7 +37,7 @@ namespace HydraTest
                 }
             };
 
-            var core = new SMTPCore(loader);
+            var core = new SMTPServer(loader);
 
             Assert.Same(core, actualCore);
             Assert.True(initialized);
@@ -54,7 +54,7 @@ namespace HydraTest
         [Fact]
         public void TestTriggerNewMessage()
         {
-            var core = new SMTPCore(DefaultLoader());
+            var core = new SMTPServer(DefaultLoader());
             var settings = new StubIReceiveSettings();
 
             var expectedTransaction = new StubSMTPTransaction(core, settings);
@@ -96,7 +96,7 @@ namespace HydraTest
         [Fact]
         public void TestSetAndGetProperty()
         {
-            var core = new SMTPCore(DefaultLoader());
+            var core = new SMTPServer(DefaultLoader());
 
             const int value1 = 5;
             const string value2 = "foo";
@@ -123,7 +123,7 @@ namespace HydraTest
         [Fact]
         public void TestGetListProperty()
         {
-            var core = new SMTPCore(DefaultLoader());
+            var core = new SMTPServer(DefaultLoader());
 
             var list = core.GetListProperty<string>("foo");
 
@@ -148,7 +148,7 @@ namespace HydraTest
         [Fact]
         public void TestHasProperty()
         {
-            var core = new SMTPCore(DefaultLoader());
+            var core = new SMTPServer(DefaultLoader());
 
             Assert.False(core.HasProperty("foo"));
 
@@ -162,7 +162,7 @@ namespace HydraTest
         [Fact]
         public void TestGetNonExistantProperty()
         {
-            var core = new SMTPCore(DefaultLoader());
+            var core = new SMTPServer(DefaultLoader());
 
             Assert.Equal(default(int), core.GetProperty<int>("nonExistant"));
             Assert.Equal(default(bool), core.GetProperty<bool>("nonExistant"));
@@ -175,7 +175,7 @@ namespace HydraTest
             const string banner = "Test Banner";
             IReceiveSettings actualSettings = null;
 
-            var core = new SMTPCore(DefaultLoader());
+            var core = new SMTPServer(DefaultLoader());
 
             var ip = IPAddress.Parse("127.0.0.1");
 
@@ -186,7 +186,7 @@ namespace HydraTest
                     BannerGet = () => banner
                 };
 
-                SMTPCore actualCore = null;
+                SMTPServer actualCore = null;
 
                 ShimSMTPTransaction.ConstructorSMTPCoreIReceiveSettings = (transaction, smtpCore, settings) =>
                 {
@@ -207,7 +207,7 @@ namespace HydraTest
         [Fact]
         public void TestStartTransactionValidationSuccess()
         {
-            var core = new SMTPCore(DefaultLoader());
+            var core = new SMTPServer(DefaultLoader());
 
             var ip = IPAddress.Parse("127.0.0.1");
 
@@ -238,7 +238,7 @@ namespace HydraTest
         [InlineData(SMTPStatusCode.AuthFailed)]
         public void TestStartTransactionValidationFail(SMTPStatusCode? code)
         {
-            var core = new SMTPCore(DefaultLoader());
+            var core = new SMTPServer(DefaultLoader());
 
             var ip = IPAddress.Parse("127.0.0.1");
 

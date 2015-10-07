@@ -162,7 +162,7 @@
     <Compile Include="IReceiveSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SMTPCommand.cs" />
-    <Compile Include="SMTPCore.cs" />
+    <Compile Include="SMTPServer.cs" />
     <Compile Include="SMTPTransaction.cs" />
   </ItemGroup>
   <ItemGroup>

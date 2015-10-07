@@ -19,7 +19,7 @@ namespace Granikos.Hydra.Service
                 XmlConfigurator.Configure();
                 if (Environment.UserInteractive)
                 {
-                    var service = new SMTPService();
+                    var service = new HydraService();
                     service.TestStartupAndStop(args);
                 }
                 else
@@ -27,7 +27,7 @@ namespace Granikos.Hydra.Service
                     ServiceBase[] ServicesToRun;
                     ServicesToRun = new ServiceBase[]
                     {
-                        new SMTPService()
+                        new HydraService()
                     };
                     ServiceBase.Run(ServicesToRun);
                 }

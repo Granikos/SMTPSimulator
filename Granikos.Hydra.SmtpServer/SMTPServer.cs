@@ -10,7 +10,7 @@ using Granikos.Hydra.SmtpServer.CommandHandlers;
 
 namespace Granikos.Hydra.SmtpServer
 {
-    public class SMTPCore
+    public class SMTPServer
     {
         public delegate void ConnectValidator(SMTPTransaction transaction, ConnectEventArgs connect);
 
@@ -19,7 +19,7 @@ namespace Granikos.Hydra.SmtpServer
         private readonly Dictionary<string, ICommandHandler> _handlers = new Dictionary<string, ICommandHandler>();
         private readonly IDictionary<string, object> _properties = new Dictionary<string, object>();
 
-        public SMTPCore(ICommandHandlerLoader loader)
+        public SMTPServer(ICommandHandlerLoader loader)
         {
             EventBroker = new EventBroker();
             foreach (var handler in loader.GetModules())

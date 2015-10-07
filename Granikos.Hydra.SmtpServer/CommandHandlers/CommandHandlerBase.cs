@@ -6,11 +6,11 @@ namespace Granikos.Hydra.SmtpServer.CommandHandlers
 {
     public abstract class CommandHandlerBase : ICommandHandler
     {
-        public SMTPCore Server { get; private set; }
+        public SMTPServer Server { get; private set; }
 
-        public virtual void Initialize(SMTPCore core)
+        public virtual void Initialize(SMTPServer server)
         {
-            Server = core;
+            Server = server;
         }
 
         public SMTPResponse Execute(SMTPTransaction transaction, string parameters)

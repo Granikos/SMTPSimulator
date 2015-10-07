@@ -422,7 +422,7 @@ namespace HydraTest.CommandHandlers
         [RequiresAuth]
         private class HandlerWithRequiresAuth : ICommandHandler
         {
-            public void Initialize(SMTPCore core)
+            public void Initialize(SMTPServer server)
             {
                 throw new NotImplementedException();
             }

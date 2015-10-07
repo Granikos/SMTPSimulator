@@ -1,209 +1,155 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.ComponentModel.Composition.Primitives;
-using System.Configuration;
-using System.IO;
 using System.Linq;
-using System.Net.Mail;
-using System.Reflection;
-using System.ServiceModel;
-using System.ServiceProcess;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
 using Granikos.Hydra.Core;
-using Granikos.Hydra.Service.PriorityQueue;
-using Granikos.Hydra.Service.Providers;
+using Granikos.Hydra.Service.Models;
 using Granikos.Hydra.SmtpServer;
-using Granikos.Hydra.SmtpServer.CommandHandlers;
-using MailMessage = Granikos.Hydra.Service.Models.MailMessage;
+using log4net;
 
 namespace Granikos.Hydra.Service
 {
-    public partial class SMTPService : ServiceBase, ISMTPServerContainer, IMailQueueProvider
+    internal class SMTPService
     {
-        private const int NumSenders = 4;
-        // TODO: Use locks
-
+        private static readonly ILog Logger = LogManager.GetLogger(typeof (SMTPService));
         private readonly CompositionContainer _container;
-        private readonly SMTPCore _core;
-        private readonly DelayedQueue<Mail> _mailQueue = new DelayedQueue<Mail>(1000);
-        private ServiceHost _host;
+        private readonly Dictionary<IPAddress, DateTime> _greyList = new Dictionary<IPAddress, DateTime>();
+        private Thread _listenThread;
+        private TcpListener _tcpListener;
 
-        [Import]
-        private IReceiveConnectorProvider _receiveConnectors;
-
-        [Import]
-        private ISendConnectorProvider _sendConnectors;
-
-        private MessageSender[] _senders;
-        private SMTPServer[] _servers;
-
-        public SMTPService()
+        public SMTPService(ReceiveConnector connector, SMTPServer smtpServer, CompositionContainer container)
         {
-            InitializeComponent();
+            _container = container;
+            LocalEndpoint = new IPEndPoint(connector.Address, connector.Port);
+            SMTPServer = smtpServer;
 
-            var pluginFolder = ConfigurationManager.AppSettings["PluginFolder"];
+            Connector = connector;
+            Settings = new DefaultReceiveSettings(connector);
 
-            ComposablePartCatalog catalog;
-
-            if (!string.IsNullOrEmpty(pluginFolder))
+            SMTPServer.OnConnect += (transaction, connect) =>
             {
-                catalog = new AggregateCatalog(
-                    new AssemblyCatalog(typeof (SMTPService).Assembly),
-                    new DirectoryCatalog(AssemblyDirectory),
-                    new DirectoryCatalog(pluginFolder)
-                    );
-            }
-            else
-            {
-                catalog = new AggregateCatalog(
-                    new AssemblyCatalog(typeof (SMTPService).Assembly),
-                    new DirectoryCatalog(AssemblyDirectory)
-                    );
-            }
+                if (connector.RemoteIPRanges.Any() && !connector.RemoteIPRanges.Any(range => range.Contains(connect.IP)))
+                {
+                    connect.Cancel = true;
+                }
 
-            _container = new CompositionContainer(catalog);
+                CheckGreylisting(connect);
+            };
+
+            SMTPServer.OnNewMessage += (transaction, mail) =>
+            {
+                Console.WriteLine("--------------------------------------");
+                Console.WriteLine("New message from " + mail.From);
+                Console.WriteLine("Recipients: " + string.Join(", ", mail.Recipients.Select(r => r.ToString())));
+                // Console.WriteLine();
+                // Console.WriteLine(body);
+                Console.WriteLine("--------------------------------------");
+            };
+
             _container.SatisfyImportsOnce(this);
-
-            var loader = new CommandHandlerLoader(catalog);
-            _core = new SMTPCore(loader);
-
-            RefreshServers();
-            RefreshSenders();
         }
 
-        public static string AssemblyDirectory
+        public SMTPServer SMTPServer { get; private set; }
+        public IReceiveSettings Settings { get; private set; }
+        public ReceiveConnector Connector { get; private set; }
+        public IPEndPoint LocalEndpoint { get; private set; }
+
+        private void CheckGreylisting(SMTPServer.ConnectEventArgs connect)
         {
-            get
+            if (Connector.GreylistingTime != null && Connector.GreylistingTime > TimeSpan.Zero)
             {
-                var codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                var uri = new UriBuilder(codeBase);
-                var path = Uri.UnescapeDataString(uri.Path);
-                return Path.GetDirectoryName(path);
-            }
-        }
+                DateTime time;
 
-        public void Enqueue(MailMessage mail)
-        {
-            var from = new MailAddress(mail.Sender);
-            var to = mail.Recipients.Select(r => new MailAddress(r)).ToArray();
-            var parsed = new Mail(from, to, mail.Content);
-
-            // TODO
-            parsed.Settings = _sendConnectors.DefaultConnector;
-
-            _mailQueue.Enqueue(parsed, TimeSpan.Zero);
-        }
-
-        public bool Running { get; private set; }
-
-        public void StopSMTPServers()
-        {
-            if (Running && _servers != null)
-            {
-                foreach (var server in _servers)
+                if (_greyList.TryGetValue(connect.IP, out time))
                 {
-                    server.Stop();
+                    if (time > DateTime.Now)
+                    {
+                        Console.WriteLine("Greylisting activate, time left: " + (time - DateTime.Now));
+                        connect.Cancel = true;
+                        connect.ResponseCode = SMTPStatusCode.NotAvailiable;
+                    }
+                    else
+                    {
+                        _greyList.Remove(connect.IP);
+                    }
                 }
-            }
-
-            Running = false;
-        }
-
-        public void StartSMTPServers()
-        {
-            if (!Running && _servers != null)
-            {
-                foreach (var server in _servers)
+                else
                 {
-                    server.Start();
-                }
-            }
-
-            Running = true;
-        }
-
-        public void StopMessageProcessing()
-        {
-            if (_senders != null)
-            {
-                foreach (var sender in _senders)
-                {
-                    sender.Stop();
+                    Console.WriteLine("Greylisting started, time left: " + Connector.GreylistingTime);
+                    _greyList.Add(connect.IP, (DateTime) (DateTime.Now + Connector.GreylistingTime));
+                    connect.Cancel = true;
+                    connect.ResponseCode = SMTPStatusCode.NotAvailiable;
                 }
             }
         }
 
-        public void StartMessageProcessing()
+        public void Start()
         {
-            if (_senders != null)
+            if (_tcpListener != null)
             {
-                foreach (var sender in _senders)
+                _tcpListener.Stop();
+            }
+
+            _tcpListener = new TcpListener(LocalEndpoint);
+
+            if (_listenThread == null)
+            {
+                _listenThread = new Thread(ListenForClients);
+                _listenThread.Start();
+            }
+        }
+
+        public void Stop()
+        {
+            if (_tcpListener != null)
+            {
+                _tcpListener.Stop();
+                _tcpListener = null;
+            }
+        }
+
+        private void ListenForClients()
+        {
+            try
+            {
+                _tcpListener.Start();
+
+                while (true)
                 {
-                    sender.Start();
+                    try
+                    {
+                        var client = _tcpListener.AcceptTcpClient();
+
+                        var clientThread = new Thread(HandleClientConnection);
+                        clientThread.Start(client);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Error("An error while listening for clients.", e);
+                    }
                 }
             }
-        }
-
-        internal void RefreshServers()
-        {
-            StopSMTPServers();
-
-            _servers = _receiveConnectors.All().Select(r =>
+            catch (SocketException e)
             {
-                var server = new SMTPServer(r, _core, _container);
-                _container.SatisfyImportsOnce(server);
-                return server;
-            })
-                .ToArray();
-
-            StartSMTPServers();
-        }
-
-        internal void RefreshSenders()
-        {
-            StopMessageProcessing();
-
-            _senders = Enumerable.Range(0, NumSenders)
-                .Select(r => new MessageSender(_container, _mailQueue))
-                .ToArray();
-
-            StartMessageProcessing();
-        }
-
-        internal void TestStartupAndStop(string[] args)
-        {
-            OnStart(args);
-            Console.ReadLine();
-            OnStop();
-        }
-
-        protected override void OnStart(string[] args)
-        {
-            StartSMTPServers();
-            StartMessageProcessing();
-
-            if (_host != null)
-            {
-                _host.Close();
+                if ((e.SocketErrorCode != SocketError.Interrupted)) throw;
             }
-
-            var service = new ConfigurationService(_core, this, this);
-            _container.ComposeParts(service);
-
-            _host = new ServiceHost(service);
-
-            _host.Open();
         }
 
-        protected override void OnStop()
+        private void HandleClientConnection(object obj)
         {
-            StopSMTPServers();
-            StopMessageProcessing();
-
-            if (_host != null)
+            try
             {
-                _host.Close();
-                _host = null;
+                var handler = new ClientHandler((TcpClient) obj, this);
+                _container.SatisfyImportsOnce(handler);
+                handler.Process().Wait();
+            }
+            catch (Exception e)
+            {
+                Logger.Error("An error while handling a client connection.", e);
             }
         }
     }

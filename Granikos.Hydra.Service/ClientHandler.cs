@@ -22,7 +22,7 @@ namespace Granikos.Hydra.Service
         private readonly IPEndPoint _localEndpoint;
         private readonly string _name;
         private readonly IPEndPoint _remoteEndpoint;
-        private readonly SMTPServer _smtpServer;
+        private readonly SMTPService _smtpServer;
         private readonly TLSConnector _tlsConnector;
 
         [ImportMany]
@@ -35,7 +35,7 @@ namespace Granikos.Hydra.Service
         private SMTPTransaction _transaction;
         private StreamWriter _writer;
 
-        public ClientHandler(TcpClient client, SMTPServer smtpServer)
+        public ClientHandler(TcpClient client, SMTPService smtpServer)
         {
             _client = client;
             _smtpServer = smtpServer;
@@ -91,7 +91,7 @@ namespace Granikos.Hydra.Service
                 Log(LogEventType.Connect);
 
                 SMTPResponse response;
-                _transaction = _smtpServer.Core.StartTransaction(_remoteEndpoint.Address, _smtpServer.Settings,
+                _transaction = _smtpServer.SMTPServer.StartTransaction(_remoteEndpoint.Address, _smtpServer.Settings,
                     out response);
 
                 if (_tlsConnector.Settings.Mode == TLSMode.FullTunnel)
@@ -205,7 +205,7 @@ namespace Granikos.Hydra.Service
             SMTPResponse response;
             _transaction.OnClose -= OnCloseHandler;
             _transaction.Close();
-            _transaction = _smtpServer.Core.StartTransaction(_remoteEndpoint.Address, _smtpServer.Settings, out response);
+            _transaction = _smtpServer.SMTPServer.StartTransaction(_remoteEndpoint.Address, _smtpServer.Settings, out response);
             _transaction.TLSActive = true;
             _transaction.OnClose += OnCloseHandler;
         }

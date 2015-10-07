@@ -17,7 +17,7 @@ namespace Granikos.Hydra.SmtpServer
         private Func<string, SMTPResponse> _dataHandler;
         private Func<string, StringBuilder, bool> _dataLineHandler;
 
-        public SMTPTransaction(SMTPCore server, IReceiveSettings settings)
+        public SMTPTransaction(SMTPServer server, IReceiveSettings settings)
         {
             Contract.Requires<ArgumentNullException>(server != null);
             Contract.Requires<ArgumentNullException>(settings != null);
@@ -31,7 +31,7 @@ namespace Granikos.Hydra.SmtpServer
             get { return _settings; }
         }
 
-        public SMTPCore Server { get; private set; }
+        public SMTPServer Server { get; private set; }
         public string ClientIdentifier { get; private set; }
         public bool Initialized { get; private set; }
         public bool Closed { get; private set; }

@@ -30,11 +30,11 @@ namespace Granikos.Hydra.SmtpServer.CommandHandlers
             }
         }
 
-        public override void Initialize(SMTPCore core)
+        public override void Initialize(SMTPServer server)
         {
-            base.Initialize(core);
+            base.Initialize(server);
 
-            core.GetListProperty<Func<SMTPTransaction, string>>("EHLOLines")
+            server.GetListProperty<Func<SMTPTransaction, string>>("EHLOLines")
                 .Add(transaction => transaction.TLSActive || !transaction.Settings.EnableTLS ? null : "STARTTLS");
         }
 

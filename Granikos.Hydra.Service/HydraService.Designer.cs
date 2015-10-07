@@ -1,6 +1,6 @@
 ﻿namespace Granikos.Hydra.Service
 {
-    partial class SMTPService
+    partial class HydraService
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            this.ServiceName = "SMTPService";
+            this.ServiceName = "HydraService";
         }
 
         #endregion
