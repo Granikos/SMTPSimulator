@@ -205,7 +205,8 @@ namespace Granikos.Hydra.Service
             SMTPResponse response;
             _transaction.OnClose -= OnCloseHandler;
             _transaction.Close();
-            _transaction = _smtpServer.SMTPServer.StartTransaction(_remoteEndpoint.Address, _smtpServer.Settings, out response);
+            _transaction = _smtpServer.SMTPServer.StartTransaction(_remoteEndpoint.Address, _smtpServer.Settings,
+                out response);
             _transaction.TLSActive = true;
             _transaction.OnClose += OnCloseHandler;
         }

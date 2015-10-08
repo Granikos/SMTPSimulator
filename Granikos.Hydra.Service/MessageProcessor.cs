@@ -15,7 +15,8 @@ namespace Granikos.Hydra.Service
 {
     internal class MessageProcessor
     {
-        public delegate void MailErrorHandler(SendableMail mail, ConnectorInfo info, SMTPStatusCode? status, Exception e);
+        public delegate void MailErrorHandler(SendableMail mail, ConnectorInfo info, SMTPStatusCode? status, Exception e
+            );
 
         private readonly CompositionContainer _container;
 

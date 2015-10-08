@@ -25,8 +25,8 @@ namespace Granikos.Hydra.Service
         // TODO: Use locks
 
         private readonly CompositionContainer _container;
-        private readonly SMTPServer _smtpServer;
         private readonly DelayedQueue<SendableMail> _mailQueue = new DelayedQueue<SendableMail>(1000);
+        private readonly SMTPServer _smtpServer;
         private ServiceHost _host;
 
         [Import]

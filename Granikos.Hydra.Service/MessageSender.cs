@@ -47,7 +47,8 @@ namespace Granikos.Hydra.Service
             }
         }
 
-        public void HandleMailError(SendableMail mail, MessageProcessor.ConnectorInfo info, SMTPStatusCode? status, Exception e)
+        public void HandleMailError(SendableMail mail, MessageProcessor.ConnectorInfo info, SMTPStatusCode? status,
+            Exception e)
         {
             var connector = info.Connector;
             if (status == SMTPStatusCode.NotAvailiable)

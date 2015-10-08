@@ -86,9 +86,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ISendSettings.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendableMail.cs" />
     <Compile Include="SMTPClient.cs" />
+    <Compile Include="SmtpStream.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Granikos.Hydra.Core\Granikos.Hydra.Core.csproj">
