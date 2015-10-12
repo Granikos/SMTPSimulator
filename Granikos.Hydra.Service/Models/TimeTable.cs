@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace Granikos.Hydra.Service.Models
@@ -6,10 +8,37 @@ namespace Granikos.Hydra.Service.Models
     public class TimeTable : IEntity<int>
     {
         [DataMember]
+        [Required]
         public string Name { get; set; }
 
         [DataMember]
+        [Required]
+        public IDictionary<string, string> Parameters { get; set; }
+
+        [DataMember]
+        [Required]
+        public string[] TimeData { get; set; }
+
+        [DataMember]
         public bool Active { get; set; }
+
+        [DataMember]
+        public string RecipientMailbox { get; set; }
+
+        [DataMember]
+        public int RecipientDomainId { get; set; }
+        [DataMember]
+        public string SenderMailbox { get; set; }
+
+        [DataMember]
+        public int SenderDomainId { get; set; }
+
+        [DataMember]
+        public bool MultipleRecipients { get; set; }
+
+        [DataMember]
+        [Range(1,4)]
+        public int MaxRecipients { get; set; }
 
         [DataMember]
         public string MailContent { get; set; }
@@ -18,6 +47,48 @@ namespace Granikos.Hydra.Service.Models
         public SendConnector SendConnector { get; set; }
 
         [DataMember]
+        [Required]
         public int Id { get; set; }
+
+        [DataMember]
+        [Required]
+        public string Type { get; set; }
+
+        [DataMember]
+        [Required]
+        public string MailType { get; set; }
+
+        [DataMember]
+        public string ReportMailAddress { get; set; }
+
+        [DataMember]
+        public ReportType ReportType { get; set; }
+
+        [DataMember]
+        public ProtocolLevel ProtocolLevel { get; set; }
+
+        [DataMember]
+        public string Attachment { get; set; }
+
+        [DataMember]
+        public AttachmentType AttachmentType { get; set; }
+
+        [DataMember]
+        public bool SendEicarFile { get; set; }
+    }
+
+    public enum ReportType
+    {
+        Off, Daily, Weekly
+    }
+
+    public enum ProtocolLevel
+    {
+        Off, On, Verbose
+    }
+
+    public enum AttachmentType
+    {
+        Off, Fixed, Random
     }
 }
