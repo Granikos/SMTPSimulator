@@ -19,7 +19,7 @@ namespace Granikos.Hydra.WebClient.Controllers
         // GET api/ExternalUsers
         [HttpGet]
         [Route("")]
-        public ExternalUsersWithTotal All([FromUri]PagedFilter filter)
+        public UsersWithTotal All([FromUri]PagedFilter filter)
         {
             return _service.GetExternalUsers(filter.PageNumber, filter.PageSize);
         }
@@ -107,7 +107,7 @@ namespace Granikos.Hydra.WebClient.Controllers
         // POST api/ExternalUsers
         [HttpPost]
         [Route("")]
-        public HttpResponseMessage Add([FromBody]ExternalUser user)
+        public HttpResponseMessage Add([FromBody]User user)
         {
             var added = _service.AddExternalUser(user);
 
@@ -122,7 +122,7 @@ namespace Granikos.Hydra.WebClient.Controllers
         // PUT api/ExternalUsers/5
         [HttpPut]
         [Route("{id:int}")]
-        public HttpResponseMessage Update(int id, [FromBody]ExternalUser user)
+        public HttpResponseMessage Update(int id, [FromBody]User user)
         {
             var updated = _service.UpdateExternalUser(user);
 

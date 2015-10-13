@@ -42,7 +42,7 @@ namespace Granikos.Hydra.WebClient.Controllers
         // GET api/LocalUsers
         [HttpGet]
         [Route("")]
-        public LocalUsersWithTotal Paged([FromUri]PagedFilter filter)
+        public UsersWithTotal Paged([FromUri]PagedFilter filter)
         {
             var page = filter != null ? filter.PageNumber : 1;
             var pageSize = filter != null ? filter.PageSize : 25;
@@ -133,7 +133,7 @@ namespace Granikos.Hydra.WebClient.Controllers
         // POST api/LocalUsers
         [HttpPost]
         [Route("")]
-        public HttpResponseMessage Add([FromBody]LocalUser user)
+        public HttpResponseMessage Add([FromBody]User user)
         {
             var added = _service.AddLocalUser(user);
 
@@ -148,7 +148,7 @@ namespace Granikos.Hydra.WebClient.Controllers
         // PUT api/LocalUsers/5
         [HttpPut]
         [Route("{id:int}")]
-        public HttpResponseMessage Update(int id, [FromBody]LocalUser user)
+        public HttpResponseMessage Update(int id, [FromBody]User user)
         {
             var updated = _service.UpdateLocalUser(user);
 

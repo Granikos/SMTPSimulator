@@ -25,7 +25,7 @@
     "angular-ui-grid": "latest",
     "bootstrap": "latest",
     "bootstrap-dialog": "latest",
-    "checklist-model": "latest",
+    "checklist-model": "*",
     "jquery": "latest",
     "moment": "latest",
     "ng-file-upload": "latest",

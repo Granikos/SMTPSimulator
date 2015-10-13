@@ -43,19 +43,31 @@
         <div class="form-group">
             <label class="control-label col-sm-4">Local Email-Addresses</label>
             <div class="col-sm-4">
-                <p class="form-control-static">TODO</p>
+                <ul class="form-control-static list-group">
+                    <li ng-repeat="group in localGroups | orderBy:'Name'" class="list-group-item">
+                        <span class="badge" tooltip="This group has {{group.Count}} email addresses configured">{{group.Count}}</span>
+                        {{group.Name}}
+                    </li>
+                    <li class="list-group-item">
+                        <span class="badge" tooltip="There are {{localMailboxTotal}} local email addresses in total">{{localMailboxTotal}}</span>
+                        Total
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-4">External Domains/Email-Addresses</label>
+            <label class="control-label col-sm-4">External Email-Addresses</label>
             <div class="col-sm-4">
-                <ul ng-show="domains" class="form-control-static list-group">
-                    <li ng-repeat="domain in domains | orderBy:'DomainName'" class="list-group-item">
-                        <span class="badge" tooltip="This domain has {{domain.MailboxCount}} email addresses configured">{{domain.MailboxCount}}</span>
-                        {{domain.DomainName}}
+                <ul class="form-control-static list-group">
+                    <li ng-repeat="group in externalGroups | orderBy:'Name'" class="list-group-item">
+                        <span class="badge" tooltip="This group has {{group.Count}} email addresses configured">{{group.Count}}</span>
+                        {{group.Name}}
+                    </li>
+                    <li class="list-group-item">
+                        <span class="badge" tooltip="There are {{externalMailboxTotal}} external email addresses in total">{{externalMailboxTotal}}</span>
+                        Total
                     </li>
                 </ul>
-                <p class="form-control-static" ng-hide="domains">No domains configured</p>
             </div>
         </div>
         <div class="form-group">

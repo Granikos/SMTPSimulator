@@ -24,9 +24,6 @@ namespace Granikos.Hydra.Service
         private IEnumerable<ISMTPLogger> _loggers;
 
         [Import]
-        private IDomainProvider domains;
-
-        [Import]
         private ISendConnectorProvider sendConnectors;
 
         public MessageProcessor(CompositionContainer container)
@@ -43,14 +40,9 @@ namespace Granikos.Hydra.Service
                     .GroupBy(r => r.Host))
             {
                 var host = recipientGroup.Key;
-                var domain = domains.GetByName(host);
-                var connector = mail.Settings as SendConnector;
-                if (connector == null)
-                {
-                    if (domain != null && domain.SendConnectorId != null)
-                        connector = sendConnectors.Get((int) domain.SendConnectorId);
-                    else connector = sendConnectors.DefaultConnector;
-                }
+                var connector = mail.Settings as SendConnector
+                    ?? sendConnectors.GetByDomain(host)
+                    ?? sendConnectors.DefaultConnector;
 
                 string remoteHost;
                 int remotePort;

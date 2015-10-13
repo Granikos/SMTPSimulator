@@ -5,10 +5,10 @@ using Granikos.Hydra.Service.Models;
 
 namespace Granikos.Hydra.Service.Providers
 {
-    public interface IExternalUserProvider : IDataProvider<ExternalUser, int>
+    public interface IExternalUserProvider : IDataProvider<User, int>
     {
-        int ImportFromCSV(Stream csv, Func<string, int> domainSource, bool overwrite);
-        int ExportAsCSV(Stream csv, Func<int, string> domainSource);
-        IEnumerable<string> SearchMailboxes(Func<int, string> domainSource, string search, int max);
+        int ImportFromCSV(Stream csv, bool overwrite);
+        int ExportAsCSV(Stream csv);
+        IEnumerable<string> SearchMailboxes(string search, int max);
     }
 }

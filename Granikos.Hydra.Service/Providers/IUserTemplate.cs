@@ -8,6 +8,6 @@ namespace Granikos.Hydra.Service.Providers
         string Name { get; }
         string DisplayName { get; }
         bool SupportsPattern { get; }
-        IEnumerable<LocalUser> Generate(string pattern, string domain, int count);
+        IEnumerable<User> Generate(string pattern, string domain, int count);
     }
 }

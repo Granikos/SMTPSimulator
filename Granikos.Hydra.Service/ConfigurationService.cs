@@ -20,7 +20,10 @@ namespace Granikos.Hydra.Service
         private readonly ISMTPServerContainer _servers;
 
         [Import]
-        private IDomainProvider _domains;
+        private ILocalMailboxGroupProvider _localGroups;
+
+        [Import]
+        private IExternalMailboxGroupProvider _externalGroups;
 
         [Import]
         private IExternalUserProvider _externalUsers;
@@ -53,55 +56,54 @@ namespace Granikos.Hydra.Service
 
         public SMTPServer SmtpServer { get; private set; }
 
-        public IEnumerable<Domain> GetDomains()
+        public IEnumerable<MailboxGroup> GetLocalGroups()
         {
-            return _domains.All();
+            return _localGroups.All();
         }
 
-        public IEnumerable<DomainWithMailboxCount> GetDomainsWithMailboxCount()
+        public MailboxGroup GetLocalGroup(int id)
         {
-            var domains = _domains.All()
-                .ToDictionary(d => d.Id, d => new DomainWithMailboxCount {DomainName = d.DomainName});
-
-            foreach (var user in _externalUsers.All())
-            {
-                domains[user.DomainId].MailboxCount++;
-            }
-
-            return domains.Values;
+            return _localGroups.Get(id);
         }
 
-        public Domain GetDomain(string domain)
+        public MailboxGroup UpdateLocalGroup(MailboxGroup mailboxGroup)
         {
-            return
-                _domains.All()
-                    .FirstOrDefault(d => d.DomainName.Equals(domain, StringComparison.InvariantCultureIgnoreCase));
+            return _localGroups.Update(mailboxGroup);
         }
 
-        public Domain UpdateDomain(Domain domain)
+        public MailboxGroup AddLocalGroup(string name)
         {
-            return _domains.Update(domain);
+            return _localGroups.Add(new MailboxGroup(name));
         }
 
-        public Domain AddDomain(string domain)
+        public bool DeleteLocalGroup(int id)
         {
-            return _domains.Add(new Domain(domain));
+            return _localGroups.Delete(id);
         }
 
-        public bool DeleteDomain(int id)
+        public IEnumerable<MailboxGroup> GetExternalGroups()
         {
-            var success = _domains.Delete(id);
+            return _externalGroups.All();
+        }
 
-            if (success)
-            {
-                // TODO: Special method for this
-                foreach (var user in _externalUsers.All().Where(u => u.DomainId == id).ToList())
-                {
-                    _externalUsers.Delete(user.Id);
-                }
-            }
+        public MailboxGroup GetExternalGroup(int id)
+        {
+            return _externalGroups.Get(id);
+        }
 
-            return success;
+        public MailboxGroup UpdateExternalGroup(MailboxGroup mailboxGroup)
+        {
+            return _externalGroups.Update(mailboxGroup);
+        }
+
+        public MailboxGroup AddExternalGroup(string name)
+        {
+            return _externalGroups.Add(new MailboxGroup(name));
+        }
+
+        public bool DeleteExternalGroup(int id)
+        {
+            return _externalGroups.Delete(id);
         }
 
         public IEnumerable<SendConnector> GetSendConnectors()
@@ -127,6 +129,11 @@ namespace Granikos.Hydra.Service
         public bool DeleteSendConnector(int id)
         {
             return _sendConnectors.Delete(id);
+        }
+
+        public int GetLocalUserCount()
+        {
+            return _localUsers.Total;
         }
 
         public SendConnector GetDefaultSendConnector()
@@ -216,11 +223,11 @@ namespace Granikos.Hydra.Service
             return _receiveConnectors.Delete(id);
         }
 
-        public EntitiesWithTotal<LocalUser> GetLocalUsers(int page, int perPage)
+        public EntitiesWithTotal<User> GetLocalUsers(int page, int perPage)
         {
             var users = _localUsers.Paged(page, perPage);
             var total = _localUsers.Total;
-            var result = new EntitiesWithTotal<LocalUser>(users, total);
+            var result = new EntitiesWithTotal<User>(users, total);
             return result;
         }
 
@@ -229,17 +236,17 @@ namespace Granikos.Hydra.Service
             return _localUsers.SearchMailboxes(search, 20);
         }
 
-        public LocalUser GetLocalUser(int id)
+        public User GetLocalUser(int id)
         {
             return _localUsers.Get(id);
         }
 
-        public LocalUser AddLocalUser(LocalUser connector)
+        public User AddLocalUser(User connector)
         {
             return _localUsers.Add(connector);
         }
 
-        public LocalUser UpdateLocalUser(LocalUser connector)
+        public User UpdateLocalUser(User connector)
         {
             return _localUsers.Update(connector);
         }
@@ -284,27 +291,32 @@ namespace Granikos.Hydra.Service
             return _localUsers.GetTemplates();
         }
 
-        public EntitiesWithTotal<ExternalUser> GetExternalUsers(int page, int perPage)
+        public EntitiesWithTotal<User> GetExternalUsers(int page, int perPage)
         {
-            return new EntitiesWithTotal<ExternalUser>(_externalUsers.Paged(page, perPage), _externalUsers.Total);
+            return new EntitiesWithTotal<User>(_externalUsers.Paged(page, perPage), _externalUsers.Total);
+        }
+
+        public int GetExternalUserCount()
+        {
+            return _externalUsers.Total;
         }
 
         public IEnumerable<string> SearchExternalUsers(string search)
         {
-            return _externalUsers.SearchMailboxes(DomainSource, search, 20);
+            return _externalUsers.SearchMailboxes(search, 20);
         }
 
-        public ExternalUser GetExternalUser(int id)
+        public User GetExternalUser(int id)
         {
             return _externalUsers.Get(id);
         }
 
-        public ExternalUser AddExternalUser(ExternalUser user)
+        public User AddExternalUser(User user)
         {
             return _externalUsers.Add(user);
         }
 
-        public ExternalUser UpdateExternalUser(ExternalUser user)
+        public User UpdateExternalUser(User user)
         {
             return _externalUsers.Update(user);
         }
@@ -342,7 +354,7 @@ namespace Granikos.Hydra.Service
         public Stream ExportExternalUsers()
         {
             var stream = new MemoryStream();
-            _externalUsers.ExportAsCSV(stream, DomainSource);
+            _externalUsers.ExportAsCSV(stream);
 
             stream.Position = 0;
 
@@ -351,7 +363,7 @@ namespace Granikos.Hydra.Service
 
         public ImportResult ImportExternalUsers(Stream stream)
         {
-            var count = _externalUsers.ImportFromCSV(stream, DomainSource, false);
+            var count = _externalUsers.ImportFromCSV(stream, false);
 
             return new ImportResult(count, 0);
         }
@@ -359,7 +371,7 @@ namespace Granikos.Hydra.Service
         public ImportResult ImportExternalUsersWithOverwrite(Stream stream)
         {
             var before = _localUsers.Total;
-            var count = _externalUsers.ImportFromCSV(stream, DomainSource, true);
+            var count = _externalUsers.ImportFromCSV(stream, true);
 
             return new ImportResult(count, before);
         }
@@ -389,25 +401,6 @@ namespace Granikos.Hydra.Service
         public void SendMail(MailMessage msg)
         {
             _mailQueue.Enqueue(msg);
-        }
-
-        private string DomainSource(int id)
-        {
-            return _domains.Get(id).DomainName;
-        }
-
-        private int DomainSource(string domainName)
-        {
-            var domain =
-                _domains.All()
-                    .FirstOrDefault(d => d.DomainName.Equals(domainName, StringComparison.InvariantCultureIgnoreCase));
-
-            if (domain == null)
-            {
-                domain = AddDomain(domainName);
-            }
-
-            return domain.Id;
         }
     }
 }

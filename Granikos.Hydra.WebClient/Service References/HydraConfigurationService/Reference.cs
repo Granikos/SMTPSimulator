@@ -164,21 +164,21 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Domain", Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MailboxGroup", Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models")]
     [System.SerializableAttribute()]
-    public partial class Domain : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class MailboxGroup : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DomainNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<int> SendConnectorIdField;
+        private int[] MailboxIdsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -187,19 +187,6 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
             }
             set {
                 this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DomainName {
-            get {
-                return this.DomainNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DomainNameField, value) != true)) {
-                    this.DomainNameField = value;
-                    this.RaisePropertyChanged("DomainName");
-                }
             }
         }
         
@@ -217,75 +204,27 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> SendConnectorId {
+        public int[] MailboxIds {
             get {
-                return this.SendConnectorIdField;
+                return this.MailboxIdsField;
             }
             set {
-                if ((this.SendConnectorIdField.Equals(value) != true)) {
-                    this.SendConnectorIdField = value;
-                    this.RaisePropertyChanged("SendConnectorId");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="DomainWithMailboxCount", Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models")]
-    [System.SerializableAttribute()]
-    public partial class DomainWithMailboxCount : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DomainNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int MailboxCountField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DomainName {
-            get {
-                return this.DomainNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DomainNameField, value) != true)) {
-                    this.DomainNameField = value;
-                    this.RaisePropertyChanged("DomainName");
+                if ((object.ReferenceEquals(this.MailboxIdsField, value) != true)) {
+                    this.MailboxIdsField = value;
+                    this.RaisePropertyChanged("MailboxIds");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int MailboxCount {
+        public string Name {
             get {
-                return this.MailboxCountField;
+                return this.NameField;
             }
             set {
-                if ((this.MailboxCountField.Equals(value) != true)) {
-                    this.MailboxCountField = value;
-                    this.RaisePropertyChanged("MailboxCount");
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
                 }
             }
         }
@@ -796,6 +735,9 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] DomainsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -838,6 +780,19 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string[] Domains {
+            get {
+                return this.DomainsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DomainsField, value) != true)) {
+                    this.DomainsField = value;
+                    this.RaisePropertyChanged("Domains");
+                }
             }
         }
         
@@ -1009,15 +964,15 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="LocalUsersWithTotal", Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UsersWithTotal", Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models")]
     [System.SerializableAttribute()]
-    public partial class LocalUsersWithTotal : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class UsersWithTotal : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser[] EntitiesField;
+        private Granikos.Hydra.WebClient.HydraConfigurationService.User[] EntitiesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int TotalField;
@@ -1033,7 +988,7 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser[] Entities {
+        public Granikos.Hydra.WebClient.HydraConfigurationService.User[] Entities {
             get {
                 return this.EntitiesField;
             }
@@ -1070,9 +1025,9 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="LocalUser", Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models")]
     [System.SerializableAttribute()]
-    public partial class LocalUser : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -1285,176 +1240,6 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
                 if ((this.SupportsPatternField.Equals(value) != true)) {
                     this.SupportsPatternField = value;
                     this.RaisePropertyChanged("SupportsPattern");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ExternalUsersWithTotal", Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models")]
-    [System.SerializableAttribute()]
-    public partial class ExternalUsersWithTotal : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser[] EntitiesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TotalField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser[] Entities {
-            get {
-                return this.EntitiesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EntitiesField, value) != true)) {
-                    this.EntitiesField = value;
-                    this.RaisePropertyChanged("Entities");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Total {
-            get {
-                return this.TotalField;
-            }
-            set {
-                if ((this.TotalField.Equals(value) != true)) {
-                    this.TotalField = value;
-                    this.RaisePropertyChanged("Total");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ExternalUser", Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models")]
-    [System.SerializableAttribute()]
-    public partial class ExternalUser : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int DomainIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FirstNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string LastNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MailboxField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int DomainId {
-            get {
-                return this.DomainIdField;
-            }
-            set {
-                if ((this.DomainIdField.Equals(value) != true)) {
-                    this.DomainIdField = value;
-                    this.RaisePropertyChanged("DomainId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FirstName {
-            get {
-                return this.FirstNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FirstNameField, value) != true)) {
-                    this.FirstNameField = value;
-                    this.RaisePropertyChanged("FirstName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string LastName {
-            get {
-                return this.LastNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.LastNameField, value) != true)) {
-                    this.LastNameField = value;
-                    this.RaisePropertyChanged("LastName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Mailbox {
-            get {
-                return this.MailboxField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MailboxField, value) != true)) {
-                    this.MailboxField = value;
-                    this.RaisePropertyChanged("Mailbox");
                 }
             }
         }
@@ -2029,41 +1814,65 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/SetProperty", ReplyAction="http://tempuri.org/IConfigurationService/SetPropertyResponse")]
         System.Threading.Tasks.Task SetPropertyAsync(string name, string value);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDomains", ReplyAction="http://tempuri.org/IConfigurationService/GetDomainsResponse")]
-        Granikos.Hydra.WebClient.HydraConfigurationService.Domain[] GetDomains();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLocalGroups", ReplyAction="http://tempuri.org/IConfigurationService/GetLocalGroupsResponse")]
+        Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup[] GetLocalGroups();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDomains", ReplyAction="http://tempuri.org/IConfigurationService/GetDomainsResponse")]
-        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.Domain[]> GetDomainsAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLocalGroups", ReplyAction="http://tempuri.org/IConfigurationService/GetLocalGroupsResponse")]
+        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup[]> GetLocalGroupsAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDomainsWithMailboxCount", ReplyAction="http://tempuri.org/IConfigurationService/GetDomainsWithMailboxCountResponse")]
-        Granikos.Hydra.WebClient.HydraConfigurationService.DomainWithMailboxCount[] GetDomainsWithMailboxCount();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLocalGroup", ReplyAction="http://tempuri.org/IConfigurationService/GetLocalGroupResponse")]
+        Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup GetLocalGroup(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDomainsWithMailboxCount", ReplyAction="http://tempuri.org/IConfigurationService/GetDomainsWithMailboxCountResponse")]
-        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.DomainWithMailboxCount[]> GetDomainsWithMailboxCountAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLocalGroup", ReplyAction="http://tempuri.org/IConfigurationService/GetLocalGroupResponse")]
+        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup> GetLocalGroupAsync(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDomain", ReplyAction="http://tempuri.org/IConfigurationService/GetDomainResponse")]
-        Granikos.Hydra.WebClient.HydraConfigurationService.Domain GetDomain(string domain);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateLocalGroup", ReplyAction="http://tempuri.org/IConfigurationService/UpdateLocalGroupResponse")]
+        Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup UpdateLocalGroup(Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup mailboxGroup);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDomain", ReplyAction="http://tempuri.org/IConfigurationService/GetDomainResponse")]
-        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.Domain> GetDomainAsync(string domain);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateLocalGroup", ReplyAction="http://tempuri.org/IConfigurationService/UpdateLocalGroupResponse")]
+        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup> UpdateLocalGroupAsync(Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup mailboxGroup);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateDomain", ReplyAction="http://tempuri.org/IConfigurationService/UpdateDomainResponse")]
-        Granikos.Hydra.WebClient.HydraConfigurationService.Domain UpdateDomain(Granikos.Hydra.WebClient.HydraConfigurationService.Domain domain);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddLocalGroup", ReplyAction="http://tempuri.org/IConfigurationService/AddLocalGroupResponse")]
+        Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup AddLocalGroup(string name);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateDomain", ReplyAction="http://tempuri.org/IConfigurationService/UpdateDomainResponse")]
-        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.Domain> UpdateDomainAsync(Granikos.Hydra.WebClient.HydraConfigurationService.Domain domain);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddLocalGroup", ReplyAction="http://tempuri.org/IConfigurationService/AddLocalGroupResponse")]
+        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup> AddLocalGroupAsync(string name);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddDomain", ReplyAction="http://tempuri.org/IConfigurationService/AddDomainResponse")]
-        Granikos.Hydra.WebClient.HydraConfigurationService.Domain AddDomain(string domain);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteLocalGroup", ReplyAction="http://tempuri.org/IConfigurationService/DeleteLocalGroupResponse")]
+        bool DeleteLocalGroup(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddDomain", ReplyAction="http://tempuri.org/IConfigurationService/AddDomainResponse")]
-        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.Domain> AddDomainAsync(string domain);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteLocalGroup", ReplyAction="http://tempuri.org/IConfigurationService/DeleteLocalGroupResponse")]
+        System.Threading.Tasks.Task<bool> DeleteLocalGroupAsync(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteDomain", ReplyAction="http://tempuri.org/IConfigurationService/DeleteDomainResponse")]
-        bool DeleteDomain(int id);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalGroups", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalGroupsResponse")]
+        Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup[] GetExternalGroups();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteDomain", ReplyAction="http://tempuri.org/IConfigurationService/DeleteDomainResponse")]
-        System.Threading.Tasks.Task<bool> DeleteDomainAsync(int id);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalGroups", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalGroupsResponse")]
+        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup[]> GetExternalGroupsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalGroup", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalGroupResponse")]
+        Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup GetExternalGroup(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalGroup", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalGroupResponse")]
+        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup> GetExternalGroupAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateExternalGroup", ReplyAction="http://tempuri.org/IConfigurationService/UpdateExternalGroupResponse")]
+        Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup UpdateExternalGroup(Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup mailboxGroup);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateExternalGroup", ReplyAction="http://tempuri.org/IConfigurationService/UpdateExternalGroupResponse")]
+        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup> UpdateExternalGroupAsync(Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup mailboxGroup);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddExternalGroup", ReplyAction="http://tempuri.org/IConfigurationService/AddExternalGroupResponse")]
+        Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup AddExternalGroup(string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddExternalGroup", ReplyAction="http://tempuri.org/IConfigurationService/AddExternalGroupResponse")]
+        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup> AddExternalGroupAsync(string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteExternalGroup", ReplyAction="http://tempuri.org/IConfigurationService/DeleteExternalGroupResponse")]
+        bool DeleteExternalGroup(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteExternalGroup", ReplyAction="http://tempuri.org/IConfigurationService/DeleteExternalGroupResponse")]
+        System.Threading.Tasks.Task<bool> DeleteExternalGroupAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetDefaultReceiveConnector", ReplyAction="http://tempuri.org/IConfigurationService/GetDefaultReceiveConnectorResponse")]
         Granikos.Hydra.WebClient.HydraConfigurationService.ReceiveConnector GetDefaultReceiveConnector();
@@ -2149,11 +1958,17 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteSendConnector", ReplyAction="http://tempuri.org/IConfigurationService/DeleteSendConnectorResponse")]
         System.Threading.Tasks.Task<bool> DeleteSendConnectorAsync(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/GetLocalUsersResponse")]
-        Granikos.Hydra.WebClient.HydraConfigurationService.LocalUsersWithTotal GetLocalUsers(int page, int perPage);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLocalUserCount", ReplyAction="http://tempuri.org/IConfigurationService/GetLocalUserCountResponse")]
+        int GetLocalUserCount();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLocalUserCount", ReplyAction="http://tempuri.org/IConfigurationService/GetLocalUserCountResponse")]
+        System.Threading.Tasks.Task<int> GetLocalUserCountAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/GetLocalUsersResponse")]
-        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.LocalUsersWithTotal> GetLocalUsersAsync(int page, int perPage);
+        Granikos.Hydra.WebClient.HydraConfigurationService.UsersWithTotal GetLocalUsers(int page, int perPage);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/GetLocalUsersResponse")]
+        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.UsersWithTotal> GetLocalUsersAsync(int page, int perPage);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/SearchLocalUsers", ReplyAction="http://tempuri.org/IConfigurationService/SearchLocalUsersResponse")]
         string[] SearchLocalUsers(string search);
@@ -2162,22 +1977,22 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         System.Threading.Tasks.Task<string[]> SearchLocalUsersAsync(string search);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLocalUser", ReplyAction="http://tempuri.org/IConfigurationService/GetLocalUserResponse")]
-        Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser GetLocalUser(int id);
+        Granikos.Hydra.WebClient.HydraConfigurationService.User GetLocalUser(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetLocalUser", ReplyAction="http://tempuri.org/IConfigurationService/GetLocalUserResponse")]
-        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser> GetLocalUserAsync(int id);
+        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.User> GetLocalUserAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddLocalUser", ReplyAction="http://tempuri.org/IConfigurationService/AddLocalUserResponse")]
-        Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser AddLocalUser(Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser user);
+        Granikos.Hydra.WebClient.HydraConfigurationService.User AddLocalUser(Granikos.Hydra.WebClient.HydraConfigurationService.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddLocalUser", ReplyAction="http://tempuri.org/IConfigurationService/AddLocalUserResponse")]
-        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser> AddLocalUserAsync(Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser user);
+        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.User> AddLocalUserAsync(Granikos.Hydra.WebClient.HydraConfigurationService.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateLocalUser", ReplyAction="http://tempuri.org/IConfigurationService/UpdateLocalUserResponse")]
-        Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser UpdateLocalUser(Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser user);
+        Granikos.Hydra.WebClient.HydraConfigurationService.User UpdateLocalUser(Granikos.Hydra.WebClient.HydraConfigurationService.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateLocalUser", ReplyAction="http://tempuri.org/IConfigurationService/UpdateLocalUserResponse")]
-        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser> UpdateLocalUserAsync(Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser user);
+        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.User> UpdateLocalUserAsync(Granikos.Hydra.WebClient.HydraConfigurationService.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteLocalUser", ReplyAction="http://tempuri.org/IConfigurationService/DeleteLocalUserResponse")]
         bool DeleteLocalUser(int id);
@@ -2216,10 +2031,16 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.UserTemplate[]> GetLocalUserTemplatesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalUsers", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalUsersResponse")]
-        Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUsersWithTotal GetExternalUsers(int page, int perPage);
+        Granikos.Hydra.WebClient.HydraConfigurationService.UsersWithTotal GetExternalUsers(int page, int perPage);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalUsers", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalUsersResponse")]
-        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUsersWithTotal> GetExternalUsersAsync(int page, int perPage);
+        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.UsersWithTotal> GetExternalUsersAsync(int page, int perPage);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalUserCount", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalUserCountResponse")]
+        int GetExternalUserCount();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalUserCount", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalUserCountResponse")]
+        System.Threading.Tasks.Task<int> GetExternalUserCountAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/SearchExternalUsers", ReplyAction="http://tempuri.org/IConfigurationService/SearchExternalUsersResponse")]
         string[] SearchExternalUsers(string search);
@@ -2228,22 +2049,22 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         System.Threading.Tasks.Task<string[]> SearchExternalUsersAsync(string search);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalUserResponse")]
-        Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser GetExternalUser(int id);
+        Granikos.Hydra.WebClient.HydraConfigurationService.User GetExternalUser(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/GetExternalUserResponse")]
-        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser> GetExternalUserAsync(int id);
+        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.User> GetExternalUserAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/AddExternalUserResponse")]
-        Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser AddExternalUser(Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser user);
+        Granikos.Hydra.WebClient.HydraConfigurationService.User AddExternalUser(Granikos.Hydra.WebClient.HydraConfigurationService.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/AddExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/AddExternalUserResponse")]
-        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser> AddExternalUserAsync(Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser user);
+        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.User> AddExternalUserAsync(Granikos.Hydra.WebClient.HydraConfigurationService.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/UpdateExternalUserResponse")]
-        Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser UpdateExternalUser(Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser user);
+        Granikos.Hydra.WebClient.HydraConfigurationService.User UpdateExternalUser(Granikos.Hydra.WebClient.HydraConfigurationService.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/UpdateExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/UpdateExternalUserResponse")]
-        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser> UpdateExternalUserAsync(Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser user);
+        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.User> UpdateExternalUserAsync(Granikos.Hydra.WebClient.HydraConfigurationService.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/DeleteExternalUserResponse")]
         bool DeleteExternalUser(int id);
@@ -2391,52 +2212,84 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
             return base.Channel.SetPropertyAsync(name, value);
         }
         
-        public Granikos.Hydra.WebClient.HydraConfigurationService.Domain[] GetDomains() {
-            return base.Channel.GetDomains();
+        public Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup[] GetLocalGroups() {
+            return base.Channel.GetLocalGroups();
         }
         
-        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.Domain[]> GetDomainsAsync() {
-            return base.Channel.GetDomainsAsync();
+        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup[]> GetLocalGroupsAsync() {
+            return base.Channel.GetLocalGroupsAsync();
         }
         
-        public Granikos.Hydra.WebClient.HydraConfigurationService.DomainWithMailboxCount[] GetDomainsWithMailboxCount() {
-            return base.Channel.GetDomainsWithMailboxCount();
+        public Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup GetLocalGroup(int id) {
+            return base.Channel.GetLocalGroup(id);
         }
         
-        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.DomainWithMailboxCount[]> GetDomainsWithMailboxCountAsync() {
-            return base.Channel.GetDomainsWithMailboxCountAsync();
+        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup> GetLocalGroupAsync(int id) {
+            return base.Channel.GetLocalGroupAsync(id);
         }
         
-        public Granikos.Hydra.WebClient.HydraConfigurationService.Domain GetDomain(string domain) {
-            return base.Channel.GetDomain(domain);
+        public Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup UpdateLocalGroup(Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup mailboxGroup) {
+            return base.Channel.UpdateLocalGroup(mailboxGroup);
         }
         
-        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.Domain> GetDomainAsync(string domain) {
-            return base.Channel.GetDomainAsync(domain);
+        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup> UpdateLocalGroupAsync(Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup mailboxGroup) {
+            return base.Channel.UpdateLocalGroupAsync(mailboxGroup);
         }
         
-        public Granikos.Hydra.WebClient.HydraConfigurationService.Domain UpdateDomain(Granikos.Hydra.WebClient.HydraConfigurationService.Domain domain) {
-            return base.Channel.UpdateDomain(domain);
+        public Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup AddLocalGroup(string name) {
+            return base.Channel.AddLocalGroup(name);
         }
         
-        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.Domain> UpdateDomainAsync(Granikos.Hydra.WebClient.HydraConfigurationService.Domain domain) {
-            return base.Channel.UpdateDomainAsync(domain);
+        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup> AddLocalGroupAsync(string name) {
+            return base.Channel.AddLocalGroupAsync(name);
         }
         
-        public Granikos.Hydra.WebClient.HydraConfigurationService.Domain AddDomain(string domain) {
-            return base.Channel.AddDomain(domain);
+        public bool DeleteLocalGroup(int id) {
+            return base.Channel.DeleteLocalGroup(id);
         }
         
-        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.Domain> AddDomainAsync(string domain) {
-            return base.Channel.AddDomainAsync(domain);
+        public System.Threading.Tasks.Task<bool> DeleteLocalGroupAsync(int id) {
+            return base.Channel.DeleteLocalGroupAsync(id);
         }
         
-        public bool DeleteDomain(int id) {
-            return base.Channel.DeleteDomain(id);
+        public Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup[] GetExternalGroups() {
+            return base.Channel.GetExternalGroups();
         }
         
-        public System.Threading.Tasks.Task<bool> DeleteDomainAsync(int id) {
-            return base.Channel.DeleteDomainAsync(id);
+        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup[]> GetExternalGroupsAsync() {
+            return base.Channel.GetExternalGroupsAsync();
+        }
+        
+        public Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup GetExternalGroup(int id) {
+            return base.Channel.GetExternalGroup(id);
+        }
+        
+        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup> GetExternalGroupAsync(int id) {
+            return base.Channel.GetExternalGroupAsync(id);
+        }
+        
+        public Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup UpdateExternalGroup(Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup mailboxGroup) {
+            return base.Channel.UpdateExternalGroup(mailboxGroup);
+        }
+        
+        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup> UpdateExternalGroupAsync(Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup mailboxGroup) {
+            return base.Channel.UpdateExternalGroupAsync(mailboxGroup);
+        }
+        
+        public Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup AddExternalGroup(string name) {
+            return base.Channel.AddExternalGroup(name);
+        }
+        
+        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailboxGroup> AddExternalGroupAsync(string name) {
+            return base.Channel.AddExternalGroupAsync(name);
+        }
+        
+        public bool DeleteExternalGroup(int id) {
+            return base.Channel.DeleteExternalGroup(id);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteExternalGroupAsync(int id) {
+            return base.Channel.DeleteExternalGroupAsync(id);
         }
         
         public Granikos.Hydra.WebClient.HydraConfigurationService.ReceiveConnector GetDefaultReceiveConnector() {
@@ -2551,11 +2404,19 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
             return base.Channel.DeleteSendConnectorAsync(id);
         }
         
-        public Granikos.Hydra.WebClient.HydraConfigurationService.LocalUsersWithTotal GetLocalUsers(int page, int perPage) {
+        public int GetLocalUserCount() {
+            return base.Channel.GetLocalUserCount();
+        }
+        
+        public System.Threading.Tasks.Task<int> GetLocalUserCountAsync() {
+            return base.Channel.GetLocalUserCountAsync();
+        }
+        
+        public Granikos.Hydra.WebClient.HydraConfigurationService.UsersWithTotal GetLocalUsers(int page, int perPage) {
             return base.Channel.GetLocalUsers(page, perPage);
         }
         
-        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.LocalUsersWithTotal> GetLocalUsersAsync(int page, int perPage) {
+        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.UsersWithTotal> GetLocalUsersAsync(int page, int perPage) {
             return base.Channel.GetLocalUsersAsync(page, perPage);
         }
         
@@ -2567,27 +2428,27 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
             return base.Channel.SearchLocalUsersAsync(search);
         }
         
-        public Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser GetLocalUser(int id) {
+        public Granikos.Hydra.WebClient.HydraConfigurationService.User GetLocalUser(int id) {
             return base.Channel.GetLocalUser(id);
         }
         
-        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser> GetLocalUserAsync(int id) {
+        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.User> GetLocalUserAsync(int id) {
             return base.Channel.GetLocalUserAsync(id);
         }
         
-        public Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser AddLocalUser(Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser user) {
+        public Granikos.Hydra.WebClient.HydraConfigurationService.User AddLocalUser(Granikos.Hydra.WebClient.HydraConfigurationService.User user) {
             return base.Channel.AddLocalUser(user);
         }
         
-        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser> AddLocalUserAsync(Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser user) {
+        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.User> AddLocalUserAsync(Granikos.Hydra.WebClient.HydraConfigurationService.User user) {
             return base.Channel.AddLocalUserAsync(user);
         }
         
-        public Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser UpdateLocalUser(Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser user) {
+        public Granikos.Hydra.WebClient.HydraConfigurationService.User UpdateLocalUser(Granikos.Hydra.WebClient.HydraConfigurationService.User user) {
             return base.Channel.UpdateLocalUser(user);
         }
         
-        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser> UpdateLocalUserAsync(Granikos.Hydra.WebClient.HydraConfigurationService.LocalUser user) {
+        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.User> UpdateLocalUserAsync(Granikos.Hydra.WebClient.HydraConfigurationService.User user) {
             return base.Channel.UpdateLocalUserAsync(user);
         }
         
@@ -2639,12 +2500,20 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
             return base.Channel.GetLocalUserTemplatesAsync();
         }
         
-        public Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUsersWithTotal GetExternalUsers(int page, int perPage) {
+        public Granikos.Hydra.WebClient.HydraConfigurationService.UsersWithTotal GetExternalUsers(int page, int perPage) {
             return base.Channel.GetExternalUsers(page, perPage);
         }
         
-        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUsersWithTotal> GetExternalUsersAsync(int page, int perPage) {
+        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.UsersWithTotal> GetExternalUsersAsync(int page, int perPage) {
             return base.Channel.GetExternalUsersAsync(page, perPage);
+        }
+        
+        public int GetExternalUserCount() {
+            return base.Channel.GetExternalUserCount();
+        }
+        
+        public System.Threading.Tasks.Task<int> GetExternalUserCountAsync() {
+            return base.Channel.GetExternalUserCountAsync();
         }
         
         public string[] SearchExternalUsers(string search) {
@@ -2655,27 +2524,27 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
             return base.Channel.SearchExternalUsersAsync(search);
         }
         
-        public Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser GetExternalUser(int id) {
+        public Granikos.Hydra.WebClient.HydraConfigurationService.User GetExternalUser(int id) {
             return base.Channel.GetExternalUser(id);
         }
         
-        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser> GetExternalUserAsync(int id) {
+        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.User> GetExternalUserAsync(int id) {
             return base.Channel.GetExternalUserAsync(id);
         }
         
-        public Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser AddExternalUser(Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser user) {
+        public Granikos.Hydra.WebClient.HydraConfigurationService.User AddExternalUser(Granikos.Hydra.WebClient.HydraConfigurationService.User user) {
             return base.Channel.AddExternalUser(user);
         }
         
-        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser> AddExternalUserAsync(Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser user) {
+        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.User> AddExternalUserAsync(Granikos.Hydra.WebClient.HydraConfigurationService.User user) {
             return base.Channel.AddExternalUserAsync(user);
         }
         
-        public Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser UpdateExternalUser(Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser user) {
+        public Granikos.Hydra.WebClient.HydraConfigurationService.User UpdateExternalUser(Granikos.Hydra.WebClient.HydraConfigurationService.User user) {
             return base.Channel.UpdateExternalUser(user);
         }
         
-        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser> UpdateExternalUserAsync(Granikos.Hydra.WebClient.HydraConfigurationService.ExternalUser user) {
+        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.User> UpdateExternalUserAsync(Granikos.Hydra.WebClient.HydraConfigurationService.User user) {
             return base.Channel.UpdateExternalUserAsync(user);
         }
         

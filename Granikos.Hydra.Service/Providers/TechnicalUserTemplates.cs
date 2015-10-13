@@ -37,11 +37,11 @@ namespace Granikos.Hydra.Service.Providers
                 get { return false; }
             }
 
-            public IEnumerable<LocalUser> Generate(string pattern, string domain, int count)
+            public IEnumerable<User> Generate(string pattern, string domain, int count)
             {
                 for (var i = 1; i <= count; i++)
                 {
-                    yield return new LocalUser
+                    yield return new User
                     {
                         FirstName = string.Format(_firstNamePattern, i),
                         LastName = string.Format(_lastNamePattern, i),

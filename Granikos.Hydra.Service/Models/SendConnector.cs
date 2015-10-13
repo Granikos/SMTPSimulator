@@ -12,6 +12,7 @@ namespace Granikos.Hydra.Service.Models
     public class SendConnector : IEntity<int>, ISendSettings
     {
         private TLSSettings _tlsSettings;
+        private string[] _domains;
 
         public SendConnector(IPAddress remoteIP = null)
         {
@@ -86,6 +87,14 @@ namespace Granikos.Hydra.Service.Models
         [DataMember]
         public string Password { get; set; }
 
+        [DataMember]
+        [Required]
+        public string[] Domains
+        {
+            get { return _domains ?? new string [0]; }
+            set { _domains = value; }
+        }
+
         public bool RequireTLS
         {
             get { return TLSSettings.Mode == TLSMode.Required; }
@@ -120,5 +129,6 @@ namespace Granikos.Hydra.Service.Models
         {
             get { return TLSSettings.ValidateCertificateRevocation; }
         }
+
     }
 }

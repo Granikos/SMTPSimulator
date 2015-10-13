@@ -2,10 +2,10 @@
 <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.datacontract.org/2004/07/System" />
   <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Core" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/System.Net.Security" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/System.Security.Authentication" />
-  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:complexType name="VersionInfo">
     <xs:annotation>
       <xs:appinfo>
@@ -18,33 +18,20 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="VersionInfo" nillable="true" type="tns:VersionInfo" />
-  <xs:complexType name="ArrayOfDomain">
+  <xs:complexType name="ArrayOfMailboxGroup">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Domain" nillable="true" type="tns:Domain" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MailboxGroup" nillable="true" type="tns:MailboxGroup" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfDomain" nillable="true" type="tns:ArrayOfDomain" />
-  <xs:complexType name="Domain">
+  <xs:element name="ArrayOfMailboxGroup" nillable="true" type="tns:ArrayOfMailboxGroup" />
+  <xs:complexType name="MailboxGroup">
     <xs:sequence>
-      <xs:element minOccurs="0" name="DomainName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="SendConnectorId" nillable="true" type="xs:int" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="MailboxIds" nillable="true" type="q2:ArrayOfint" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="Domain" nillable="true" type="tns:Domain" />
-  <xs:complexType name="ArrayOfDomainWithMailboxCount">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="DomainWithMailboxCount" nillable="true" type="tns:DomainWithMailboxCount" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfDomainWithMailboxCount" nillable="true" type="tns:ArrayOfDomainWithMailboxCount" />
-  <xs:complexType name="DomainWithMailboxCount">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="DomainName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="MailboxCount" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="DomainWithMailboxCount" nillable="true" type="tns:DomainWithMailboxCount" />
+  <xs:element name="MailboxGroup" nillable="true" type="tns:MailboxGroup" />
   <xs:complexType name="ReceiveConnector">
     <xs:sequence>
       <xs:element minOccurs="0" name="AddressString" nillable="true" type="xs:string" />
@@ -56,7 +43,7 @@
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Port" type="xs:int" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Core" minOccurs="0" name="RemoteIPRanges" nillable="true" type="q2:ArrayOfIPRange" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Core" minOccurs="0" name="RemoteIPRanges" nillable="true" type="q3:ArrayOfIPRange" />
       <xs:element minOccurs="0" name="RequireAuth" type="xs:boolean" />
       <xs:element minOccurs="0" name="TLSSettings" nillable="true" type="tns:TLSSettings" />
     </xs:sequence>
@@ -68,10 +55,10 @@
       <xs:element minOccurs="0" name="CertificateDomain" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CertificateName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CertificatePassword" nillable="true" type="xs:string" />
-      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/System.Net.Security" minOccurs="0" name="EncryptionPolicy" type="q3:EncryptionPolicy" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/System.Net.Security" minOccurs="0" name="EncryptionPolicy" type="q4:EncryptionPolicy" />
       <xs:element minOccurs="0" name="IsFilesystemCertificate" type="xs:boolean" />
       <xs:element minOccurs="0" name="Mode" type="tns:TLSMode" />
-      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/System.Security.Authentication" minOccurs="0" name="SslProtocols" type="q4:SslProtocols" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/System.Security.Authentication" minOccurs="0" name="SslProtocols" type="q5:SslProtocols" />
       <xs:element minOccurs="0" name="ValidateCertificateRevocation" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
@@ -101,6 +88,7 @@
   <xs:element name="ArrayOfReceiveConnector" nillable="true" type="tns:ArrayOfReceiveConnector" />
   <xs:complexType name="SendConnector">
     <xs:sequence>
+      <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Domains" nillable="true" type="q6:ArrayOfstring" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="LocalAddressString" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
@@ -122,28 +110,28 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfSendConnector" nillable="true" type="tns:ArrayOfSendConnector" />
-  <xs:complexType name="LocalUsersWithTotal">
+  <xs:complexType name="UsersWithTotal">
     <xs:annotation>
       <xs:appinfo>
         <GenericType Name="{0}sWithTotal" Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-          <GenericParameter Name="LocalUser" Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models">
+          <GenericParameter Name="User" Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models">
           </GenericParameter>
         </GenericType>
       </xs:appinfo>
     </xs:annotation>
     <xs:sequence>
-      <xs:element minOccurs="0" name="Entities" nillable="true" type="tns:ArrayOfLocalUser" />
+      <xs:element minOccurs="0" name="Entities" nillable="true" type="tns:ArrayOfUser" />
       <xs:element minOccurs="0" name="Total" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="LocalUsersWithTotal" nillable="true" type="tns:LocalUsersWithTotal" />
-  <xs:complexType name="ArrayOfLocalUser">
+  <xs:element name="UsersWithTotal" nillable="true" type="tns:UsersWithTotal" />
+  <xs:complexType name="ArrayOfUser">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="LocalUser" nillable="true" type="tns:LocalUser" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="User" nillable="true" type="tns:User" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfLocalUser" nillable="true" type="tns:ArrayOfLocalUser" />
-  <xs:complexType name="LocalUser">
+  <xs:element name="ArrayOfUser" nillable="true" type="tns:ArrayOfUser" />
+  <xs:complexType name="User">
     <xs:sequence>
       <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
@@ -151,7 +139,7 @@
       <xs:element minOccurs="0" name="Mailbox" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="LocalUser" nillable="true" type="tns:LocalUser" />
+  <xs:element name="User" nillable="true" type="tns:User" />
   <xs:complexType name="ImportResult">
     <xs:sequence>
       <xs:element minOccurs="0" name="ImportCount" type="xs:int" />
@@ -173,37 +161,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="UserTemplate" nillable="true" type="tns:UserTemplate" />
-  <xs:complexType name="ExternalUsersWithTotal">
-    <xs:annotation>
-      <xs:appinfo>
-        <GenericType Name="{0}sWithTotal" Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-          <GenericParameter Name="ExternalUser" Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models">
-          </GenericParameter>
-        </GenericType>
-      </xs:appinfo>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Entities" nillable="true" type="tns:ArrayOfExternalUser" />
-      <xs:element minOccurs="0" name="Total" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ExternalUsersWithTotal" nillable="true" type="tns:ExternalUsersWithTotal" />
-  <xs:complexType name="ArrayOfExternalUser">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="ExternalUser" nillable="true" type="tns:ExternalUser" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfExternalUser" nillable="true" type="tns:ArrayOfExternalUser" />
-  <xs:complexType name="ExternalUser">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="DomainId" type="xs:int" />
-      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Mailbox" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ExternalUser" nillable="true" type="tns:ExternalUser" />
   <xs:complexType name="ArrayOfTimeTable">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="TimeTable" nillable="true" type="tns:TimeTable" />
@@ -221,7 +178,7 @@
       <xs:element minOccurs="0" name="MaxRecipients" type="xs:int" />
       <xs:element minOccurs="0" name="MinRecipients" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Parameters" nillable="true" type="q5:ArrayOfKeyValueOfstringstring" />
+      <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Parameters" nillable="true" type="q7:ArrayOfKeyValueOfstringstring" />
       <xs:element minOccurs="0" name="ProtocolLevel" type="tns:ProtocolLevel" />
       <xs:element minOccurs="0" name="RecipientDomainId" type="xs:int" />
       <xs:element minOccurs="0" name="RecipientMailbox" nillable="true" type="xs:string" />
@@ -233,7 +190,7 @@
       <xs:element minOccurs="0" name="SenderMailbox" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StaticRecipient" type="xs:boolean" />
       <xs:element minOccurs="0" name="StaticSender" type="xs:boolean" />
-      <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="TimeData" nillable="true" type="q6:ArrayOfstring" />
+      <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="TimeData" nillable="true" type="q8:ArrayOfstring" />
       <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
@@ -266,7 +223,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="ConnectorId" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="Content" nillable="true" type="xs:string" />
-      <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Recipients" nillable="true" type="q7:ArrayOfstring" />
+      <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Recipients" nillable="true" type="q9:ArrayOfstring" />
       <xs:element minOccurs="0" name="Sender" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>

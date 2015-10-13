@@ -83,9 +83,9 @@
                         <label class="col-sm-4 control-label">Domains</label>
                         <div class="col-sm-8">
                             <ul class="list-group domain-list" ng-show="filtered[connector.Id].length > 0">
-                                <li ng-repeat="domain in filtered[connector.Id] = (domains | filter: { SendConnectorId: connector.Id } : defaultComparer(defaultId))" class="list-group-item">
-                                    <i ng-show="domain.SendConnectorId === null">{{domain.DomainName}}</i>
-                                    <span ng-show="domain.SendConnectorId !== null">{{domain.DomainName}}</span>
+                                <li ng-repeat="group in filtered[connector.Id] = (groups | filter: { SendConnectorId: connector.Id } : defaultComparer(defaultId))" class="list-group-item">
+                                    <i ng-show="group.SendConnectorId === null">{{group.DomainName}}</i>
+                                    <span ng-show="group.SendConnectorId !== null">{{group.DomainName}}</span>
                                 </li>
                             </ul>
                             <p class="form-control-static" ng-show="filtered[connector.Id].length == 0">None</p>

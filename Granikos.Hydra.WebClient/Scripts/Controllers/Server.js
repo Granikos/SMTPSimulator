@@ -24,7 +24,10 @@
                 $scope.serviceBuildDate = "???";
                 $scope.uiVersion = "???";
                 $scope.uiBuildDate = "???";
-                $scope.domains = [];
+                $scope.localMailboxTotal = "???";
+                $scope.externalMailboxTotal = "???";
+                $scope.localGroups = [];
+                $scope.externalGroups = [];
                 $scope.timeTables = [];
 
                 $http.get("api/Server/IsRunning")
@@ -74,9 +77,19 @@
                         showError(data.Message);
                     });
 
-                $http.get("api/Domains/WithMailboxCount")
-                    .success(function (domains) {
-                        $scope.domains = domains;
+                $http.get("api/LocalGroups/WithCounts")
+                    .success(function (groups) {
+                        $scope.localGroups = groups.Items;
+                        $scope.localMailboxTotal = groups.MailboxTotal;
+                    })
+                    .error(function (data) {
+                        showError(data.Message || data.data.Message);
+                    });
+
+                $http.get("api/ExternalGroups/WithCounts")
+                    .success(function (groups) {
+                        $scope.externalGroups = groups.Items;
+                        $scope.externalMailboxTotal = groups.MailboxTotal;
                     })
                     .error(function (data) {
                         showError(data.Message || data.data.Message);

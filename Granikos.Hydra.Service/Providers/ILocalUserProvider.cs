@@ -4,7 +4,7 @@ using Granikos.Hydra.Service.Models;
 
 namespace Granikos.Hydra.Service.Providers
 {
-    public interface ILocalUserProvider : IDataProvider<LocalUser, int>
+    public interface ILocalUserProvider : IDataProvider<User, int>
     {
         int ImportFromCSV(Stream csv, bool overwrite);
         int ExportAsCSV(Stream csv);

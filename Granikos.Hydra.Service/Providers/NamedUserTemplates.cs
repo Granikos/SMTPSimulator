@@ -113,7 +113,7 @@ namespace Granikos.Hydra.Service.Providers
                 get { return true; }
             }
 
-            public IEnumerable<LocalUser> Generate(string pattern, string domain, int count)
+            public IEnumerable<User> Generate(string pattern, string domain, int count)
             {
                 var boxes = new HashSet<string>();
 
@@ -131,7 +131,7 @@ namespace Granikos.Hydra.Service.Providers
 
                     boxes.Add(mb);
 
-                    yield return new LocalUser
+                    yield return new User
                     {
                         FirstName = fn,
                         LastName = ln,

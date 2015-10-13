@@ -3,10 +3,10 @@ using System.Runtime.Serialization;
 namespace Granikos.Hydra.Service.Models
 {
     [DataContract]
-    public class DomainWithMailboxCount
+    public class GroupWithMailboxCount
     {
         [DataMember]
-        public string DomainName { get; set; }
+        public string Name { get; set; }
 
         [DataMember]
         public int MailboxCount { get; set; }

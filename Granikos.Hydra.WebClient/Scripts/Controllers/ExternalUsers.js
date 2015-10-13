@@ -1,25 +1,21 @@
 ﻿(function () {
-    var DomainRegexp = /^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/;
-
-    angular.module('ExternalUsers', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.selection', 'ui.grid.pagination', 'ui.bootstrap.modal', 'ngFileUpload'])
+    angular.module('ExternalUsers', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.selection', 'ui.grid.pagination', 'ui.bootstrap.modal', 'ngFileUpload', 'checklist-model'])
         .service('ExternalUsersService', ['$http', DataService('api/ExternalUsers')])
-        .service("DomainService", ["$http", DataService("api/Domains")])
-        .service("SendConnectorService", ["$http", DataService("api/SendConnectors")])
+        .service("ExternalGroupsService", ["$http", DataService("api/ExternalGroups")])
         .controller('ExternalUsersController', [
-            '$scope', '$modal', '$q', '$http', 'ExternalUsersService', 'Upload', 'DomainService', 'SendConnectorService', function($scope, $modal, $q, $http, ExternalUsersService, Upload, DomainService, SendConnectorService) {
+            '$scope', '$modal', '$q', '$http', 'ExternalUsersService', 'Upload', 'ExternalGroupsService', 'uiGridConstants', function ($scope, $modal, $q, $http, ExternalUsersService, Upload, GroupService, uiGridConstants) {
                 $scope.users = [];
-                $scope.domains = {};
-                $scope.connectors = [];
+                $scope.groups = {};
 
                 var paginationOptions = {
                     PageSize: 25,
                     PageNumber: 1
                 };
 
-                var columnDefs = [
+                $scope.columns = [
                     { name: 'firstName', field: 'FirstName', editableCellTemplate: simpleEditTemplate('required') },
                     { name: 'lastName', field: 'LastName', editableCellTemplate: simpleEditTemplate('required') },
-                    { name: 'mailbox', field: 'getMailAddress()', displayName:'Email Address', editableCellTemplate: simpleEditTemplate('required', 'email'), type: 'email' }
+                    { name: 'mailbox', field: 'Mailbox', displayName: 'Email Address', editableCellTemplate: simpleEditTemplate('required', 'email'), type: 'email' }
                 ];
 
                 $scope.gridOptions = {
@@ -39,12 +35,12 @@
                     enableSelectAll: true,
                     selectionRowHeaderWidth: 35,
                     enableHorizontalScrollbar: 0,
-                    columnDefs: columnDefs,
-                    onRegisterApi: function(gridApi) {
+                    columnDefs: $scope.columns,
+                    onRegisterApi: function (gridApi) {
                         $scope.gridApi = gridApi;
                         gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
 
-                        gridApi.pagination.on.paginationChanged($scope, function(newPage, pageSize) {
+                        gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
                             paginationOptions.PageNumber = newPage;
                             paginationOptions.PageSize = pageSize;
                             $scope.refresh();
@@ -52,34 +48,23 @@
                     }
                 };
 
-                SendConnectorService.all()
-                    .success(function(connectors) {
-                        $scope.connectors = connectors;
-                    })
-                    .error(function(data) {
-                        showError(data.Message || data.data.Message);
-                    });
-
-
-                $scope.refreshDomains = function() {
-                    DomainService.all()
-                        .success(function(domains) {
-                            $scope.domains = {};
-                            angular.forEach(domains, function(domain) {
-                                $scope.domains[domain.Id] = domain;
-                            });
-                            angular.forEach($scope.users, function(user) {
-                                user.__changed__ = true;
-                            });
+                $scope.refreshGroups = function () {
+                    GroupService.all()
+                        .success(function (groups) {
+                            $scope.groups = groups;
+                            if ($scope.columns.length > 3) {
+                                $scope.columns.splice(3, $scope.columns.length - 3);
+                            }
+                            for (var j = 0; j < groups.length; j++) {
+                                $scope.columns.push({
+                                    name: 'group' + j,
+                                    displayName: groups[j].Name,
+                                    type: 'boolean',
+                                    cellTemplate: '<input type="checkbox" checklist-model="grid.appScope.groups[' + j + '].MailboxIds" checklist-value="row.entity.Id" />'
+                                });
+                            }
                         })
-                        .error(function(data) {
-                            showError(data.Message || data.data.Message);
-                        });
-                };
-
-                $scope.updateDomain = function(domain) {
-                    DomainService.update(domain)
-                        .error(function(data) {
+                        .error(function (data) {
                             showError(data.Message || data.data.Message);
                         });
                 };
@@ -99,7 +84,7 @@
                         $scope.importedUsers = data.ImportCount;
                         $scope.overwrittenUsers = data.OverwrittenCount;
 
-                        $scope.refreshDomains();
+                        $scope.refreshGroups();
                         $scope.refresh();
                     });
                 }
@@ -126,85 +111,77 @@
                     }
                 };
 
-                $scope.saveRow = function(rowEntity) {
+                $scope.saveRow = function (rowEntity) {
                     var promise = ExternalUsersService.update(rowEntity);
                     $scope.gridApi.rowEdit.setSavePromise($scope.gridApi.grid, rowEntity, promise);
                 };
 
-                $scope.deleteSelected = function() {
-                    angular.forEach($scope.gridApi.selection.getSelectedRows(), function(data, index) {
-                        ExternalUsersService.delete(data.Id).success(function() {
+                $scope.deleteSelected = function () {
+                    angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
+                        ExternalUsersService.delete(data.Id).success(function () {
                             $scope.refresh();
                         });
                     });
                 };
 
-                var domainAddCtrl = ['$scope', '$modalInstance', function($scope, $modalInstance) {
-                    $scope.DomainName = null;
-                    $scope.DomainRegexp = DomainRegexp;
+                var groupAddCtrl = ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+                    $scope.Name = null;
 
-                    $scope.add = function() {
-                        $modalInstance.close($scope.DomainName);
+                    $scope.add = function () {
+                        $modalInstance.close($scope.Name);
                     };
                 }];
 
-                $scope.addDomainDialog = function() {
+                $scope.addGroupDialog = function () {
                     $modal
                         .open({
-                            templateUrl: 'Views/ExternalUsers/AddDomainDialog.html',
-                            controller: domainAddCtrl
+                            templateUrl: 'Views/ExternalUsers/AddGroupDialog.html',
+                            controller: groupAddCtrl
                         })
-                        .result.then(function(domain) {
-                            $scope.addDomain(domain);
+                        .result.then(function (name) {
+                            $scope.addGroup(name);
                         });
                 };
 
-                $scope.addDomain = function(domain) {
-                    var p = $http.post('api/Domains/' + domain);
+                $scope.addGroup = function (name) {
+                    var p = $http.post('api/ExternalGroups/' + name);
 
-                    p.success(function() {
-                        $scope.refreshDomains();
+                    p.success(function () {
+                        $scope.refreshGroups();
                     });
 
                     return p;
                 };
 
-                $scope.deleteDomain = function(id) {
-                    DomainService.delete(id)
-                        .success(function() {
-                            $scope.refreshDomains();
+                $scope.deleteGroup = function (id) {
+                    GroupService.delete(id)
+                        .success(function () {
+                            $scope.refreshGroups();
                             $scope.refresh();
                         })
-                        .error(function(data) {
+                        .error(function (data) {
                             showError(data.Message || data.data.Message);
                         });
                 };
 
-                $scope.refresh = function() {
-                    setTimeout(function() {
+                $scope.refresh = function () {
+                    setTimeout(function () {
                         ExternalUsersService.all(paginationOptions)
-                            .success(function(result) {
+                            .success(function (result) {
                                 $scope.gridOptions.totalItems = result.Total;
                                 $scope.users = result.Entities;
-
-                                angular.forEach($scope.users, function(row) {
-                                    row.getMailAddress = function() {
-                                        var domain = $scope.domains[row.DomainId];
-                                        return row.Mailbox + '@' + (domain ? domain.DomainName : '???');
-                                    };
-                                });
                             });
                     }, 100);
                 };
 
                 // watches
-                $scope.$watch('pagingOptions', function(newVal, oldVal) {
+                $scope.$watch('pagingOptions', function (newVal, oldVal) {
                     if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
                         $scope.refresh();
                     }
                 }, true);
 
-                $scope.refreshDomains();
+                $scope.refreshGroups();
                 $scope.refresh();
             }
         ]);

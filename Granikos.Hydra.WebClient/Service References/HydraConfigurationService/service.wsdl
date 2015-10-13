@@ -49,41 +49,65 @@
   <wsdl:message name="IConfigurationService_SetProperty_OutputMessage">
     <wsdl:part name="parameters" element="tns:SetPropertyResponse" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_GetDomains_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetDomains" />
+  <wsdl:message name="IConfigurationService_GetLocalGroups_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLocalGroups" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_GetDomains_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetDomainsResponse" />
+  <wsdl:message name="IConfigurationService_GetLocalGroups_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLocalGroupsResponse" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_GetDomainsWithMailboxCount_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetDomainsWithMailboxCount" />
+  <wsdl:message name="IConfigurationService_GetLocalGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLocalGroup" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_GetDomainsWithMailboxCount_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetDomainsWithMailboxCountResponse" />
+  <wsdl:message name="IConfigurationService_GetLocalGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLocalGroupResponse" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_GetDomain_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetDomain" />
+  <wsdl:message name="IConfigurationService_UpdateLocalGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateLocalGroup" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_GetDomain_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetDomainResponse" />
+  <wsdl:message name="IConfigurationService_UpdateLocalGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateLocalGroupResponse" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_UpdateDomain_InputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateDomain" />
+  <wsdl:message name="IConfigurationService_AddLocalGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddLocalGroup" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_UpdateDomain_OutputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateDomainResponse" />
+  <wsdl:message name="IConfigurationService_AddLocalGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddLocalGroupResponse" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_AddDomain_InputMessage">
-    <wsdl:part name="parameters" element="tns:AddDomain" />
+  <wsdl:message name="IConfigurationService_DeleteLocalGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteLocalGroup" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_AddDomain_OutputMessage">
-    <wsdl:part name="parameters" element="tns:AddDomainResponse" />
+  <wsdl:message name="IConfigurationService_DeleteLocalGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteLocalGroupResponse" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_DeleteDomain_InputMessage">
-    <wsdl:part name="parameters" element="tns:DeleteDomain" />
+  <wsdl:message name="IConfigurationService_GetExternalGroups_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetExternalGroups" />
   </wsdl:message>
-  <wsdl:message name="IConfigurationService_DeleteDomain_OutputMessage">
-    <wsdl:part name="parameters" element="tns:DeleteDomainResponse" />
+  <wsdl:message name="IConfigurationService_GetExternalGroups_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetExternalGroupsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetExternalGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetExternalGroup" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetExternalGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetExternalGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_UpdateExternalGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateExternalGroup" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_UpdateExternalGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateExternalGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_AddExternalGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddExternalGroup" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_AddExternalGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddExternalGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_DeleteExternalGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteExternalGroup" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_DeleteExternalGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteExternalGroupResponse" />
   </wsdl:message>
   <wsdl:message name="IConfigurationService_GetDefaultReceiveConnector_InputMessage">
     <wsdl:part name="parameters" element="tns:GetDefaultReceiveConnector" />
@@ -169,6 +193,12 @@
   <wsdl:message name="IConfigurationService_DeleteSendConnector_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteSendConnectorResponse" />
   </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetLocalUserCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLocalUserCount" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetLocalUserCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLocalUserCountResponse" />
+  </wsdl:message>
   <wsdl:message name="IConfigurationService_GetLocalUsers_InputMessage">
     <wsdl:part name="parameters" element="tns:GetLocalUsers" />
   </wsdl:message>
@@ -240,6 +270,12 @@
   </wsdl:message>
   <wsdl:message name="IConfigurationService_GetExternalUsers_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetExternalUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetExternalUserCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetExternalUserCount" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetExternalUserCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetExternalUserCountResponse" />
   </wsdl:message>
   <wsdl:message name="IConfigurationService_SearchExternalUsers_InputMessage">
     <wsdl:part name="parameters" element="tns:SearchExternalUsers" />
@@ -366,29 +402,45 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/SetProperty" message="tns:IConfigurationService_SetProperty_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/SetPropertyResponse" message="tns:IConfigurationService_SetProperty_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetDomains">
-      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetDomains" message="tns:IConfigurationService_GetDomains_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetDomainsResponse" message="tns:IConfigurationService_GetDomains_OutputMessage" />
+    <wsdl:operation name="GetLocalGroups">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetLocalGroups" message="tns:IConfigurationService_GetLocalGroups_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetLocalGroupsResponse" message="tns:IConfigurationService_GetLocalGroups_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetDomainsWithMailboxCount">
-      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetDomainsWithMailboxCount" message="tns:IConfigurationService_GetDomainsWithMailboxCount_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetDomainsWithMailboxCountResponse" message="tns:IConfigurationService_GetDomainsWithMailboxCount_OutputMessage" />
+    <wsdl:operation name="GetLocalGroup">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetLocalGroup" message="tns:IConfigurationService_GetLocalGroup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetLocalGroupResponse" message="tns:IConfigurationService_GetLocalGroup_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetDomain">
-      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetDomain" message="tns:IConfigurationService_GetDomain_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetDomainResponse" message="tns:IConfigurationService_GetDomain_OutputMessage" />
+    <wsdl:operation name="UpdateLocalGroup">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/UpdateLocalGroup" message="tns:IConfigurationService_UpdateLocalGroup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/UpdateLocalGroupResponse" message="tns:IConfigurationService_UpdateLocalGroup_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="UpdateDomain">
-      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/UpdateDomain" message="tns:IConfigurationService_UpdateDomain_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/UpdateDomainResponse" message="tns:IConfigurationService_UpdateDomain_OutputMessage" />
+    <wsdl:operation name="AddLocalGroup">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/AddLocalGroup" message="tns:IConfigurationService_AddLocalGroup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/AddLocalGroupResponse" message="tns:IConfigurationService_AddLocalGroup_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="AddDomain">
-      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/AddDomain" message="tns:IConfigurationService_AddDomain_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/AddDomainResponse" message="tns:IConfigurationService_AddDomain_OutputMessage" />
+    <wsdl:operation name="DeleteLocalGroup">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DeleteLocalGroup" message="tns:IConfigurationService_DeleteLocalGroup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DeleteLocalGroupResponse" message="tns:IConfigurationService_DeleteLocalGroup_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="DeleteDomain">
-      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DeleteDomain" message="tns:IConfigurationService_DeleteDomain_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DeleteDomainResponse" message="tns:IConfigurationService_DeleteDomain_OutputMessage" />
+    <wsdl:operation name="GetExternalGroups">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetExternalGroups" message="tns:IConfigurationService_GetExternalGroups_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetExternalGroupsResponse" message="tns:IConfigurationService_GetExternalGroups_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExternalGroup">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetExternalGroup" message="tns:IConfigurationService_GetExternalGroup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetExternalGroupResponse" message="tns:IConfigurationService_GetExternalGroup_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateExternalGroup">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/UpdateExternalGroup" message="tns:IConfigurationService_UpdateExternalGroup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/UpdateExternalGroupResponse" message="tns:IConfigurationService_UpdateExternalGroup_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddExternalGroup">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/AddExternalGroup" message="tns:IConfigurationService_AddExternalGroup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/AddExternalGroupResponse" message="tns:IConfigurationService_AddExternalGroup_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteExternalGroup">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DeleteExternalGroup" message="tns:IConfigurationService_DeleteExternalGroup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DeleteExternalGroupResponse" message="tns:IConfigurationService_DeleteExternalGroup_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetDefaultReceiveConnector">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetDefaultReceiveConnector" message="tns:IConfigurationService_GetDefaultReceiveConnector_InputMessage" />
@@ -446,6 +498,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DeleteSendConnector" message="tns:IConfigurationService_DeleteSendConnector_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DeleteSendConnectorResponse" message="tns:IConfigurationService_DeleteSendConnector_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetLocalUserCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetLocalUserCount" message="tns:IConfigurationService_GetLocalUserCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetLocalUserCountResponse" message="tns:IConfigurationService_GetLocalUserCount_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetLocalUsers">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetLocalUsers" message="tns:IConfigurationService_GetLocalUsers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetLocalUsersResponse" message="tns:IConfigurationService_GetLocalUsers_OutputMessage" />
@@ -493,6 +549,10 @@
     <wsdl:operation name="GetExternalUsers">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetExternalUsers" message="tns:IConfigurationService_GetExternalUsers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetExternalUsersResponse" message="tns:IConfigurationService_GetExternalUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExternalUserCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetExternalUserCount" message="tns:IConfigurationService_GetExternalUserCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetExternalUserCountResponse" message="tns:IConfigurationService_GetExternalUserCount_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SearchExternalUsers">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/SearchExternalUsers" message="tns:IConfigurationService_SearchExternalUsers_InputMessage" />
@@ -607,8 +667,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetDomains">
-      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetDomains" style="document" />
+    <wsdl:operation name="GetLocalGroups">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetLocalGroups" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -616,8 +676,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetDomainsWithMailboxCount">
-      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetDomainsWithMailboxCount" style="document" />
+    <wsdl:operation name="GetLocalGroup">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetLocalGroup" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -625,8 +685,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetDomain">
-      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetDomain" style="document" />
+    <wsdl:operation name="UpdateLocalGroup">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/UpdateLocalGroup" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -634,8 +694,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="UpdateDomain">
-      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/UpdateDomain" style="document" />
+    <wsdl:operation name="AddLocalGroup">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/AddLocalGroup" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -643,8 +703,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="AddDomain">
-      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/AddDomain" style="document" />
+    <wsdl:operation name="DeleteLocalGroup">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/DeleteLocalGroup" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -652,8 +712,44 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="DeleteDomain">
-      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/DeleteDomain" style="document" />
+    <wsdl:operation name="GetExternalGroups">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetExternalGroups" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExternalGroup">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetExternalGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateExternalGroup">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/UpdateExternalGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddExternalGroup">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/AddExternalGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteExternalGroup">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/DeleteExternalGroup" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -787,6 +883,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetLocalUserCount">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetLocalUserCount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetLocalUsers">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetLocalUsers" style="document" />
       <wsdl:input>
@@ -888,6 +993,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetExternalUsers">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetExternalUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExternalUserCount">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetExternalUserCount" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

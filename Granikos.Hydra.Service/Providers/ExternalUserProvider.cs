@@ -12,14 +12,14 @@ using Granikos.Hydra.Service.Models;
 namespace Granikos.Hydra.Service.Providers
 {
     [Export(typeof (IExternalUserProvider))]
-    public class ExternalUserProvider : DefaultProvider<ExternalUser>, IExternalUserProvider
+    public class ExternalUserProvider : DefaultProvider<User>, IExternalUserProvider
     {
         public ExternalUserProvider()
             : base("ExternalUsers")
         {
         }
 
-        public int ImportFromCSV(Stream stream, Func<string, int> domainSource, bool overwrite)
+        public int ImportFromCSV(Stream stream, bool overwrite)
         {
             try
             {
@@ -33,26 +33,14 @@ namespace Granikos.Hydra.Service.Providers
                     config.RegisterClassMap<CsvMap>();
 
                     var csv = new CsvReader(reader, config);
-                    var records = csv.GetRecords<ExternalUser>().ToList();
+                    var records = csv.GetRecords<User>().ToList();
 
                     if (overwrite)
                     {
                         Clear();
                     }
 
-                    var count = 0;
-                    foreach (var user in records)
-                    {
-                        var parts = user.Mailbox.Split(new[] {'@'}, 2);
-                        user.Mailbox = parts[0];
-                        user.DomainId = domainSource(parts[1]);
-
-                        if (Add(user) != null)
-                        {
-                            count++;
-                        }
-                    }
-                    return count;
+                    return records.Count(user => Add(user) != null);
                 }
             }
             catch (Exception)
@@ -61,100 +49,63 @@ namespace Granikos.Hydra.Service.Providers
             }
         }
 
-        public int ExportAsCSV(Stream stream, Func<int, string> domainSource)
+        public int ExportAsCSV(Stream stream)
         {
             var config = new CsvConfiguration
             {
                 Delimiter = ";"
             };
-            config.RegisterClassMap<ProxyMap>();
+            config.RegisterClassMap<CsvMap>();
 
             using (var writer = new StreamWriter(stream, Encoding.UTF8, 1000, true))
             using (var csv = new CsvWriter(writer, config))
             {
-                csv.WriteRecords(All().Select(u => new UserProxy
-                {
-                    Domain = domainSource(u.DomainId),
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    Mailbox = u.Mailbox
-                }));
+                csv.WriteRecords(All());
 
                 return All().Count();
             }
         }
 
-        public IEnumerable<string> SearchMailboxes(Func<int, string> domainSource, string search, int max)
+        public IEnumerable<string> SearchMailboxes(string search, int max)
         {
             return
-                All().Select(u =>
-                {
-                    var domain = domainSource(u.DomainId);
-                    var mailbox = string.Format("{0}@{1}", u.Mailbox, domain);
-
-                    return string.Format("{0} {1} <{2}>", u.FirstName, u.LastName, mailbox);
-                })
+                All().Select(u => string.Format("{0} {1} <{2}>", u.FirstName, u.LastName, u.Mailbox))
                     .Where(
                         m => CultureInfo.InvariantCulture.CompareInfo.IndexOf(m, search, CompareOptions.IgnoreCase) >= 0)
                     .Take(max);
         }
 
 #if DEBUG
-        protected override IEnumerable<ExternalUser> Initializer()
+        protected override IEnumerable<User> Initializer()
         {
-            yield return new ExternalUser
+            yield return new User
             {
-                Mailbox = "bernd.mueller",
-                DomainId = 1
+                Mailbox = "bernd.mueller@test.de"
             };
-            yield return new ExternalUser
+            yield return new User
             {
-                Mailbox = "max.muetze",
-                DomainId = 1
+                Mailbox = "max.muetze@test.de"
             };
-            yield return new ExternalUser
+            yield return new User
             {
-                Mailbox = "manuel.krebber",
-                DomainId = 2
+                Mailbox = "manuel.krebber@domain.com"
             };
         }
 #endif
 
-        protected override IOrderedEnumerable<ExternalUser> ApplyOrder(IEnumerable<ExternalUser> entities)
+        protected override IOrderedEnumerable<User> ApplyOrder(IEnumerable<User> entities)
         {
             return entities.OrderBy(u => u.Mailbox, StringComparer.InvariantCultureIgnoreCase);
         }
 
-        private class CsvMap : CsvClassMap<ExternalUser>
+        private class CsvMap : CsvClassMap<User>
         {
             public CsvMap()
             {
-                Map(m => m.Mailbox).Name("Mailbox", "Email Address", "EmailAddress");
-                Map(m => m.FirstName).Name("FirstName", "First Name");
-                Map(m => m.LastName).Name("LastName", "Last Name");
-            }
-        }
-
-        private class UserProxy : ExternalUser
-        {
-            public string Domain { get; set; }
-
-            public string Address
-            {
-                get { return string.Format("{0}@{1}", Mailbox, Domain); }
-            }
-        }
-
-        private class ProxyMap : CsvClassMap<UserProxy>
-        {
-            public ProxyMap()
-            {
-                Map(m => m.Mailbox).Ignore();
-                Map(m => m.Domain).Ignore();
                 Map(m => m.Id).Ignore();
-                Map(m => m.FirstName).Name("First Name").Index(0);
-                Map(m => m.LastName).Name("Last Name").Index(1);
-                Map(m => m.Address).Name("Email Address").Index(2);
+                Map(m => m.Mailbox).Name("Mailbox", "Email Address", "EmailAddress").Index(2);
+                Map(m => m.FirstName).Name("FirstName", "First Name").Index(0);
+                Map(m => m.LastName).Name("LastName", "Last Name").Index(1);
             }
         }
     }

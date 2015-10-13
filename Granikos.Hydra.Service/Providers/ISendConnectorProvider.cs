@@ -6,5 +6,7 @@ namespace Granikos.Hydra.Service.Providers
     {
         int DefaultId { get; set; }
         SendConnector DefaultConnector { get; }
+
+        SendConnector GetByDomain(string domain);
     }
 }

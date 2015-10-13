@@ -13,7 +13,7 @@ using log4net;
 namespace Granikos.Hydra.Service.Providers
 {
     [Export(typeof (ILocalUserProvider))]
-    public class LocalUserProvider : DefaultProvider<LocalUser>, ILocalUserProvider
+    public class LocalUserProvider : DefaultProvider<User>, ILocalUserProvider
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof (LocalUserProvider));
 
@@ -29,7 +29,7 @@ namespace Granikos.Hydra.Service.Providers
         {
             try
             {
-                var users = new List<LocalUser>();
+                var users = new List<User>();
 
                 using (var reader = new StreamReader(stream, Encoding.UTF8))
                 {
@@ -41,7 +41,7 @@ namespace Granikos.Hydra.Service.Providers
                     config.RegisterClassMap<CsvMap>();
 
                     var csv = new CsvReader(reader, config);
-                    var records = csv.GetRecords<LocalUser>().ToList();
+                    var records = csv.GetRecords<User>().ToList();
 
                     if (overwrite)
                     {
@@ -124,15 +124,15 @@ namespace Granikos.Hydra.Service.Providers
         }
 
 #if DEBUG
-        protected override IEnumerable<LocalUser> Initializer()
+        protected override IEnumerable<User> Initializer()
         {
-            yield return new LocalUser
+            yield return new User
             {
                 FirstName = "Bernd",
                 LastName = "Müller",
                 Mailbox = "bernd.mueller@test.de"
             };
-            yield return new LocalUser
+            yield return new User
             {
                 FirstName = "Eva",
                 LastName = "Schmidt",
@@ -141,12 +141,12 @@ namespace Granikos.Hydra.Service.Providers
         }
 #endif
 
-        protected override IOrderedEnumerable<LocalUser> ApplyOrder(IEnumerable<LocalUser> entities)
+        protected override IOrderedEnumerable<User> ApplyOrder(IEnumerable<User> entities)
         {
             return entities.OrderBy(u => u.Mailbox, StringComparer.InvariantCultureIgnoreCase);
         }
 
-        private class CsvMap : CsvClassMap<LocalUser>
+        private class CsvMap : CsvClassMap<User>
         {
             public CsvMap()
             {
@@ -156,7 +156,7 @@ namespace Granikos.Hydra.Service.Providers
             }
         }
 
-        private class ExportMap : CsvClassMap<LocalUser>
+        private class ExportMap : CsvClassMap<User>
         {
             public ExportMap()
             {

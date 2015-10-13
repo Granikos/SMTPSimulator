@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Granikos.Hydra.Service.Models
 {
     [DataContract]
-    public class ExternalUser : IEntity<int>
+    public class User : IEntity<int>
     {
         [DataMember]
         public string FirstName { get; set; }
@@ -15,10 +15,6 @@ namespace Granikos.Hydra.Service.Models
         [DataMember]
         [Required]
         public string Mailbox { get; set; }
-
-        [DataMember]
-        [Required]
-        public int DomainId { get; set; }
 
         [DataMember]
         [Required]
