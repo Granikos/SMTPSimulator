@@ -34,7 +34,8 @@ var config = {
         'bower_components/checklist-model/checklist-model.js',
         'bower_components/ng-file-upload/ng-file-upload.js',
         'bower_components/angular-moment-duration/src/angular-moment-duration.js',
-        'bower_components/ngTouchSpin/src/js/ngTouchSpin.js'
+        'bower_components/ngTouchSpin/src/js/ngTouchSpin.js',
+        'bower_components/angular-rangeslider/angular.rangeSlider.js'
     ],
     angularbundle: 'Scripts/angular-bundle.min.js',
 
@@ -49,7 +50,8 @@ var config = {
 
     angularuicss: [
         'bower_components/angular-ui/build/angular-ui.min.css',
-        'bower_components/angular-ui-grid/ui-grid.min.css'
+        'bower_components/angular-ui-grid/ui-grid.min.css',
+        'bower_components/angular-rangeslider/angular.rangeSlider.css'
     ],
     angularuifonts: [
         'bower_components/angular-ui-grid/ui-grid.eot',

@@ -27,6 +27,10 @@ namespace Granikos.Hydra.Service.Models
 
         [DataMember]
         public int RecipientDomainId { get; set; }
+
+        [DataMember]
+        public bool StaticRecipient { get; set; }
+
         [DataMember]
         public string SenderMailbox { get; set; }
 
@@ -34,7 +38,11 @@ namespace Granikos.Hydra.Service.Models
         public int SenderDomainId { get; set; }
 
         [DataMember]
-        public bool MultipleRecipients { get; set; }
+        public bool StaticSender { get; set; }
+
+        [DataMember]
+        [Range(1, 4)]
+        public int MinRecipients { get; set; }
 
         [DataMember]
         [Range(1,4)]

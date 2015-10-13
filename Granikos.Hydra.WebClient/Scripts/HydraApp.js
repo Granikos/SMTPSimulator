@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('Hydra', ['ngRoute', 'ui.bootstrap', 'Server', 'LocalUsers', 'ExternalUsers', 'Send', 'Receive', 'Timer', 'Mail', 'Logging', 'Register', 'Login', 'enumFlag', 'checklist-model'])
+    angular.module('Hydra', ['ngRoute', 'ui.bootstrap', 'ui-rangeSlider', 'Server', 'LocalUsers', 'ExternalUsers', 'Send', 'Receive', 'Timer', 'Mail', 'Logging', 'Register', 'Login', 'enumFlag', 'checklist-model'])
         .config([
             '$routeProvider', '$httpProvider', '$locationProvider', function($routeProvider, $httpProvider, $locationProvider) {
                 $locationProvider.hashPrefix('!').html5Mode(true);

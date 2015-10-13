@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('Timer', ['ui.bootstrap.modal'])
+    angular.module('Timer', ['ui.bootstrap.modal', 'ui-rangeSlider'])
 
         .service("TimeTableService", ["$http", DataService("api/TimeTables")])
 

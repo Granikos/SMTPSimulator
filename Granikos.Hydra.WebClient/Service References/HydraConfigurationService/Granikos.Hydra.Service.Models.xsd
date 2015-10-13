@@ -213,18 +213,60 @@
   <xs:complexType name="TimeTable">
     <xs:sequence>
       <xs:element minOccurs="0" name="Active" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Attachment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AttachmentType" type="tns:AttachmentType" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="MailContent" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MailType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaxRecipients" type="xs:int" />
+      <xs:element minOccurs="0" name="MinRecipients" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Parameters" nillable="true" type="q5:ArrayOfKeyValueOfstringstring" />
+      <xs:element minOccurs="0" name="ProtocolLevel" type="tns:ProtocolLevel" />
+      <xs:element minOccurs="0" name="RecipientDomainId" type="xs:int" />
+      <xs:element minOccurs="0" name="RecipientMailbox" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportMailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportType" type="tns:ReportType" />
       <xs:element minOccurs="0" name="SendConnector" nillable="true" type="tns:SendConnector" />
+      <xs:element minOccurs="0" name="SendEicarFile" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SenderDomainId" type="xs:int" />
+      <xs:element minOccurs="0" name="SenderMailbox" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StaticRecipient" type="xs:boolean" />
+      <xs:element minOccurs="0" name="StaticSender" type="xs:boolean" />
+      <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="TimeData" nillable="true" type="q6:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TimeTable" nillable="true" type="tns:TimeTable" />
+  <xs:simpleType name="AttachmentType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Off" />
+      <xs:enumeration value="Fixed" />
+      <xs:enumeration value="Random" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="AttachmentType" nillable="true" type="tns:AttachmentType" />
+  <xs:simpleType name="ProtocolLevel">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Off" />
+      <xs:enumeration value="On" />
+      <xs:enumeration value="Verbose" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ProtocolLevel" nillable="true" type="tns:ProtocolLevel" />
+  <xs:simpleType name="ReportType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Off" />
+      <xs:enumeration value="Daily" />
+      <xs:enumeration value="Weekly" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ReportType" nillable="true" type="tns:ReportType" />
   <xs:complexType name="MailMessage">
     <xs:sequence>
       <xs:element minOccurs="0" name="ConnectorId" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="Content" nillable="true" type="xs:string" />
-      <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Recipients" nillable="true" type="q5:ArrayOfstring" />
+      <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Recipients" nillable="true" type="q7:ArrayOfstring" />
       <xs:element minOccurs="0" name="Sender" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>

@@ -19,6 +19,7 @@
     "angular-bootstrap": "latest",
     "angular-enum-flag-directive": "https://github.com/jvdvleuten/angular-enum-flag-directive.git",
     "angular-moment-duration": "latest",
+    "angular-rangeslider": "~0.0.14",
     "angular-route": "latest",
     "angular-ui": "latest",
     "angular-ui-grid": "latest",

@@ -1482,16 +1482,70 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         private bool ActiveField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AttachmentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Granikos.Hydra.WebClient.HydraConfigurationService.AttachmentType AttachmentTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MailContentField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MailTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int MaxRecipientsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int MinRecipientsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.Dictionary<string, string> ParametersField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Granikos.Hydra.WebClient.HydraConfigurationService.ProtocolLevel ProtocolLevelField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RecipientDomainIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RecipientMailboxField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ReportMailAddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Granikos.Hydra.WebClient.HydraConfigurationService.ReportType ReportTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Granikos.Hydra.WebClient.HydraConfigurationService.SendConnector SendConnectorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool SendEicarFileField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int SenderDomainIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SenderMailboxField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool StaticRecipientField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool StaticSenderField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] TimeDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TypeField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -1512,6 +1566,32 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
                 if ((this.ActiveField.Equals(value) != true)) {
                     this.ActiveField = value;
                     this.RaisePropertyChanged("Active");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Attachment {
+            get {
+                return this.AttachmentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AttachmentField, value) != true)) {
+                    this.AttachmentField = value;
+                    this.RaisePropertyChanged("Attachment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Granikos.Hydra.WebClient.HydraConfigurationService.AttachmentType AttachmentType {
+            get {
+                return this.AttachmentTypeField;
+            }
+            set {
+                if ((this.AttachmentTypeField.Equals(value) != true)) {
+                    this.AttachmentTypeField = value;
+                    this.RaisePropertyChanged("AttachmentType");
                 }
             }
         }
@@ -1543,6 +1623,45 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MailType {
+            get {
+                return this.MailTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MailTypeField, value) != true)) {
+                    this.MailTypeField = value;
+                    this.RaisePropertyChanged("MailType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int MaxRecipients {
+            get {
+                return this.MaxRecipientsField;
+            }
+            set {
+                if ((this.MaxRecipientsField.Equals(value) != true)) {
+                    this.MaxRecipientsField = value;
+                    this.RaisePropertyChanged("MaxRecipients");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int MinRecipients {
+            get {
+                return this.MinRecipientsField;
+            }
+            set {
+                if ((this.MinRecipientsField.Equals(value) != true)) {
+                    this.MinRecipientsField = value;
+                    this.RaisePropertyChanged("MinRecipients");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Name {
             get {
                 return this.NameField;
@@ -1551,6 +1670,84 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
                 if ((object.ReferenceEquals(this.NameField, value) != true)) {
                     this.NameField = value;
                     this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.Dictionary<string, string> Parameters {
+            get {
+                return this.ParametersField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ParametersField, value) != true)) {
+                    this.ParametersField = value;
+                    this.RaisePropertyChanged("Parameters");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Granikos.Hydra.WebClient.HydraConfigurationService.ProtocolLevel ProtocolLevel {
+            get {
+                return this.ProtocolLevelField;
+            }
+            set {
+                if ((this.ProtocolLevelField.Equals(value) != true)) {
+                    this.ProtocolLevelField = value;
+                    this.RaisePropertyChanged("ProtocolLevel");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int RecipientDomainId {
+            get {
+                return this.RecipientDomainIdField;
+            }
+            set {
+                if ((this.RecipientDomainIdField.Equals(value) != true)) {
+                    this.RecipientDomainIdField = value;
+                    this.RaisePropertyChanged("RecipientDomainId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RecipientMailbox {
+            get {
+                return this.RecipientMailboxField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RecipientMailboxField, value) != true)) {
+                    this.RecipientMailboxField = value;
+                    this.RaisePropertyChanged("RecipientMailbox");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ReportMailAddress {
+            get {
+                return this.ReportMailAddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReportMailAddressField, value) != true)) {
+                    this.ReportMailAddressField = value;
+                    this.RaisePropertyChanged("ReportMailAddress");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Granikos.Hydra.WebClient.HydraConfigurationService.ReportType ReportType {
+            get {
+                return this.ReportTypeField;
+            }
+            set {
+                if ((this.ReportTypeField.Equals(value) != true)) {
+                    this.ReportTypeField = value;
+                    this.RaisePropertyChanged("ReportType");
                 }
             }
         }
@@ -1568,6 +1765,97 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
             }
         }
         
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool SendEicarFile {
+            get {
+                return this.SendEicarFileField;
+            }
+            set {
+                if ((this.SendEicarFileField.Equals(value) != true)) {
+                    this.SendEicarFileField = value;
+                    this.RaisePropertyChanged("SendEicarFile");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int SenderDomainId {
+            get {
+                return this.SenderDomainIdField;
+            }
+            set {
+                if ((this.SenderDomainIdField.Equals(value) != true)) {
+                    this.SenderDomainIdField = value;
+                    this.RaisePropertyChanged("SenderDomainId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SenderMailbox {
+            get {
+                return this.SenderMailboxField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SenderMailboxField, value) != true)) {
+                    this.SenderMailboxField = value;
+                    this.RaisePropertyChanged("SenderMailbox");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool StaticRecipient {
+            get {
+                return this.StaticRecipientField;
+            }
+            set {
+                if ((this.StaticRecipientField.Equals(value) != true)) {
+                    this.StaticRecipientField = value;
+                    this.RaisePropertyChanged("StaticRecipient");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool StaticSender {
+            get {
+                return this.StaticSenderField;
+            }
+            set {
+                if ((this.StaticSenderField.Equals(value) != true)) {
+                    this.StaticSenderField = value;
+                    this.RaisePropertyChanged("StaticSender");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string[] TimeData {
+            get {
+                return this.TimeDataField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TimeDataField, value) != true)) {
+                    this.TimeDataField = value;
+                    this.RaisePropertyChanged("TimeData");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Type {
+            get {
+                return this.TypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TypeField, value) != true)) {
+                    this.TypeField = value;
+                    this.RaisePropertyChanged("Type");
+                }
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -1576,6 +1864,48 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AttachmentType", Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models")]
+    public enum AttachmentType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Off = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Fixed = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Random = 2,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ProtocolLevel", Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models")]
+    public enum ProtocolLevel : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Off = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        On = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Verbose = 2,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ReportType", Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models")]
+    public enum ReportType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Off = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Daily = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Weekly = 2,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]

@@ -1,2 +1,204 @@
 ﻿<div class="container-fluid">
+    <div class="panel" ng-class="{'panel-success': tt.Active, 'panel-default': !tt.Active}" ng-repeat="tt in timeTables">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-target="#collapse{{tt.Id}}" class="collapsed">
+                    {{tt.Name}}&nbsp;
+                </a>
+            </h4>
+        </div>
+        <div id="collapse{{tt.Id}}" class="panel-collapse collapse">
+            <div class="panel-body">
+                <form id="timeTableForm{{tt.Id}}" class="form-horizontal" name="timeTableForms.form{{tt.Id}}" ng-submit="timeTableForms['form' + tt.Id].$valid && (tt.__adding__? add(tt) : update(tt))">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" ng-model="tt.Name" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Type</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" ng-model="tt.Type" required></select>
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <label class="col-sm-4 control-label">From</label>
+                        <div class="col-sm-8">
+                            <div class="row vertical-align">
+                                <div class="col-sm-2">
+                                    <input type="radio" name="senderRadio{{tt.Id}}" ng-model="tt.StaticSender" ng-value="true" /> Static
+                                </div>
+                                <div class="col-sm-10">
+                                    <input type="text" ng-model="tt.SenderMailbox" typeahead="user as user for user in searchLocalUsers($viewValue)" typeahead-loading="loadingLocalUsers"
+                                           class="form-control" typeahead-template-url="escapingTemplate" ng-pattern="MailRegexp" required ng-disabled="!tt.StaticSender">
+                                    <i class="glyphicon form-control-feedback" ng-class="{'glyphicon-refresh': loadingLocalUsers, 'glyphicon-envelope': !loadingLocalUsers}"></i>
+                                </div>
+                            </div>
+                            <div class="row vertical-align top5">
+                                <div class="col-sm-2">
+                                    <input type="radio" name="senderRadio{{tt.Id}}" ng-model="tt.StaticSender" ng-value="false" /> Dynamic
+                                </div>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Local Email Group</span>
+                                        <select ng-model="tt.SenderDomainId" required class="form-control" required ng-disabled="tt.StaticSender"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <label class="col-sm-4 control-label">To</label>
+                        <div class="col-sm-8">
+                            <div class="row vertical-align">
+                                <div class="col-sm-2">
+                                    <input type="radio" name="recipientRadio{{tt.Id}}" ng-model="tt.StaticRecipient" ng-value="true" /> Static
+                                </div>
+                                <div class="col-sm-10">
+                                    <input type="text" ng-model="tt.RecipientMailbox" typeahead="user as user for user in searchExternalUsers($viewValue)" typeahead-loading="loadingExternalUsers"
+                                           class="form-control" typeahead-template-url="escapingTemplate" ng-pattern="MailRegexp" required ng-disabled="!tt.StaticRecipient">
+                                    <i class="glyphicon form-control-feedback" ng-class="{'glyphicon-refresh': loadingExternalUsers, 'glyphicon-envelope': !loadingExternalUsers}"></i>
+                                </div>
+                            </div>
+                            <div class="row vertical-align top5">
+                                <div class="col-sm-2">
+                                    <input type="radio" name="recipientRadio{{tt.Id}}" ng-model="tt.StaticRecipient" ng-value="false" /> Dynamic
+                                </div>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">External Email Group</span>
+                                        <select ng-model="tt.RecipientDomainId" required class="form-control" required ng-disabled="tt.StaticRecipient"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row vertical-align top5">
+                                <div class="col-sm-offset-2 col-sm-4">
+                                    Number of Recipients <!-- TODO -->
+                                </div>
+                                <div class="col-sm-6">
+                                    <div range-slider min="1" max="4" model-min="tt.MinRecipients" model-max="tt.MaxRecipients" disabled="tt.StaticRecipient" attach-handle-values="true" show-values="true"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Mail Type</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" ng-model="tt.MailType" required></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Attachment</label>
+                        <div class="col-sm-8">
+                            <div class="row vertical-align">
+                                <div class="col-sm-12">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="attachmentRadio{{tt.Id}}" ng-model="tt.AttachmentType" ng-value="0" /> None
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="attachmentRadio{{tt.Id}}" ng-model="tt.AttachmentType" ng-value="1" /> Random
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="attachmentRadio{{tt.Id}}" ng-model="tt.AttachmentType" ng-value="2" /> Fixed
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row vertical-align top5">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Attachement File</span>
+                                        <select class="form-control" ng-model="tt.Attachment" required ng-disabled="tt.AttachmentType !== 2"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row vertical-align top5">
+                                <div class="col-sm-12">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" ng-model="tt.SendEicarFile" />
+                                            Send EICAR File
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <label class="col-sm-4 control-label">Report</label>
+                        <div class="col-sm-8">
+                            <div class="row vertical-align">
+                                <div class="col-sm-12">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="reportRadio{{tt.Id}}" ng-model="tt.ReportType" ng-value="0" /> Off
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="reportRadio{{tt.Id}}" ng-model="tt.ReportType" ng-value="1" /> Daily
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="reportRadio{{tt.Id}}" ng-model="tt.ReportType" ng-value="2" /> Weekly
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row vertical-align top5">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Report Recipient</span>
+                                        <input type="text" ng-model="tt.ReportMailAddress" class="form-control" ng-pattern="MailRegexp" required ng-disabled="tt.ReportType === 0">
+                                    </div>
+                                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <label class="col-sm-4 control-label">Protocol Level</label>
+                        <div class="col-sm-8">
+                            <label class="radio-inline">
+                                <input type="radio" name="protocolRadio{{tt.Id}}" ng-model="tt.ProtocolLevel" ng-value="0" /> Off
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="protocolRadio{{tt.Id}}" ng-model="tt.ProtocolLevel" ng-value="1" /> On
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="protocolRadio{{tt.Id}}" ng-model="tt.ProtocolLevel" ng-value="2" /> Verbose
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="btn-group pull-right">
+                                <button type="button" class="btn btn-info" ng-click="activate(tt)" ng-hide="tt.Active || tt.__adding__">
+                                    <i class="glyphicon glyphicon-check"></i> Activate
+                                </button>
+                                <button type="button" class="btn btn-info" ng-click="deactivate(tt)" ng-show="tt.Active && !tt.__adding__">
+                                    <i class="glyphicon glyphicon-unchecked"></i> Deactivate
+                                </button>
+                                <button type="submit" class="btn btn-success" ng-hide="tt.__adding__">
+                                    <i class="glyphicon glyphicon-floppy-disk"></i> Update
+                                </button>
+                                <button type="button" class="btn btn-danger" ng-click="delete(tt)" ng-hide="tt.__adding__">
+                                    <i class="glyphicon glyphicon-remove-sign"></i> Remove
+                                </button>
+                                <button type="submit" class="btn btn-success" ng-show="tt.__adding__">
+                                    <i class="glyphicon glyphicon-floppy-disk"></i> Add
+                                </button>
+                                <button type="button" class="btn btn-danger" ng-click="cancelAdd(tt)" ng-show="tt.__adding__">
+                                    <i class="glyphicon glyphicon-remove-sign"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="btn-group pull-right" style="margin-top: 10px;">
+            <button type="button" class="btn btn-success" ng-click="startAdd()" ng-disabled="adding">
+                <i class="glyphicon glyphicon-plus-sign"></i> Add
+            </button>
+        </div>
+    </div>
 </div>
