@@ -23,55 +23,6 @@
                         showError(data.Message || data.data.Message);
                     });
 
-                function calculateColumnAutoWidths(columns, data, fontFamily, fontSize) {
-                    var maximumsPixels = {};
-
-                    var cell = $('<div class="ui-grid-cell-contents" />');
-                    var padding = cell.innerWidth() - cell.width();
-
-                    // TODO: Cleanup
-                    var menuButton = $('<div class="ui-grid-column-menu-button" style="width: 2.2em"></div>');
-                    var buttonWidth = menuButton.outerWidth();
-
-                    var detector = new FontDetector();
-                    var fonts = fontFamily.split(/,/);
-                    var font;
-                    for (var i = 0; i < fonts.length; i++) {
-                        var f = fonts[i];
-                        if (f.indexOf('"') === 0) f = f.substr(1, f.length - 2);
-                        if (detector.detect(f)) {
-                            font = f;
-                            break;
-                        }
-                    }
-
-                    for (var i = 0; i < data.length; i++) {
-                        for (var j = 0; j < columns.length; j++) {
-                            var field = columns[j].field;
-                            var v = new String(eval('data[i].'+field));
-
-                            var pixels = getTextWidth(v, fontSize + ' ' + font);
-                            if ((maximumsPixels[field] || 0) < pixels)
-                                maximumsPixels[field] = pixels;
-                        }
-                    }
-
-                    for (var j = 0; j < columns.length; j++) {
-                        var field = columns[j].field;
-
-                        var pixels = getTextWidth(columns[j].name, fontSize + ' ' + font);
-                        pixels += buttonWidth;
-                        if ((maximumsPixels[field] || 0) < pixels)
-                            maximumsPixels[field] = pixels;
-
-                    }
-
-                    for (var j = 0; j < columns.length; j++) {
-                        var pixels = maximumsPixels[columns[j].field];
-                        columns[j].minWidth = pixels + padding + 1;
-                    }
-                }
-
                 $scope.load = function () {
                     $scope.loading = true;
                     $http.get("api/Logs/Get/" + $scope.logName)
@@ -90,7 +41,7 @@
                                 var csv = Papa.parse(data, { comments: '#', skipEmptyLines: true });
                                 $scope.gridOptions.columnDefs = angular.copy(csvFields);
                                 $scope.gridOptions.data = angular.copy(csv.data.map(function (v) { return { values: v }; }));
-                                calculateColumnAutoWidths($scope.gridOptions.columnDefs, $scope.gridOptions.data, fontFamily, fontSize);
+                                calculateColumnAutoWidths($scope.gridOptions.columnDefs, $scope.gridOptions.data, fontFamily, fontSize, true);
                                 $scope.refreshGrid = true;
                                 $timeout(function () {
                                     $scope.refreshGrid = false;

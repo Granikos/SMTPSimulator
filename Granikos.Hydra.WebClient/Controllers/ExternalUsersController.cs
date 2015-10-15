@@ -16,7 +16,6 @@ namespace Granikos.Hydra.WebClient.Controllers
     {
         readonly ConfigurationServiceClient _service = new ConfigurationServiceClient();
 
-        // GET api/ExternalUsers
         [HttpGet]
         [Route("")]
         public UsersWithTotal All([FromUri]PagedFilter filter)
@@ -24,7 +23,6 @@ namespace Granikos.Hydra.WebClient.Controllers
             return _service.GetExternalUsers(filter.PageNumber, filter.PageSize);
         }
 
-        // GET api/LocalUsers/Search
         [HttpGet]
         [Route("Search/{search}")]
         public IEnumerable<string> Search(string search)
@@ -32,7 +30,20 @@ namespace Granikos.Hydra.WebClient.Controllers
             return _service.SearchExternalUsers(search);
         }
 
-        // GET api/ExternalUsers/Export
+        [HttpGet]
+        [Route("ByDomain/{domain}")]
+        public IEnumerable<int> ByDomain(string domain)
+        {
+            return _service.GetExternalUsersByDomain(domain).Select(u => u.Id);
+        }
+
+        [HttpGet]
+        [Route("SearchDomains/{domain}")]
+        public stringWithCount[] SearchDomain(string domain)
+        {
+            return _service.SearchExternalUserDomains(domain);
+        }
+
         [HttpGet]
         [Route("Export")]
         public HttpResponseMessage Export()
@@ -55,7 +66,6 @@ namespace Granikos.Hydra.WebClient.Controllers
             return response;
         }
 
-        // POST api/ExternalUsers/Import
         [HttpPost]
         [Route("Import")]
         public async Task<ImportResult> Import()
@@ -65,7 +75,6 @@ namespace Granikos.Hydra.WebClient.Controllers
             return await _service.ImportExternalUsersAsync(stream);
         }
 
-        // POST api/ExternalUsers/ImportWithOverwrite
         [HttpPost]
         [Route("ImportWithOverwrite")]
         public async Task<ImportResult> ImportWithOverwrite()
@@ -89,7 +98,6 @@ namespace Granikos.Hydra.WebClient.Controllers
             return stream;
         }
 
-        // GET api/ExternalUsers/5
         [HttpGet]
         [Route("{id:int}")]
         public HttpResponseMessage Get(int id)
@@ -104,7 +112,6 @@ namespace Granikos.Hydra.WebClient.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, user);
         }
 
-        // POST api/ExternalUsers
         [HttpPost]
         [Route("")]
         public HttpResponseMessage Add([FromBody]User user)
@@ -119,7 +126,6 @@ namespace Granikos.Hydra.WebClient.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, added);
         }
 
-        // PUT api/ExternalUsers/5
         [HttpPut]
         [Route("{id:int}")]
         public HttpResponseMessage Update(int id, [FromBody]User user)
@@ -134,7 +140,6 @@ namespace Granikos.Hydra.WebClient.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, updated);
         }
 
-        // DELETE api/ExternalUsers/5
         [HttpDelete]
         [Route("{id:int}")]
         public HttpResponseMessage Delete(int id)

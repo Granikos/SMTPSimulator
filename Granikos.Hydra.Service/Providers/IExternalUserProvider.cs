@@ -10,5 +10,7 @@ namespace Granikos.Hydra.Service.Providers
         int ImportFromCSV(Stream csv, bool overwrite);
         int ExportAsCSV(Stream csv);
         IEnumerable<string> SearchMailboxes(string search, int max);
+        IEnumerable<User> GetByDomain(string domain);
+        IEnumerable<ValueWithCount<string>> SearchDomains(string domain);
     }
 }

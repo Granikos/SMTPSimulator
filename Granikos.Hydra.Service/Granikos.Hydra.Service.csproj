@@ -197,6 +197,7 @@
     <Compile Include="Models\ImportResult.cs" />
     <Compile Include="Models\MailMessage.cs" />
     <Compile Include="Models\TimeTable.cs" />
+    <Compile Include="Models\ValueWithCount.cs" />
     <Compile Include="PriorityQueue\DelayedQueue.cs" />
     <Compile Include="IConfigurationService.cs" />
     <Compile Include="ISMTPServerContainer.cs" />

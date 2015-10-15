@@ -207,6 +207,27 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebGet(
+            UriTemplate = "LocalUsers/ByDomain/{domain}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<User> GetLocalUsersByDomain(string domain);
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "ExternalUsers/SearchDomains/{domain}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<ValueWithCount<string>> SearchExternalUserDomains(string domain);
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "ExternalUsers/ByDomain/{domain}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<User> GetExternalUsersByDomain(string domain);
+
+        [OperationContract]
+        [WebGet(
             UriTemplate = "LocalUsers/Count",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]

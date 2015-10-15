@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -17,6 +18,87 @@ namespace Granikos.Hydra.Service.Providers
         public ExternalUserProvider()
             : base("ExternalUsers")
         {
+            OnAdded += OnUserAdded;
+            OnRemoved += OnUserRemoved;
+            OnClear += OnUsersClear;
+        }
+
+        private void OnUsersClear()
+        {
+            _domainCounts = null;
+        }
+
+        private void OnUserRemoved(User user)
+        {
+            if (_domainCounts != null)
+            {
+                var domain = user.Mailbox.Split('@')[1];
+                if (_domainCounts.ContainsKey(domain))
+                {
+                    var count = _domainCounts[domain] - 1;
+
+                    if (count <= 0)
+                    {
+                        _domainCounts.Remove(domain);
+                    }
+                    else
+                    {
+                        _domainCounts[domain] = count;
+                    }
+                }
+            }
+        }
+
+        private void OnUserAdded(User user)
+        {
+            if (_domainCounts != null)
+            {
+                var domain = user.Mailbox.Split('@')[1];
+                if (_domainCounts.ContainsKey(domain))
+                {
+                    _domainCounts[domain]++;
+                }
+                else
+                {
+                    _domainCounts.Add(domain, 1);
+                }
+            }
+        }
+
+        public IEnumerable<User> GetByDomain(string domain)
+        {
+            domain = domain.StartsWith("*")? domain.Substring(1) : "@" + domain;
+
+            return All().Where(u => u.Mailbox.EndsWith(domain, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        private Dictionary<string, int> _domainCounts;
+
+        private void RefreshDomains()
+        {
+            Contract.Ensures(_domainCounts != null);
+
+            var domainCounts = All()
+                .Select(u => u.Mailbox.Split('@')[1])
+                .GroupBy(d => d, StringComparer.OrdinalIgnoreCase)
+                .ToDictionary(d => d.Key, d => d.Count());
+
+            _domainCounts = new Dictionary<string, int>(domainCounts, StringComparer.OrdinalIgnoreCase);
+        }
+
+        public IEnumerable<ValueWithCount<string>> SearchDomains(string domain)
+        {
+            if (_domainCounts == null)
+            {
+                RefreshDomains();
+            }
+
+            return _domainCounts
+                .Where(
+                    pair =>
+                        CultureInfo.InvariantCulture.CompareInfo.IndexOf(pair.Key, domain, CompareOptions.IgnoreCase) >=
+                        0)
+                .Select(d => new ValueWithCount<string>(d.Key, d.Value));
         }
 
         public int ImportFromCSV(Stream stream, bool overwrite)

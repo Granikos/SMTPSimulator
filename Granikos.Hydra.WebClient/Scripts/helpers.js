@@ -188,3 +188,67 @@ function getTextWidth2(text, fontFamily, fontSize) {
     $(span).text(text);
     return span.clientWidth;
 };
+
+
+
+function calculateColumnAutoWidths(columns, data, fontFamily, fontSize, hasMenu) {
+    var maximumsPixels = {};
+
+    var cell = $('<div class="ui-grid-cell-contents" />');
+    var padding = cell.innerWidth() - cell.width();
+
+    var buttonWidth = 0;
+
+    if (hasMenu) {
+        // TODO: Cleanup
+        var menuButton = $('<div class="ui-grid-column-menu-button" style="width: 2.2em"></div>');
+        buttonWidth = menuButton.outerWidth();
+    }
+
+    var detector = new FontDetector();
+    var fonts = fontFamily.split(/,/);
+    var font;
+    for (var i = 0; i < fonts.length; i++) {
+        var f = fonts[i];
+        if (f.indexOf('"') === 0) f = f.substr(1, f.length - 2);
+        if (detector.detect(f)) {
+            font = f;
+            break;
+        }
+    }
+
+    for (var i = 0; i < data.length; i++) {
+        for (var j = 0; j < columns.length; j++) {
+            var field = columns[j].field;
+            if (field !== undefined) {
+                var name = columns[j].name || columns[j].field;
+                var v = new String(eval('data[i].' + field));
+
+                var pixels = getTextWidth(v, fontSize + ' ' + font);
+                if ((maximumsPixels[name] || 0) < pixels)
+                    maximumsPixels[name] = pixels;
+            }
+        }
+    }
+
+    for (var j = 0; j < columns.length; j++) {
+        var name = columns[j].name || columns[j].field;
+        var text = columns[j].displayName || columns[j].name;
+
+        var pixels = getTextWidth(text, fontSize + ' ' + font);
+        pixels += buttonWidth;
+        if ((maximumsPixels[name] || 0) < pixels)
+            maximumsPixels[name] = pixels;
+
+    }
+
+    for (var j = 0; j < columns.length; j++) {
+        var name = columns[j].name || columns[j].field;
+        var pixels = maximumsPixels[name];
+        var minWidth = Math.ceil(pixels + padding + 1);
+        if ((columns[j].absMinWidth || 0) > minWidth) {
+            minWidth = columns[j].absMinWidth;
+        }
+        columns[j].minWidth = minWidth;
+    }
+}

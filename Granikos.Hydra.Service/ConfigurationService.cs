@@ -131,6 +131,21 @@ namespace Granikos.Hydra.Service
             return _sendConnectors.Delete(id);
         }
 
+        public IEnumerable<User> GetLocalUsersByDomain(string domain)
+        {
+            return _localUsers.GetByDomain(domain);
+        }
+
+        public IEnumerable<ValueWithCount<string>> SearchExternalUserDomains(string domain)
+        {
+            return _externalUsers.SearchDomains(domain);
+        }
+
+        public IEnumerable<User> GetExternalUsersByDomain(string domain)
+        {
+            return _externalUsers.GetByDomain(domain);
+        }
+
         public int GetLocalUserCount()
         {
             return _localUsers.Total;
@@ -370,7 +385,7 @@ namespace Granikos.Hydra.Service
 
         public ImportResult ImportExternalUsersWithOverwrite(Stream stream)
         {
-            var before = _localUsers.Total;
+            var before = _externalUsers.Total;
             var count = _externalUsers.ImportFromCSV(stream, true);
 
             return new ImportResult(count, before);

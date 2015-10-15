@@ -11,5 +11,7 @@ namespace Granikos.Hydra.Service.Providers
         bool Generate(string template, string pattern, string domain, int count);
         IEnumerable<UserTemplate> GetTemplates();
         IEnumerable<string> SearchMailboxes(string search, int max);
+
+        IEnumerable<User> GetByDomain(string domain);
     }
 }

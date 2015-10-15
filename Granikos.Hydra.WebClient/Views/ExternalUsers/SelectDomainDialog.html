@@ -1,0 +1,22 @@
+﻿<script type="text/ng-template" id="domainAutocompleteTemplate">
+    <a href tabindex="-1">
+        <span class="badge pull-right">{{match.model.Count}}</span>
+        <span ng-bind-html="match.label | typeaheadHighlight : query"></span>
+    </a>
+</script>
+
+<div class="modal-header">
+    <h4 class="modal-title"><span class="glyphicon glyphicon-plus-sign"></span> Add Users to Group by Domain</h4>
+</div>
+
+<div class="modal-body clearfix">
+    <form role="form" name="addToGroupForm" ng-submit="addToGroupForm.$valid && submit()">
+        <div class="form-group has-feedback">
+            <label for="domainForGroupAdd">Domain</label>
+            <input placeholder="Domain" id="domainForGroupAdd" type="text" ng-model="Domain" typeahead="domain.Value as domain.Value for domain in searchDomains($viewValue)"
+                   typeahead-loading="loadingDomains" typeahead-template-url="domainAutocompleteTemplate" class="form-control" ng-pattern="DomainRegexp" required>
+            <i class="glyphicon form-control-feedback" ng-class="{'glyphicon-refresh': loadingDomains}"></i>
+        </div>
+        <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-plus-sign"></i> Add</button>
+    </form>
+</div>

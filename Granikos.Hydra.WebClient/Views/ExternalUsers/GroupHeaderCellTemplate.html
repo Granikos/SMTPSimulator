@@ -1,0 +1,35 @@
+﻿<div role="columnheader"
+     ng-class="{dirty: grid.appScope.groupsById[col.colDef._groupId]._dirty}"
+     ui-grid-one-bind-aria-labelledby-grid="col.uid + '-header-text'"
+     aria-sort="none">
+    <div role="button"
+         tabindex="0"
+         class="ui-grid-cell-contents ui-grid-header-cell-primary-focus"
+         col-index="renderIndex"
+         title="TOOLTIP">
+        <span class="badge pull-right">{{grid.appScope.groupsById[col.colDef._groupId].MailboxIds.length}}</span>
+        <span class="ui-grid-header-cell-label"
+              ui-grid-one-bind-id-grid="col.uid + '-header-text'">
+            <span class="glyphicon glyphicon-exclamation-sign" ng-show="grid.appScope.groupsById[col.colDef._groupId]._dirty"
+                  tooltip="This group has unsaved changes" tooltip-placement="top" tooltip-append-to-body="true"></span>
+            {{ grid.appScope.groupsById[col.colDef._groupId].Name }}
+        </span>
+    </div>
+
+    <div class="text-center">
+        <div class="btn-group btn-group-xs" role="group" style="margin: 3px;">
+            <button class="btn btn-success" ng-click="grid.appScope.addToGroup(grid.appScope.groupsById[col.colDef._groupId].Id)" tooltip="Add all users from a domain to this group" tooltip-placement="bottom" tooltip-append-to-body="true">
+                <i class="glyphicon glyphicon-plus"></i>
+            </button>
+            <button class="btn btn-warning" ng-click="grid.appScope.removeAllFromGroup(grid.appScope.groupsById[col.colDef._groupId].Id)" tooltip="Remove all users from this group" tooltip-placement="bottom" tooltip-append-to-body="true" ng-disabled="grid.appScope.groupsById[col.colDef._groupId].MailboxIds.length === 0">
+                <i class="glyphicon glyphicon-minus"></i>
+            </button>
+            <button class="btn btn-default" ng-click="grid.appScope.saveGroup(grid.appScope.groupsById[col.colDef._groupId].Id)" tooltip="Save changes in this group" tooltip-placement="bottom" tooltip-append-to-body="true" ng-disabled="!grid.appScope.groupsById[col.colDef._groupId]._dirty">
+                <i class="glyphicon glyphicon-floppy-disk"></i>
+            </button>
+            <button class="btn btn-danger" ng-click="grid.appScope.deleteGroupWithConfirm(grid.appScope.groupsById[col.colDef._groupId].Id)" tooltip="Delete this group" tooltip-placement="bottom" tooltip-append-to-body="true">
+                <i class="glyphicon glyphicon-remove-sign"></i>
+            </button>
+        </div>
+    </div>
+</div>

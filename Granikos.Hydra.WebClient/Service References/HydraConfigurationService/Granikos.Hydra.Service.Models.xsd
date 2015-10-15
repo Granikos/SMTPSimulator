@@ -110,21 +110,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfSendConnector" nillable="true" type="tns:ArrayOfSendConnector" />
-  <xs:complexType name="UsersWithTotal">
-    <xs:annotation>
-      <xs:appinfo>
-        <GenericType Name="{0}sWithTotal" Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-          <GenericParameter Name="User" Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models">
-          </GenericParameter>
-        </GenericType>
-      </xs:appinfo>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Entities" nillable="true" type="tns:ArrayOfUser" />
-      <xs:element minOccurs="0" name="Total" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="UsersWithTotal" nillable="true" type="tns:UsersWithTotal" />
   <xs:complexType name="ArrayOfUser">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="User" nillable="true" type="tns:User" />
@@ -140,6 +125,42 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="ArrayOfstringWithCount">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="stringWithCount" nillable="true" type="tns:stringWithCount" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfstringWithCount" nillable="true" type="tns:ArrayOfstringWithCount" />
+  <xs:complexType name="stringWithCount">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="{0}WithCount" Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema">
+          </GenericParameter>
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Count" type="xs:int" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="stringWithCount" nillable="true" type="tns:stringWithCount" />
+  <xs:complexType name="UsersWithTotal">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="{0}sWithTotal" Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="User" Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models">
+          </GenericParameter>
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Entities" nillable="true" type="tns:ArrayOfUser" />
+      <xs:element minOccurs="0" name="Total" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UsersWithTotal" nillable="true" type="tns:UsersWithTotal" />
   <xs:complexType name="ImportResult">
     <xs:sequence>
       <xs:element minOccurs="0" name="ImportCount" type="xs:int" />

@@ -1,9 +1,11 @@
 ﻿(function () {
-    angular.module('ExternalUsers', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.selection', 'ui.grid.pagination', 'ui.bootstrap.modal', 'ngFileUpload', 'checklist-model'])
+    var DomainRegexp = /^(\*\.?)?([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/;
+
+    angular.module('ExternalUsers', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.selection', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.bootstrap.modal', 'ngFileUpload', 'checklist-model'])
         .service('ExternalUsersService', ['$http', DataService('api/ExternalUsers')])
         .service("ExternalGroupsService", ["$http", DataService("api/ExternalGroups")])
         .controller('ExternalUsersController', [
-            '$scope', '$modal', '$q', '$http', 'ExternalUsersService', 'Upload', 'ExternalGroupsService', 'uiGridConstants', function ($scope, $modal, $q, $http, ExternalUsersService, Upload, GroupService, uiGridConstants) {
+            '$scope', '$modal', '$q', '$http', '$timeout', 'ExternalUsersService', 'Upload', 'ExternalGroupsService', 'uiGridConstants', function ($scope, $modal, $q, $http, $timeout, ExternalUsersService, Upload, GroupService, uiGridConstants) {
                 $scope.users = [];
                 $scope.groups = {};
 
@@ -13,9 +15,9 @@
                 };
 
                 $scope.columns = [
-                    { name: 'firstName', field: 'FirstName', editableCellTemplate: simpleEditTemplate('required') },
-                    { name: 'lastName', field: 'LastName', editableCellTemplate: simpleEditTemplate('required') },
-                    { name: 'mailbox', field: 'Mailbox', displayName: 'Email Address', editableCellTemplate: simpleEditTemplate('required', 'email'), type: 'email' }
+                    { name: 'firstName', field: 'FirstName', editableCellTemplate: simpleEditTemplate('required'), enableColumnMenu: false },
+                    { name: 'lastName', field: 'LastName', editableCellTemplate: simpleEditTemplate('required'), enableColumnMenu: false },
+                    { name: 'mailbox', field: 'Mailbox', displayName: 'Email Address', editableCellTemplate: simpleEditTemplate('required', 'email'), type: 'email', width: '*', enableColumnMenu: false }
                 ];
 
                 $scope.gridOptions = {
@@ -34,7 +36,6 @@
                     showSelectionCheckbox: true,
                     enableSelectAll: true,
                     selectionRowHeaderWidth: 35,
-                    enableHorizontalScrollbar: 0,
                     columnDefs: $scope.columns,
                     onRegisterApi: function (gridApi) {
                         $scope.gridApi = gridApi;
@@ -48,21 +49,77 @@
                     }
                 };
 
+                /*
+                function menuItems(id) {
+                    return [
+                        {
+                            title: 'Delete',
+                            icon: 'ui-grid-icon-cancel',
+                            action: function ($event) {
+                                this.context.deleteGroup(id);
+                            },
+                            context: $scope
+                        },
+                        {
+                            title: 'Remove All Users',
+                            icon: 'ui-grid-icon-minus-squared',
+                            action: function ($event) {
+
+                            },
+                            context: $scope
+                        },
+                        {
+                            title: 'Add Users From Domain',
+                            icon: 'ui-grid-icon-plus-squared',
+                            action: function ($event) {
+
+                            },
+                            context: $scope
+                        }
+                    ];
+                }
+                */
+
+                function getColumnDef(id) {
+                    return {
+                        name: 'group' + id,
+                        type: 'boolean',
+                        width: '1%',
+                        enableSorting: false,
+                        enableHiding: false,
+                        absMinWidth: 100,
+                        _groupId: id,
+                        headerCellTemplate: 'Views/ExternalUsers/GroupHeaderCellTemplate.html',
+                        cellTemplate: '<input type="checkbox" checklist-model="grid.appScope.groupsById[' + id + '].MailboxIds" checklist-value="row.entity.Id" checklist-change="grid.appScope.groupsById[' + id + ']._dirty = true" />'
+                    };
+                }
+
+                $scope.refreshGridSizing = function () {
+                    var style = window.getComputedStyle($('#usersGrid')[0], null);
+                    var fontSize = style.getPropertyValue('font-size');
+                    var fontFamily = style.getPropertyValue('font-family');
+                    calculateColumnAutoWidths($scope.columns, $scope.users, fontFamily, fontSize, true);
+                    $scope.refreshGrid = true;
+                    $timeout(function () {
+                        $scope.refreshGrid = false;
+                    }, 0);
+
+                }
+
                 $scope.refreshGroups = function () {
                     GroupService.all()
                         .success(function (groups) {
                             $scope.groups = groups;
+                            $scope.groupsById = {};
                             if ($scope.columns.length > 3) {
                                 $scope.columns.splice(3, $scope.columns.length - 3);
                             }
                             for (var j = 0; j < groups.length; j++) {
-                                $scope.columns.push({
-                                    name: 'group' + j,
-                                    displayName: groups[j].Name,
-                                    type: 'boolean',
-                                    cellTemplate: '<input type="checkbox" checklist-model="grid.appScope.groups[' + j + '].MailboxIds" checklist-value="row.entity.Id" />'
-                                });
+                                var id = groups[j].Id;
+                                $scope.groupsById[id] = groups[j];
+                                $scope.columns.push(getColumnDef(id));
                             }
+                            $scope.refreshGridSizing();
                         })
                         .error(function (data) {
                             showError(data.Message || data.data.Message);
@@ -124,19 +181,17 @@
                     });
                 };
 
-                var groupAddCtrl = ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-                    $scope.Name = null;
-
-                    $scope.add = function () {
-                        $modalInstance.close($scope.Name);
-                    };
-                }];
-
                 $scope.addGroupDialog = function () {
                     $modal
                         .open({
                             templateUrl: 'Views/ExternalUsers/AddGroupDialog.html',
-                            controller: groupAddCtrl
+                            controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+                                $scope.Name = null;
+
+                                $scope.add = function () {
+                                    $modalInstance.close($scope.Name);
+                                };
+                            }]
                         })
                         .result.then(function (name) {
                             $scope.addGroup(name);
@@ -144,22 +199,120 @@
                 };
 
                 $scope.addGroup = function (name) {
-                    var p = $http.post('api/ExternalGroups/' + name);
+                    $http.post('api/ExternalGroups/' + name)
+                        .success(function (group) {
+                            $scope.groups.push(group);
+                            $scope.groupsById[group.Id] = group;
+                            $scope.columns.push(getColumnDef(group.Id));
+                            $scope.refreshGridSizing();
+                        })
+                        .error(function (data) {
+                            showError(data.Message || data.data.Message);
+                        });
+                };
 
-                    p.success(function () {
-                        $scope.refreshGroups();
+                $scope.deleteGroupWithConfirm = function (id) {
+                    var name = $scope.groupsById[id].Name;
+                    BootstrapDialog.confirm({
+                        type: BootstrapDialog.TYPE_PRIMARY,
+                        title: 'Delete User Group',
+                        message: 'Do you want to delete the user group "' + name + '"?',
+                        btnCancelLabel: 'No',
+                        btnOKLabel: 'Yes',
+                        btnOKClass: 'btn-danger',
+                        callback: function (success) {
+                            if (success) {
+                                $scope.deleteGroup(id);
+                            }
+                        }
                     });
-
-                    return p;
                 };
 
                 $scope.deleteGroup = function (id) {
+                    var off;
+                    for (off = 0; off < $scope.groups.length; off++)
+                        if ($scope.groups[off].Id === id)
+                            break;
                     GroupService.delete(id)
                         .success(function () {
-                            $scope.refreshGroups();
-                            $scope.refresh();
+                            $scope.groups.splice(off, 1);
+                            $scope.columns.splice(off + 3, 1);
+                            delete $scope.groupsById[id];
                         })
                         .error(function (data) {
+                            showError(data.Message || data.data.Message);
+                        });
+                };
+
+                $scope.removeAllFromGroup = function (id) {
+                    var name = $scope.groupsById[id].Name;
+                    BootstrapDialog.confirm({
+                        type: BootstrapDialog.TYPE_PRIMARY,
+                        title: 'Empty User Group',
+                        message: 'Do you want to remove all users from the group "' + name + '"?',
+                        btnCancelLabel: 'No',
+                        btnOKLabel: 'Yes',
+                        btnOKClass: 'btn-danger',
+                        callback: function (success) {
+                            if (success) {
+                                var group = $scope.groupsById[id];
+                                group.MailboxIds.length = 0; //.splice(0, group.MailboxIds.length);
+                                $scope.$apply();
+                            }
+                        }
+                    });
+                };
+
+                $scope.addToGroup = function (id) {
+                    $modal
+                        .open({
+                            templateUrl: 'Views/ExternalUsers/SelectDomainDialog.html',
+                            controller: [
+                                '$scope', '$modalInstance', function ($scope, $modalInstance) {
+                                    $scope.Domain = null;
+                                    $scope.DomainRegexp = DomainRegexp;
+
+                                    $scope.searchDomains = function (search) {
+                                        return $http.get("api/ExternalUsers/SearchDomains/" + search)
+                                            .then(function (data) {
+                                                return data.data;
+                                            });
+                                    };
+
+                                    $scope.submit = function () {
+                                        $modalInstance.close($scope.Domain);
+                                    };
+                                }
+                            ]
+                        })
+                        .result.then(function (domain) {
+                            $http.get("api/ExternalUsers/ByDomain/" + domain)
+                                .then(function (data) {
+                                    var mbs = $scope.groupsById[id].MailboxIds;
+                                    var temp = {};
+                                    for (var i = 0; i < mbs.length; i++)
+                                        temp[mbs[i]] = true;
+                                    for (var i = 0; i < data.data.length; i++)
+                                        if (!temp[data.data[i]])
+                                            mbs.push(data.data[i]);
+                                    $scope.groupsById[id]._dirty = true;
+                                    $scope.apply();
+                                });
+                        });
+                };
+
+                $scope.saveGroup = function (id) {
+                    var group = $scope.groupsById[id];
+
+                    GroupService.update(group)
+                        .then(function (data) {
+                            var index = $scope.groups.indexOf(group);
+                            if (index > -1) {
+                                $scope.groups[index] = data.data;
+                            }
+                            $scope.groupsById[id] = data.data;
+                            $scope.apply();
+                        }, function (data) {
                             showError(data.Message || data.data.Message);
                         });
                 };

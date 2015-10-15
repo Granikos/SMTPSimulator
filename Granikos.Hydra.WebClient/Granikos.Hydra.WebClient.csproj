@@ -265,6 +265,9 @@
     <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.UsersWithTotal.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.stringWithCount.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\HydraConfigurationService\Message.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -272,7 +275,8 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="Views\ExternalUsers\AddDomainDialog.html" />
+    <Content Include="Views\ExternalUsers\SelectDomainDialog.html" />
+    <Content Include="Views\ExternalUsers\AddGroupDialog.html" />
     <Content Include="Views\ExternalUsers\ImportDialog.html" />
     <Content Include="Views\ExternalUsers\Index.html" />
     <Content Include="Views\LocalUsers\GenerateDialog.html" />
@@ -302,6 +306,7 @@
     <None Include="Service References\HydraConfigurationService\System.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\ExternalUsers\GroupHeaderCellTemplate.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

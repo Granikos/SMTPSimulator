@@ -123,6 +123,17 @@ namespace Granikos.Hydra.Service.Providers
                 .Take(max);
         }
 
+        public IEnumerable<User> GetByDomain(string domain)
+        {
+            if (domain.StartsWith("*"))
+            {
+                domain = domain.Substring(1);
+                return All().Where(u => u.Mailbox.EndsWith(domain));
+            }
+
+            return All().Where(u => u.Mailbox.Equals(domain));
+        }
+
 #if DEBUG
         protected override IEnumerable<User> Initializer()
         {
