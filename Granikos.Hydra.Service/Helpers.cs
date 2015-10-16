@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.Composition.Hosting;
+using System.ComponentModel.Composition.Primitives;
+using System.ComponentModel.Composition.ReflectionModel;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace Granikos.Hydra.Service
@@ -34,6 +39,22 @@ namespace Granikos.Hydra.Service
             dt = dt.AddSeconds(secondsSince1970);
             dt = dt.ToLocalTime();
             return dt;
+        }
+
+        public static IEnumerable<Tuple<Type,string>> GetExportedTypesWithContracts<T>(this CompositionContainer container)
+        {
+            foreach (var part in container.Catalog.Parts)
+            {
+                foreach (var def in part.ExportDefinitions)
+                {
+                    if (def.Metadata.ContainsKey("ExportTypeIdentity") &&
+                        def.Metadata["ExportTypeIdentity"].Equals(typeof (T).FullName))
+                    {
+                        yield return Tuple.Create(ReflectionModelServices.GetPartType(part).Value, def.ContractName);
+                    }
+                }
+                
+            }
         }
     }
 }

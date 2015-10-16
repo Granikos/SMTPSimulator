@@ -63,6 +63,7 @@ namespace Granikos.Hydra.Service
             }
 
             _container = new CompositionContainer(catalog);
+            _container.ComposeExportedValue(_container);
             _container.SatisfyImportsOnce(this);
 
             var loader = new CommandHandlerLoader(catalog);

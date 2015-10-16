@@ -693,6 +693,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetTimeTableTypes">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTimeTableTypesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="GetTimeTableTypesResult" nillable="true" type="q53:ArrayOfTimeTableTypeInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetTimeTable">
     <xs:complexType>
       <xs:sequence>
@@ -703,35 +715,35 @@
   <xs:element name="GetTimeTableResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="GetTimeTableResult" nillable="true" type="q53:TimeTable" />
+        <xs:element xmlns:q54="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="GetTimeTableResult" nillable="true" type="q54:TimeTable" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddTimeTable">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q54="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="timeTable" nillable="true" type="q54:TimeTable" />
+        <xs:element xmlns:q55="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="timeTable" nillable="true" type="q55:TimeTable" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddTimeTableResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q55="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="AddTimeTableResult" nillable="true" type="q55:TimeTable" />
+        <xs:element xmlns:q56="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="AddTimeTableResult" nillable="true" type="q56:TimeTable" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateTimeTable">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q56="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="timeTable" nillable="true" type="q56:TimeTable" />
+        <xs:element xmlns:q57="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="timeTable" nillable="true" type="q57:TimeTable" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateTimeTableResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q57="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="UpdateTimeTableResult" nillable="true" type="q57:TimeTable" />
+        <xs:element xmlns:q58="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="UpdateTimeTableResult" nillable="true" type="q58:TimeTable" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -757,35 +769,35 @@
   <xs:element name="ExportExternalUsersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q58="http://schemas.microsoft.com/Message" name="ExportExternalUsersResult" type="q58:StreamBody" />
+        <xs:element xmlns:q59="http://schemas.microsoft.com/Message" name="ExportExternalUsersResult" type="q59:StreamBody" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ImportExternalUsers">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q59="http://schemas.microsoft.com/Message" name="stream" type="q59:StreamBody" />
+        <xs:element xmlns:q60="http://schemas.microsoft.com/Message" name="stream" type="q60:StreamBody" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ImportExternalUsersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q60="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="ImportExternalUsersResult" nillable="true" type="q60:ImportResult" />
+        <xs:element xmlns:q61="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="ImportExternalUsersResult" nillable="true" type="q61:ImportResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ImportExternalUsersWithOverwrite">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q61="http://schemas.microsoft.com/Message" name="stream" type="q61:StreamBody" />
+        <xs:element xmlns:q62="http://schemas.microsoft.com/Message" name="stream" type="q62:StreamBody" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ImportExternalUsersWithOverwriteResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q62="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="ImportExternalUsersWithOverwriteResult" nillable="true" type="q62:ImportResult" />
+        <xs:element xmlns:q63="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="ImportExternalUsersWithOverwriteResult" nillable="true" type="q63:ImportResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -797,7 +809,7 @@
   <xs:element name="GetCertificateFilesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q63="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetCertificateFilesResult" nillable="true" type="q63:ArrayOfstring" />
+        <xs:element xmlns:q64="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetCertificateFilesResult" nillable="true" type="q64:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -836,7 +848,7 @@
   <xs:element name="SendMail">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q64="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="msg" nillable="true" type="q64:MailMessage" />
+        <xs:element xmlns:q65="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="msg" nillable="true" type="q65:MailMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

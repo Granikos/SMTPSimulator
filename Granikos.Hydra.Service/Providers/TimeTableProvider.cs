@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using Granikos.Hydra.Service.Models;
 
@@ -48,5 +51,23 @@ namespace Granikos.Hydra.Service.Providers
             };
         }
 #endif
+
+        [Import(AllowRecomposition = true)]
+        private CompositionContainer _container { get; set; }
+
+        public IEnumerable<TimeTableTypeInfo> GetTimeTableTypes()
+        {
+            foreach (var type in _container.GetExportedTypesWithContracts<ITimeTableType>())
+            {
+                DisplayNameAttribute dn = (DisplayNameAttribute) Attribute.GetCustomAttribute(type.Item1, typeof (DisplayNameAttribute));
+
+                yield return new TimeTableTypeInfo
+                {
+                    Name = type.Item2,
+                    DisplayName = dn != null? dn.DisplayName : type.Item2
+                };
+
+            }
+        }
     }
 }

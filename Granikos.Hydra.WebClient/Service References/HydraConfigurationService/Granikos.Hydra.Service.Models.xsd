@@ -240,6 +240,19 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="ReportType" nillable="true" type="tns:ReportType" />
+  <xs:complexType name="ArrayOfTimeTableTypeInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TimeTableTypeInfo" nillable="true" type="tns:TimeTableTypeInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTimeTableTypeInfo" nillable="true" type="tns:ArrayOfTimeTableTypeInfo" />
+  <xs:complexType name="TimeTableTypeInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TimeTableTypeInfo" nillable="true" type="tns:TimeTableTypeInfo" />
   <xs:complexType name="MailMessage">
     <xs:sequence>
       <xs:element minOccurs="0" name="ConnectorId" nillable="true" type="xs:int" />

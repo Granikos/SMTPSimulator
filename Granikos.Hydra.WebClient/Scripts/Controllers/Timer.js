@@ -6,6 +6,7 @@
         .controller('TimerController', [
             '$scope', '$http', '$modal', 'TimeTableService', function ($scope, $http, $modal, TimeTableService) {
                 $scope.timeTables = [];
+                $scope.types = [];
                 $scope.localGroups = [];
                 $scope.externalGroups = [];
                 $scope.localMailboxTotal = "???";
@@ -58,6 +59,14 @@
                 TimeTableService.all()
                     .success(function (timeTables) {
                         $scope.timeTables = timeTables;
+                    })
+                    .error(function (data) {
+                        showError(data.Message || data.data.Message);
+                    });
+
+                $http.get("api/TimeTables/Types")
+                    .success(function (types) {
+                        $scope.types = types;
                     })
                     .error(function (data) {
                         showError(data.Message || data.data.Message);

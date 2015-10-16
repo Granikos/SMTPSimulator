@@ -268,6 +268,9 @@
     <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.stringWithCount.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.TimeTableTypeInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\HydraConfigurationService\Message.xsd">
       <SubType>Designer</SubType>
     </None>
