@@ -26,7 +26,7 @@ namespace Granikos.Hydra.Service.Models
         public string RecipientMailbox { get; set; }
 
         [DataMember]
-        public int RecipientDomainId { get; set; }
+        public int? RecipientGroupId { get; set; }
 
         [DataMember]
         public bool StaticRecipient { get; set; }
@@ -35,7 +35,7 @@ namespace Granikos.Hydra.Service.Models
         public string SenderMailbox { get; set; }
 
         [DataMember]
-        public int SenderDomainId { get; set; }
+        public int? SenderGroupId { get; set; }
 
         [DataMember]
         public bool StaticSender { get; set; }

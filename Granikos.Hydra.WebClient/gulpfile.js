@@ -18,7 +18,8 @@ var config = {
 
     bootstrapsrc: [
         'bower_components/bootstrap/dist/js/bootstrap.min.js',
-        'bower_components/bootstrap-dialog/dist/js/bootstrap-dialog.min.js'
+        'bower_components/bootstrap-dialog/dist/js/bootstrap-dialog.min.js',
+        // 'bower_components/bootstrap-select/dist/js/bootstrap-select.js'
     ],
     bootstrapbundle: 'Scripts/bootstrap-bundle.min.js',
 
@@ -30,12 +31,14 @@ var config = {
         'bower_components/angular-ui-grid/ui-grid.js',
         'bower_components/angular-bootstrap/ui-bootstrap.js',
         'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+        // 'bower_components/angular-bootstrap-select/build/angular-bootstrap-select.js',
         'bower_components/angular-enum-flag-directive/angular-enum-flag-directive.js',
         'bower_components/checklist-model/checklist-model.js',
         'bower_components/ng-file-upload/ng-file-upload.js',
         'bower_components/angular-moment-duration/src/angular-moment-duration.js',
         'bower_components/ngTouchSpin/src/js/ngTouchSpin.js',
-        'bower_components/angular-rangeslider/angular.rangeSlider.js'
+        'bower_components/angular-rangeslider/angular.rangeSlider.js',
+        'bower_components/ui-select/dist/select.js'
     ],
     angularbundle: 'Scripts/angular-bundle.min.js',
 
@@ -44,14 +47,16 @@ var config = {
 
     bootstrapcss: [
         'bower_components/bootstrap/dist/css/bootstrap.min.css',
-        'bower_components/bootstrap-dialog/dist/css/bootstrap-dialog.min.css'
+        'bower_components/bootstrap-dialog/dist/css/bootstrap-dialog.min.css',
+        // 'bower_components/bootstrap-select/dist/css/bootstrap-select.css'
     ],
     boostrapfonts: 'bower_components/bootstrap/dist/fonts/*.*',
 
     angularuicss: [
         'bower_components/angular-ui/build/angular-ui.min.css',
         'bower_components/angular-ui-grid/ui-grid.min.css',
-        'bower_components/angular-rangeslider/angular.rangeSlider.css'
+        'bower_components/angular-rangeslider/angular.rangeSlider.css',
+        'bower_components/ui-select/dist/select.css'
     ],
     angularuifonts: [
         'bower_components/angular-ui-grid/ui-grid.eot',

@@ -1358,7 +1358,7 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         private Granikos.Hydra.WebClient.HydraConfigurationService.ProtocolLevel ProtocolLevelField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int RecipientDomainIdField;
+        private System.Nullable<int> RecipientGroupIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string RecipientMailboxField;
@@ -1376,7 +1376,7 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         private bool SendEicarFileField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int SenderDomainIdField;
+        private System.Nullable<int> SenderGroupIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SenderMailboxField;
@@ -1547,14 +1547,14 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int RecipientDomainId {
+        public System.Nullable<int> RecipientGroupId {
             get {
-                return this.RecipientDomainIdField;
+                return this.RecipientGroupIdField;
             }
             set {
-                if ((this.RecipientDomainIdField.Equals(value) != true)) {
-                    this.RecipientDomainIdField = value;
-                    this.RaisePropertyChanged("RecipientDomainId");
+                if ((this.RecipientGroupIdField.Equals(value) != true)) {
+                    this.RecipientGroupIdField = value;
+                    this.RaisePropertyChanged("RecipientGroupId");
                 }
             }
         }
@@ -1625,14 +1625,14 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int SenderDomainId {
+        public System.Nullable<int> SenderGroupId {
             get {
-                return this.SenderDomainIdField;
+                return this.SenderGroupIdField;
             }
             set {
-                if ((this.SenderDomainIdField.Equals(value) != true)) {
-                    this.SenderDomainIdField = value;
-                    this.RaisePropertyChanged("SenderDomainId");
+                if ((this.SenderGroupIdField.Equals(value) != true)) {
+                    this.SenderGroupIdField = value;
+                    this.RaisePropertyChanged("SenderGroupId");
                 }
             }
         }

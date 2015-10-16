@@ -1,4 +1,8 @@
-﻿<div class="container-fluid">
+﻿<script type="text/ng-template" id="escapingTemplate">
+    <a href tabindex="-1" ng-bind-html="match.label | escapeHTML| typeaheadHighlightSafe:query"></a>
+</script>
+
+<div class="container-fluid">
     <div class="panel" ng-class="{'panel-success': tt.Active, 'panel-default': !tt.Active}" ng-repeat="tt in timeTables">
         <div class="panel-heading">
             <h4 class="panel-title">
@@ -27,7 +31,9 @@
                         <div class="col-sm-8">
                             <div class="row vertical-align">
                                 <div class="col-sm-2">
-                                    <input type="radio" name="senderRadio{{tt.Id}}" ng-model="tt.StaticSender" ng-value="true" /> Static
+                                    <label class="radio-inline">
+                                        <input type="radio" name="senderRadio{{tt.Id}}" ng-model="tt.StaticSender" ng-value="true" /> Static
+                                    </label>
                                 </div>
                                 <div class="col-sm-10">
                                     <input type="text" ng-model="tt.SenderMailbox" typeahead="user as user for user in searchLocalUsers($viewValue)" typeahead-loading="loadingLocalUsers"
@@ -37,12 +43,19 @@
                             </div>
                             <div class="row vertical-align top5">
                                 <div class="col-sm-2">
-                                    <input type="radio" name="senderRadio{{tt.Id}}" ng-model="tt.StaticSender" ng-value="false" /> Dynamic
+                                    <label class="radio-inline">
+                                        <input type="radio" name="senderRadio{{tt.Id}}" ng-model="tt.StaticSender" ng-value="false" /> Dynamic
+                                    </label>
                                 </div>
                                 <div class="col-sm-10">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Local Email Group</span>
-                                        <select ng-model="tt.SenderDomainId" required class="form-control" required ng-disabled="tt.StaticSender"></select>
+                                        <span class="input-group-addon input-group-addon-select-fix">Local Email Group</span>
+                                        <ui-select search-enabled="false" theme="bootstrap" ng-model="$parent.tt.SenderGroupId" required ng-disabled="tt.StaticSender" append-to-body="true">
+                                            <ui-select-match>{{$select.selected.Name}}</ui-select-match>
+                                            <ui-select-choices repeat="group.Id as group in localGroups">
+                                                <div><span class="badge pull-right">{{group.Count}}</span> {{group.Name}}</div>
+                                            </ui-select-choices>
+                                        </ui-select>
                                     </div>
                                 </div>
                             </div>
@@ -53,7 +66,9 @@
                         <div class="col-sm-8">
                             <div class="row vertical-align">
                                 <div class="col-sm-2">
-                                    <input type="radio" name="recipientRadio{{tt.Id}}" ng-model="tt.StaticRecipient" ng-value="true" /> Static
+                                    <label class="radio-inline">
+                                        <input type="radio" name="recipientRadio{{tt.Id}}" ng-model="tt.StaticRecipient" ng-value="true" /> Static
+                                    </label>
                                 </div>
                                 <div class="col-sm-10">
                                     <input type="text" ng-model="tt.RecipientMailbox" typeahead="user as user for user in searchExternalUsers($viewValue)" typeahead-loading="loadingExternalUsers"
@@ -63,12 +78,21 @@
                             </div>
                             <div class="row vertical-align top5">
                                 <div class="col-sm-2">
-                                    <input type="radio" name="recipientRadio{{tt.Id}}" ng-model="tt.StaticRecipient" ng-value="false" /> Dynamic
+                                    <label class="radio-inline">
+                                        <input type="radio" name="recipientRadio{{tt.Id}}" ng-model="tt.StaticRecipient" ng-value="false" /> Dynamic
+                                    </label>
                                 </div>
                                 <div class="col-sm-10">
                                     <div class="input-group">
-                                        <span class="input-group-addon">External Email Group</span>
-                                        <select ng-model="tt.RecipientDomainId" required class="form-control" required ng-disabled="tt.StaticRecipient"></select>
+                                        <span class="input-group-addon input-group-addon-select-fix">External Email Group</span>
+                                        <ui-select search-enabled="false" theme="bootstrap" ng-model="tt.RecipientGroupId" required ng-disabled="tt.StaticRecipient" append-to-body="true">
+                                            <ui-select-match>{{$select.selected.Name}}</ui-select-match>
+                                            <ui-select-choices repeat="group.Id as group in externalGroups">
+                                                <div>
+                                                    <span class="badge pull-right">{{group.Count}}</span> {{group.Name}}
+                                                </div>
+                                            </ui-select-choices>
+                                        </ui-select>
                                     </div>
                                 </div>
                             </div>

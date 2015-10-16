@@ -31,5 +31,9 @@
     "ng-file-upload": "latest",
     "ngTouchSpin": "latest",
     "papaparse": "latest"
+  },
+  "resolutions": {
+    "angular": "1.4.7",
+    "bootstrap-select": "~1.7.4"
   }
 }

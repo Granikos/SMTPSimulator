@@ -31,6 +31,7 @@ namespace Granikos.Hydra.WebClient.Controllers
                 Items = _service.GetLocalGroups()
                     .Select(g => new
                     {
+                        Id = g.Id,
                         Name = g.Name,
                         Count = g.MailboxIds.Length
                     }).ToArray(),

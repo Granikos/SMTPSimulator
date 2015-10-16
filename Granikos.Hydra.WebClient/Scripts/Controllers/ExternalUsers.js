@@ -90,7 +90,7 @@
                         absMinWidth: 100,
                         _groupId: id,
                         headerCellTemplate: 'Views/ExternalUsers/GroupHeaderCellTemplate.html',
-                        cellTemplate: '<input type="checkbox" checklist-model="grid.appScope.groupsById[' + id + '].MailboxIds" checklist-value="row.entity.Id" checklist-change="grid.appScope.groupsById[' + id + ']._dirty = true" />'
+                        cellTemplate: 'Views/ExternalUsers/GroupCellTemplate.html'
                     };
                 }
 
