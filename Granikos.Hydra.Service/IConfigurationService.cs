@@ -149,10 +149,17 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "DefaultSendConnector",
+            UriTemplate = "EmptySendConnector",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         SendConnector GetEmptySendConnector();
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "EmptyTimeTable",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        TimeTable GetEmptyTimeTable();
 
         [WebGet(
             UriTemplate = "DefaultSendConnector",

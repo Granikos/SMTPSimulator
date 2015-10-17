@@ -71,6 +71,81 @@
                     .error(function (data) {
                         showError(data.Message || data.data.Message);
                     });
+
+                $scope.update = function (timeTable) {
+                    TimeTableService
+                        .update(timeTable)
+                        .then(function (data) {
+                            var index = $scope.timeTables.indexOf(timeTable);
+                            if (index > -1) {
+                                $scope.timeTables[index] = data.data;
+                            }
+                            window.setTimeout(function () {
+                                $('#collapse' + timeTable.Id).addClass('in');
+                            }, 10);
+                        }, function (data) {
+                            showError(data.Message || data.data.Message);
+                        });
+                };
+
+                $scope.delete = function (timeTable) {
+                    TimeTableService
+                        .delete(timeTable.Id)
+                        .then(function () {
+                            var index = $scope.timeTables.indexOf(timeTable);
+                            if (index > -1) {
+                                $scope.timeTables.splice(index, 1);
+                            }
+                        }, function (data) {
+                            showError(data.Message || data.data.Message);
+                        });
+                };
+
+                $scope.startAdd = function () {
+                    $http.get("api/TimeTables/Empty")
+                        .then(function (data) {
+                            $scope.adding = true;
+                            data.data.__adding__ = true;
+                            data.data.Id = 'Add';
+                            $scope.timeTables.push(data.data);
+                            window.setTimeout(function () {
+                                $('#collapseAdd').addClass('in');
+                                $('#timeTableFormAdd :input').first().focus();
+                                $('#timeTableFormAdd').scope().timeTableForms.formAdd.$setDirty();
+                                $scope.$apply();
+                            }, 10);
+                        }, function (data) {
+                            showError(data.Message || data.data.Message);
+                        });
+                };
+
+                $scope.add = function (timeTable) {
+                    delete timeTable.Id;
+                    delete timeTable.__adding__;
+
+                    TimeTableService
+                        .add(timeTable)
+                        .then(function (data) {
+                            var index = $scope.timeTables.indexOf(timeTable);
+                            if (index > -1) {
+                                $scope.timeTables[index] = data.data;
+                            }
+                            window.setTimeout(function () {
+                                $('#collapse' + data.data.Id).addClass('in');
+                            }, 10);
+                            $scope.adding = false;
+                        }, function (data) {
+                            showError(data.Message || data.data.Message);
+                        });
+                };
+
+                $scope.cancelAdd = function (timeTable) {
+                    var index = $scope.timeTables.indexOf(timeTable);
+                    if (index > -1) {
+                        $scope.timeTables.splice(index, 1);
+                    }
+                    $scope.adding = false;
+                };
             }
         ]);
 })();

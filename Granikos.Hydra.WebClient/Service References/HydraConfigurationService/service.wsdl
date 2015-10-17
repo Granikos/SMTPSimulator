@@ -151,6 +151,12 @@
   <wsdl:message name="IConfigurationService_GetEmptySendConnector_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetEmptySendConnectorResponse" />
   </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetEmptyTimeTable_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmptyTimeTable" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetEmptyTimeTable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmptyTimeTableResponse" />
+  </wsdl:message>
   <wsdl:message name="IConfigurationService_GetDefaultSendConnector_InputMessage">
     <wsdl:part name="parameters" element="tns:GetDefaultSendConnector" />
   </wsdl:message>
@@ -493,6 +499,10 @@
     <wsdl:operation name="GetEmptySendConnector">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetEmptySendConnector" message="tns:IConfigurationService_GetEmptySendConnector_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetEmptySendConnectorResponse" message="tns:IConfigurationService_GetEmptySendConnector_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmptyTimeTable">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetEmptyTimeTable" message="tns:IConfigurationService_GetEmptyTimeTable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetEmptyTimeTableResponse" message="tns:IConfigurationService_GetEmptyTimeTable_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetDefaultSendConnector">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetDefaultSendConnector" message="tns:IConfigurationService_GetDefaultSendConnector_InputMessage" />
@@ -853,6 +863,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetEmptySendConnector">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetEmptySendConnector" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmptyTimeTable">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetEmptyTimeTable" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

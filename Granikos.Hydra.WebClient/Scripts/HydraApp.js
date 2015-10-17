@@ -239,11 +239,42 @@
             return matchItem;
         };
     }])
-    .directive('selectpicker', function () {
+    .directive('confirmOnExit', function () {
+        var forms = [];
+            var messages = [];
+
         return {
-            restrict: 'C',
-            link: function (scope, element, attrs) {
-                $(element).selectpicker();
+            require: '^form',
+            link: function ($scope, formElem, attrs, formCtrl) {
+                var msg = attrs['confirmOnExit'];
+                forms.push(formCtrl);
+                messages.push(msg);
+
+                window.onbeforeunload = function () {
+                    for (var i = 0; i < forms.length; i++) {
+                        if (forms[i].$dirty) {
+                            return messages[i];
+                        }
+                    }
+                }
+
+                $scope.$on('$locationChangeStart', function (event, next, current) {
+                    if (formCtrl.$dirty) {
+                        if (!confirm(msg)) {
+                            event.preventDefault();
+                        }
+                    }
+                });
+
+                $scope.$on('$destroy', function() {
+                    for (var i = 0; i < forms.length; i++) {
+                        if (forms[i] === formCtrl) {
+                            forms.splice(i, 1);
+                            messages.splice(i, 1);
+                            break;
+                        }
+                    }
+                });
             }
         };
     });

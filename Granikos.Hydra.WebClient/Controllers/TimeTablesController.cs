@@ -13,6 +13,13 @@ namespace Granikos.Hydra.WebClient.Controllers
         readonly ConfigurationServiceClient _service = new ConfigurationServiceClient();
 
         [HttpGet]
+        [Route("Empty")]
+        public TimeTable Empty()
+        {
+            return _service.GetEmptyTimeTable();
+        }
+
+        [HttpGet]
         [Route("")]
         public IEnumerable<TimeTable> Get()
         {

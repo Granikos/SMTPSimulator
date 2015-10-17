@@ -151,6 +151,11 @@ namespace Granikos.Hydra.Service
             return _localUsers.Total;
         }
 
+        public TimeTable GetEmptyTimeTable()
+        {
+            return new TimeTable();
+        }
+
         public SendConnector GetDefaultSendConnector()
         {
             return _sendConnectors.DefaultConnector;

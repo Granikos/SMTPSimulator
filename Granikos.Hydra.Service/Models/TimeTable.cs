@@ -7,6 +7,11 @@ namespace Granikos.Hydra.Service.Models
     [DataContract]
     public class TimeTable : IEntity<int>
     {
+        public TimeTable()
+        {
+            MinRecipients = MaxRecipients = 1;
+        }
+
         [DataMember]
         [Required]
         public string Name { get; set; }

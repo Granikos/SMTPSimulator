@@ -6,25 +6,27 @@
     <div class="panel" ng-class="{'panel-success': tt.Active, 'panel-default': !tt.Active}" ng-repeat="tt in timeTables">
         <div class="panel-heading">
             <h4 class="panel-title">
+                <input type="checkbox" ng-model="tt.Active" ng-change="timeTableForms['form' + tt.Id].$setDirty()" />
                 <a data-toggle="collapse" data-target="#collapse{{tt.Id}}" class="collapsed">
                     {{tt.Name}}&nbsp;
+                    <span class="glyphicon glyphicon-exclamation-sign" ng-show="timeTableForms['form' + tt.Id].$dirty"
+                          tooltip="This time table has unsaved changes" tooltip-placement="top" tooltip-append-to-body="true"></span>
                 </a>
             </h4>
         </div>
         <div id="collapse{{tt.Id}}" class="panel-collapse collapse">
             <div class="panel-body">
-                <form id="timeTableForm{{tt.Id}}" class="form-horizontal" name="timeTableForms.form{{tt.Id}}" ng-submit="timeTableForms['form' + tt.Id].$valid && (tt.__adding__? add(tt) : update(tt))">
+                <form id="timeTableForm{{tt.Id}}" class="form-horizontal" name="timeTableForms.form{{tt.Id}}" ng-submit="timeTableForms['form' + tt.Id].$valid && (tt.__adding__? add(tt) : update(tt))" confirm-on-exit="There are unsaved changes in a time table, are you sure you want to leave the page?">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Name</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" ng-model="tt.Name" placeholder="Name" required>
+                            <input name="Name" type="text" class="form-control" ng-model="tt.Name" placeholder="Name" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Type</label>
                         <div class="col-sm-8">
-                            <select class="form-control" ng-model="tt.Type" required ng-options="type.Name as type.DisplayName for type in types">
-                            </select>
+                            <select name="Type" class="form-control" ng-model="tt.Type" required ng-options="type.Name as type.DisplayName for type in types"></select>
                         </div>
                     </div>
                     <div class="form-group has-feedback">
@@ -37,8 +39,8 @@
                                     </label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <input type="text" ng-model="tt.SenderMailbox" typeahead="user as user for user in searchLocalUsers($viewValue)" typeahead-loading="loadingLocalUsers"
-                                           class="form-control" typeahead-template-url="escapingTemplate" ng-pattern="MailRegexp" required ng-disabled="!tt.StaticSender">
+                                    <input name="SenderMailbox" type="text" ng-model="tt.SenderMailbox" typeahead="user as user for user in searchLocalUsers($viewValue)" typeahead-loading="loadingLocalUsers"
+                                           class="form-control" typeahead-template-url="escapingTemplate" ng-pattern="MailRegexp" ng-required="tt.StaticSender" ng-disabled="!tt.StaticSender">
                                     <i class="glyphicon form-control-feedback" ng-class="{'glyphicon-refresh': loadingLocalUsers, 'glyphicon-envelope': !loadingLocalUsers}"></i>
                                 </div>
                             </div>
@@ -51,7 +53,7 @@
                                 <div class="col-sm-10">
                                     <div class="input-group">
                                         <span class="input-group-addon input-group-addon-select-fix">Local Email Group</span>
-                                        <ui-select search-enabled="false" theme="bootstrap" ng-model="$parent.tt.SenderGroupId" required ng-disabled="tt.StaticSender" append-to-body="true">
+                                        <ui-select name="SenderGroupId" search-enabled="false" theme="bootstrap" ng-model="$parent.tt.SenderGroupId" ng-disabled="tt.StaticSender" append-to-body="true">
                                             <ui-select-match>{{$select.selected.Name}}</ui-select-match>
                                             <ui-select-choices repeat="group.Id as group in localGroups">
                                                 <div><span class="badge pull-right">{{group.Count}}</span> {{group.Name}}</div>
@@ -72,8 +74,8 @@
                                     </label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <input type="text" ng-model="tt.RecipientMailbox" typeahead="user as user for user in searchExternalUsers($viewValue)" typeahead-loading="loadingExternalUsers"
-                                           class="form-control" typeahead-template-url="escapingTemplate" ng-pattern="MailRegexp" required ng-disabled="!tt.StaticRecipient">
+                                    <input name="RecipientMailbox" type="text" ng-model="tt.RecipientMailbox" typeahead="user as user for user in searchExternalUsers($viewValue)" typeahead-loading="loadingExternalUsers"
+                                           class="form-control" typeahead-template-url="escapingTemplate" ng-pattern="MailRegexp" ng-required="tt.StaticRecipient" ng-disabled="!tt.StaticRecipient">
                                     <i class="glyphicon form-control-feedback" ng-class="{'glyphicon-refresh': loadingExternalUsers, 'glyphicon-envelope': !loadingExternalUsers}"></i>
                                 </div>
                             </div>
@@ -86,7 +88,7 @@
                                 <div class="col-sm-10">
                                     <div class="input-group">
                                         <span class="input-group-addon input-group-addon-select-fix">External Email Group</span>
-                                        <ui-select search-enabled="false" theme="bootstrap" ng-model="tt.RecipientGroupId" required ng-disabled="tt.StaticRecipient" append-to-body="true">
+                                        <ui-select name="RecipientGroupId" search-enabled="false" theme="bootstrap" ng-model="tt.RecipientGroupId" ng-disabled="tt.StaticRecipient" append-to-body="true">
                                             <ui-select-match>{{$select.selected.Name}}</ui-select-match>
                                             <ui-select-choices repeat="group.Id as group in externalGroups">
                                                 <div>
@@ -110,7 +112,9 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Mail Type</label>
                         <div class="col-sm-8">
-                            <select class="form-control" ng-model="tt.MailType" required></select>
+                            <select name="MailType" class="form-control" ng-model="tt.MailType" required>
+                                <option>TODO</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -132,8 +136,8 @@
                             <div class="row vertical-align top5">
                                 <div class="col-sm-12">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Attachement File</span>
-                                        <select class="form-control" ng-model="tt.Attachment" required ng-disabled="tt.AttachmentType !== 2"></select>
+                                        <span class="input-group-addon">Attachment File</span>
+                                        <select name="Attachment" class="form-control" ng-model="tt.Attachment" ng-required="tt.AttachmentType === 2" ng-disabled="tt.AttachmentType !== 2"></select>
                                     </div>
                                 </div>
                             </div>
@@ -169,7 +173,7 @@
                                 <div class="col-sm-12">
                                     <div class="input-group">
                                         <span class="input-group-addon">Report Recipient</span>
-                                        <input type="text" ng-model="tt.ReportMailAddress" class="form-control" ng-pattern="MailRegexp" required ng-disabled="tt.ReportType === 0">
+                                        <input name="ReportMailAddress" type="text" ng-model="tt.ReportMailAddress" class="form-control" ng-pattern="MailRegexp" ng-required="tt.ReportType !== 0" ng-disabled="tt.ReportType === 0">
                                     </div>
                                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                                 </div>
@@ -193,12 +197,6 @@
                     <div class="form-group">
                         <div class="col-sm-12">
                             <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-info" ng-click="activate(tt)" ng-hide="tt.Active || tt.__adding__">
-                                    <i class="glyphicon glyphicon-check"></i> Activate
-                                </button>
-                                <button type="button" class="btn btn-info" ng-click="deactivate(tt)" ng-show="tt.Active && !tt.__adding__">
-                                    <i class="glyphicon glyphicon-unchecked"></i> Deactivate
-                                </button>
                                 <button type="submit" class="btn btn-success" ng-hide="tt.__adding__">
                                     <i class="glyphicon glyphicon-floppy-disk"></i> Update
                                 </button>
