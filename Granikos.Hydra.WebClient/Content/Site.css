@@ -181,6 +181,12 @@ input.ng-valid.ng-dirty {
 .timeSelector {
     width: 100%;
     table-layout: fixed;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .timeSelector .morning:before, .timeSelector .evening:before {
@@ -231,4 +237,12 @@ input.ng-valid.ng-dirty {
 
 .timeSelector .selected {
     background-color: lightblue;
+}
+
+.timeSelector .toggeling {
+    background-color: lightcoral;
+}
+
+.timeSelector .toggeling.selected {
+    background-color: coral;
 }

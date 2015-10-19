@@ -8,16 +8,16 @@
         <div class="form-group">
             <label>Interval Type</label>
             <label class="radio-inline">
-                <input type="radio" value="1h" name="IntervalType" ng-model="$parent.timeTable.Parameters.type" ng-change="refreshIntervals()" /> 1 hour
+                <input type="radio" value="1h" name="IntervalType" ng-model="$parent.$parent.tt.Parameters.type" ng-change="refreshIntervals()" /> 1 hour
             </label>
             <label class="radio-inline">
-                <input type="radio" value="15min" name="IntervalType" ng-model="$parent.timeTable.Parameters.type" ng-change="refreshIntervals()" /> 15 min
+                <input type="radio" value="15min" name="IntervalType" ng-model="$parent.$parent.tt.Parameters.type" ng-change="refreshIntervals()" /> 15 min
             </label>
         </div>
-        <table ng-init="totalIndex = -1" class="timeSelector">
+        <table class="timeSelector" static-timetable-editor>
             <colgroup>
-                <col style="width: 7em;" />
-                <col ng-repeat="interval in intervals track by $index" />
+                <col style="width: 7em;"/>
+                <col ng-repeat="interval in intervals track by $index"/>
             </colgroup>
             <tr style="font-weight: bold;">
                 <th></th>
@@ -40,9 +40,18 @@
             </tr>
             <tr class="dataRow" ng-repeat="day in days" ng-init="dayIndex = $index">
                 <th>{{day}}</th>
-                <td ng-repeat="interval in intervals track by $index" ng-class="{'selected': $parent.$parent.timeTable.TimeData[offset(dayIndex, $index)] === '1'}"></td>
+                <td ng-repeat="interval in intervals track by $index"
+                    ng-class="{'selected': $parent.$parent.$parent.tt.TimeData[offset(dayIndex, $index)] === '1'}"
+                    day="{{dayIndex}}" interval="{{$index}}"></td>
             </tr>
         </table>
-        <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-plus-sign"></i> Close</button>
+        <div class="btn-group pull-right top10">
+            <button type="button" class="btn btn-default" ng-click="reset()">
+                <i class="glyphicon glyphicon-asterisk"></i> Reset Timetable
+            </button>
+            <button type="submit" class="btn btn-success">
+                <i class="glyphicon glyphicon-plus-sign"></i> Close
+            </button>
+        </div>
     </form>
 </div>
