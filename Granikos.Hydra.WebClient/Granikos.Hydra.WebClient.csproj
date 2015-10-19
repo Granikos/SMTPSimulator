@@ -311,6 +311,7 @@
     </None>
     <Content Include="Views\ExternalUsers\GroupHeaderCellTemplate.html" />
     <Content Include="Views\ExternalUsers\GroupCellTemplate.html" />
+    <Content Include="Views\Timer\DynamicTypeDialog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

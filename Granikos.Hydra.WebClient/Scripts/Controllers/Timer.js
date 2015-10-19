@@ -146,6 +146,37 @@
                     }
                     $scope.adding = false;
                 };
+
+                $scope.showSettings = function (tt) {
+                    var type = tt.Type.charAt(0).toUpperCase() + tt.Type.slice(1);
+                    var scope = $scope.$new(true);
+                    scope.timeTable = tt;
+                    $modal
+                        .open({
+                            templateUrl: 'Views/Timer/' + type + 'TypeDialog.html',
+                            controller: type + 'TimerTypeController',
+                            scope: scope,
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                };
             }
-        ]);
+        ])
+        .controller('DynamicTimerTypeController', [
+            '$scope', '$http', '$modal', function ($scope, $http, $modal) {
+            }])
+        .controller('StaticTimerTypeController', [
+            '$scope', '$http', '$modal', function ($scope, $http, $modal) {
+                $scope.days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+                $scope.refreshIntervals = function() {
+                    var is15min = $scope.$parent.timeTable.Parameters.type === '15min';
+                    $scope.numIntervals = is15min ? 4 * 24 : 24;
+                    $scope.factor = is15min ? 4 : 1;
+                    $scope.intervals = new Array($scope.numIntervals);
+                };
+                $scope.offset = function (day, time) {
+                    return day * $scope.numIntervals + time;
+                };
+                $scope.refreshIntervals();
+            }]);
 })();

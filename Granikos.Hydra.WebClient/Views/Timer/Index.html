@@ -26,7 +26,15 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Type</label>
                         <div class="col-sm-8">
-                            <select name="Type" class="form-control" ng-model="tt.Type" required ng-options="type.Name as type.DisplayName for type in types"></select>
+                            <div class="input-group">
+                                <select name="Type" class="form-control" ng-model="tt.Type" required ng-options="type.Name as type.DisplayName for type in types"></select>
+
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="showSettings(tt)">
+                                        <i class="glyphicon glyphicon-calendar"></i> Configure Timetable
+                                    </button>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group has-feedback">

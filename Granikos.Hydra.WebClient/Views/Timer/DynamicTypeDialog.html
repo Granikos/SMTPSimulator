@@ -1,0 +1,15 @@
+﻿
+<div class="modal-header">
+    <h4 class="modal-title"><span class="glyphicon glyphicon-plus-sign"></span> Edit Timetable</h4>
+</div>
+
+<div class="modal-body clearfix">
+    {{$parent.timeTable.Type}}
+    <form role="form" name="typeForm" ng-submit="typeForm.$valid && $close()">
+        <div class="form-group">
+            <label for="todo">TODO</label>
+            <input type="text" class="form-control" id="todo" placeholder="TODO" ng-model="todo" required/>
+        </div>
+        <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-plus-sign"></i> Close</button>
+    </form>
+</div>

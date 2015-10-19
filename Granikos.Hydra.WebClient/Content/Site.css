@@ -177,3 +177,58 @@ input.ng-valid.ng-dirty {
 .input-group-addon-select-fix {
     line-height: 20px;
 }
+
+.timeSelector {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.timeSelector .morning:before, .timeSelector .evening:before {
+    content: '☾';
+    display: block; 
+    text-align: center;
+    width: 1.5em;
+    color: darkblue;
+}
+
+.timeSelector .morning:before {
+    margin-left: -0.75em;   
+}
+
+.timeSelector .evening:before {
+    margin-right: -0.75em;   
+    float: right;
+}
+
+.timeSelector .noon {
+    color: orange;
+    text-align: center;
+}
+
+.timeSelector .biginterval td {
+    border: 1px solid black;
+    border-top: 0;
+    line-height: 5px;
+    height: 8px;
+}
+
+.timeSelector .smallinterval td {
+    border: 1px solid black;
+    border-bottom: 0;
+    line-height: 5px;
+    height: 5px;
+}
+
+.timeSelector .dataRow th {
+    border: 1px solid black;
+    text-align: right;
+    padding: 2px;
+}
+
+.timeSelector .dataRow td {
+    border: 1px solid darkgray;
+}
+
+.timeSelector .selected {
+    background-color: lightblue;
+}
