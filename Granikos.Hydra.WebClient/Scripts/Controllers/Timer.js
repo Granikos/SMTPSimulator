@@ -2,7 +2,7 @@
     angular.module('Timer', ['ui.bootstrap.modal', 'ui-rangeSlider', 'ui.select'])
         .service("TimeTableService", ["$http", DataService("api/TimeTables")])
         .controller('TimerController', [
-            '$scope', '$http', '$modal', 'TimeTableService', function($scope, $http, $modal, TimeTableService) {
+            '$scope', '$http', '$modal', 'TimeTableService', function ($scope, $http, $modal, TimeTableService) {
                 $scope.timeTables = [];
                 $scope.types = [];
                 $scope.localGroups = [];
@@ -10,22 +10,22 @@
                 $scope.localMailboxTotal = "???";
                 $scope.externalMailboxTotal = "???";
 
-                $scope.searchLocalUsers = function(search) {
+                $scope.searchLocalUsers = function (search) {
                     return $http.get("api/LocalUsers/Search/" + search)
-                        .then(function(data) {
+                        .then(function (data) {
                             return data.data;
                         });
                 };
 
-                $scope.searchExternalUsers = function(search) {
+                $scope.searchExternalUsers = function (search) {
                     return $http.get("api/ExternalUsers/Search/" + search)
-                        .then(function(data) {
+                        .then(function (data) {
                             return data.data;
                         });
                 };
 
                 $http.get("api/LocalGroups/WithCounts")
-                    .success(function(groups) {
+                    .success(function (groups) {
                         $scope.localGroups = groups.Items;
                         // TODO: Make this cleaner
                         $scope.localGroups.unshift({
@@ -35,12 +35,12 @@
                         });
                         $scope.localMailboxTotal = groups.MailboxTotal;
                     })
-                    .error(function(data) {
+                    .error(function (data) {
                         showError(data.Message || data.data.Message);
                     });
 
                 $http.get("api/ExternalGroups/WithCounts")
-                    .success(function(groups) {
+                    .success(function (groups) {
                         $scope.externalGroups = groups.Items;
                         // TODO: Make this cleaner
                         $scope.externalGroups.unshift({
@@ -50,94 +50,94 @@
                         });
                         $scope.externalMailboxTotal = groups.MailboxTotal;
                     })
-                    .error(function(data) {
+                    .error(function (data) {
                         showError(data.Message || data.data.Message);
                     });
 
                 TimeTableService.all()
-                    .success(function(timeTables) {
+                    .success(function (timeTables) {
                         $scope.timeTables = timeTables;
                     })
-                    .error(function(data) {
+                    .error(function (data) {
                         showError(data.Message || data.data.Message);
                     });
 
                 $http.get("api/TimeTables/Types")
-                    .success(function(types) {
+                    .success(function (types) {
                         $scope.types = types;
                     })
-                    .error(function(data) {
+                    .error(function (data) {
                         showError(data.Message || data.data.Message);
                     });
 
-                $scope.update = function(timeTable) {
+                $scope.update = function (timeTable) {
                     TimeTableService
                         .update(timeTable)
-                        .then(function(data) {
+                        .then(function (data) {
                             var index = $scope.timeTables.indexOf(timeTable);
                             if (index > -1) {
                                 $scope.timeTables[index] = data.data;
                             }
-                            window.setTimeout(function() {
+                            window.setTimeout(function () {
                                 $('#collapse' + timeTable.Id).addClass('in');
                             }, 10);
-                        }, function(data) {
+                        }, function (data) {
                             showError(data.Message || data.data.Message);
                         });
                 };
 
-                $scope.delete = function(timeTable) {
+                $scope.delete = function (timeTable) {
                     TimeTableService
                         .delete(timeTable.Id)
-                        .then(function() {
+                        .then(function () {
                             var index = $scope.timeTables.indexOf(timeTable);
                             if (index > -1) {
                                 $scope.timeTables.splice(index, 1);
                             }
-                        }, function(data) {
+                        }, function (data) {
                             showError(data.Message || data.data.Message);
                         });
                 };
 
-                $scope.startAdd = function() {
+                $scope.startAdd = function () {
                     $http.get("api/TimeTables/Empty")
-                        .then(function(data) {
+                        .then(function (data) {
                             $scope.adding = true;
                             data.data.__adding__ = true;
                             data.data.Id = 'Add';
                             $scope.timeTables.push(data.data);
-                            window.setTimeout(function() {
+                            window.setTimeout(function () {
                                 $('#collapseAdd').addClass('in');
                                 $('#timeTableFormAdd :input').first().focus();
                                 $('#timeTableFormAdd').scope().timeTableForms.formAdd.$setDirty();
                                 $scope.$apply();
                             }, 10);
-                        }, function(data) {
+                        }, function (data) {
                             showError(data.Message || data.data.Message);
                         });
                 };
 
-                $scope.add = function(timeTable) {
+                $scope.add = function (timeTable) {
                     delete timeTable.Id;
                     delete timeTable.__adding__;
 
                     TimeTableService
                         .add(timeTable)
-                        .then(function(data) {
+                        .then(function (data) {
                             var index = $scope.timeTables.indexOf(timeTable);
                             if (index > -1) {
                                 $scope.timeTables[index] = data.data;
                             }
-                            window.setTimeout(function() {
+                            window.setTimeout(function () {
                                 $('#collapse' + data.data.Id).addClass('in');
                             }, 10);
                             $scope.adding = false;
-                        }, function(data) {
+                        }, function (data) {
                             showError(data.Message || data.data.Message);
                         });
                 };
 
-                $scope.cancelAdd = function(timeTable) {
+                $scope.cancelAdd = function (timeTable) {
                     var index = $scope.timeTables.indexOf(timeTable);
                     if (index > -1) {
                         $scope.timeTables.splice(index, 1);
@@ -158,7 +158,7 @@
                 };
             }
         ])
-        .directive('staticTimetableEditor', function() {
+        .directive('staticTimetableEditor', function () {
             return {
                 link: function ($scope, element, attrs) {
                     var startDay, startInterval, down = false;
@@ -178,7 +178,7 @@
                             for (var j = minInterval; j <= maxInterval; j++) {
                                 var o = offset(i, j);
                                 var value = $scope.data[o];
-                                $scope.data[o] = value === '1'? '0' : '1';
+                                $scope.data[o] = value === '1' ? '0' : '1';
                             }
                         }
 
@@ -231,41 +231,40 @@
             };
         })
         .controller('DynamicTimerTypeController', [
-            '$scope', '$http', '$modal', function($scope, $http, $modal) {
+            '$scope', '$http', '$modal', function ($scope, $http, $modal) {
             }
         ])
-        .controller('StaticTimerTypeController', ['$scope', function($scope) {
-                var rawData = $scope.$parent.tt.Parameters.staticData;
-                $scope.data = rawData ? rawData.split(',') : new Array(24 * 7 * 4);
-                $scope.days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-                $scope.refreshIntervals = function() {
-                    var is15min = $scope.$parent.tt.Parameters.staticType === '15min';
-                    $scope.numIntervals = is15min ? 4 * 24 : 24;
-                    $scope.factor = is15min ? 4 : 1;
-                    $scope.intervals = new Array($scope.numIntervals);
-                };
+        .controller('StaticTimerTypeController', ['$scope', function ($scope) {
+            var rawData = $scope.$parent.tt.Parameters.staticData;
+            $scope.days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            $scope.numIntervals = 24;
+            $scope.intervals = new Array($scope.numIntervals);
 
-                $scope.offset = function(day, time) {
-                    return day * $scope.numIntervals + time;
-                };
+            $scope.offset = function (day, time) {
+                return day * $scope.numIntervals + time;
+            };
 
-                $scope.save = function () {
-                    for (var j = 0; j < $scope.data.length; j++) {
-                        $scope.data[j] = $scope.data[j] === '1' ? '1' : '0';
-                    }
-                    $scope.$parent.tt.Parameters.staticData = $scope.data.join(',');
-                    $scope.$close();
-                };
+            $scope.save = function () {
+                for (var j = 0; j < $scope.data.length; j++) {
+                    $scope.data[j] = $scope.data[j] === '1' ? '1' : '0';
+                }
+                $scope.$parent.tt.Parameters.staticData = $scope.data.join(',');
+                $scope.$close();
+            };
 
-                $scope.reset = function() {
-                    for (var i = 0; i < $scope.data.length; i++) {
-                        $scope.data[i] = '0';
-                    }
+            $scope.reset = function () {
+                $scope.data = rawData ? rawData.split(',') : new Array(24 * 7);
+            };
 
-                    $scope.timeTableForms['form' + $scope.$parent.tt.Id].$setDirty();
+            $scope.empty = function () {
+                for (var i = 0; i < $scope.data.length; i++) {
+                    $scope.data[i] = '0';
                 }
 
-                $scope.refreshIntervals();
-            }
+                $scope.timeTableForms['form' + $scope.$parent.tt.Id].$setDirty();
+            };
+
+            $scope.reset();
+        }
         ]);
 })();

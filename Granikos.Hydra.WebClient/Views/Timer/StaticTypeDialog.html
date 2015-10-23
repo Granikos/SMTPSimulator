@@ -4,54 +4,70 @@
 </div>
 
 <div class="modal-body clearfix">
-    <form role="form" name="typeForm" ng-submit="typeForm.$valid && save()">
-        <div class="form-group">
-            <label>Interval Type</label>
-            <label class="radio-inline">
-                <input type="radio" value="1h" name="IntervalType" ng-model="tt.Parameters.staticType" ng-change="refreshIntervals()" /> 1 hour
-            </label>
-            <label class="radio-inline">
-                <input type="radio" value="15min" name="IntervalType" ng-model="tt.Parameters.staticType" ng-change="refreshIntervals()" /> 15 min
-            </label>
-        </div>
-        <table class="timeSelector" static-timetable-editor>
-            <colgroup>
-                <col style="width: 7em;"/>
-                <col ng-repeat="interval in intervals track by $index"/>
-            </colgroup>
-            <tr style="font-weight: bold;">
-                <th></th>
-                <th colspan="{{2 * factor}}" class="morning"></th>
-                <th colspan="{{8 * factor}}" style="text-align: center;">6 AM</th>
-                <th colspan="{{4 * factor}}" class="noon">☀</th>
-                <th colspan="{{8 * factor}}" style="text-align: center;">6 PM</th>
-                <th colspan="{{2 * factor}}" class="evening"></th>
-            </tr>
-            <tr class="biginterval">
-                <th></th>
-                <td colspan="{{6 * factor}}"></td>
-                <td colspan="{{6 * factor}}"></td>
-                <td colspan="{{6 * factor}}"></td>
-                <td colspan="{{6 * factor}}"></td>
-            </tr>
-            <tr class="smallinterval">
-                <th></th>
-                <td ng-repeat="interval in intervals track by $index"></td>
-            </tr>
-            <tr class="dataRow" ng-repeat="day in days" ng-init="dayIndex = $index">
-                <th>{{day}}</th>
-                <td ng-repeat="interval in intervals track by $index"
-                    ng-class="{'selected': data[offset(dayIndex, $index)] === '1'}"
-                    day="{{dayIndex}}" interval="{{$index}}"></td>
-            </tr>
-        </table>
-        <div class="btn-group pull-right top10">
-            <button type="button" class="btn btn-default" ng-click="reset()">
-                <i class="glyphicon glyphicon-asterisk"></i> Reset Timetable
-            </button>
-            <button type="submit" class="btn btn-success">
-                <i class="glyphicon glyphicon-plus-sign"></i> Close
-            </button>
-        </div>
-    </form>
+    <div class="container-fluid">
+        <form role="form" name="typeForm" ng-submit="typeForm.$valid && save()">
+            <table class="timeSelector" static-timetable-editor>
+                <colgroup>
+                    <col style="width: 7em;" />
+                    <col ng-repeat="interval in intervals track by $index" />
+                </colgroup>
+                <tr style="font-weight: bold;">
+                    <th></th>
+                    <th colspan="2" class="morning"></th>
+                    <th colspan="8" style="text-align: center;">6 AM</th>
+                    <th colspan="4" class="noon">☀</th>
+                    <th colspan="8" style="text-align: center;">6 PM</th>
+                    <th colspan="2" class="evening"></th>
+                </tr>
+                <tr class="biginterval">
+                    <th></th>
+                    <td colspan="6"></td>
+                    <td colspan="6"></td>
+                    <td colspan="6"></td>
+                    <td colspan="6"></td>
+                </tr>
+                <tr class="smallinterval">
+                    <th></th>
+                    <td ng-repeat="interval in intervals track by $index"></td>
+                </tr>
+                <tr class="dataRow" ng-repeat="day in days" ng-init="dayIndex = $index">
+                    <th>{{day}}</th>
+                    <td ng-repeat="interval in intervals track by $index"
+                        ng-class="{'selected': data[offset(dayIndex, $index)] === '1'}"
+                        day="{{dayIndex}}" interval="{{$index}}"></td>
+                </tr>
+            </table>
+            <div class="form-group row top10 vertical-align">
+                <label class="col-sm-6 control-label" for="staticMailsPerInterval">Mails per Interval</label>
+                <div class="col-sm-6">
+                    <input id="staticMailsPerInterval" type="number" class="form-control" placeholder="Mails per Interval" name="IntervalType"
+                           ng-model="tt.Parameters.staticMailsPerInterval" min="1" max="100" required string-to-number />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-6 control-label">Number of Selected Intervals</label>
+                <div class="col-sm-6">
+                    <span class="form-control-static">{{(data | filter: '1').length}}</span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-6 control-label">Total Number of Mails per Week</label>
+                <div class="col-sm-6">
+                    <span class="form-control-static">{{(data | filter: '1').length * tt.Parameters.staticMailsPerInterval}}</span>
+                </div>
+            </div>
+            <span></span>
+            <div class="btn-group pull-right top10">
+                <button type="button" class="btn btn-danger" ng-click="empty()">
+                    <i class="glyphicon glyphicon-th"></i> Empty Timetable
+                </button>
+                <button type="button" class="btn btn-default" ng-click="reset()">
+                    <i class="glyphicon glyphicon-asterisk"></i> Reset Timetable
+                </button>
+                <button type="submit" class="btn btn-success">
+                    <i class="glyphicon glyphicon-remove"></i> Close
+                </button>
+            </div>
+        </form>
+    </div>
 </div>

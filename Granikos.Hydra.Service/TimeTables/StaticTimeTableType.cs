@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
+using Granikos.Hydra.Service.Providers;
 
-namespace Granikos.Hydra.Service.Providers
+namespace Granikos.Hydra.Service.TimeTables
 {
     [DisplayName("Static")]
     [Export("static", typeof(ITimeTableType))]
@@ -19,16 +20,18 @@ namespace Granikos.Hydra.Service.Providers
 
         public bool ValidateParameters(out string message)
         {
-            if (Parameters.ContainsKey("staticType"))
+            if (Parameters.ContainsKey("staticMailsPerInterval"))
             {
-                switch (Parameters["staticType"])
+                int value;
+                if (!int.TryParse(Parameters["staticMailsPerInterval"], out value))
                 {
-                    case "1h":
-                    case "15min":
-                        break;
-                    default:
-                        message = "Invalid interval type for static time table.";
-                        return false;
+                    message = "Invalid value for staticMailsPerInterval, not a valid integer.";
+                    return false;
+                }
+                if (value <= 0 || value > 100)
+                {
+                    message = "Invalid value for staticMailsPerInterval, value out of range 1-100.";
+                    return false;
                 }
             }
             if (Parameters.ContainsKey("staticData"))
