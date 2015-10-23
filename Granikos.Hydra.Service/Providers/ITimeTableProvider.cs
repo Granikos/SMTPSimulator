@@ -3,8 +3,16 @@ using Granikos.Hydra.Service.Models;
 
 namespace Granikos.Hydra.Service.Providers
 {
+    public delegate void TimeTableChangeHandler(TimeTable timeTable);
+
     public interface ITimeTableProvider : IDataProvider<TimeTable, int>
     {
         IEnumerable<TimeTableTypeInfo> GetTimeTableTypes();
+
+        IDictionary<string,string> GetTimeTableTypeData(string type);
+
+        event TimeTableChangeHandler OnAdd;
+
+        event TimeTableChangeHandler OnRemove;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition.Primitives;
@@ -10,8 +11,10 @@ using System.Reflection;
 using System.ServiceModel;
 using System.ServiceProcess;
 using Granikos.Hydra.Core;
+using Granikos.Hydra.Service.Models;
 using Granikos.Hydra.Service.PriorityQueue;
 using Granikos.Hydra.Service.Providers;
+using Granikos.Hydra.Service.TimeTables;
 using Granikos.Hydra.SmtpClient;
 using Granikos.Hydra.SmtpServer;
 using Granikos.Hydra.SmtpServer.CommandHandlers;
@@ -35,8 +38,12 @@ namespace Granikos.Hydra.Service
         [Import]
         private ISendConnectorProvider _sendConnectors;
 
+        [Import]
+        private ITimeTableProvider _timeTables;
+
         private MessageSender[] _senders;
         private SMTPService[] _servers;
+        private readonly Dictionary<int,TimeTableGenerator> _generators = new Dictionary<int, TimeTableGenerator>();
 
         public HydraService()
         {
@@ -69,8 +76,39 @@ namespace Granikos.Hydra.Service
             var loader = new CommandHandlerLoader(catalog);
             _smtpServer = new SMTPServer(loader);
 
+            foreach (var tt in _timeTables.All())
+            {
+                var generator = new TimeTableGenerator(tt, this, _container);
+                _generators.Add(tt.Id, generator);
+
+                if (tt.Active) generator.Start();
+            }
+
+            _timeTables.OnAdd += OnTimeTableAdd;
+            _timeTables.OnRemove += OnTimeTableRemove;
+
             RefreshServers();
             RefreshSenders();
+        }
+
+        private void OnTimeTableRemove(TimeTable tt)
+        {
+            lock (_generators)
+            {
+                _generators[tt.Id].Stop();
+                _generators.Remove(tt.Id);
+            }
+        }
+
+        private void OnTimeTableAdd(TimeTable tt)
+        {
+            lock (_generators)
+            {
+                var generator = new TimeTableGenerator(tt, this, _container);
+                _generators.Add(tt.Id, generator);
+
+                if (tt.Active) generator.Start();
+            }
         }
 
         public static string AssemblyDirectory

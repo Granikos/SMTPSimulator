@@ -127,7 +127,6 @@
       <xs:element minOccurs="0" name="SenderMailbox" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StaticRecipient" type="xs:boolean" />
       <xs:element minOccurs="0" name="StaticSender" type="xs:boolean" />
-      <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="TimeData" nillable="true" type="q8:ArrayOfstring" />
       <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
@@ -257,7 +256,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="ConnectorId" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="Content" nillable="true" type="xs:string" />
-      <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Recipients" nillable="true" type="q9:ArrayOfstring" />
+      <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Recipients" nillable="true" type="q8:ArrayOfstring" />
       <xs:element minOccurs="0" name="Sender" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>

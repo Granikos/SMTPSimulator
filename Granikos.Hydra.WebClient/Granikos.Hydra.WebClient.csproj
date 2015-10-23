@@ -294,6 +294,7 @@
     <Content Include="Views\Register.html" />
     <Content Include="Views\Send\Index.html" />
     <Content Include="Views\Server\Index.html" />
+    <Content Include="Views\Timer\StaticTypeDialog.html" />
     <Content Include="Views\Timer\Index.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -311,7 +312,7 @@
     </None>
     <Content Include="Views\ExternalUsers\GroupHeaderCellTemplate.html" />
     <Content Include="Views\ExternalUsers\GroupCellTemplate.html" />
-    <Content Include="Views\Timer\DynamicTypeDialog.cshtml" />
+    <Content Include="Views\Timer\DynamicTypeDialog.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

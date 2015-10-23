@@ -356,6 +356,11 @@ namespace Granikos.Hydra.Service
             return _timeTables.GetTimeTableTypes();
         }
 
+        public IDictionary<string, string> GetTimeTableTypeData(string type)
+        {
+            return _timeTables.GetTimeTableTypeData(type);
+        }
+
         public TimeTable GetTimeTable(int id)
         {
             return _timeTables.Get(id);

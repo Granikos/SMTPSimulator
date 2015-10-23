@@ -343,6 +343,12 @@
   <wsdl:message name="IConfigurationService_GetTimeTableTypes_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetTimeTableTypesResponse" />
   </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetTimeTableTypeData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTimeTableTypeData" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetTimeTableTypeData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTimeTableTypeDataResponse" />
+  </wsdl:message>
   <wsdl:message name="IConfigurationService_GetTimeTable_InputMessage">
     <wsdl:part name="parameters" element="tns:GetTimeTable" />
   </wsdl:message>
@@ -627,6 +633,10 @@
     <wsdl:operation name="GetTimeTableTypes">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetTimeTableTypes" message="tns:IConfigurationService_GetTimeTableTypes_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetTimeTableTypesResponse" message="tns:IConfigurationService_GetTimeTableTypes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimeTableTypeData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetTimeTableTypeData" message="tns:IConfigurationService_GetTimeTableTypeData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetTimeTableTypeDataResponse" message="tns:IConfigurationService_GetTimeTableTypeData_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetTimeTable">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetTimeTable" message="tns:IConfigurationService_GetTimeTable_InputMessage" />
@@ -1151,6 +1161,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetTimeTableTypes">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetTimeTableTypes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTimeTableTypeData">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetTimeTableTypeData" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

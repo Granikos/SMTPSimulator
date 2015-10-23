@@ -1035,9 +1035,6 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         private bool StaticSenderField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string[] TimeDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TypeField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -1319,19 +1316,6 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
                 if ((this.StaticSenderField.Equals(value) != true)) {
                     this.StaticSenderField = value;
                     this.RaisePropertyChanged("StaticSender");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] TimeData {
-            get {
-                return this.TimeDataField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TimeDataField, value) != true)) {
-                    this.TimeDataField = value;
-                    this.RaisePropertyChanged("TimeData");
                 }
             }
         }
@@ -2230,6 +2214,12 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetTimeTableTypes", ReplyAction="http://tempuri.org/IConfigurationService/GetTimeTableTypesResponse")]
         System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.TimeTableTypeInfo[]> GetTimeTableTypesAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetTimeTableTypeData", ReplyAction="http://tempuri.org/IConfigurationService/GetTimeTableTypeDataResponse")]
+        System.Collections.Generic.Dictionary<string, string> GetTimeTableTypeData(string type);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetTimeTableTypeData", ReplyAction="http://tempuri.org/IConfigurationService/GetTimeTableTypeDataResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetTimeTableTypeDataAsync(string type);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetTimeTable", ReplyAction="http://tempuri.org/IConfigurationService/GetTimeTableResponse")]
         Granikos.Hydra.WebClient.HydraConfigurationService.TimeTable GetTimeTable(int id);
         
@@ -2754,6 +2744,14 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         
         public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.TimeTableTypeInfo[]> GetTimeTableTypesAsync() {
             return base.Channel.GetTimeTableTypesAsync();
+        }
+        
+        public System.Collections.Generic.Dictionary<string, string> GetTimeTableTypeData(string type) {
+            return base.Channel.GetTimeTableTypeData(type);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetTimeTableTypeDataAsync(string type) {
+            return base.Channel.GetTimeTableTypeDataAsync(type);
         }
         
         public Granikos.Hydra.WebClient.HydraConfigurationService.TimeTable GetTimeTable(int id) {

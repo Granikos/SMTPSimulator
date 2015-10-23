@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.Linq;
 using Granikos.Hydra.Service.Models;
 
 namespace Granikos.Hydra.Service.Providers
@@ -14,6 +13,15 @@ namespace Granikos.Hydra.Service.Providers
         public TimeTableProvider()
             : base("TimeTables")
         {
+            OnAdded += tt =>
+            {
+                if (OnAdd != null) OnAdd(tt);
+            };
+
+            OnRemoved += tt =>
+            {
+                if (OnRemove != null) OnRemove(tt);
+            };
         }
 
 #if DEBUG
@@ -37,9 +45,8 @@ namespace Granikos.Hydra.Service.Providers
                 AttachmentType = AttachmentType.Off,
                 Parameters = new Dictionary<string, string>
                 {
-                    {"type", "1h"}
+                    {"staticType", "1h"}
                 },
-                TimeData = Enumerable.Repeat("0", 24*7).ToArray(),
                 ReportMailAddress = "report@test.de",
                 SendEicarFile = false
             };
@@ -69,5 +76,13 @@ namespace Granikos.Hydra.Service.Providers
 
             }
         }
+
+        public IDictionary<string, string> GetTimeTableTypeData(string type)
+        {
+            return _container.GetExport<ITimeTableType>(type).Value.Data;
+        }
+
+        public event TimeTableChangeHandler OnAdd;
+        public event TimeTableChangeHandler OnRemove;
     }
 }

@@ -21,10 +21,6 @@ namespace Granikos.Hydra.Service.Models
         public IDictionary<string, string> Parameters { get; set; }
 
         [DataMember]
-        [Required]
-        public string[] TimeData { get; set; }
-
-        [DataMember]
         public bool Active { get; set; }
 
         [DataMember]
