@@ -4,14 +4,14 @@
 </div>
 
 <div class="modal-body clearfix">
-    <form role="form" name="typeForm" ng-submit="typeForm.$valid && $close()">
+    <form role="form" name="typeForm" ng-submit="typeForm.$valid && save()">
         <div class="form-group">
             <label>Interval Type</label>
             <label class="radio-inline">
-                <input type="radio" value="1h" name="IntervalType" ng-model="$parent.$parent.tt.Parameters.type" ng-change="refreshIntervals()" /> 1 hour
+                <input type="radio" value="1h" name="IntervalType" ng-model="tt.Parameters.staticType" ng-change="refreshIntervals()" /> 1 hour
             </label>
             <label class="radio-inline">
-                <input type="radio" value="15min" name="IntervalType" ng-model="$parent.$parent.tt.Parameters.type" ng-change="refreshIntervals()" /> 15 min
+                <input type="radio" value="15min" name="IntervalType" ng-model="tt.Parameters.staticType" ng-change="refreshIntervals()" /> 15 min
             </label>
         </div>
         <table class="timeSelector" static-timetable-editor>
@@ -41,7 +41,7 @@
             <tr class="dataRow" ng-repeat="day in days" ng-init="dayIndex = $index">
                 <th>{{day}}</th>
                 <td ng-repeat="interval in intervals track by $index"
-                    ng-class="{'selected': $parent.$parent.$parent.tt.TimeData[offset(dayIndex, $index)] === '1'}"
+                    ng-class="{'selected': data[offset(dayIndex, $index)] === '1'}"
                     day="{{dayIndex}}" interval="{{$index}}"></td>
             </tr>
         </table>

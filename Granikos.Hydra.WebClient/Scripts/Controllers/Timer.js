@@ -177,8 +177,8 @@
                         for (var i = minDay; i <= maxDay; i++) {
                             for (var j = minInterval; j <= maxInterval; j++) {
                                 var o = offset(i, j);
-                                var value = $scope.$parent.tt.TimeData[o];
-                                $scope.$parent.tt.TimeData[o] = value === '1'? '0' : '1';
+                                var value = $scope.data[o];
+                                $scope.data[o] = value === '1'? '0' : '1';
                             }
                         }
 
@@ -234,11 +234,12 @@
             '$scope', '$http', '$modal', function($scope, $http, $modal) {
             }
         ])
-        .controller('StaticTimerTypeController', [
-            '$scope', '$http', '$modal', function ($scope, $http, $modal) {
+        .controller('StaticTimerTypeController', ['$scope', function($scope) {
+                var rawData = $scope.$parent.tt.Parameters.staticData;
+                $scope.data = rawData ? rawData.split(',') : new Array(24 * 7 * 4);
                 $scope.days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
                 $scope.refreshIntervals = function() {
-                    var is15min = $scope.$parent.tt.Parameters.type === '15min';
+                    var is15min = $scope.$parent.tt.Parameters.staticType === '15min';
                     $scope.numIntervals = is15min ? 4 * 24 : 24;
                     $scope.factor = is15min ? 4 : 1;
                     $scope.intervals = new Array($scope.numIntervals);
@@ -248,10 +249,17 @@
                     return day * $scope.numIntervals + time;
                 };
 
+                $scope.save = function () {
+                    for (var j = 0; j < $scope.data.length; j++) {
+                        $scope.data[j] = $scope.data[j] === '1' ? '1' : '0';
+                    }
+                    $scope.$parent.tt.Parameters.staticData = $scope.data.join(',');
+                    $scope.$close();
+                };
+
                 $scope.reset = function() {
-                    var data = $scope.$parent.tt.TimeData;
-                    for (var i = 0; i < data.length; i++) {
-                        data[i] = '0';
+                    for (var i = 0; i < $scope.data.length; i++) {
+                        $scope.data[i] = '0';
                     }
 
                     $scope.timeTableForms['form' + $scope.$parent.tt.Id].$setDirty();
