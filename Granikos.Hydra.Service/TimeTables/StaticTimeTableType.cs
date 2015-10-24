@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.Linq;
 using Granikos.Hydra.Service.Providers;
+using log4net;
 
 namespace Granikos.Hydra.Service.TimeTables
 {
@@ -13,9 +15,49 @@ namespace Granikos.Hydra.Service.TimeTables
     {
         public IDictionary<string, string> Parameters { get; set; }
         public IDictionary<string, string> Data { get { return null; } }
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(StaticTimeTableType));
+        private int _numMails;
+        private bool[] _intervals;
+
         public DateTime GetNextMailTime()
         {
-            return DateTime.Now + TimeSpan.FromMinutes(1);
+            const int numIntervals = 7*24;
+
+            var time = DateTime.Now;
+            var offset = time.Hour + 24 * (int)time.DayOfWeek;
+
+            var initial = new DateTime(time.Year, time.Month, time.Day, time.Hour, 0, 0, DateTimeKind.Local);
+
+            DateTime nextTime;
+            if (_intervals[offset])
+            {
+                var perInterval = 3600000.0/_numMails;
+                var diff = (time.Minute*60 + time.Second) * 1000 + time.Millisecond;
+                var newDiff = (int)(Math.Ceiling(diff/perInterval)*perInterval);
+
+                nextTime = initial.AddMilliseconds(newDiff);
+
+                Logger.DebugFormat("Next mail time is {0}", nextTime);
+
+                return nextTime;
+            }
+            int i;
+            for (i = 0; i <= numIntervals; i++)
+            {
+                var index = (offset + i)%numIntervals;
+                if (_intervals[index]) break;
+            }
+
+            if (i > numIntervals)
+            {
+                Logger.Debug("No interval is active, so no next mail");
+                return DateTime.MaxValue;
+            }
+            nextTime = initial.AddHours(i);
+
+            Logger.DebugFormat("Next mail time is {0}", nextTime);
+
+            return nextTime;
         }
 
         public bool ValidateParameters(out string message)
@@ -43,7 +85,7 @@ namespace Granikos.Hydra.Service.TimeTables
                     return false;
                 }
 
-                for (var i = 0; i < 24*7*4; i++)
+                for (var i = 0; i < 24 * 7 * 4; i++)
                 {
                     switch (values[i])
                     {
@@ -51,9 +93,9 @@ namespace Granikos.Hydra.Service.TimeTables
                         case "0":
                             break;
                         default:
-                            message = "Invalid interval data value for stgatic time table: '"+values[i]+"'";
+                            message = "Invalid interval data value for stgatic time table: '" + values[i] + "'";
                             return false;
-                    } 
+                    }
                 }
             }
 
@@ -63,6 +105,11 @@ namespace Granikos.Hydra.Service.TimeTables
 
         public void Initialize()
         {
+            _numMails = int.Parse(Parameters["staticMailsPerInterval"]);
+            _intervals = Parameters["staticData"]
+                .Split(',')
+                .Select(x => x.Equals("1"))
+                .ToArray();
         }
     }
 }

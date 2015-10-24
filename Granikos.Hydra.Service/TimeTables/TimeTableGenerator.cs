@@ -39,6 +39,9 @@ namespace Granikos.Hydra.Service.TimeTables
 
             _timeTableType = container.GetExport<ITimeTableType>(timeTable.Type).Value;
             _timeTableType.Parameters = _timeTable.Parameters;
+            _timeTableType.Initialize();
+
+            container.SatisfyImportsOnce(this);
         }
 
         public bool IsRunning
@@ -52,8 +55,8 @@ namespace Granikos.Hydra.Service.TimeTables
             {
                 if (_timer == null)
                 {
-                    _timer = new Timer(Callback, null, GetWaitTime(), TimeSpan.Zero);
                     Logger.Info(String.Format("Timetable '{0}' was started.", _timeTable.Name));
+                    _timer = new Timer(Callback, null, GetWaitTime(), TimeSpan.Zero);
                 }
             }
         }
@@ -64,9 +67,9 @@ namespace Granikos.Hydra.Service.TimeTables
             {
                 if (_timer != null)
                 {
+                    Logger.Info(String.Format("Timetable '{0}' was stopped.", _timeTable.Name));
                     _timer.Dispose();
                     _timer = null;
-                    Logger.Info(String.Format("Timetable '{0}' was stopped.", _timeTable.Name));
                 }
             }
         }
@@ -75,22 +78,26 @@ namespace Granikos.Hydra.Service.TimeTables
         {
             try
             {
-                _timer.Change(GetWaitTime(), TimeSpan.Zero);
-
+                var from = GetFrom();
+                var to = GetRecipients();
                 var mail = new MailMessage
                 {
                     Content = _timeTable.MailContent,
-                    Sender = GetFrom(),
-                    Recipients = GetRecipients()
+                    Sender = from,
+                    Recipients = to
                 };
 
-                Logger.Info(String.Format("Timetable '{0}' enqueued a mail.", _timeTable.Name));
+                Logger.InfoFormat("Timetable '{0}' enqueued a mail (From: {1}, To: {2}).", _timeTable.Name, from, String.Join(", ", to));
 
                 _queue.Enqueue(mail);
             }
             catch (Exception e)
             {
                 Logger.Error("An exception occured while sending a mail.", e);
+            }
+            finally
+            {
+                _timer.Change(GetWaitTime(), TimeSpan.Zero);
             }
         }
 

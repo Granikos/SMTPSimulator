@@ -236,7 +236,7 @@
         ])
         .controller('StaticTimerTypeController', ['$scope', function ($scope) {
             var rawData = $scope.$parent.tt.Parameters.staticData;
-            $scope.days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            $scope.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             $scope.numIntervals = 24;
             $scope.intervals = new Array($scope.numIntervals);
 
