@@ -5,24 +5,13 @@
 
         .service("SendConnectorService", ["$http", DataService("api/SendConnectors")])
 
-        .service("DomainService", ["$http", DataService("api/Domains")])
-
         .controller('SendController', [
-            '$scope', '$modal', '$q', '$http', 'SendConnectorService', 'DomainService', function ($scope, $modal, $q, $http, SendConnectorService, DomainService) {
+            '$scope', '$modal', '$q', '$http', 'SendConnectorService', function ($scope, $modal, $q, $http, SendConnectorService ) {
                 $scope.connectors = [];
                 $scope.certificates = [];
-                $scope.domains = [];
                 $scope.adding = false;
                 $scope.IPRegexp = IPRegexp;
                 $scope.defaultId = 0;
-
-                $scope.defaultComparer = function (def) {
-                    return function (actual, expected) {
-                        if (actual === null)
-                            actual = def;
-                        return actual === expected;
-                    };
-                };
 
                 $http.get("api/SendConnectors/Default")
                     .success(function (connector) {
@@ -50,15 +39,6 @@
                     .error(function (data) {
                         showError(data.Message || data.data.Message);
                     });
-
-                DomainService.all()
-                    .success(function (domains) {
-                        $scope.domains = domains;
-                    })
-                    .error(function (data) {
-                        showError(data.Message || data.data.Message);
-                    });
-
 
                 $scope.makeDefault = function (connector) {
                     $http.post("api/SendConnectors/Default/" + connector.Id)
