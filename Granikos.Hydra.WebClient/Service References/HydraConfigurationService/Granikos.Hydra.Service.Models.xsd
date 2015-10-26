@@ -112,6 +112,8 @@
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="MailContent" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MailType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MailsError" type="xs:int" />
+      <xs:element minOccurs="0" name="MailsSuccess" type="xs:int" />
       <xs:element minOccurs="0" name="MaxRecipients" type="xs:int" />
       <xs:element minOccurs="0" name="MinRecipients" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />

@@ -111,7 +111,9 @@ namespace Granikos.Hydra.Service
 
                     if (mail != null)
                     {
-                        _processor.ProcessMail(mail);
+                        var success = _processor.ProcessMail(mail);
+
+                        mail.ResultHandler(success);
                     }
 
                     Thread.Sleep(TickDefaultMilliseconds);

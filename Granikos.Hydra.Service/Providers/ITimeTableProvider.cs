@@ -14,5 +14,9 @@ namespace Granikos.Hydra.Service.Providers
         event TimeTableChangeHandler OnAdd;
 
         event TimeTableChangeHandler OnRemove;
+
+        void IncreaseErrorMailCount(int id);
+
+        void IncreaseSuccessMailCount(int id);
     }
 }

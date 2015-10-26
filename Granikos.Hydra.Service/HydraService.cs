@@ -78,7 +78,7 @@ namespace Granikos.Hydra.Service
 
             foreach (var tt in _timeTables.All())
             {
-                var generator = new TimeTableGenerator(tt, this, _container);
+                var generator = new TimeTableGenerator(tt, _mailQueue, _container);
                 _generators.Add(tt.Id, generator);
 
                 if (tt.Active) generator.Start();
@@ -104,7 +104,7 @@ namespace Granikos.Hydra.Service
         {
             lock (_generators)
             {
-                var generator = new TimeTableGenerator(tt, this, _container);
+                var generator = new TimeTableGenerator(tt, _mailQueue, _container);
                 _generators.Add(tt.Id, generator);
 
                 if (tt.Active) generator.Start();

@@ -990,6 +990,12 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         private string MailTypeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int MailsErrorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int MailsSuccessField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int MaxRecipientsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1121,6 +1127,32 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
                 if ((object.ReferenceEquals(this.MailTypeField, value) != true)) {
                     this.MailTypeField = value;
                     this.RaisePropertyChanged("MailType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int MailsError {
+            get {
+                return this.MailsErrorField;
+            }
+            set {
+                if ((this.MailsErrorField.Equals(value) != true)) {
+                    this.MailsErrorField = value;
+                    this.RaisePropertyChanged("MailsError");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int MailsSuccess {
+            get {
+                return this.MailsSuccessField;
+            }
+            set {
+                if ((this.MailsSuccessField.Equals(value) != true)) {
+                    this.MailsSuccessField = value;
+                    this.RaisePropertyChanged("MailsSuccess");
                 }
             }
         }

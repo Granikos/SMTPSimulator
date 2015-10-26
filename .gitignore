@@ -204,3 +204,4 @@ FakesAssemblies/
 /Granikos.Hydra.Service/AppData/*.json
 /WebDeploy
 /HydraWebClient.*
+/Granikos.Hydra.Service/AppData

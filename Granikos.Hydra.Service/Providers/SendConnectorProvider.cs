@@ -44,7 +44,8 @@ namespace Granikos.Hydra.Service.Providers
 
         public SendConnector GetByDomain(string domain)
         {
-            throw new NotImplementedException();
+            return DefaultConnector;
+            // TODO
         }
 
         protected override IEnumerable<SendConnector> Initializer()

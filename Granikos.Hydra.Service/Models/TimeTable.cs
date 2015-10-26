@@ -7,6 +7,9 @@ namespace Granikos.Hydra.Service.Models
     [DataContract]
     public class TimeTable : IEntity<int>
     {
+        private int _mailsSuccess;
+        private int _mailsError;
+
         public TimeTable()
         {
             MinRecipients = MaxRecipients = 1;
@@ -84,6 +87,36 @@ namespace Granikos.Hydra.Service.Models
 
         [DataMember]
         public bool SendEicarFile { get; set; }
+
+        [DataMember]
+        public int MailsSuccess
+        {
+            get { return _mailsSuccess; }
+            set {  }
+        }
+
+        public void IncreaseSuccess()
+        {
+            _mailsSuccess++;
+        }
+
+        [DataMember]
+        public int MailsError
+        {
+            get { return _mailsError; }
+            set { }
+        }
+
+        public void IncreaseError()
+        {
+            _mailsError++;
+        }
+
+        internal void InitializeResults(int successes, int errors)
+        {
+            _mailsError = errors;
+            _mailsSuccess = successes;
+        }
     }
 
     public enum ReportType

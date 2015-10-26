@@ -1,39 +1,52 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading;
+using Granikos.Hydra.Core;
 using Granikos.Hydra.Service.Models;
+using Granikos.Hydra.Service.PriorityQueue;
 using Granikos.Hydra.Service.Providers;
+using Granikos.Hydra.SmtpClient;
 using log4net;
 
 namespace Granikos.Hydra.Service.TimeTables
 {
     public class TimeTableGenerator
     {
-        private readonly TimeTable _timeTable;
-        private readonly IMailQueueProvider _queue;
-        private Thread _thread;
-        private readonly object _lockObject = new object();
         private static readonly ILog Logger = LogManager.GetLogger(typeof(TimeTableGenerator));
-        private readonly ITimeTableType _timeTableType;
+        private readonly object _lockObject = new object();
         private readonly Random _random = new Random();
-        private Timer _timer;
+
+        private readonly DelayedQueue<SendableMail> _queue;
+        private readonly TimeTable _timeTable;
+        private readonly ITimeTableType _timeTableType;
 
         [Import]
-        private ILocalUserProvider _localUsers;
-
-        [Import]
-        private ILocalMailboxGroupProvider _localGroups;
+        private IExternalMailboxGroupProvider _externalGroups;
 
         [Import]
         private IExternalUserProvider _externalUsers;
 
         [Import]
-        private IExternalMailboxGroupProvider _externalGroups;
+        private ILocalMailboxGroupProvider _localGroups;
 
-        public TimeTableGenerator(TimeTable timeTable, IMailQueueProvider queue, CompositionContainer container)
+        [Import]
+        private ILocalUserProvider _localUsers;
+
+        [Import]
+        private ITimeTableProvider _timeTables;
+
+        private Timer _timer;
+
+        public TimeTableGenerator(TimeTable timeTable, DelayedQueue<SendableMail> queue, CompositionContainer container)
         {
+            Contract.Requires<ArgumentNullException>(timeTable != null, "timeTable");
+            Contract.Requires<ArgumentNullException>(queue != null, "queue");
+            Contract.Requires<ArgumentNullException>(container != null, "container");
+
             _timeTable = timeTable;
             _queue = queue;
 
@@ -55,7 +68,7 @@ namespace Granikos.Hydra.Service.TimeTables
             {
                 if (_timer == null)
                 {
-                    Logger.Info(String.Format("Timetable '{0}' was started.", _timeTable.Name));
+                    Logger.Info(string.Format("Timetable '{0}' was started.", _timeTable.Name));
                     _timer = new Timer(Callback, null, GetWaitTime(), TimeSpan.Zero);
                 }
             }
@@ -67,33 +80,44 @@ namespace Granikos.Hydra.Service.TimeTables
             {
                 if (_timer != null)
                 {
-                    Logger.Info(String.Format("Timetable '{0}' was stopped.", _timeTable.Name));
+                    Logger.Info(string.Format("Timetable '{0}' was stopped.", _timeTable.Name));
                     _timer.Dispose();
                     _timer = null;
                 }
             }
         }
-       
+
         private void Callback(object state)
         {
             try
             {
                 var from = GetFrom();
                 var to = GetRecipients();
-                var mail = new MailMessage
+                var fromMail = new MailAddress(from);
+                var toMail = to.Select(r => new MailAddress(r)).ToArray();
+                var parsed = new Mail(fromMail, toMail, _timeTable.MailContent);
+
+                var sendableMail = new SendableMail(parsed, null)
                 {
-                    Content = _timeTable.MailContent,
-                    Sender = from,
-                    Recipients = to
+                    ResultHandler = success =>
+                    {
+                        if (success)
+                            _timeTables.IncreaseSuccessMailCount(_timeTable.Id);
+                        else
+                        {
+                            _timeTables.IncreaseErrorMailCount(_timeTable.Id);
+                        }
+                    }
                 };
 
-                Logger.InfoFormat("Timetable '{0}' enqueued a mail (From: {1}, To: {2}).", _timeTable.Name, from, String.Join(", ", to));
+                Logger.InfoFormat("Timetable '{0}' enqueued a mail (From: {1}, To: {2}).", _timeTable.Name, from,
+                    string.Join(", ", to));
 
-                _queue.Enqueue(mail);
+                _queue.Enqueue(sendableMail, TimeSpan.Zero);
             }
             catch (Exception e)
             {
-                Logger.Error("An exception occured while sending a mail.", e);
+                Logger.Error(String.Format("Timetable '{0}': An exception occured while sending a mail.", _timeTable.Name), e);
             }
             finally
             {

@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using System.Net.Mail;
+using System.Net.Sockets;
 using ARSoft.Tools.Net.Dns;
 using Granikos.Hydra.Core;
 using Granikos.Hydra.Core.Logging;
@@ -13,6 +14,14 @@ using Granikos.Hydra.SmtpClient;
 
 namespace Granikos.Hydra.Service
 {
+    public class NoMailHostFoundException : Exception
+    {
+        public NoMailHostFoundException(string host)
+            : base(String.Format("No MX entry could be found for the domain '{0}'.", host))
+        {
+        }
+    }
+
     internal class MessageProcessor
     {
         public delegate void MailErrorHandler(SendableMail mail, ConnectorInfo info, SMTPStatusCode? status, Exception e
@@ -51,7 +60,20 @@ namespace Granikos.Hydra.Service
                 {
                     var response = DnsClient.Default.Resolve(recipientGroup.Key, RecordType.Mx);
                     var records = response.AnswerRecords.OfType<MxRecord>();
-                    remoteHost = records.OrderBy(record => record.Preference).First().ExchangeDomainName;
+                    var record = records.OrderBy(r => r.Preference).FirstOrDefault();
+
+                    if (record == null)
+                    {
+                        TriggerMailError(mail, new ConnectorInfo
+                        {
+                            Connector = connector,
+                            Host = recipientGroup.Key,
+                            Port = 25,
+                            Addresses = recipientGroup
+                        }, null, new NoMailHostFoundException(recipientGroup.Key));
+                        continue;
+                    }
+                    remoteHost = record.ExchangeDomainName;
                     remotePort = 25;
                 }
                 else

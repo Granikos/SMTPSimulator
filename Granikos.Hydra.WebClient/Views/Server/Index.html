@@ -75,8 +75,8 @@
             <div class="col-sm-4">
                 <ul ng-show="(at = (timeTables | filter:{Active:true})).length" class="form-control-static list-group">
                     <li ng-repeat="timeTable in at | orderBy:'Name'" class="list-group-item">
-                        <span class="badge badge-success" tooltip="For this time table, {{timeTable.SentCount || 'no'}} emails were sent successfully">{{timeTable.SentCount || 0}}</span>
-                        <span class="badge badge-danger" tooltip="For this time table, {{timeTable.ErrorCount || 'no'}} emails resulted in an error">{{timeTable.ErrorCount || 0}}</span>
+                        <span class="badge badge-success" tooltip="For this time table, {{timeTable.MailsSuccess || 'no'}} emails were sent successful">{{timeTable.MailsSuccess || 0}}</span>
+                        <span class="badge badge-danger" tooltip="For this time table, {{timeTable.MailsError || 'no'}} emails resulted in an error">{{timeTable.MailsError || 0}}</span>
                         {{timeTable.Name}}
                     </li>
                 </ul>
