@@ -257,6 +257,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimeTables\MailTemplateSchema.cs" />
     <Compile Include="TimeTables\StaticTimeTableType.cs" />
     <Compile Include="TimeTables\TimeTableGenerator.cs" />
     <Compile Include="TLSConnector.cs" />
@@ -268,7 +269,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="HydraService_TemporaryKey.pfx" />
+    <None Include="MailTemplates\MailTemplateSchema.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
+    <Content Include="MailTemplates\ExampleTemplate.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="UserTemplates\en.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

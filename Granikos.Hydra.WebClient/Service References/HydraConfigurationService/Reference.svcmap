@@ -35,6 +35,7 @@
     <MetadataFile FileName="Granikos.Hydra.Core.xsd" MetadataType="Schema" ID="094dc77b-8823-4952-8c31-ac9b1c01c0ba" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
     <MetadataFile FileName="System.Net.Security.xsd" MetadataType="Schema" ID="844343a7-406c-4099-add9-1746b2f6d8b8" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
     <MetadataFile FileName="System.Security.Authentication.xsd" MetadataType="Schema" ID="f15504b3-96fe-463e-ba55-12c6bebfceab" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
+    <MetadataFile FileName="Granikos.Hydra.Service.TimeTables.xsd" MetadataType="Schema" ID="5bfbd0a7-2a2a-4614-9768-aeb3b38c9fdc" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

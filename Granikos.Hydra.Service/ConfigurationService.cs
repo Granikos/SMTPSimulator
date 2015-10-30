@@ -9,6 +9,7 @@ using System.Reflection;
 using System.ServiceModel;
 using Granikos.Hydra.Service.Models;
 using Granikos.Hydra.Service.Providers;
+using Granikos.Hydra.Service.TimeTables;
 using Granikos.Hydra.SmtpServer;
 
 namespace Granikos.Hydra.Service
@@ -344,6 +345,11 @@ namespace Granikos.Hydra.Service
         public bool DeleteExternalUser(int id)
         {
             return _externalUsers.Delete(id);
+        }
+
+        public IEnumerable<MailTemplateType> GetMailTemplates()
+        {
+            return _timeTables.GetMailTemplates();
         }
 
         public IEnumerable<TimeTable> GetTimeTables()

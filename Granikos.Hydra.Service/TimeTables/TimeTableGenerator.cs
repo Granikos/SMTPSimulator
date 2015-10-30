@@ -68,7 +68,10 @@ namespace Granikos.Hydra.Service.TimeTables
             {
                 if (_timer == null)
                 {
-                    Logger.Info(string.Format("Timetable '{0}' was started.", _timeTable.Name));
+                    if (_timeTable.ProtocolLevel > ProtocolLevel.Off)
+                    {
+                        Logger.Info(string.Format("Timetable '{0}' was started.", _timeTable.Name));
+                    }
                     _timer = new Timer(Callback, null, GetWaitTime(), TimeSpan.Zero);
                 }
             }
@@ -80,7 +83,10 @@ namespace Granikos.Hydra.Service.TimeTables
             {
                 if (_timer != null)
                 {
-                    Logger.Info(string.Format("Timetable '{0}' was stopped.", _timeTable.Name));
+                    if (_timeTable.ProtocolLevel > ProtocolLevel.Off)
+                    {
+                        Logger.Info(string.Format("Timetable '{0}' was stopped.", _timeTable.Name));
+                    }
                     _timer.Dispose();
                     _timer = null;
                 }
@@ -95,7 +101,7 @@ namespace Granikos.Hydra.Service.TimeTables
                 var to = GetRecipients();
                 var fromMail = new MailAddress(from);
                 var toMail = to.Select(r => new MailAddress(r)).ToArray();
-                var parsed = new Mail(fromMail, toMail, _timeTable.MailContent);
+                var parsed = new Mail(fromMail, toMail, _timeTable.MailContentTemplate);
 
                 var sendableMail = new SendableMail(parsed, null)
                 {
@@ -110,8 +116,15 @@ namespace Granikos.Hydra.Service.TimeTables
                     }
                 };
 
-                Logger.InfoFormat("Timetable '{0}' enqueued a mail (From: {1}, To: {2}).", _timeTable.Name, from,
-                    string.Join(", ", to));
+                if (_timeTable.ProtocolLevel > ProtocolLevel.Off)
+                {
+                    Logger.InfoFormat("Timetable '{0}' enqueued a mail.", _timeTable.Name);
+
+                    if (_timeTable.ProtocolLevel == ProtocolLevel.Verbose)
+                    {
+                        Logger.InfoFormat("From: {0}, To: {1}", from, string.Join(", ", to));
+                    }
+                }
 
                 _queue.Enqueue(sendableMail, TimeSpan.Zero);
             }

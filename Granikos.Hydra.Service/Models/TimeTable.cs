@@ -53,7 +53,7 @@ namespace Granikos.Hydra.Service.Models
         public int MaxRecipients { get; set; }
 
         [DataMember]
-        public string MailContent { get; set; }
+        public string MailContentTemplate { get; set; }
 
         [DataMember]
         public SendConnector SendConnector { get; set; }

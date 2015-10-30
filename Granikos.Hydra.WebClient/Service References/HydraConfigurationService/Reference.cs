@@ -984,7 +984,7 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MailContentField;
+        private string MailContentTemplateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MailTypeField;
@@ -1106,14 +1106,14 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MailContent {
+        public string MailContentTemplate {
             get {
-                return this.MailContentField;
+                return this.MailContentTemplateField;
             }
             set {
-                if ((object.ReferenceEquals(this.MailContentField, value) != true)) {
-                    this.MailContentField = value;
-                    this.RaisePropertyChanged("MailContent");
+                if ((object.ReferenceEquals(this.MailContentTemplateField, value) != true)) {
+                    this.MailContentTemplateField = value;
+                    this.RaisePropertyChanged("MailContentTemplate");
                 }
             }
         }
@@ -1772,6 +1772,185 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MailTemplateType", Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.TimeTables")]
+    [System.SerializableAttribute()]
+    public partial class MailTemplateType : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Granikos.Hydra.WebClient.HydraConfigurationService.MailTemplateTypeBehaviour BehaviourField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Granikos.Hydra.WebClient.HydraConfigurationService.EncodingType BodyEncodingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Granikos.Hydra.WebClient.HydraConfigurationService.EncodingType ContentEncodingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Granikos.Hydra.WebClient.HydraConfigurationService.EncodingType HeaderEncodingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HtmlField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SubjectField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TextField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TitleField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Granikos.Hydra.WebClient.HydraConfigurationService.MailTemplateTypeBehaviour Behaviour {
+            get {
+                return this.BehaviourField;
+            }
+            set {
+                if ((this.BehaviourField.Equals(value) != true)) {
+                    this.BehaviourField = value;
+                    this.RaisePropertyChanged("Behaviour");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Granikos.Hydra.WebClient.HydraConfigurationService.EncodingType BodyEncoding {
+            get {
+                return this.BodyEncodingField;
+            }
+            set {
+                if ((this.BodyEncodingField.Equals(value) != true)) {
+                    this.BodyEncodingField = value;
+                    this.RaisePropertyChanged("BodyEncoding");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Granikos.Hydra.WebClient.HydraConfigurationService.EncodingType ContentEncoding {
+            get {
+                return this.ContentEncodingField;
+            }
+            set {
+                if ((this.ContentEncodingField.Equals(value) != true)) {
+                    this.ContentEncodingField = value;
+                    this.RaisePropertyChanged("ContentEncoding");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Granikos.Hydra.WebClient.HydraConfigurationService.EncodingType HeaderEncoding {
+            get {
+                return this.HeaderEncodingField;
+            }
+            set {
+                if ((this.HeaderEncodingField.Equals(value) != true)) {
+                    this.HeaderEncodingField = value;
+                    this.RaisePropertyChanged("HeaderEncoding");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Html {
+            get {
+                return this.HtmlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HtmlField, value) != true)) {
+                    this.HtmlField = value;
+                    this.RaisePropertyChanged("Html");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Subject {
+            get {
+                return this.SubjectField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SubjectField, value) != true)) {
+                    this.SubjectField = value;
+                    this.RaisePropertyChanged("Subject");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Text {
+            get {
+                return this.TextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TextField, value) != true)) {
+                    this.TextField = value;
+                    this.RaisePropertyChanged("Text");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Title {
+            get {
+                return this.TitleField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TitleField, value) != true)) {
+                    this.TitleField = value;
+                    this.RaisePropertyChanged("Title");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MailTemplateTypeBehaviour", Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.TimeTables")]
+    public enum MailTemplateTypeBehaviour : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SMTPCompliant = 0,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EncodingType", Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.TimeTables")]
+    public enum EncodingType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ASCII = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UTF8 = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UTF32 = 2,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="TimeTableTypeInfo", Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models")]
     [System.SerializableAttribute()]
     public partial class TimeTableTypeInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -2233,6 +2412,12 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/DeleteExternalUser", ReplyAction="http://tempuri.org/IConfigurationService/DeleteExternalUserResponse")]
         System.Threading.Tasks.Task<bool> DeleteExternalUserAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetMailTemplates", ReplyAction="http://tempuri.org/IConfigurationService/GetMailTemplatesResponse")]
+        Granikos.Hydra.WebClient.HydraConfigurationService.MailTemplateType[] GetMailTemplates();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetMailTemplates", ReplyAction="http://tempuri.org/IConfigurationService/GetMailTemplatesResponse")]
+        System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailTemplateType[]> GetMailTemplatesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetTimeTables", ReplyAction="http://tempuri.org/IConfigurationService/GetTimeTablesResponse")]
         Granikos.Hydra.WebClient.HydraConfigurationService.TimeTable[] GetTimeTables();
@@ -2760,6 +2945,14 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         
         public System.Threading.Tasks.Task<bool> DeleteExternalUserAsync(int id) {
             return base.Channel.DeleteExternalUserAsync(id);
+        }
+        
+        public Granikos.Hydra.WebClient.HydraConfigurationService.MailTemplateType[] GetMailTemplates() {
+            return base.Channel.GetMailTemplates();
+        }
+        
+        public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.MailTemplateType[]> GetMailTemplatesAsync() {
+            return base.Channel.GetMailTemplatesAsync();
         }
         
         public Granikos.Hydra.WebClient.HydraConfigurationService.TimeTable[] GetTimeTables() {

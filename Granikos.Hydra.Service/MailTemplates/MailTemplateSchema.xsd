@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="MailTemplateSchema"
+    targetNamespace="http://tempuri.org/MailTemplateSchema.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/MailTemplateSchema.xsd"
+    xmlns:mstns="http://tempuri.org/MailTemplateSchema.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <xs:element name="NikosTwo">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element name="MailTemplate" type="mstns:MailTemplateType" minOccurs="1" maxOccurs="unbounded" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="MailTemplateType">
+    <xs:sequence>
+      <xs:element name="Title" type="xs:string" />
+      <xs:element name="Subject" type="xs:string" />
+      <xs:element name="HeaderEncoding" type="mstns:EncodingType" />
+      <xs:element name="ContentEncoding" type="mstns:EncodingType" />
+      <xs:element name="BodyEncoding" type="mstns:EncodingType" />
+      <xs:element name="Html" type="xs:string" />
+      <xs:element name="Text" type="xs:string" />
+    </xs:sequence>
+    <xs:attribute name="Behaviour" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="SMTPCompliant"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:simpleType name="EncodingType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ASCII"></xs:enumeration>
+      <xs:enumeration value="UTF8"></xs:enumeration>
+      <xs:enumeration value="UTF32"></xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

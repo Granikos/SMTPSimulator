@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NikosTwo xmlns="http://tempuri.org/MailTemplateSchema.xsd">
+  <MailTemplate Behaviour="SMTPCompliant">
+    <Title>My Template Title</Title>
+    <Subject>E-Mail Subject</Subject>
+    <HeaderEncoding>ASCII</HeaderEncoding>
+    <ContentEncoding>ASCII</ContentEncoding>
+    <BodyEncoding>ASCII</BodyEncoding>
+    <Html>
+      &lt;h1&gt;Header 1 Body Example&lt;/h1&gt;
+      &lt;p&gt;Parapraph Beispiel mit Umlauten sind m&#246;glich&lt;/p&gt;
+
+      &lt;p&gt;Datum: [DATE]&lt;/p&gt;
+    </Html>
+    <Text>
+      Header 1 Body Example
+
+      Paragraph Beispiel mit Umlauten sind möglich
+
+      Template: [TEMPLATETITLE]
+    </Text>
+  </MailTemplate>
+</NikosTwo>

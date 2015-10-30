@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Granikos.Hydra.Service.Models;
+using Granikos.Hydra.Service.TimeTables;
 
 namespace Granikos.Hydra.Service.Providers
 {
@@ -18,5 +19,8 @@ namespace Granikos.Hydra.Service.Providers
         void IncreaseErrorMailCount(int id);
 
         void IncreaseSuccessMailCount(int id);
+
+        IEnumerable<MailTemplateType> GetMailTemplates();
+
     }
 }

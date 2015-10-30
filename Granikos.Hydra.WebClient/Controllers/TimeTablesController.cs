@@ -34,6 +34,13 @@ namespace Granikos.Hydra.WebClient.Controllers
         }
 
         [HttpGet]
+        [Route("MailTemplates")]
+        public IEnumerable<MailTemplateType> GetMailTemplates()
+        {
+            return _service.GetMailTemplates();
+        }
+
+        [HttpGet]
         [Route("TypeData/{type}")]
         public Dictionary<string, string> GetTypeData(string type)
         {

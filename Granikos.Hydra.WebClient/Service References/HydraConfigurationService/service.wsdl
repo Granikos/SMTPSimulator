@@ -23,6 +23,7 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Core" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Net.Security" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Security.Authentication" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.TimeTables" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IConfigurationService_GetVersionInfo_InputMessage">
@@ -331,6 +332,12 @@
   <wsdl:message name="IConfigurationService_DeleteExternalUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteExternalUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetMailTemplates_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMailTemplates" />
+  </wsdl:message>
+  <wsdl:message name="IConfigurationService_GetMailTemplates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMailTemplatesResponse" />
+  </wsdl:message>
   <wsdl:message name="IConfigurationService_GetTimeTables_InputMessage">
     <wsdl:part name="parameters" element="tns:GetTimeTables" />
   </wsdl:message>
@@ -625,6 +632,10 @@
     <wsdl:operation name="DeleteExternalUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/DeleteExternalUser" message="tns:IConfigurationService_DeleteExternalUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/DeleteExternalUserResponse" message="tns:IConfigurationService_DeleteExternalUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMailTemplates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetMailTemplates" message="tns:IConfigurationService_GetMailTemplates_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IConfigurationService/GetMailTemplatesResponse" message="tns:IConfigurationService_GetMailTemplates_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetTimeTables">
       <wsdl:input wsaw:Action="http://tempuri.org/IConfigurationService/GetTimeTables" message="tns:IConfigurationService_GetTimeTables_InputMessage" />
@@ -1143,6 +1154,15 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteExternalUser">
       <soap12:operation soapAction="http://tempuri.org/IConfigurationService/DeleteExternalUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMailTemplates">
+      <soap12:operation soapAction="http://tempuri.org/IConfigurationService/GetMailTemplates" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

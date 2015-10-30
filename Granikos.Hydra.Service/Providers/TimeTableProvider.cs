@@ -5,7 +5,11 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Configuration;
 using System.IO;
+using System.Reflection;
+using System.Xml;
+using System.Xml.Serialization;
 using Granikos.Hydra.Service.Models;
+using Granikos.Hydra.Service.TimeTables;
 using log4net;
 
 namespace Granikos.Hydra.Service.Providers
@@ -13,6 +17,16 @@ namespace Granikos.Hydra.Service.Providers
     [Export(typeof(ITimeTableProvider))]
     public class TimeTableProvider : DefaultProvider<TimeTable>, ITimeTableProvider
     {
+        private string TemplateFolder
+        {
+            get
+            {
+                var folder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var logFolder = ConfigurationManager.AppSettings["MailTemplates"];
+                return Path.Combine(folder, logFolder);
+            }
+        }
+
         private static readonly ILog Logger = LogManager.GetLogger(typeof(TimeTableProvider));
 
         public TimeTableProvider()
@@ -48,7 +62,7 @@ namespace Granikos.Hydra.Service.Providers
             {
                 Name = "Test",
                 Active = true,
-                MailContent = "Test Mail Content",
+                MailContentTemplate = "Test Mail Content",
                 MailType = "default",
                 MinRecipients = 1,
                 MaxRecipients = 2,
@@ -71,7 +85,7 @@ namespace Granikos.Hydra.Service.Providers
             {
                 Name = "Test 2",
                 Active = false,
-                MailContent = "Test 2 Mail Content"
+                MailContentTemplate = "Test 2 Mail Content"
             };
         }
 #endif
@@ -113,6 +127,27 @@ namespace Granikos.Hydra.Service.Providers
             Get(id).IncreaseSuccess();
 
             StoreResults();
+        }
+
+        public IEnumerable<MailTemplateType> GetMailTemplates()
+        {
+            var files = Directory.GetFiles(TemplateFolder, "*.xml");
+
+            XmlSerializer serializer = new XmlSerializer(typeof(NikosTwo));
+
+            foreach (var file in files)
+            {
+
+                FileStream fs = new FileStream(file, FileMode.Open);
+                XmlReader reader = XmlReader.Create(fs);
+
+                var nk2 = (NikosTwo)serializer.Deserialize(reader);
+
+                foreach (var mailTemlate in nk2.Items)
+                {
+                    yield return mailTemlate;
+                }
+            }
         }
 
         protected void StoreResults()

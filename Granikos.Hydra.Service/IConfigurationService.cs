@@ -3,6 +3,7 @@ using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using Granikos.Hydra.Service.Models;
+using Granikos.Hydra.Service.TimeTables;
 
 namespace Granikos.Hydra.Service
 {
@@ -374,6 +375,13 @@ namespace Granikos.Hydra.Service
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         bool DeleteExternalUser(int id);
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "MailTemplates",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<MailTemplateType> GetMailTemplates();
 
         [OperationContract]
         [WebGet(

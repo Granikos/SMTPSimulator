@@ -271,6 +271,12 @@
     <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.TimeTableTypeInfo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <None Include="Service References\HydraConfigurationService\Granikos.Hydra.Service.TimeTables.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.MailTemplateType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\HydraConfigurationService\Message.xsd">
       <SubType>Designer</SubType>
     </None>
