@@ -5,6 +5,7 @@
             '$scope', '$http', '$modal', 'TimeTableService', function ($scope, $http, $modal, TimeTableService) {
                 $scope.timeTables = [];
                 $scope.types = [];
+                $scope.templates = [];
                 $scope.localGroups = [];
                 $scope.externalGroups = [];
                 $scope.localMailboxTotal = "???";
@@ -65,6 +66,14 @@
                 $http.get("api/TimeTables/Types")
                     .success(function (types) {
                         $scope.types = types;
+                    })
+                    .error(function (data) {
+                        showError(data.Message || data.data.Message);
+                    });
+
+                $http.get("api/TimeTables/MailTemplates")
+                    .success(function (templates) {
+                        $scope.templates = templates;
                     })
                     .error(function (data) {
                         showError(data.Message || data.data.Message);

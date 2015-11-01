@@ -126,6 +126,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-4 control-label">Mail Template</label>
+                        <div class="col-sm-8">
+                            <select name="Type" class="form-control" ng-model="tt.MailContentTemplate" required ng-options="template.File as template.Title for template in templates"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-4 control-label">Attachment</label>
                         <div class="col-sm-8">
                             <div class="row vertical-align">

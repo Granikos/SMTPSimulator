@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Granikos.Hydra.Service.Models;
 
@@ -34,9 +35,20 @@ namespace Granikos.Hydra.Service.Providers
             return _entities.Values.ToList();
         }
 
+        protected virtual bool Validate(TEntity entity, out string message)
+        {
+            var context = new ValidationContext(entity, null, null);
+            var results = new List<ValidationResult>();
+            var success = Validator.TryValidateObject(entity, context, results, true);
+
+            message = results.Select(r => r.ErrorMessage).FirstOrDefault();
+
+            return success;
+        }
+
         public IEnumerable<TEntity> Paged(int page, int pageSize)
         {
-            var skip = (page - 1)*pageSize;
+            var skip = (page - 1) * pageSize;
             var entities = ApplyOrder(_entities.Values);
             return entities.Skip(skip).Take(pageSize).ToList();
         }
@@ -52,6 +64,12 @@ namespace Granikos.Hydra.Service.Providers
 
         public TEntity Add(TEntity entity)
         {
+            string message;
+            if (!Validate(entity, out message))
+            {
+                throw new ValidationException(message ?? "Validation failed for entity.");
+            }
+
             if (AutoId != null)
             {
                 entity.Id = AutoId(entity);
@@ -85,7 +103,13 @@ namespace Granikos.Hydra.Service.Providers
             if (!_entities.ContainsKey(entity.Id))
             {
                 throw new ArgumentException(string.Format("The {1} with the id {0} does not exist.", entity.Id,
-                    typeof (TEntity).Name));
+                    typeof(TEntity).Name));
+            }
+
+            string message;
+            if (!Validate(entity, out message))
+            {
+                throw new ValidationException(message ?? "Validation failed for entity.");
             }
 
             if (OnRemoved != null)
@@ -113,7 +137,7 @@ namespace Granikos.Hydra.Service.Providers
             if (!_entities.ContainsKey(id))
             {
                 throw new ArgumentException(string.Format("The {1} with the id {0} does not exist.", id,
-                    typeof (TEntity).Name));
+                    typeof(TEntity).Name));
             }
 
             if (!CanRemove(id)) return false;

@@ -11,6 +11,7 @@
       <xs:element minOccurs="0" name="Behaviour" type="tns:MailTemplateTypeBehaviour" />
       <xs:element minOccurs="0" name="BodyEncoding" type="tns:EncodingType" />
       <xs:element minOccurs="0" name="ContentEncoding" type="tns:EncodingType" />
+      <xs:element minOccurs="0" name="File" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="HeaderEncoding" type="tns:EncodingType" />
       <xs:element minOccurs="0" name="Html" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />

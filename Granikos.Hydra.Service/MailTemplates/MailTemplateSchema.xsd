@@ -9,7 +9,7 @@
   <xs:element name="NikosTwo">
     <xs:complexType>
       <xs:choice>
-        <xs:element name="MailTemplate" type="mstns:MailTemplateType" minOccurs="1" maxOccurs="unbounded" />
+        <xs:element name="MailTemplate" type="mstns:MailTemplateType"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>

@@ -1789,6 +1789,9 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         private Granikos.Hydra.WebClient.HydraConfigurationService.EncodingType ContentEncodingField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FileField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Granikos.Hydra.WebClient.HydraConfigurationService.EncodingType HeaderEncodingField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1848,6 +1851,19 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
                 if ((this.ContentEncodingField.Equals(value) != true)) {
                     this.ContentEncodingField = value;
                     this.RaisePropertyChanged("ContentEncoding");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string File {
+            get {
+                return this.FileField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileField, value) != true)) {
+                    this.FileField = value;
+                    this.RaisePropertyChanged("File");
                 }
             }
         }

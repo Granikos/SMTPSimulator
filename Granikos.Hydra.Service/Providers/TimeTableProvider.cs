@@ -5,6 +5,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Serialization;
@@ -28,6 +29,27 @@ namespace Granikos.Hydra.Service.Providers
         }
 
         private static readonly ILog Logger = LogManager.GetLogger(typeof(TimeTableProvider));
+
+        protected override bool Validate(TimeTable entity, out string message)
+        {
+            if (!base.Validate(entity, out message)) return false;
+
+            if (entity.MailContentTemplate.Contains(".."))
+            {
+                message = "Invalid MailContentTemplate";
+                return false;
+            }
+
+            var file = Path.Combine(TemplateFolder, entity.MailContentTemplate + ".xml");
+
+            if (!File.Exists(file))
+            {
+                message = "Invalid MailContentTemplate";
+                return false;
+            }
+
+            return true;
+        }
 
         public TimeTableProvider()
             : base("TimeTables")
@@ -132,22 +154,20 @@ namespace Granikos.Hydra.Service.Providers
         public IEnumerable<MailTemplateType> GetMailTemplates()
         {
             var files = Directory.GetFiles(TemplateFolder, "*.xml");
+            var serializer = new XmlSerializer(typeof(NikosTwo));
 
-            XmlSerializer serializer = new XmlSerializer(typeof(NikosTwo));
-
-            foreach (var file in files)
+            return files.Select(file =>
             {
-
-                FileStream fs = new FileStream(file, FileMode.Open);
-                XmlReader reader = XmlReader.Create(fs);
-
-                var nk2 = (NikosTwo)serializer.Deserialize(reader);
-
-                foreach (var mailTemlate in nk2.Items)
+                using (var stream = new FileStream(file, FileMode.Open))
+                using (var reader = XmlReader.Create(stream))
                 {
-                    yield return mailTemlate;
+                    var nikosTwo = (NikosTwo)serializer.Deserialize(reader);
+
+                    nikosTwo.MailTemplate.File = Path.GetFileNameWithoutExtension(file);
+
+                    return nikosTwo.MailTemplate;
                 }
-            }
+            });
         }
 
         protected void StoreResults()

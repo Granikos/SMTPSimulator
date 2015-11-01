@@ -10,7 +10,7 @@ namespace Granikos.Hydra.Service.TimeTables
     public class NikosTwo
     {
         [XmlElement("MailTemplate")]
-        public MailTemplateType[] Items { get; set; }
+        public MailTemplateType MailTemplate { get; set; }
     }
 
     [Serializable]
@@ -18,6 +18,10 @@ namespace Granikos.Hydra.Service.TimeTables
     [DataContract]
     public class MailTemplateType
     {
+        [DataMember]
+        [XmlIgnore]
+        public string File { get; set; }
+
         [DataMember]
         public string Title { get; set; }
 
