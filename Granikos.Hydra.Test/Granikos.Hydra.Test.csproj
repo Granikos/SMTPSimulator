@@ -126,6 +126,7 @@
     <Compile Include="CommandHandlers\STARTTLSTest.cs" />
     <Compile Include="CommandHandlers\TestBase.cs" />
     <Compile Include="CoreTest.cs" />
+    <Compile Include="Core\HelpersTest.cs" />
     <Compile Include="DefaultHandlerLoaderTest.cs" />
     <Compile Include="HelpersTest.cs" />
     <Compile Include="IPRangeTest.cs" />

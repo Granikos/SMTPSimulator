@@ -24,9 +24,12 @@ namespace SMTPTestClient
             // var client = new SMTPClient("localhost", 1337)
             // var client = new SMTPClient("test.smtp.org")
             // var client = new SMTPClient("mailtrap.io", 2525)
-            var client = SMTPClient.Create(container, new SendConnector(), "localhost", 25);
-
-            client.Credentials = new NetworkCredential("357045ceeeb05fa28", "07db3fc0f21e46");
+            var sc = new SendConnector
+            {
+                Username = "357045ceeeb05fa28",
+                Password = "07db3fc0f21e46"
+            };
+            var client = SMTPClient.Create(container, sc, "localhost", 25);
 
             var from = new MailAddress("manuel.krebber@granikos.eu");
             var to = new MailAddress("manuel.krebber@outlook.com");
