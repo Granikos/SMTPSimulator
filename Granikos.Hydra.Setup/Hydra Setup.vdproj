@@ -490,6 +490,12 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_69061D983ECEF8BC2E38C1B3940D07EF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -835,12 +841,6 @@
         "OwnerKey" = "8:_6C2F595535644BD3EBB86B0C63602FCD"
         "MsmSig" = "8:_UNDEFINED"
         }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_69061D983ECEF8BC2E38C1B3940D07EF"
-        "MsmSig" = "8:_UNDEFINED"
-        }
     }
     "Configurations"
     {
@@ -866,6 +866,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
             }
         }
         "Release"
@@ -890,6 +898,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
             }
         }
     }
@@ -1944,7 +1960,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Granikos.Hydra.SmtpServer, Version=0.1.5757.26143, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Granikos.Hydra.SmtpServer, Version=0.1.5792.21875, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_884E277BE1C4E459FCF77EBD299B27A6"
@@ -2130,7 +2146,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Granikos.Hydra.SmtpClient, Version=0.1.5757.26144, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Granikos.Hydra.SmtpClient, Version=0.1.5792.21874, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_ABB6525A5918BF17BE76EBFECC80D93A"
@@ -2626,7 +2642,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Granikos.Hydra.Core, Version=0.1.5757.26142, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Granikos.Hydra.Core, Version=0.1.5792.21872, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_E4DD2CD2B02ACD708448CCDBE88DD575"
@@ -2834,13 +2850,13 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Hydra"
         "ProductCode" = "8:{9DE62B8D-D0ED-4266-B8DB-BE77F2FC83DC}"
-        "PackageCode" = "8:{990BD621-2F7E-4BD1-AD06-F6132B7AF481}"
+        "PackageCode" = "8:{5EB7654B-097E-4F22-A0B9-460CF6EDD016}"
         "UpgradeCode" = "8:{2D530948-25A6-4A8C-BA7E-CCE8069D5B3E}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "InstallAllUsers" = "11:FALSE"
+        "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.0.0"
         "Manufacturer" = "8:Granikos GmbH & Co. KG"
         "ARPHELPTELEPHONE" = "8:"
@@ -3119,7 +3135,7 @@
                             "ContextData" = "8:1;True=1;False=0"
                             "Attributes" = "3:0"
                             "Setting" = "3:0"
-                            "Value" = "3:1"
+                            "Value" = "3:0"
                             "DefaultValue" = "3:1"
                             "UsePlugInResources" = "11:TRUE"
                             }
@@ -3353,6 +3369,34 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0C40CFEC530747A9B816BB4B3241564F"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:ContentFiles"
+            "OutputProjectGuid" = "8:{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A82C604658C34A1EA7EA5B1A33B052B7"
             {
             "SourcePath" = "8:..\\Granikos.Hydra.Service\\obj\\Debug\\Granikos.Hydra.Service.exe"
