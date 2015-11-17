@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.IO;
 using System.Linq;
 using System.Net.Mail;
-using System.Net.Mime;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -157,12 +155,12 @@ namespace Granikos.Hydra.Core
             var date = DateTime.Now.ToString("ddd, d MMM yyyy H:m:s zz00");
 
             var subject = !Equals(SubjectEncoding, Encoding.ASCII)
-                ? String.Format("=?{0}?Q?{1}?=", SubjectEncoding.HeaderName, encodeQuotedPrintable(Subject, SubjectEncoding))
+                ? EncodeQuotedPrintableHeader(Subject, SubjectEncoding)
                 : Subject;
 
-            AddHeader(sb, "From", From.ToString());
-            if (To.Any()) AddHeader(sb, "To", String.Join(", ", To.Select(t => t.ToString())));
-            if (Cc.Any()) AddHeader(sb, "Cc", String.Join(", ", Cc.Select(t => t.ToString())));
+            AddHeader(sb, "From", FormatMailAddress(From, HeaderEncoding));
+            if (To.Any()) AddHeader(sb, "To", String.Join(", ", To.Select(t => FormatMailAddress(t, HeaderEncoding))));
+            if (Cc.Any()) AddHeader(sb, "Cc", String.Join(", ", Cc.Select(t => FormatMailAddress(t, HeaderEncoding))));
             AddHeader(sb, "Subject", subject);
             AddHeader(sb, "Content-Type", "multipart/mixed; boundary=" + boundary);
             AddHeader(sb, "MIME-Version", "1.0");
@@ -230,8 +228,23 @@ namespace Granikos.Hydra.Core
 
             return sb.ToString();
         }
+        private static bool IsAsciiString(string value)
+        {
+            return Encoding.UTF8.GetByteCount(value) == value.Length;
+        }
 
-        private string encodeQuotedPrintable(string input, Encoding encoding)
+        private static string FormatMailAddress(MailAddress address, Encoding encoding)
+        {
+            if (String.IsNullOrEmpty(address.DisplayName))
+            {
+                return address.Address;
+            }
+
+            return String.Format("{0} <{1}>", EncodeQuotedPrintableHeader(address.DisplayName, encoding),
+                address.Address);
+        }
+
+        private string encodeQuotedPrintable(string input, Encoding encoding, params char[] additionalChars)
         {
             var sb = new StringBuilder();
             var bytes = encoding.GetBytes(input);
@@ -243,7 +256,7 @@ namespace Granikos.Hydra.Core
                 var isPartOfLineBreak = (ascii == '\r' && i < bytes.Length - 1 && bytes[i + 1] == '\n')
                                         || (ascii == '\n' && i > 0 && bytes[i - 1] == '\r');
 
-                if (!isPartOfLineBreak && (ascii < 32 || ascii == 61 || ascii > 126))
+                if (!isPartOfLineBreak && (ascii < 32 || ascii == 61 || ascii > 126 || additionalChars.Contains((char)ascii)))
                 {
                     sb.Append("=" + ascii.ToString("X2"));
                 }
@@ -256,7 +269,53 @@ namespace Granikos.Hydra.Core
             return SplitLine(sb.ToString(), "=\r\n");
         }
 
-        private void AddHeader(StringBuilder sb, string name, string value)
+        private static string EncodeQuotedPrintableHeader(string input, Encoding encoding)
+        {
+            Contract.Requires<ArgumentNullException>(input != null, "input");
+            Contract.Requires<ArgumentNullException>(encoding != null, "encoding");
+
+            if (input.Length == 0) return input;
+            if (IsAsciiString(input)) return input;
+
+            var sb = new StringBuilder();
+            var bytes = encoding.GetBytes(input);
+
+            var start = String.Format("=?{0}?Q?", encoding.HeaderName);
+            var word = new StringBuilder(start, 75);
+
+            foreach (var ascii in bytes)
+            {
+                string token;
+
+                // Escape non-printable characters, non-ascii characters, as well as '=', '?', and '_'
+                if (ascii <= 32 || ascii == 61 || ascii == 63 || ascii == 95 ||ascii > 126)
+                {
+                    token = "=" + ascii.ToString("X2");
+                }
+                else
+                {
+                    token = ((char) ascii).ToString();
+                }
+
+                // Split into 75 character encoded-words
+                if (word.Length + token.Length > 73)
+                {
+                    word.Append("?= ");
+                    sb.Append(word.ToString());
+                    word.Clear();
+                    word.Append(start);
+                }
+
+                word.Append(token);
+            }
+
+            sb.Append(word.ToString());
+            sb.Append("?=");
+
+            return sb.ToString();
+        }
+
+        private static void AddHeader(StringBuilder sb, string name, string value)
         {
             string header = String.Format("{0}: {1}", name, value);
 
@@ -305,7 +364,7 @@ namespace Granikos.Hydra.Core
             return lines.ToString();
         }
 
-        private void AddLine(StringBuilder sb, string line, params object[] values)
+        private static void AddLine(StringBuilder sb, string line, params object[] values)
         {
             sb.AppendFormat(line, values);
             sb.Append("\r\n");

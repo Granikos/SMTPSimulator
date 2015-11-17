@@ -11,7 +11,7 @@ namespace Granikos.Hydra.Test.Core
         [Fact]
         public void TestToSMTPString()
         {
-            var content = new MailContent("Test Mail",  new MailAddress("test@test.de"), "<p>Html Content</p>", "Text Content");
+            var content = new MailContent("Test Mail",  new MailAddress("test@test.de", "Display name with Umlauts äöü"), "<p>Html Content</p>", "Text Content");
 
             Assert.Equal("Test Mail", content.Subject);
         }
@@ -19,16 +19,16 @@ namespace Granikos.Hydra.Test.Core
         [Fact]
         public void TestToString()
         {
-            var subject = "Test Subject with Ümläutß";
-            var from = new MailAddress("fu@bar.de", "Fu Bar");
+            var subject = "Test Subject with Ümläutß? and =_=";
+            var from = new MailAddress("fu@bar.de", "Fu Bar äöü");
             var html = "<p>This is the <b>HTML</b> content.</p>";
-            var text = "This is the plain text content. Mit Umlauten: äöüß! \u00E4 =";
-            text = "Hätten Hüte ein ß im Namen, wären sie möglicherweise keine Hüte mehr,\r\nsondern Hüße.";
+            var text = "This is the plain text content. Mit Umlauten: äöüß! = _! =";
 
             var mc = new MailContent(subject, from, html, text);
 
             mc.BodyEncoding = Encoding.GetEncoding("ISO-8859-1"); // Encoding.UTF8;
             mc.SubjectEncoding = Encoding.UTF8;
+            mc.HeaderEncoding = Encoding.UTF8;
 
             for (int i = 0; i < 10; i++)
             {
