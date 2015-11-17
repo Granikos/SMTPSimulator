@@ -18,7 +18,7 @@
       <xs:element name="Title" type="xs:string" />
       <xs:element name="Subject" type="xs:string" />
       <xs:element name="HeaderEncoding" type="mstns:EncodingType" />
-      <xs:element name="ContentEncoding" type="mstns:EncodingType" />
+      <xs:element name="SubjectEncoding" type="mstns:EncodingType" />
       <xs:element name="BodyEncoding" type="mstns:EncodingType" />
       <xs:element name="Html" type="xs:string" />
       <xs:element name="Text" type="xs:string" />

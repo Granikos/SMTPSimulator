@@ -3,9 +3,9 @@
   <MailTemplate Behaviour="SMTPCompliant">
     <Title>My Template Title</Title>
     <Subject>E-Mail Subject</Subject>
-    <HeaderEncoding>ASCII</HeaderEncoding>
-    <ContentEncoding>ASCII</ContentEncoding>
-    <BodyEncoding>ASCII</BodyEncoding>
+    <HeaderEncoding>UTF8</HeaderEncoding>
+    <SubjectEncoding>UTF8</SubjectEncoding>
+    <BodyEncoding>UTF8</BodyEncoding>
     <Html>
       &lt;h1&gt;Header 1 Body Example&lt;/h1&gt;
       &lt;p&gt;Parapraph Beispiel mit Umlauten sind m&#246;glich&lt;/p&gt;

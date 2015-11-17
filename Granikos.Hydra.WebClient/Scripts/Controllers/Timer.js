@@ -6,6 +6,7 @@
                 $scope.timeTables = [];
                 $scope.types = [];
                 $scope.templates = [];
+                $scope.attachments = [];
                 $scope.localGroups = [];
                 $scope.externalGroups = [];
                 $scope.localMailboxTotal = "???";
@@ -74,6 +75,14 @@
                 $http.get("api/TimeTables/MailTemplates")
                     .success(function (templates) {
                         $scope.templates = templates;
+                    })
+                    .error(function (data) {
+                        showError(data.Message || data.data.Message);
+                    });
+
+                $http.get("api/TimeTables/Attachments")
+                    .success(function (attachments) {
+                        $scope.attachments = attachments;
                     })
                     .error(function (data) {
                         showError(data.Message || data.data.Message);

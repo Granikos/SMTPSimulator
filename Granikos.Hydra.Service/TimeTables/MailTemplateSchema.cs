@@ -32,7 +32,7 @@ namespace Granikos.Hydra.Service.TimeTables
         public EncodingType HeaderEncoding { get; set; }
 
         [DataMember]
-        public EncodingType ContentEncoding { get; set; }
+        public EncodingType SubjectEncoding { get; set; }
 
         [DataMember]
         public EncodingType BodyEncoding { get; set; }

@@ -22,5 +22,9 @@ namespace Granikos.Hydra.Service.Providers
 
         IEnumerable<MailTemplateType> GetMailTemplates();
 
+        string[] GetAttachments();
+
+        byte[] GetAttachmentContent(string name);
+
     }
 }

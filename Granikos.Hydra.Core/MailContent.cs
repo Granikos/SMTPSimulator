@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 
 namespace Granikos.Hydra.Core
 {
@@ -13,7 +15,7 @@ namespace Granikos.Hydra.Core
     {
         public string Name { get; set; }
 
-        public string Content { get; set; }
+        public byte[] Data { get; set; }
 
         public Encoding Encoding { get; set; }
 
@@ -35,7 +37,7 @@ namespace Granikos.Hydra.Core
         private readonly List<Attachment> _attachments = new List<Attachment>();
         private readonly List<MailAddress> _to = new List<MailAddress>();
         private readonly List<MailAddress> _cc = new List<MailAddress>();
-        private Encoding _contentEncoding;
+        private Encoding _bodyEncoding;
         private Encoding _headerEncoding;
         private Encoding _subjectEncoding;
 
@@ -65,10 +67,10 @@ namespace Granikos.Hydra.Core
 
         public string Text { get; set; }
 
-        public Encoding ContentEncoding
+        public Encoding BodyEncoding
         {
-            get { return _contentEncoding ?? Encoding.Default; }
-            set { _contentEncoding = value; }
+            get { return _bodyEncoding ?? Encoding.Default; }
+            set { _bodyEncoding = value; }
         }
 
         public Encoding SubjectEncoding
@@ -101,14 +103,26 @@ namespace Granikos.Hydra.Core
             _additionalHeaders.Add(new MailHeader { Name = name, Value = value, Encoding = encoding });
         }
 
-        public void AddAttachment(string name, string content, Encoding encoding, string type)
+        public void AddAttachment(string name, string content, Encoding encoding, string type = null)
         {
             Contract.Requires<ArgumentNullException>(name != null, "name");
             Contract.Requires<ArgumentNullException>(content != null, "content");
             Contract.Requires<ArgumentNullException>(encoding != null, "encoding");
-            Contract.Requires<ArgumentNullException>(type != null, "type");
 
-            _attachments.Add(new Attachment { Name = name, Content = content, Encoding = encoding, Type = type});
+            AddAttachment(name, encoding.GetBytes(content), encoding, type);
+        }
+
+        public void AddAttachment(string name, byte[] data, Encoding encoding = null, string type = null)
+        {
+            Contract.Requires<ArgumentNullException>(name != null, "name");
+            Contract.Requires<ArgumentNullException>(data != null, "data");
+
+            if (type == null)
+            {
+                type = MimeMapping.GetMimeMapping(name);
+            }
+
+            _attachments.Add(new Attachment { Name = name, Data = data, Encoding = encoding, Type = type });
         }
 
         public void AddRecipient(MailAddress recipient)
@@ -167,23 +181,23 @@ namespace Granikos.Hydra.Core
 
             AddLine(sb, "--" + boundary2);
 
-            AddHeader(sb, "Content-Type", "text/plain; charset=" + ContentEncoding.HeaderName);
+            AddHeader(sb, "Content-Type", "text/plain; charset=" + BodyEncoding.HeaderName);
             AddHeader(sb, "Content-Transfer-Encoding", "quoted-printable");
             AddHeader(sb, "Content-Disposition", "inline");
 
             AddLine(sb, "");
 
-            AddLine(sb, encodeQuotedPrintable(Text, ContentEncoding));
+            AddLine(sb, encodeQuotedPrintable(Text, BodyEncoding));
 
             AddLine(sb, "--" + boundary2);
 
-            AddHeader(sb, "Content-Type", "text/html; charset=" + ContentEncoding.HeaderName);
+            AddHeader(sb, "Content-Type", "text/html; charset=" + BodyEncoding.HeaderName);
             AddHeader(sb, "Content-Transfer-Encoding", "quoted-printable");
             AddHeader(sb, "Content-Disposition", "inline");
 
             AddLine(sb, "");
 
-            AddLine(sb, encodeQuotedPrintable(Html, ContentEncoding));
+            AddLine(sb, encodeQuotedPrintable(Html, BodyEncoding));
 
             AddLine(sb, "--" + boundary2 + "--");
             AddLine(sb, "");
@@ -192,13 +206,20 @@ namespace Granikos.Hydra.Core
             {
                 AddLine(sb, "--" + boundary);
 
-                AddHeader(sb, "Content-Type", attachment.Type + "; charset=" + attachment.Encoding.HeaderName);
+                if (attachment.Encoding != null)
+                {
+                    AddHeader(sb, "Content-Type", attachment.Type + "; charset=" + attachment.Encoding.HeaderName);
+                }
+                else
+                {
+                    AddHeader(sb, "Content-Type", attachment.Type);
+                }
                 AddHeader(sb, "Content-Transfer-Encoding", "base64");
                 AddHeader(sb, "Content-Disposition", "attachment; filename=" + attachment.Name);
 
                 AddLine(sb, "");
 
-                AddLine(sb, Convert.ToBase64String(attachment.Encoding.GetBytes(attachment.Content), Base64FormattingOptions.InsertLineBreaks));
+                AddLine(sb, Convert.ToBase64String(attachment.Data, Base64FormattingOptions.InsertLineBreaks));
             }
 
             AddLine(sb, "--" + boundary + "--");

@@ -28,6 +28,16 @@ namespace Granikos.Hydra.Service.Providers
             }
         }
 
+        private string AttachmentFolder
+        {
+            get
+            {
+                var folder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var logFolder = ConfigurationManager.AppSettings["AttachmentFolder"];
+                return Path.Combine(folder, logFolder);
+            }
+        }
+
         private static readonly ILog Logger = LogManager.GetLogger(typeof(TimeTableProvider));
 
         protected override bool Validate(TimeTable entity, out string message)
@@ -158,9 +168,12 @@ namespace Granikos.Hydra.Service.Providers
 
             return files.Select(file =>
             {
+
                 using (var stream = new FileStream(file, FileMode.Open))
-                using (var reader = XmlReader.Create(stream))
+                using (var reader = new XmlTextReader(stream))
                 {
+                    reader.WhitespaceHandling = WhitespaceHandling.All;
+
                     var nikosTwo = (NikosTwo)serializer.Deserialize(reader);
 
                     nikosTwo.MailTemplate.File = Path.GetFileNameWithoutExtension(file);
@@ -168,6 +181,20 @@ namespace Granikos.Hydra.Service.Providers
                     return nikosTwo.MailTemplate;
                 }
             });
+        }
+
+        public string[] GetAttachments()
+        {
+            if (!File.Exists(AttachmentFolder))
+                Directory.CreateDirectory(AttachmentFolder);
+
+            return Directory.GetFiles(AttachmentFolder).Select(Path.GetFileName).ToArray();
+            
+        }
+
+        public byte[] GetAttachmentContent(string name)
+        {
+            return File.ReadAllBytes(Path.Combine(AttachmentFolder, name));
         }
 
         protected void StoreResults()

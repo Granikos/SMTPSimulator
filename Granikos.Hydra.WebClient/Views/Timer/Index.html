@@ -151,7 +151,9 @@
                                 <div class="col-sm-12">
                                     <div class="input-group">
                                         <span class="input-group-addon">Attachment File</span>
-                                        <select name="Attachment" class="form-control" ng-model="tt.Attachment" ng-required="tt.AttachmentType === 2" ng-disabled="tt.AttachmentType !== 2"></select>
+                                        <select name="Attachment" class="form-control" ng-model="tt.Attachment" ng-required="tt.AttachmentType === 2" ng-disabled="tt.AttachmentType !== 2">
+                                            <option ng-repeat="attachment in attachments">{{attachment}}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

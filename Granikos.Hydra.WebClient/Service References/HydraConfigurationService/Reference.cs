@@ -2447,6 +2447,12 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetTimeTableTypes", ReplyAction="http://tempuri.org/IConfigurationService/GetTimeTableTypesResponse")]
         System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.TimeTableTypeInfo[]> GetTimeTableTypesAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetTimeTableAttachments", ReplyAction="http://tempuri.org/IConfigurationService/GetTimeTableAttachmentsResponse")]
+        string[] GetTimeTableAttachments();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetTimeTableAttachments", ReplyAction="http://tempuri.org/IConfigurationService/GetTimeTableAttachmentsResponse")]
+        System.Threading.Tasks.Task<string[]> GetTimeTableAttachmentsAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IConfigurationService/GetTimeTableTypeData", ReplyAction="http://tempuri.org/IConfigurationService/GetTimeTableTypeDataResponse")]
         System.Collections.Generic.Dictionary<string, string> GetTimeTableTypeData(string type);
         
@@ -2985,6 +2991,14 @@ namespace Granikos.Hydra.WebClient.HydraConfigurationService {
         
         public System.Threading.Tasks.Task<Granikos.Hydra.WebClient.HydraConfigurationService.TimeTableTypeInfo[]> GetTimeTableTypesAsync() {
             return base.Channel.GetTimeTableTypesAsync();
+        }
+        
+        public string[] GetTimeTableAttachments() {
+            return base.Channel.GetTimeTableAttachments();
+        }
+        
+        public System.Threading.Tasks.Task<string[]> GetTimeTableAttachmentsAsync() {
+            return base.Channel.GetTimeTableAttachmentsAsync();
         }
         
         public System.Collections.Generic.Dictionary<string, string> GetTimeTableTypeData(string type) {

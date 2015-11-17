@@ -399,6 +399,13 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebGet(
+            UriTemplate = "TimeTables/Attachments",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<string> GetTimeTableAttachments();
+
+        [OperationContract]
+        [WebGet(
             UriTemplate = "TimeTables/TypeData/{type}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]

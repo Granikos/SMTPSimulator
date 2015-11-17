@@ -1,9 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Configuration;
 using System.Diagnostics.Contracts;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Net.Mime;
+using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Granikos.Hydra.Core;
 using Granikos.Hydra.Service.Models;
@@ -23,6 +30,18 @@ namespace Granikos.Hydra.Service.TimeTables
         private readonly DelayedQueue<SendableMail> _queue;
         private readonly TimeTable _timeTable;
         private readonly ITimeTableType _timeTableType;
+
+        private const string EICAR = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*";
+
+        private string EmlFolder
+        {
+            get
+            {
+                var folder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var logFolder = ConfigurationManager.AppSettings["EmlFolder"];
+                return logFolder != null? Path.Combine(folder, logFolder) : null;
+            }
+        }
 
         [Import]
         private IExternalMailboxGroupProvider _externalGroups;
@@ -101,7 +120,8 @@ namespace Granikos.Hydra.Service.TimeTables
                 var to = GetRecipients();
                 var fromMail = new MailAddress(from);
                 var toMail = to.Select(r => new MailAddress(r)).ToArray();
-                var parsed = new Mail(fromMail, toMail, _timeTable.MailContentTemplate);
+                var content = CreateContent(fromMail, toMail);
+                var parsed = new Mail(fromMail, toMail, content.ToString());
 
                 var sendableMail = new SendableMail(parsed, null)
                 {
@@ -126,7 +146,7 @@ namespace Granikos.Hydra.Service.TimeTables
                     }
                 }
 
-                _queue.Enqueue(sendableMail, TimeSpan.Zero);
+                // _queue.Enqueue(sendableMail, TimeSpan.Zero);
             }
             catch (Exception e)
             {
@@ -135,6 +155,97 @@ namespace Granikos.Hydra.Service.TimeTables
             finally
             {
                 _timer.Change(GetWaitTime(), TimeSpan.Zero);
+            }
+        }
+
+        private MailContent CreateContent(MailAddress from, MailAddress[] to)
+        {
+            var template = _timeTables.GetMailTemplates().First(t => t.File == _timeTable.MailContentTemplate);
+
+            var html = ReplaceTokens(template.Html, template.Title);
+            var text = ReplaceTokens(template.Text, template.Title);
+
+            var mc = new MailContent(template.Subject, from, html, text)
+            {
+                HeaderEncoding = GetEncoding(template.HeaderEncoding),
+                SubjectEncoding = GetEncoding(template.HeaderEncoding),
+                BodyEncoding = GetEncoding(template.BodyEncoding)
+            };
+
+            if (to.Length > 0)
+            {
+                mc.AddRecipient(to.First());
+
+                if (to.Length > 1)
+                {
+                    foreach (var cc in to.Skip(1))
+                    {
+                        mc.AddCc(cc);
+                    }
+                }
+            }
+
+            string attachment = null;
+
+            if (_timeTable.AttachmentType == AttachmentType.Fixed)
+            {
+                attachment = _timeTable.Attachment;
+            }
+            else if (_timeTable.AttachmentType == AttachmentType.Random)
+            {
+                var attachments = _timeTables.GetAttachments();
+                attachment = attachments[_random.Next(attachments.Length)];
+            }
+
+            if (attachment != null)
+            {
+                var data = _timeTables.GetAttachmentContent(attachment);
+
+                mc.AddAttachment(attachment, data);
+            }
+
+            if (_timeTable.SendEicarFile)
+            {
+                mc.AddAttachment("eicar.html", EICAR, Encoding.ASCII, MediaTypeNames.Text.Html);
+            }
+
+            if (EmlFolder != null)
+            {
+                if (!File.Exists(EmlFolder)) Directory.CreateDirectory(EmlFolder);
+
+                var name = _timeTable.Name + " " + DateTime.Now.ToString("s");
+                var safeName = Regex.Replace(name, "\\W+", "-");
+
+                using (var file = File.OpenWrite(Path.Combine(EmlFolder, safeName + ".eml")))
+                using (var writer = new StreamWriter(file))
+                {
+                    writer.Write(mc.ToString());
+                }
+            }
+
+            return mc;
+        }
+
+        private string ReplaceTokens(string template, string name)
+        {
+            return template.Replace("[TEMPLATETITLE]", name)
+                .Replace("[DATE]", DateTime.Today.ToString("D"))
+                .Replace("[DATETIME]", DateTime.Now.ToString("F"))
+                .Replace("[DATETIMEUTC]", DateTime.UtcNow.ToString("F"));
+        }
+
+        private Encoding GetEncoding(EncodingType type)
+        {
+            switch (type)
+            {
+                case EncodingType.ASCII:
+                    return Encoding.ASCII;
+                case EncodingType.UTF32:
+                    return Encoding.UTF32;
+                case EncodingType.UTF8:
+                    return Encoding.UTF8;
+                default:
+                    throw new ArgumentException("Unknown encoding", "type");
             }
         }
 

@@ -41,6 +41,13 @@ namespace Granikos.Hydra.WebClient.Controllers
         }
 
         [HttpGet]
+        [Route("Attachments")]
+        public IEnumerable<string> GetAttachments()
+        {
+            return _service.GetTimeTableAttachments();
+        }
+
+        [HttpGet]
         [Route("TypeData/{type}")]
         public Dictionary<string, string> GetTypeData(string type)
         {
