@@ -156,10 +156,14 @@ namespace Granikos.Hydra.Core
             string boundary = Guid.NewGuid().ToString();
             var date = DateTime.Now.ToString("ddd, d MMM yyyy H:m:s zz00");
 
+            var subject = !Equals(SubjectEncoding, Encoding.ASCII)
+                ? String.Format("=?{0}?Q?{1}?=", SubjectEncoding.HeaderName, encodeQuotedPrintable(Subject, SubjectEncoding))
+                : Subject;
+
             AddHeader(sb, "From", From.ToString());
             if (To.Any()) AddHeader(sb, "To", String.Join(", ", To.Select(t => t.ToString())));
             if (Cc.Any()) AddHeader(sb, "Cc", String.Join(", ", Cc.Select(t => t.ToString())));
-            AddHeader(sb, "Subject", Subject);
+            AddHeader(sb, "Subject", subject);
             AddHeader(sb, "Content-Type", "multipart/mixed; boundary=" + boundary);
             AddHeader(sb, "MIME-Version", "1.0");
             AddHeader(sb, "Date", date);
