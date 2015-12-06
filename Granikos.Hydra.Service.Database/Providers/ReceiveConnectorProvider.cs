@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Net.Security;
 using Granikos.Hydra.Service.Database.Models;
@@ -24,6 +26,21 @@ namespace Granikos.Hydra.Service.Database.Providers
         IReceiveConnector IReceiveConnectorProvider<IReceiveConnector>.GetEmptyConnector()
         {
             return GetEmptyConnector();
+        }
+
+        protected override void OnUpdate(ReceiveConnector entity, ReceiveConnector dbEntity)
+        {
+            foreach (var domain in dbEntity.RemoteIPRanges.ToArray())
+            {
+                Database.Entry(domain).State = EntityState.Deleted;
+            }
+
+            dbEntity.RemoteIPRanges.Clear();
+
+            foreach (var range in entity.RemoteIPRanges)
+            {
+                dbEntity.RemoteIPRanges.Add(new DbIPRange(range.Start, range.End));
+            }
         }
     }
 }

@@ -21,6 +21,12 @@
                     3072: 'TLS 1.2'
                 }
 
+                $scope.modes = ['Disabled', 'Enabled', 'Required', 'Full Tunnel'];
+
+                $scope.policies = ['Require Encryption', 'Allow No Encryption', 'No Encryption'];
+
+                $scope.authLevels = ['Encryption Only', 'Certificate Validation', 'Domain Validation'];
+
                 $scope.IPRegexp = IPRegexp;
                 $scope.TimeRegexp = TimeRegexp;
 

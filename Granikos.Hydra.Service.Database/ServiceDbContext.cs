@@ -23,6 +23,7 @@ namespace Granikos.Hydra.Service.Database
         public DbSet<SendConnector> SendConnectors { get; set; }
         public DbSet<Domain> Domains { get; set; }
         public DbSet<TimeTable> TimeTables { get; set; }
+        public DbSet<DbIPRange> IPRanges { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -41,6 +42,11 @@ namespace Granikos.Hydra.Service.Database
             modelBuilder.Entity<SendConnector>()
                 .HasMany(s => s.InternalDomains)
                 .WithRequired(d => d.Connector)
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<ReceiveConnector>()
+                .HasMany(r => r.RemoteIPRanges)
+                .WithRequired(i => i.Connector)
                 .WillCascadeOnDelete();
         }
     }

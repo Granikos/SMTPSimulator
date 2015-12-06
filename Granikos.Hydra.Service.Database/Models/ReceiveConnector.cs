@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Granikos.Hydra.Service.Database.Models
 {
     public class ReceiveConnector : IReceiveConnector
     {
-        private DbIPRange[] _remoteIPRanges;
+        private ICollection<DbIPRange> _remoteIPRanges = new List<DbIPRange>();
         private TLSSettings _tlsSettings;
 
         public ReceiveConnector()
@@ -47,10 +48,10 @@ namespace Granikos.Hydra.Service.Database.Models
             set { RemoteIPRanges = value.Select(DbIPRange.FromOther).ToArray(); }
         }
 
-        public DbIPRange[] RemoteIPRanges
+        public virtual ICollection<DbIPRange> RemoteIPRanges
         {
-            get { return _remoteIPRanges ?? new DbIPRange[0]; }
-            set { _remoteIPRanges = value; }
+            get { return _remoteIPRanges; }
+            set { _remoteIPRanges = (value ?? new List<DbIPRange>()); }
         }
 
         [Required]
@@ -63,7 +64,7 @@ namespace Granikos.Hydra.Service.Database.Models
         public string AuthPassword { get; set; }
 
         [Required]
-        public TLSSettings TLSSettings
+        public virtual TLSSettings TLSSettings
         {
             get { return _tlsSettings; }
             set { _tlsSettings = value ?? new TLSSettings(); }
