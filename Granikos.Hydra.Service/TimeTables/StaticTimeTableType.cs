@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
+using Granikos.Hydra.Service.Models;
 using Granikos.Hydra.Service.Providers;
 using log4net;
 

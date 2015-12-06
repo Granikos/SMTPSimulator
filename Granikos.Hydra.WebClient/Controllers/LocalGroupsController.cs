@@ -15,7 +15,7 @@ namespace Granikos.Hydra.WebClient.Controllers
 
         [HttpGet]
         [Route("")]
-        public IEnumerable<MailboxGroup> Get()
+        public IEnumerable<UserGroup> Get()
         {
             return _service.GetLocalGroups();
         }
@@ -33,7 +33,7 @@ namespace Granikos.Hydra.WebClient.Controllers
                     {
                         Id = g.Id,
                         Name = g.Name,
-                        Count = g.MailboxIds.Length
+                        Count = g.UserIds.Length
                     }).ToArray(),
                 MailboxTotal = total
             };
@@ -69,7 +69,7 @@ namespace Granikos.Hydra.WebClient.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
-        public HttpResponseMessage Put(int id, [FromBody]MailboxGroup @group)
+        public HttpResponseMessage Put(int id, [FromBody]UserGroup @group)
         {
             var updated = _service.UpdateLocalGroup(@group);
 

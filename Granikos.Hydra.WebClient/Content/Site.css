@@ -246,3 +246,14 @@ input.ng-valid.ng-dirty {
 .timeSelector .toggeling.selected {
     background-color: coral;
 }
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+    text-align: right;
+}

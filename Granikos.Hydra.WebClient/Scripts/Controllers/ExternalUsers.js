@@ -256,7 +256,7 @@
                         callback: function (success) {
                             if (success) {
                                 var group = $scope.groupsById[id];
-                                group.MailboxIds.length = 0; //.splice(0, group.MailboxIds.length);
+                                group.UserIds.length = 0; //.splice(0, group.MailboxIds.length);
                                 $scope.$apply();
                             }
                         }
@@ -288,7 +288,7 @@
                         .result.then(function (domain) {
                             $http.get("api/ExternalUsers/ByDomain/" + domain)
                                 .then(function (data) {
-                                    var mbs = $scope.groupsById[id].MailboxIds;
+                                    var mbs = $scope.groupsById[id].UserIds;
                                     var temp = {};
                                     for (var i = 0; i < mbs.length; i++)
                                         temp[mbs[i]] = true;
@@ -296,7 +296,7 @@
                                         if (!temp[data.data[i]])
                                             mbs.push(data.data[i]);
                                     $scope.groupsById[id]._dirty = true;
-                                    $scope.apply();
+                                    // $scope.$apply();
                                 });
                         });
                 };
@@ -311,7 +311,7 @@
                                 $scope.groups[index] = data.data;
                             }
                             $scope.groupsById[id] = data.data;
-                            $scope.apply();
+                            // $scope.$apply();
                         }, function (data) {
                             showError(data.Message || data.data.Message);
                         });

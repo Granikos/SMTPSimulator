@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
+using Granikos.Hydra.Service.Models;
 using Granikos.Hydra.Service.Providers;
 
 namespace Granikos.Hydra.Service.TimeTables

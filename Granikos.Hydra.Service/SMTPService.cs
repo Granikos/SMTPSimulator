@@ -21,7 +21,7 @@ namespace Granikos.Hydra.Service
         private Thread _listenThread;
         private TcpListener _tcpListener;
 
-        public SMTPService(ReceiveConnector connector, SMTPServer smtpServer, CompositionContainer container)
+        public SMTPService(IReceiveConnector connector, SMTPServer smtpServer, CompositionContainer container)
         {
             _container = container;
             LocalEndpoint = new IPEndPoint(connector.Address, connector.Port);
@@ -55,7 +55,7 @@ namespace Granikos.Hydra.Service
 
         public SMTPServer SMTPServer { get; private set; }
         public IReceiveSettings Settings { get; private set; }
-        public ReceiveConnector Connector { get; private set; }
+        public IReceiveConnector Connector { get; private set; }
         public IPEndPoint LocalEndpoint { get; private set; }
 
         private void CheckGreylisting(SMTPServer.ConnectEventArgs connect)

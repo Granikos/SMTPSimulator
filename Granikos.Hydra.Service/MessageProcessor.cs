@@ -8,7 +8,9 @@ using System.Net.Sockets;
 using ARSoft.Tools.Net.Dns;
 using Granikos.Hydra.Core;
 using Granikos.Hydra.Core.Logging;
+using Granikos.Hydra.Service.Database.Models;
 using Granikos.Hydra.Service.Models;
+using Granikos.Hydra.Service.Models.Providers;
 using Granikos.Hydra.Service.Providers;
 using Granikos.Hydra.SmtpClient;
 
@@ -49,7 +51,7 @@ namespace Granikos.Hydra.Service
                     .GroupBy(r => r.Host))
             {
                 var host = recipientGroup.Key;
-                var connector = mail.Settings as SendConnector
+                var connector = mail.Settings as ISendConnector
                     ?? sendConnectors.GetByDomain(host)
                     ?? sendConnectors.DefaultConnector;
 
@@ -145,7 +147,7 @@ namespace Granikos.Hydra.Service
         public class ConnectorInfo
         {
             public IEnumerable<MailAddress> Addresses;
-            public SendConnector Connector;
+            public ISendConnector Connector;
             public string Host;
             public int Port;
         }

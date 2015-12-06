@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using Granikos.Hydra.Core;
 using Granikos.Hydra.Service.Models;
+using Granikos.Hydra.Service.Models.Providers;
 using Granikos.Hydra.Service.PriorityQueue;
 using Granikos.Hydra.Service.Providers;
 using Granikos.Hydra.SmtpClient;
@@ -28,7 +29,7 @@ namespace Granikos.Hydra.Service.TimeTables
         private readonly Random _random = new Random();
 
         private readonly DelayedQueue<SendableMail> _queue;
-        private readonly TimeTable _timeTable;
+        private readonly ITimeTable _timeTable;
         private readonly ITimeTableType _timeTableType;
 
         private const string EICAR = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*";
@@ -58,9 +59,15 @@ namespace Granikos.Hydra.Service.TimeTables
         [Import]
         private ITimeTableProvider _timeTables;
 
+        [Import]
+        private IMailTemplateProvider _mailTemplates;
+
+        [Import]
+        private IAttachmentProvider _attachments;
+
         private Timer _timer;
 
-        public TimeTableGenerator(TimeTable timeTable, DelayedQueue<SendableMail> queue, CompositionContainer container)
+        public TimeTableGenerator(ITimeTable timeTable, DelayedQueue<SendableMail> queue, CompositionContainer container)
         {
             Contract.Requires<ArgumentNullException>(timeTable != null, "timeTable");
             Contract.Requires<ArgumentNullException>(queue != null, "queue");
@@ -146,7 +153,7 @@ namespace Granikos.Hydra.Service.TimeTables
                     }
                 }
 
-                // _queue.Enqueue(sendableMail, TimeSpan.Zero);
+                _queue.Enqueue(sendableMail, TimeSpan.Zero);
             }
             catch (Exception e)
             {
@@ -160,7 +167,7 @@ namespace Granikos.Hydra.Service.TimeTables
 
         private MailContent CreateContent(MailAddress from, MailAddress[] to)
         {
-            var template = _timeTables.GetMailTemplates().First(t => t.File == _timeTable.MailContentTemplate);
+            var template = _mailTemplates.GetMailTemplates().First(t => t.Id == _timeTable.MailTemplateId);
 
             var html = ReplaceTokens(template.Html, template.Title);
             var text = ReplaceTokens(template.Text, template.Title);
@@ -185,23 +192,23 @@ namespace Granikos.Hydra.Service.TimeTables
                 }
             }
 
-            string attachment = null;
+            int? attachment = null;
 
             if (_timeTable.AttachmentType == AttachmentType.Fixed)
             {
-                attachment = _timeTable.Attachment;
+                attachment = _timeTable.AttachmentId;
             }
             else if (_timeTable.AttachmentType == AttachmentType.Random)
             {
-                var attachments = _timeTables.GetAttachments();
+                var attachments = _attachments.GetAttachmentIds();
                 attachment = attachments[_random.Next(attachments.Length)];
             }
 
             if (attachment != null)
             {
-                var data = _timeTables.GetAttachmentContent(attachment);
+                var data = _attachments.GetAttachmentContent(attachment.Value);
 
-                mc.AddAttachment(attachment, data);
+                mc.AddAttachment("foo", data); // TODO 
             }
 
             if (_timeTable.SendEicarFile)
@@ -266,7 +273,7 @@ namespace Granikos.Hydra.Service.TimeTables
             }
             if (_timeTable.SenderGroupId != null)
             {
-                var mailboxes = _localGroups.Get(_timeTable.SenderGroupId.Value).MailboxIds;
+                var mailboxes = _localGroups.Get(_timeTable.SenderGroupId.Value).UserIds;
 
                 var id = mailboxes[_random.Next(mailboxes.Length)];
 
@@ -287,7 +294,7 @@ namespace Granikos.Hydra.Service.TimeTables
 
             if (_timeTable.RecipientGroupId != null)
             {
-                var mailboxes = _externalGroups.Get(_timeTable.RecipientGroupId.Value).MailboxIds;
+                var mailboxes = _externalGroups.Get(_timeTable.RecipientGroupId.Value).UserIds;
 
                 return mailboxes
                     .OrderBy(x => _random.Next())

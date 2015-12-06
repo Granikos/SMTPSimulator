@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.Configuration;
 using System.Diagnostics.Contracts;
 using System.IO;
@@ -8,9 +10,10 @@ using System.Linq;
 using System.Reflection;
 using System.ServiceModel;
 using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.Providers;
-using Granikos.Hydra.Service.TimeTables;
+using Granikos.Hydra.Service.Models.Providers;
+using Granikos.Hydra.Service.ViewModels;
 using Granikos.Hydra.SmtpServer;
+using log4net;
 
 namespace Granikos.Hydra.Service
 {
@@ -44,6 +47,18 @@ namespace Granikos.Hydra.Service
         [Import]
         private ITimeTableProvider _timeTables;
 
+        [Import]
+        private IMailTemplateProvider _mailTemplates;
+
+        [Import]
+        private IAttachmentProvider _attachments;
+
+        [ImportMany]
+        private IEnumerable<IUserTemplateProvider> _templateProviders;
+
+
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(IConfigurationService));
+
         public ConfigurationService(SMTPServer server, ISMTPServerContainer servers, IMailQueueProvider mailQueue)
         {
             Contract.Requires<ArgumentNullException>(server != null, "server");
@@ -57,24 +72,24 @@ namespace Granikos.Hydra.Service
 
         public SMTPServer SmtpServer { get; private set; }
 
-        public IEnumerable<MailboxGroup> GetLocalGroups()
+        public IEnumerable<UserGroup> GetLocalGroups()
         {
-            return _localGroups.All();
+            return _localGroups.All().Select(g => g.ConvertTo<UserGroup>());
         }
 
-        public MailboxGroup GetLocalGroup(int id)
+        public UserGroup GetLocalGroup(int id)
         {
-            return _localGroups.Get(id);
+            return _localGroups.Get(id).ConvertTo<UserGroup>();
         }
 
-        public MailboxGroup UpdateLocalGroup(MailboxGroup mailboxGroup)
+        public UserGroup UpdateLocalGroup(UserGroup userGroup)
         {
-            return _localGroups.Update(mailboxGroup);
+            return _localGroups.Update(userGroup).ConvertTo<UserGroup>();
         }
 
-        public MailboxGroup AddLocalGroup(string name)
+        public UserGroup AddLocalGroup(string name)
         {
-            return _localGroups.Add(new MailboxGroup(name));
+            return _localGroups.Add(name).ConvertTo<UserGroup>();
         }
 
         public bool DeleteLocalGroup(int id)
@@ -82,24 +97,24 @@ namespace Granikos.Hydra.Service
             return _localGroups.Delete(id);
         }
 
-        public IEnumerable<MailboxGroup> GetExternalGroups()
+        public IEnumerable<UserGroup> GetExternalGroups()
         {
-            return _externalGroups.All();
+            return _externalGroups.All().Select(g => g.ConvertTo<UserGroup>());
         }
 
-        public MailboxGroup GetExternalGroup(int id)
+        public UserGroup GetExternalGroup(int id)
         {
-            return _externalGroups.Get(id);
+            return _externalGroups.Get(id).ConvertTo<UserGroup>();
         }
 
-        public MailboxGroup UpdateExternalGroup(MailboxGroup mailboxGroup)
+        public UserGroup UpdateExternalGroup(UserGroup userGroup)
         {
-            return _externalGroups.Update(mailboxGroup);
+            return _externalGroups.Update(userGroup).ConvertTo<UserGroup>();
         }
 
-        public MailboxGroup AddExternalGroup(string name)
+        public UserGroup AddExternalGroup(string name)
         {
-            return _externalGroups.Add(new MailboxGroup(name));
+            return _externalGroups.Add(name).ConvertTo<UserGroup>();
         }
 
         public bool DeleteExternalGroup(int id)
@@ -109,22 +124,22 @@ namespace Granikos.Hydra.Service
 
         public IEnumerable<SendConnector> GetSendConnectors()
         {
-            return _sendConnectors.All();
+            return _sendConnectors.All().Select(s => s.ConvertTo<SendConnector>());
         }
 
         public SendConnector GetSendConnector(int id)
         {
-            return _sendConnectors.Get(id);
+            return _sendConnectors.Get(id).ConvertTo<SendConnector>();
         }
 
         public SendConnector AddSendConnector(SendConnector connector)
         {
-            return _sendConnectors.Add(connector);
+            return _sendConnectors.Add(connector).ConvertTo<SendConnector>();
         }
 
         public SendConnector UpdateSendConnector(SendConnector connector)
         {
-            return _sendConnectors.Update(connector);
+            return _sendConnectors.Update(connector).ConvertTo<SendConnector>();
         }
 
         public bool DeleteSendConnector(int id)
@@ -134,7 +149,7 @@ namespace Granikos.Hydra.Service
 
         public IEnumerable<User> GetLocalUsersByDomain(string domain)
         {
-            return _localUsers.GetByDomain(domain);
+            return _localUsers.GetByDomain(domain).Select(u => u.ConvertTo<User>());
         }
 
         public IEnumerable<ValueWithCount<string>> SearchExternalUserDomains(string domain)
@@ -144,7 +159,7 @@ namespace Granikos.Hydra.Service
 
         public IEnumerable<User> GetExternalUsersByDomain(string domain)
         {
-            return _externalUsers.GetByDomain(domain);
+            return _externalUsers.GetByDomain(domain).Select(u => u.ConvertTo<User>());
         }
 
         public int GetLocalUserCount()
@@ -154,12 +169,12 @@ namespace Granikos.Hydra.Service
 
         public TimeTable GetEmptyTimeTable()
         {
-            return new TimeTable();
+            return _timeTables.GetEmptyTimeTable().ConvertTo<TimeTable>();
         }
 
         public SendConnector GetDefaultSendConnector()
         {
-            return _sendConnectors.DefaultConnector;
+            return _sendConnectors.DefaultConnector.ConvertTo<SendConnector>();
         }
 
         public bool SetDefaultSendConnector(int id)
@@ -204,39 +219,34 @@ namespace Granikos.Hydra.Service
             return stream;
         }
 
-        public void SetProperty(string name, string value)
-        {
-            throw new NotImplementedException();
-        }
-
         public SendConnector GetEmptySendConnector()
         {
-            return new SendConnector();
+            return _sendConnectors.GetEmptyConnector().ConvertTo<SendConnector>();
         }
 
         public ReceiveConnector GetDefaultReceiveConnector()
         {
-            return new ReceiveConnector();
+            return _receiveConnectors.GetEmptyConnector().ConvertTo<ReceiveConnector>();
         }
 
         public IEnumerable<ReceiveConnector> GetReceiveConnectors()
         {
-            return _receiveConnectors.All();
+            return _receiveConnectors.All().Select(r => r.ConvertTo<ReceiveConnector>());
         }
 
         public ReceiveConnector GetReceiveConnector(int id)
         {
-            return _receiveConnectors.Get(id);
+            return _receiveConnectors.Get(id).ConvertTo<ReceiveConnector>();
         }
 
         public ReceiveConnector AddReceiveConnector(ReceiveConnector connector)
         {
-            return _receiveConnectors.Add(connector);
+            return _receiveConnectors.Add(connector).ConvertTo<ReceiveConnector>();
         }
 
         public ReceiveConnector UpdateReceiveConnector(ReceiveConnector connector)
         {
-            return _receiveConnectors.Update(connector);
+            return _receiveConnectors.Update(connector).ConvertTo<ReceiveConnector>();
         }
 
         public bool DeleteReceiveConnector(int id)
@@ -246,7 +256,7 @@ namespace Granikos.Hydra.Service
 
         public EntitiesWithTotal<User> GetLocalUsers(int page, int perPage)
         {
-            var users = _localUsers.Paged(page, perPage);
+            var users = _localUsers.Paged(page, perPage).Select(u => u.ConvertTo<User>()).ToList();
             var total = _localUsers.Total;
             var result = new EntitiesWithTotal<User>(users, total);
             return result;
@@ -259,17 +269,17 @@ namespace Granikos.Hydra.Service
 
         public User GetLocalUser(int id)
         {
-            return _localUsers.Get(id);
+            return _localUsers.Get(id).ConvertTo<User>();
         }
 
         public User AddLocalUser(User connector)
         {
-            return _localUsers.Add(connector);
+            return _localUsers.Add(connector).ConvertTo<User>();
         }
 
         public User UpdateLocalUser(User connector)
         {
-            return _localUsers.Update(connector);
+            return _localUsers.Update(connector).ConvertTo<User>();
         }
 
         public bool DeleteLocalUser(int id)
@@ -279,8 +289,9 @@ namespace Granikos.Hydra.Service
 
         public Stream ExportLocalUsers()
         {
+            var exporter = new UserExporter(_localUsers);
             var stream = new MemoryStream();
-            _localUsers.ExportAsCSV(stream);
+            exporter.ExportAsCSV(stream);
 
             stream.Position = 0;
 
@@ -289,32 +300,54 @@ namespace Granikos.Hydra.Service
 
         public ImportResult ImportLocalUsers(Stream stream)
         {
-            var count = _localUsers.ImportFromCSV(stream, false);
+            var importer = new UserImporter(_localUsers);
+            var count = importer.ImportFromCSV(stream, false);
 
             return new ImportResult(count, 0);
         }
 
         public ImportResult ImportLocalUsersWithOverwrite(Stream stream)
         {
+            var importer = new UserImporter(_localUsers);
             var before = _localUsers.Total;
-            var count = _localUsers.ImportFromCSV(stream, true);
+            var count = importer.ImportFromCSV(stream, true);
 
             return new ImportResult(count, before);
         }
 
-        public bool GenerateLocalUsers(string template, string pattern, string domain, int count)
+        public bool GenerateLocalUsers(string templateName, string pattern, string domain, int count)
         {
-            return _localUsers.Generate(template, pattern, domain, count);
+            var parts = templateName.Split(new[] { '/' }, 2);
+            var template = _templateProviders
+                .SelectMany(t => t.All())
+                .First(t => t.GetType().Name.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase)
+                            && t.Name.Equals(parts[1], StringComparison.InvariantCultureIgnoreCase));
+
+            var generator = new UserGenerator(_localUsers, template);
+
+            return generator.Generate(pattern, domain, count);
         }
 
         public IEnumerable<UserTemplate> GetLocalUserTemplates()
         {
-            return _localUsers.GetTemplates();
+            try
+            {
+                return _templateProviders
+                    .SelectMany(t => t.All())
+                    .Select(t => new UserTemplate(t.GetType().Name + "/" + t.Name, t.DisplayName, t.SupportsPattern))
+                    .OrderBy(t => t.DisplayName);
+            }
+            catch (Exception e)
+            {
+                Logger.Error("Template error", e);
+                // TODO
+                return new UserTemplate[0];
+            }
         }
 
         public EntitiesWithTotal<User> GetExternalUsers(int page, int perPage)
         {
-            return new EntitiesWithTotal<User>(_externalUsers.Paged(page, perPage), _externalUsers.Total);
+            return new EntitiesWithTotal<User>(_externalUsers.Paged(page, perPage).Select(u => u.ConvertTo<User>()), _externalUsers.Total);
         }
 
         public int GetExternalUserCount()
@@ -329,17 +362,17 @@ namespace Granikos.Hydra.Service
 
         public User GetExternalUser(int id)
         {
-            return _externalUsers.Get(id);
+            return _externalUsers.Get(id).ConvertTo<User>();
         }
 
         public User AddExternalUser(User user)
         {
-            return _externalUsers.Add(user);
+            return _externalUsers.Add(user).ConvertTo<User>();
         }
 
         public User UpdateExternalUser(User user)
         {
-            return _externalUsers.Update(user);
+            return _externalUsers.Update(user).ConvertTo<User>();
         }
 
         public bool DeleteExternalUser(int id)
@@ -347,44 +380,57 @@ namespace Granikos.Hydra.Service
             return _externalUsers.Delete(id);
         }
 
-        public IEnumerable<MailTemplateType> GetMailTemplates()
+        public IEnumerable<IMailTemplate> GetMailTemplates()
         {
-            return _timeTables.GetMailTemplates();
+            return _mailTemplates.GetMailTemplates();
         }
 
         public IEnumerable<TimeTable> GetTimeTables()
         {
-            return _timeTables.All();
+            return _timeTables.All().Select(t => t.ConvertTo<TimeTable>());
         }
+
+        [Import(AllowRecomposition = true)]
+        private CompositionContainer _container { get; set; }
 
         public IEnumerable<TimeTableTypeInfo> GetTimeTableTypes()
         {
-            return _timeTables.GetTimeTableTypes();
+            foreach (var type in _container.GetExportedTypesWithContracts<ITimeTableType>())
+            {
+                DisplayNameAttribute dn = (DisplayNameAttribute)Attribute.GetCustomAttribute(type.Item1, typeof(DisplayNameAttribute));
+
+                yield return new TimeTableTypeInfo
+                {
+                    Name = type.Item2,
+                    DisplayName = dn != null ? dn.DisplayName : type.Item2
+                };
+
+            }
         }
 
-        public IEnumerable<string> GetTimeTableAttachments()
+        public IEnumerable<int> GetTimeTableAttachments()
         {
-            return _timeTables.GetAttachments();
+            return _attachments.GetAttachmentIds();
         }
 
         public IDictionary<string, string> GetTimeTableTypeData(string type)
         {
-            return _timeTables.GetTimeTableTypeData(type);
+            return _container.GetExport<ITimeTableType>(type).Value.Data;
         }
 
         public TimeTable GetTimeTable(int id)
         {
-            return _timeTables.Get(id);
+            return _timeTables.Get(id).ConvertTo<TimeTable>();
         }
 
         public TimeTable AddTimeTable(TimeTable timeTable)
         {
-            return _timeTables.Add(timeTable);
+            return _timeTables.Add(timeTable).ConvertTo<TimeTable>();
         }
 
         public TimeTable UpdateTimeTable(TimeTable timeTable)
         {
-            return _timeTables.Update(timeTable);
+            return _timeTables.Update(timeTable).ConvertTo<TimeTable>();
         }
 
         public bool DeleteTimeTable(int id)
@@ -394,8 +440,9 @@ namespace Granikos.Hydra.Service
 
         public Stream ExportExternalUsers()
         {
+            var exporter = new UserExporter(_externalUsers);
             var stream = new MemoryStream();
-            _externalUsers.ExportAsCSV(stream);
+            exporter.ExportAsCSV(stream);
 
             stream.Position = 0;
 
@@ -404,15 +451,17 @@ namespace Granikos.Hydra.Service
 
         public ImportResult ImportExternalUsers(Stream stream)
         {
-            var count = _externalUsers.ImportFromCSV(stream, false);
+            var exporter = new UserImporter(_externalUsers);
+            var count = exporter.ImportFromCSV(stream, false);
 
             return new ImportResult(count, 0);
         }
 
         public ImportResult ImportExternalUsersWithOverwrite(Stream stream)
         {
+            var exporter = new UserImporter(_externalUsers);
             var before = _externalUsers.Total;
-            var count = _externalUsers.ImportFromCSV(stream, true);
+            var count = exporter.ImportFromCSV(stream, true);
 
             return new ImportResult(count, before);
         }

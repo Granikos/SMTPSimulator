@@ -52,13 +52,22 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Retry Time</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" data-momentduration="hours" data-ng-model="connector.RetryTimeDuration" />
+                            <div class="input-group">
+                                <input type="text" class="form-control" data-momentduration="hours" data-ng-model="connector.RetryTimeDuration" />
+                                <span class="input-group-addon">h</span>
+                            </div>
                         </div>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" data-momentduration="minutes" data-ng-model="connector.RetryTimeDuration" />
+                            <div class="input-group">
+                                <input type="text" class="form-control" data-momentduration="minutes" data-ng-model="connector.RetryTimeDuration" />
+                                <span class="input-group-addon">m</span>
+                            </div>
                         </div>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" data-momentduration="seconds" data-ng-model="connector.RetryTimeDuration" />
+                            <div class="input-group">
+                                <input type="text" class="form-control" data-momentduration="seconds" data-ng-model="connector.RetryTimeDuration" />
+                                <span class="input-group-addon">s</span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -82,12 +91,17 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Domains</label>
                         <div class="col-sm-8">
-                            <ul class="list-group domain-list" ng-show="connector.Domains.length > 0">
-                                <li ng-repeat="domain in connector.Domains" class="list-group-item">
-                                    {{domain}}
-                                </li>
-                            </ul>
-                            <p class="form-control-static" ng-show="connector.Domains.length == 0">None</p>
+
+                            <div class="list-group domain-list pull-left" ng-show="connector.Domains.length > 0">
+                                <span ng-repeat="domain in connector.Domains" class="tag label label-default">
+                                    <span>{{domain}}</span>
+                                    <a ng-click="removeDomain(connector, domain)" tooltip="Remove the domain from the send connector" tooltip-placement="bottom" tooltip-append-to-body="true"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                                </span>
+                            </div>
+                            <p class="form-control-static pull-left" ng-show="connector.Domains.length == 0">None</p>
+                            <button class="btn btn-sm btn-success pull-right" type="button" ng-click="addDomain(connector)" tooltip="Add a domain to the send connector" tooltip-placement="bottom" tooltip-append-to-body="true">
+                                <i class="glyphicon glyphicon-plus-sign"></i> Add
+                            </button>
                         </div>
                     </div>
                     <div class="panel" ng-class="{'panel-success': connector.TLSSettings.Mode > 0, 'panel-default': connector.TLSSettings.Mode == 0}">

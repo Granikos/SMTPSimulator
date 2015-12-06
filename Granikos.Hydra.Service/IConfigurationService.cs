@@ -3,7 +3,7 @@ using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.TimeTables;
+using Granikos.Hydra.Service.ViewModels;
 
 namespace Granikos.Hydra.Service
 {
@@ -32,37 +32,34 @@ namespace Granikos.Hydra.Service
         Stream GetLogFile(string name);
 
         [OperationContract]
-        void SetProperty(string name, string value);
-
-        [OperationContract]
         [WebGet(
             UriTemplate = "LocalGroups",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        IEnumerable<MailboxGroup> GetLocalGroups();
+        IEnumerable<UserGroup> GetLocalGroups();
 
         [WebGet(
-            UriTemplate = "LocalGroups/{id}",
+            UriTemplate = "LocalGroups/ById?id={id}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        MailboxGroup GetLocalGroup(int id);
+        UserGroup GetLocalGroup(int id);
 
         [WebInvoke(
             UriTemplate = "LocalGroups",
             Method = "POST",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        MailboxGroup UpdateLocalGroup(MailboxGroup mailboxGroup);
+        UserGroup UpdateLocalGroup(UserGroup group);
 
         [WebInvoke(
             UriTemplate = "LocalGroups/{name}",
             Method = "PUT",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        MailboxGroup AddLocalGroup(string name);
+        UserGroup AddLocalGroup(string name);
 
         [WebInvoke(
-            UriTemplate = "LocalGroups/{id}",
+            UriTemplate = "LocalGroups/ById?id={id}",
             Method = "DELETE",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
@@ -73,30 +70,30 @@ namespace Granikos.Hydra.Service
             UriTemplate = "ExternalGroups",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        IEnumerable<MailboxGroup> GetExternalGroups();
+        IEnumerable<UserGroup> GetExternalGroups();
 
         [WebGet(
-            UriTemplate = "ExternalGroups/{id}",
+            UriTemplate = "ExternalGroups/ById?id={id}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        MailboxGroup GetExternalGroup(int id);
+        UserGroup GetExternalGroup(int id);
 
         [WebInvoke(
             UriTemplate = "ExternalGroups",
             Method = "POST",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        MailboxGroup UpdateExternalGroup(MailboxGroup mailboxGroup);
+        UserGroup UpdateExternalGroup(UserGroup group);
 
         [WebInvoke(
             UriTemplate = "ExternalGroups/{name}",
             Method = "PUT",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        MailboxGroup AddExternalGroup(string name);
+        UserGroup AddExternalGroup(string name);
 
         [WebInvoke(
-            UriTemplate = "ExternalGroups/{id}",
+            UriTemplate = "ExternalGroups/ById?id={id}",
             Method = "DELETE",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
@@ -119,7 +116,7 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "ReceiveConnectors/{id}",
+            UriTemplate = "ReceiveConnectors/ById?id={id}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         ReceiveConnector GetReceiveConnector(int id);
@@ -142,7 +139,7 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "ReceiveConnectors/{id}",
+            UriTemplate = "ReceiveConnectors/ById?id={id}",
             Method = "DELETE",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
@@ -169,7 +166,7 @@ namespace Granikos.Hydra.Service
         SendConnector GetDefaultSendConnector();
 
         [WebInvoke(
-            UriTemplate = "DefaultSendConnector/{id}",
+            UriTemplate = "DefaultSendConnector/ById?id={id}",
             Method = "POST",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
@@ -184,7 +181,7 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "SendConnectors/{id}",
+            UriTemplate = "SendConnectors/ById?id={id}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         SendConnector GetSendConnector(int id);
@@ -207,7 +204,7 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "SendConnectors/{id}",
+            UriTemplate = "SendConnectors/ById?id={id}",
             Method = "DELETE",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
@@ -215,7 +212,7 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "LocalUsers/ByDomain/{domain}",
+            UriTemplate = "LocalUsers/ByDomain?domain={domain}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         IEnumerable<User> GetLocalUsersByDomain(string domain);
@@ -229,7 +226,7 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "ExternalUsers/ByDomain/{domain}",
+            UriTemplate = "ExternalUsers/ByDomain?domain={domain}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         IEnumerable<User> GetExternalUsersByDomain(string domain);
@@ -243,7 +240,7 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "LocalUsers/{perPage}/{page}",
+            UriTemplate = "LocalUsers?perPage={perPage}&page={page}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         EntitiesWithTotal<User> GetLocalUsers(int page, int perPage);
@@ -257,7 +254,7 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "LocalUsers/{id}",
+            UriTemplate = "LocalUsers/ById?id={id}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         User GetLocalUser(int id);
@@ -272,7 +269,7 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "LocalUsers/{id}",
+            UriTemplate = "LocalUsers",
             Method = "POST",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
@@ -280,7 +277,7 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "LocalUsers/{id}",
+            UriTemplate = "LocalUsers/ById?id={id}",
             Method = "DELETE",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
@@ -311,7 +308,7 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "LocalUsers/Generate",
+            UriTemplate = "LocalUsers/Generate?template={template}&pattern={pattern}&domain={domain}&count={count}",
             Method = "PUT",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
@@ -326,7 +323,7 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "ExternalUsers/{perPage}/{page}",
+            UriTemplate = "ExternalUsers?perPage={perPage}&page={page}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         EntitiesWithTotal<User> GetExternalUsers(int page, int perPage);
@@ -347,7 +344,7 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "ExternalUsers/{id}",
+            UriTemplate = "ExternalUsers/ById?id={id}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         User GetExternalUser(int id);
@@ -370,7 +367,7 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "ExternalUsers/{id}",
+            UriTemplate = "ExternalUsers/ById?id={id}",
             Method = "DELETE",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
@@ -381,7 +378,7 @@ namespace Granikos.Hydra.Service
             UriTemplate = "MailTemplates",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        IEnumerable<MailTemplateType> GetMailTemplates();
+        IEnumerable<IMailTemplate> GetMailTemplates();
 
         [OperationContract]
         [WebGet(
@@ -402,7 +399,7 @@ namespace Granikos.Hydra.Service
             UriTemplate = "TimeTables/Attachments",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        IEnumerable<string> GetTimeTableAttachments();
+        IEnumerable<int> GetTimeTableAttachments();
 
         [OperationContract]
         [WebGet(
@@ -413,7 +410,7 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "TimeTables/{id}",
+            UriTemplate = "TimeTables/ById?id={id}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         TimeTable GetTimeTable(int id);
@@ -436,7 +433,7 @@ namespace Granikos.Hydra.Service
 
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "TimeTables/{id}",
+            UriTemplate = "TimeTables/ById?id={id}",
             Method = "DELETE",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]

@@ -5,6 +5,7 @@ using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Granikos.Hydra.Service.Models.Providers;
 
 namespace Granikos.Hydra.Service.Providers
 {

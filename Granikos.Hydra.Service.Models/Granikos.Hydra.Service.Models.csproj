@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Granikos.Hydra.Service.Models</RootNamespace>
+    <AssemblyName>Granikos.Hydra.Service.Models</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IEntity.cs" />
+    <Compile Include="IIpRange.cs" />
+    <Compile Include="IMailTemplate.cs" />
+    <Compile Include="IPRange.cs" />
+    <Compile Include="IReceiveConnector.cs" />
+    <Compile Include="ISendConnector.cs" />
+    <Compile Include="ITimeTable.cs" />
+    <Compile Include="IUser.cs" />
+    <Compile Include="IUserGroup.cs" />
+    <Compile Include="ModelHelpers.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\IAttachmentProvider.cs" />
+    <Compile Include="Providers\IDataProvider.cs" />
+    <Compile Include="Providers\IExternalMailboxGroupProvider.cs" />
+    <Compile Include="Providers\IExternalUserProvider.cs" />
+    <Compile Include="Providers\ILocalMailboxGroupProvider.cs" />
+    <Compile Include="Providers\ILocalUserProvider.cs" />
+    <Compile Include="Providers\ILogProvider.cs" />
+    <Compile Include="Providers\IMailTemplateProvider.cs" />
+    <Compile Include="Providers\IReceiveConnectorProvider.cs" />
+    <Compile Include="Providers\ISendConnectorProvider.cs" />
+    <Compile Include="Providers\ITimeTableProvider.cs" />
+    <Compile Include="ITimeTableType.cs" />
+    <Compile Include="IUserTemplate.cs" />
+    <Compile Include="Providers\IUserTemplateProvider.cs" />
+    <Compile Include="TLSSettings.cs" />
+    <Compile Include="UserTemplate.cs" />
+    <Compile Include="ValueWithCount.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Granikos.Hydra.Core\Granikos.Hydra.Core.csproj">
+      <Project>{6C923248-1B40-4A27-80F7-DDEEB9F6D4D5}</Project>
+      <Name>Granikos.Hydra.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Granikos.Hydra.SmtpClient\Granikos.Hydra.SmtpClient.csproj">
+      <Project>{E149BA1D-5095-4F46-BB16-A113757ADCC9}</Project>
+      <Name>Granikos.Hydra.SmtpClient</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

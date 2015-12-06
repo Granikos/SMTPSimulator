@@ -5,9 +5,9 @@ namespace Granikos.Hydra.Service
 {
     public class DefaultReceiveSettings : IReceiveSettings
     {
-        private readonly ReceiveConnector _connector;
+        private readonly IReceiveConnector _connector;
 
-        public DefaultReceiveSettings(ReceiveConnector connector)
+        public DefaultReceiveSettings(IReceiveConnector connector)
         {
             _connector = connector;
         }

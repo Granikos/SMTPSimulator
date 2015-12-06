@@ -1,6 +1,6 @@
 using System;
 using System.Net;
-using Granikos.Hydra.Core;
+using Granikos.Hydra.Service.ViewModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -10,7 +10,7 @@ namespace Granikos.Hydra.Service.Providers
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var range = (IPRange) value;
+            var range = (JsonIPRange)value;
             writer.WriteStartObject();
             writer.WritePropertyName("Start");
             writer.WriteValue(range.StartString);
@@ -24,12 +24,12 @@ namespace Granikos.Hydra.Service.Providers
         {
             var obj = JObject.Load(reader);
 
-            return new IPRange(IPAddress.Parse((string) obj["Start"]), IPAddress.Parse((string) obj["End"]));
+            return new JsonIPRange(IPAddress.Parse((string)obj["Start"]), IPAddress.Parse((string)obj["End"]));
         }
 
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof (IPRange);
+            return objectType == typeof(JsonIPRange);
         }
     }
 }

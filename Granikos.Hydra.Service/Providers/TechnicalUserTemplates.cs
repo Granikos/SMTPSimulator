@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Granikos.Hydra.Service.Models;
+using Granikos.Hydra.Service.Models.Providers;
+using User = Granikos.Hydra.Service.ViewModels.User;
 
 namespace Granikos.Hydra.Service.Providers
 {
@@ -37,7 +39,7 @@ namespace Granikos.Hydra.Service.Providers
                 get { return false; }
             }
 
-            public IEnumerable<User> Generate(string pattern, string domain, int count)
+            public IEnumerable<IUser> Generate(string pattern, string domain, int count)
             {
                 for (var i = 1; i <= count; i++)
                 {

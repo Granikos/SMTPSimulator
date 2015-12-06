@@ -12,6 +12,7 @@ using System.ServiceModel;
 using System.ServiceProcess;
 using Granikos.Hydra.Core;
 using Granikos.Hydra.Service.Models;
+using Granikos.Hydra.Service.Models.Providers;
 using Granikos.Hydra.Service.PriorityQueue;
 using Granikos.Hydra.Service.Providers;
 using Granikos.Hydra.Service.TimeTables;
@@ -91,7 +92,7 @@ namespace Granikos.Hydra.Service
             RefreshSenders();
         }
 
-        private void OnTimeTableRemove(TimeTable tt)
+        private void OnTimeTableRemove(ITimeTable tt)
         {
             lock (_generators)
             {
@@ -100,7 +101,7 @@ namespace Granikos.Hydra.Service
             }
         }
 
-        private void OnTimeTableAdd(TimeTable tt)
+        private void OnTimeTableAdd(ITimeTable tt)
         {
             lock (_generators)
             {

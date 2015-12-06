@@ -3,13 +3,12 @@
     targetNamespace="http://tempuri.org/MailTemplateSchema.xsd"
     elementFormDefault="qualified"
     xmlns="http://tempuri.org/MailTemplateSchema.xsd"
-    xmlns:mstns="http://tempuri.org/MailTemplateSchema.xsd"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
 >
   <xs:element name="NikosTwo">
     <xs:complexType>
       <xs:choice>
-        <xs:element name="MailTemplate" type="mstns:MailTemplateType"/>
+        <xs:element name="MailTemplate" type="MailTemplateType"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
@@ -17,9 +16,9 @@
     <xs:sequence>
       <xs:element name="Title" type="xs:string" />
       <xs:element name="Subject" type="xs:string" />
-      <xs:element name="HeaderEncoding" type="mstns:EncodingType" />
-      <xs:element name="SubjectEncoding" type="mstns:EncodingType" />
-      <xs:element name="BodyEncoding" type="mstns:EncodingType" />
+      <xs:element name="HeaderEncoding" type="EncodingType" default="UTF8" />
+      <xs:element name="SubjectEncoding" type="EncodingType" default="UTF8" />
+      <xs:element name="BodyEncoding" type="EncodingType" default="UTF8" />
       <xs:element name="Html" type="xs:string" />
       <xs:element name="Text" type="xs:string" />
     </xs:sequence>

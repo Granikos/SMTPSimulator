@@ -7,6 +7,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Granikos.Hydra.Service.Models;
+using Granikos.Hydra.Service.Models.Providers;
+using Granikos.Hydra.Service.ViewModels;
 using Newtonsoft.Json;
 
 namespace Granikos.Hydra.Service.Providers
@@ -113,7 +115,7 @@ namespace Granikos.Hydra.Service.Providers
                 get { return true; }
             }
 
-            public IEnumerable<User> Generate(string pattern, string domain, int count)
+            public IEnumerable<IUser> Generate(string pattern, string domain, int count)
             {
                 var boxes = new HashSet<string>();
 

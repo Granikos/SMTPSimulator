@@ -35,14 +35,14 @@ namespace Granikos.Hydra.WebClient.Controllers
 
         [HttpGet]
         [Route("MailTemplates")]
-        public IEnumerable<MailTemplateType> GetMailTemplates()
+        public IEnumerable<object> GetMailTemplates()
         {
             return _service.GetMailTemplates();
         }
 
         [HttpGet]
         [Route("Attachments")]
-        public IEnumerable<string> GetAttachments()
+        public IEnumerable<int> GetAttachments()
         {
             return _service.GetTimeTableAttachments();
         }

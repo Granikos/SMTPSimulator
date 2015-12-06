@@ -156,6 +156,15 @@
     <Reference Include="CsvHelper">
       <HintPath>..\packages\CsvHelper.2.13.1.0\lib\net40-client\CsvHelper.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServerCompact">
+      <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -170,6 +179,10 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -191,24 +204,13 @@
     <Compile Include="DefaultReceiveSettings.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="IMailQueueProvider.cs" />
+    <Compile Include="JsonFormatting.cs" />
     <Compile Include="MessageSender.cs" />
-    <Compile Include="Models\GroupWithMailboxCount.cs" />
-    <Compile Include="Models\EntitiesWithTotal.cs" />
-    <Compile Include="Models\ImportResult.cs" />
-    <Compile Include="Models\MailMessage.cs" />
-    <Compile Include="Models\TimeTable.cs" />
-    <Compile Include="Models\TimeTableTypeInfo.cs" />
-    <Compile Include="Models\ValueWithCount.cs" />
     <Compile Include="PriorityQueue\DelayedQueue.cs" />
     <Compile Include="IConfigurationService.cs" />
     <Compile Include="ISMTPServerContainer.cs" />
     <Compile Include="MailExtensions.cs" />
     <Compile Include="MessageProcessor.cs" />
-    <Compile Include="Models\TLSAuthLevel.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\SendConnector.cs" />
-    <Compile Include="Models\TLSMode.cs" />
-    <Compile Include="Models\TLSSettings.cs" />
     <Compile Include="PriorityQueue\HeapPriorityQueue.cs" />
     <Compile Include="PriorityQueue\IPriorityQueue.cs" />
     <Compile Include="PriorityQueue\PriorityQueueNode.cs" />
@@ -218,36 +220,20 @@
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
-    <Compile Include="Providers\DataContainer.cs" />
-    <Compile Include="Providers\DefaultProvider.cs" />
-    <Compile Include="Models\MailboxGroup.cs" />
-    <Compile Include="Providers\IExternalMailboxGroupProvider.cs" />
-    <Compile Include="Providers\LocalMailboxGroupProvider.cs" />
+    <Compile Include="Providers\AttachmentProvider.cs" />
+    <Compile Include="UserExporter.cs" />
+    <Compile Include="UserGenerator.cs" />
+    <Compile Include="UserImporter.cs" />
+    <Compile Include="ViewModels\JsonIPRange.cs" />
+    <Compile Include="ViewModels\ReceiveConnector.cs" />
+    <Compile Include="ViewModels\SendConnector.cs" />
+    <Compile Include="ViewModels\TimeTable.cs" />
+    <Compile Include="ViewModels\User.cs" />
     <Compile Include="TimeTables\DynamicTimeTableType.cs" />
-    <Compile Include="Providers\ExternalUserProvider.cs" />
-    <Compile Include="Providers\IDataProvider.cs" />
-    <Compile Include="Models\IEntity.cs" />
-    <Compile Include="Providers\ILocalMailboxGroupProvider.cs" />
-    <Compile Include="Providers\IExternalUserProvider.cs" />
-    <Compile Include="Providers\ILocalUserProvider.cs" />
-    <Compile Include="Providers\ILogProvider.cs" />
-    <Compile Include="Providers\InMemoryProvider.cs" />
     <Compile Include="Providers\IPRangeConverter.cs" />
-    <Compile Include="Providers\IReceiveConnectorProvider.cs" />
-    <Compile Include="Models\ReceiveConnector.cs" />
-    <Compile Include="Providers\ISendConnectorProvider.cs" />
-    <Compile Include="Providers\ITimeTableProvider.cs" />
-    <Compile Include="Providers\ITimeTableType.cs" />
-    <Compile Include="Providers\IUserTemplate.cs" />
-    <Compile Include="Providers\IUserTemplateProvider.cs" />
-    <Compile Include="Providers\LocalUserProvider.cs" />
     <Compile Include="Providers\LogProvider.cs" />
     <Compile Include="Providers\NamedUserTemplates.cs" />
-    <Compile Include="Providers\ReceiveConnectorProvider.cs" />
-    <Compile Include="Providers\SendConnectorProvider.cs" />
-    <Compile Include="Models\UserTemplate.cs" />
     <Compile Include="Providers\TechnicalUserTemplates.cs" />
-    <Compile Include="Providers\TimeTableProvider.cs" />
     <Compile Include="SMTPService.cs" />
     <Compile Include="HydraService.cs">
       <SubType>Component</SubType>
@@ -257,11 +243,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TimeTables\MailTemplateSchema.cs" />
     <Compile Include="TimeTables\StaticTimeTableType.cs" />
     <Compile Include="TimeTables\TimeTableGenerator.cs" />
     <Compile Include="TLSConnector.cs" />
-    <Compile Include="Models\VersionInfo.cs" />
+    <Compile Include="ViewModels\EntitiesWithTotal.cs" />
+    <Compile Include="ViewModels\GroupWithMailboxCount.cs" />
+    <Compile Include="ViewModels\ImportResult.cs" />
+    <Compile Include="ViewModels\MailMessage.cs" />
+    <Compile Include="ViewModels\MailTemplateSchema.cs" />
+    <Compile Include="ViewModels\TimeTableTypeInfo.cs" />
+    <Compile Include="ViewModels\UserGroup.cs" />
+    <Compile Include="ViewModels\VersionInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -290,6 +282,14 @@
     <ProjectReference Include="..\Granikos.Hydra.Core\Granikos.Hydra.Core.csproj">
       <Project>{6c923248-1b40-4a27-80f7-ddeeb9f6d4d5}</Project>
       <Name>Granikos.Hydra.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Granikos.Hydra.Service.Database\Granikos.Hydra.Service.Database.csproj">
+      <Project>{a29dcd4f-b993-47fc-a095-563c62131ed9}</Project>
+      <Name>Granikos.Hydra.Service.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Granikos.Hydra.Service.Models\Granikos.Hydra.Service.Models.csproj">
+      <Project>{3bc25918-8db6-44db-8d08-abb7e2a8a24e}</Project>
+      <Name>Granikos.Hydra.Service.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\Granikos.Hydra.SmtpClient\Granikos.Hydra.SmtpClient.csproj">
       <Project>{e149ba1d-5095-4f46-bb16-a113757adcc9}</Project>
@@ -326,6 +326,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

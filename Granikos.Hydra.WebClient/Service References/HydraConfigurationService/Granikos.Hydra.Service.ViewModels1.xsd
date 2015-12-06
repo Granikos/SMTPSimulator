@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.ViewModels" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.ViewModels" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" />
+  <xs:complexType name="ArrayOfUserGroup">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserGroup" nillable="true" type="tns:UserGroup" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserGroup" nillable="true" type="tns:ArrayOfUserGroup" />
+  <xs:complexType name="UserGroup">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserIds" nillable="true" type="q1:ArrayOfint" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserGroup" nillable="true" type="tns:UserGroup" />
+  <xs:complexType name="ReceiveConnector">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AddressString" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AuthPassword" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AuthUsername" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Banner" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Enabled" type="xs:boolean" />
+      <xs:element minOccurs="0" name="GreylistingTime" nillable="true" type="ser:duration" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Port" type="xs:int" />
+      <xs:element minOccurs="0" name="RemoteIPRanges" nillable="true" type="tns:ArrayOfJsonIPRange" />
+      <xs:element minOccurs="0" name="RequireAuth" type="xs:boolean" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="TLSSettings" nillable="true" type="q2:TLSSettings" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReceiveConnector" nillable="true" type="tns:ReceiveConnector" />
+  <xs:complexType name="ArrayOfJsonIPRange">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="JsonIPRange" nillable="true" type="tns:JsonIPRange" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfJsonIPRange" nillable="true" type="tns:ArrayOfJsonIPRange" />
+  <xs:complexType name="JsonIPRange">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EndString" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StartString" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="JsonIPRange" nillable="true" type="tns:JsonIPRange" />
+  <xs:complexType name="ArrayOfReceiveConnector">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ReceiveConnector" nillable="true" type="tns:ReceiveConnector" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfReceiveConnector" nillable="true" type="tns:ArrayOfReceiveConnector" />
+  <xs:complexType name="SendConnector">
+    <xs:sequence>
+      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Domains" nillable="true" type="q3:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="LocalAddressString" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RemoteAddressString" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RemotePort" type="xs:int" />
+      <xs:element minOccurs="0" name="RetryCount" type="xs:int" />
+      <xs:element minOccurs="0" name="RetryTime" type="ser:duration" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="TLSSettings" nillable="true" type="q4:TLSSettings" />
+      <xs:element minOccurs="0" name="UseAuth" type="xs:boolean" />
+      <xs:element minOccurs="0" name="UseSmarthost" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SendConnector" nillable="true" type="tns:SendConnector" />
+  <xs:complexType name="TimeTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Active" type="xs:boolean" />
+      <xs:element minOccurs="0" name="AttachmentId" type="xs:int" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="AttachmentType" type="q5:AttachmentType" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="MailTemplateId" type="xs:int" />
+      <xs:element minOccurs="0" name="MailType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MailsError" type="xs:int" />
+      <xs:element minOccurs="0" name="MailsSuccess" type="xs:int" />
+      <xs:element minOccurs="0" name="MaxRecipients" type="xs:int" />
+      <xs:element minOccurs="0" name="MinRecipients" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Parameters" nillable="true" type="q6:ArrayOfKeyValueOfstringstring" />
+      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="ProtocolLevel" type="q7:ProtocolLevel" />
+      <xs:element minOccurs="0" name="RecipientGroupId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="RecipientMailbox" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportMailAddress" nillable="true" type="xs:string" />
+      <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.Models" minOccurs="0" name="ReportType" type="q8:ReportType" />
+      <xs:element minOccurs="0" name="SendEicarFile" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SenderGroupId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="SenderMailbox" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StaticRecipient" type="xs:boolean" />
+      <xs:element minOccurs="0" name="StaticSender" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TimeTable" nillable="true" type="tns:TimeTable" />
+  <xs:complexType name="ArrayOfSendConnector">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SendConnector" nillable="true" type="tns:SendConnector" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSendConnector" nillable="true" type="tns:ArrayOfSendConnector" />
+  <xs:complexType name="ArrayOfUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="User" nillable="true" type="tns:User" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUser" nillable="true" type="tns:ArrayOfUser" />
+  <xs:complexType name="User">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Mailbox" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="UsersWithTotal">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="{0}sWithTotal" Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.ViewModels" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="User" Namespace="http://schemas.datacontract.org/2004/07/Granikos.Hydra.Service.ViewModels" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Entities" nillable="true" type="tns:ArrayOfUser" />
+      <xs:element minOccurs="0" name="Total" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UsersWithTotal" nillable="true" type="tns:UsersWithTotal" />
+  <xs:complexType name="ArrayOfTimeTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TimeTable" nillable="true" type="tns:TimeTable" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTimeTable" nillable="true" type="tns:ArrayOfTimeTable" />
+</xs:schema>

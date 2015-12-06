@@ -1,5 +1,6 @@
 ﻿(function () {
     var IPRegexp = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    var DomainRegexp = /^(\*\.?)?([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/;
 
     angular.module('Send', ['ui.bootstrap.modal', 'enumFlag', 'checklist-model', 'ui.moment-duration', 'jkuri.touchspin'])
 
@@ -50,6 +51,41 @@
                         });
                 };
 
+                $scope.addDomain = function (connector) {
+                    $modal
+                        .open({
+                            templateUrl: 'Views/ExternalUsers/SelectDomainDialog.html',
+                            controller: [
+                                '$scope', '$modalInstance', function ($scope, $modalInstance) {
+                                    $scope.Domain = null;
+                                    $scope.DomainRegexp = DomainRegexp;
+
+                                    $scope.searchDomains = function (search) {
+                                        return $http.get("api/ExternalUsers/SearchDomains/" + search)
+                                            .then(function (data) {
+                                                return data.data;
+                                            });
+                                    };
+
+                                    $scope.submit = function () {
+                                        $modalInstance.close($scope.Domain);
+                                    };
+                                }
+                            ]
+                        })
+                        .result.then(function (domain) {
+                            connector.Domains.push(domain);
+                        });
+                };
+
+                $scope.removeDomain = function (connector, domain) {
+                    for (var i = connector.Domains.length - 1; i >= 0; i--) {
+                        if (connector.Domains[i] === domain) {
+                            connector.Domains.splice(i, 1);
+                        }
+                    }
+                };
+
                 $scope.update = function (connector) {
                     if (connector.TLSSettings.CertificateName === '-- None --')
                         connector.TLSSettings.CertificateName = null;
@@ -63,6 +99,7 @@
                         .then(function (data) {
                             var index = $scope.connectors.indexOf(connector);
                             if (index > -1) {
+                                data.data.RetryTimeDuration = moment.duration(data.data.RetryTime);
                                 $scope.connectors[index] = data.data;
                             }
                             window.setTimeout(function () {

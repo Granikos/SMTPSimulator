@@ -91,7 +91,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers.cs" />
-    <Compile Include="IPRange.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />
     <Compile Include="Logging\CsvPatternLayout.cs" />
     <Compile Include="Logging\CsvTextWriter.cs" />

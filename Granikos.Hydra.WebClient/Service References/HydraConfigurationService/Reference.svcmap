@@ -22,20 +22,19 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://localhost:13339/service/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="http://localhost:9001/HydraService/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="97c9dcc8-561a-4fd0-8adb-cc5ed63b554d" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="b7459ff1-0d1f-400b-a4de-1184a1d1f3bd" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="8284a6a0-7f31-4041-b55e-a01ab3b028a0" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
-    <MetadataFile FileName="Granikos.Hydra.Service.Models.xsd" MetadataType="Schema" ID="8dd3fe36-db6d-4c29-a98b-e1ba17d67173" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
-    <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="2b6e8e4a-b950-4ebe-bc50-12ac80b031bc" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
-    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="21077e2f-596a-4688-beca-8e532c10f450" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
-    <MetadataFile FileName="Message.xsd" MetadataType="Schema" ID="b25f6c51-8e23-4a89-810e-ed69ac5cb93f" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
-    <MetadataFile FileName="Granikos.Hydra.Core.xsd" MetadataType="Schema" ID="094dc77b-8823-4952-8c31-ac9b1c01c0ba" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
-    <MetadataFile FileName="System.Net.Security.xsd" MetadataType="Schema" ID="844343a7-406c-4099-add9-1746b2f6d8b8" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
-    <MetadataFile FileName="System.Security.Authentication.xsd" MetadataType="Schema" ID="f15504b3-96fe-463e-ba55-12c6bebfceab" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
-    <MetadataFile FileName="Granikos.Hydra.Service.TimeTables.xsd" MetadataType="Schema" ID="5bfbd0a7-2a2a-4614-9768-aeb3b38c9fdc" SourceId="1" SourceUrl="net.tcp://localhost:13339/service/mex" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="d7876ec5-6407-4c8b-b3db-389374afb596" SourceId="1" SourceUrl="http://localhost:9001/HydraService/mex" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="40d600b1-b7be-452e-9287-ba1e5ced6953" SourceId="1" SourceUrl="http://localhost:9001/HydraService/mex" />
+    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="72ab0ac8-aa90-482a-8c34-8b4b164015ab" SourceId="1" SourceUrl="http://localhost:9001/HydraService/mex" />
+    <MetadataFile FileName="Granikos.Hydra.Service.Models1.xsd" MetadataType="Schema" ID="a872a526-4aa2-4fcf-bdff-10889c71f7e4" SourceId="1" SourceUrl="http://localhost:9001/HydraService/mex" />
+    <MetadataFile FileName="System1.xsd" MetadataType="Schema" ID="a83626be-8d8d-4b59-acba-01a1bba16043" SourceId="1" SourceUrl="http://localhost:9001/HydraService/mex" />
+    <MetadataFile FileName="Arrays1.xsd" MetadataType="Schema" ID="4f487958-ab7c-4be2-b27f-5f1d20fe2241" SourceId="1" SourceUrl="http://localhost:9001/HydraService/mex" />
+    <MetadataFile FileName="Message1.xsd" MetadataType="Schema" ID="0034aff9-ff0d-44b3-b982-365957cf8e26" SourceId="1" SourceUrl="http://localhost:9001/HydraService/mex" />
+    <MetadataFile FileName="Granikos.Hydra.Service.ViewModels1.xsd" MetadataType="Schema" ID="179ca41d-2d49-46a6-b9d1-7fd433658c80" SourceId="1" SourceUrl="http://localhost:9001/HydraService/mex" />
+    <MetadataFile FileName="System.Net.Security.xsd" MetadataType="Schema" ID="baa01e9b-8794-4378-a417-ddcfa849ded9" SourceId="1" SourceUrl="http://localhost:9001/HydraService/mex" />
+    <MetadataFile FileName="System.Security.Authentication.xsd" MetadataType="Schema" ID="e18065af-c3c4-4107-af1e-4e11151c6e6e" SourceId="1" SourceUrl="http://localhost:9001/HydraService/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
