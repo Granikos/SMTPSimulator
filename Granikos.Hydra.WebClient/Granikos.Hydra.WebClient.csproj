@@ -171,7 +171,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="ConfigurationService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AttachmentController.cs" />
     <Compile Include="Controllers\LocalGroupsController.cs" />
     <Compile Include="Controllers\ExternalGroupsController.cs" />
     <Compile Include="Controllers\ExternalUsersController.cs" />
@@ -192,11 +194,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\HydraConfigurationService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +205,7 @@
     <Content Include="Scripts\bootstrap-bundle.min.js" />
     <Content Include="Scripts\Controllers\Mail.js" />
     <Content Include="Scripts\Controllers\Receive.js" />
+    <Content Include="Scripts\Controllers\Attachment.js" />
     <Content Include="Scripts\Controllers\Send.js" />
     <Content Include="Scripts\Controllers\Timer.js" />
     <Content Include="Scripts\Controllers\Logging.js" />
@@ -230,57 +228,6 @@
     <None Include="Scripts\UserTemplates\en.json" />
     <Content Include="Scripts\papaparse.min.js" />
     <Content Include="Scripts\_references.js" />
-    <None Include="Service References\HydraConfigurationService\Arrays1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\HydraConfigurationService\configuration91.svcinfo" />
-    <None Include="Service References\HydraConfigurationService\configuration.svcinfo" />
-    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.ImportResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.UserTemplate.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.VersionInfo.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.stringWithCount.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.TimeTableTypeInfo.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.UsersWithTotal.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Service References\HydraConfigurationService\Granikos.Hydra.Service.Models1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\HydraConfigurationService\Granikos.Hydra.Service.ViewModels1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.ReceiveConnector.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.SendConnector.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.TimeTable.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.User.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\HydraConfigurationService\Granikos.Hydra.WebClient.HydraConfigurationService.UserGroup.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Service References\HydraConfigurationService\Message1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\HydraConfigurationService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="Views\ExternalUsers\SelectDomainDialog.html" />
     <Content Include="Views\ExternalUsers\AddGroupDialog.html" />
     <Content Include="Views\ExternalUsers\ImportDialog.html" />
@@ -295,6 +242,7 @@
     <Content Include="Views\Receive\AddIPRangeDialog.html" />
     <Content Include="Views\Receive\Index.html" />
     <Content Include="Views\Register.html" />
+    <Content Include="Views\Attachment\Index.html" />
     <Content Include="Views\Send\Index.html" />
     <Content Include="Views\Server\Index.html" />
     <Content Include="Views\Timer\StaticTypeDialog.html" />
@@ -310,22 +258,6 @@
     <Content Include="Views\ExternalUsers\GroupHeaderCellTemplate.html" />
     <Content Include="Views\ExternalUsers\GroupCellTemplate.html" />
     <Content Include="Views\Timer\DynamicTypeDialog.html" />
-    <None Include="Service References\HydraConfigurationService\service1.wsdl" />
-    <None Include="Service References\HydraConfigurationService\service2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\HydraConfigurationService\service21.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\HydraConfigurationService\System.Net.Security.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\HydraConfigurationService\System.Security.Authentication.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\HydraConfigurationService\System1.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -341,7 +273,18 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\HydraConfigurationService\" />
+    <ProjectReference Include="..\Granikos.Hydra.Service.ConfigurationService\Granikos.Hydra.Service.ConfigurationService.csproj">
+      <Project>{9b5c4156-d332-48b5-9a3a-d57402cd7d2b}</Project>
+      <Name>Granikos.Hydra.Service.ConfigurationService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Granikos.Hydra.Service.Models\Granikos.Hydra.Service.Models.csproj">
+      <Project>{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}</Project>
+      <Name>Granikos.Hydra.Service.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Granikos.Hydra.SmtpClient\Granikos.Hydra.SmtpClient.csproj">
+      <Project>{E149BA1D-5095-4F46-BB16-A113757ADCC9}</Project>
+      <Name>Granikos.Hydra.SmtpClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

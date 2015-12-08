@@ -252,3 +252,128 @@ function calculateColumnAutoWidths(columns, data, fontFamily, fontSize, hasMenu)
         columns[j].minWidth = minWidth;
     }
 }
+
+function fontawesomeFileIconClassForMimeType( mimeType ) {
+    var classes = {
+        'image' : 'fa-file-image-o',
+        'audio' : 'fa-file-audio-o',
+        'video' : 'fa-file-video-o',
+        'application/pdf' : 'fa-file-pdf-o',
+        'text/plain' : 'fa-file-text-o',
+        'text/html' : 'fa-file-code-o',
+        'application/json' : 'fa-file-code-o',
+        'application/gzip' : 'fa-file-archive-o',
+        'application/zip' : 'fa-file-archive-o',
+        'application/octet-stream' : 'fa-file-o'
+    };
+
+    if (classes[mimeType]) return classes[mimeType];
+
+    mimeType = mimeType.split('/')[0];
+
+    if (classes[mimeType]) return classes[mimeType];
+
+    return "fa-file-o";
+}
+
+function fontawesomeFileIconClassForFileExtension(fileName) {
+    var exts = {
+        'pdf': 'fa-file-pdf-o',
+
+        'txt': 'fa-file-text-o',
+
+        'doc': 'fa-file-word-o',
+        'docx': 'fa-file-word-o',
+
+        'xls': 'fa-file-excel-o',
+        'xlsx': 'fa-file-excel-o',
+
+        'ppt': 'fa-file-powerpoint-o',
+        'pptx': 'fa-file-powerpoint-o',
+
+        'bmp': 'fa-file-image-o',
+        'gif': 'fa-file-image-o',
+        'jpeg': 'fa-file-image-o',
+        'jpg': 'fa-file-image-o',
+        'png': 'fa-file-image-o',
+
+        'bz2': 'fa-file-archive-o',
+        'dmg': 'fa-file-archive-o',
+        'gz': 'fa-file-archive-o',
+        'gzip': 'fa-file-archive-o',
+        'iso': 'fa-file-archive-o',
+        'rar': 'fa-file-archive-o',
+        'tar': 'fa-file-archive-o',
+        'tgz': 'fa-file-archive-o',
+        'zip': 'fa-file-archive-o',
+        '7z': 'fa-file-archive-o',
+
+        'mp3': 'fa-file-audio-o',
+        'wav': 'fa-file-audio-o',
+        'flac': 'fa-file-audio-o',
+        'm4a': 'fa-file-audio-o',
+        'cda': 'fa-file-audio-o',
+        'wma': 'fa-file-audio-o',
+        'ogg': 'fa-file-audio-o',
+        'midi': 'fa-file-audio-o',
+
+        'mov': 'fa-file-video-o',
+        'webm': 'fa-file-video-o',
+        'mkv': 'fa-file-video-o',
+        'flv': 'fa-file-video-o',
+        'ogv': 'fa-file-video-o',
+        'vob': 'fa-file-video-o',
+        'avi': 'fa-file-video-o',
+        'wmv': 'fa-file-video-o',
+        'mp4': 'fa-file-video-o',
+        'mpg': 'fa-file-video-o',
+        'mpeg': 'fa-file-video-o',
+        'mp2': 'fa-file-video-o',
+        'mpv': 'fa-file-video-o',
+        'm4v': 'fa-file-video-o',
+        '3gp': 'fa-file-video-o',
+        '3g2': 'fa-file-video-o',
+
+        'java': 'fa-file-code-o',
+        'c': 'fa-file-code-o',
+        'cpp': 'fa-file-code-o',
+        'h': 'fa-file-code-o',
+        'hpp': 'fa-file-code-o',
+        'py': 'fa-file-code-o',
+        'js': 'fa-file-code-o',
+        'cs': 'fa-file-code-o',
+        'aspx': 'fa-file-code-o',
+        'php': 'fa-file-code-o',
+        'html': 'fa-file-code-o',
+        'xml': 'fa-file-code-o',
+        'htm': 'fa-file-code-o',
+        'pl': 'fa-file-code-o',
+        'bas': 'fa-file-code-o',
+        'sh': 'fa-file-code-o',
+        'fs': 'fa-file-code-o',
+        'dtd': 'fa-file-code-o',
+        'xsl': 'fa-file-code-o',
+        'bat': 'fa-file-code-o',
+        'cgi': 'fa-file-code-o',
+        'xsd': 'fa-file-code-o',
+        'cshtml': 'fa-file-code-o',
+        'lua': 'fa-file-code-o',
+        'cmake': 'fa-file-code-o',
+        'csx': 'fa-file-code-o',
+        'php3': 'fa-file-code-o',
+        'cc': 'fa-file-code-o',
+        'csproj': 'fa-file-code-o',
+        'vb': 'fa-file-code-o',
+        'vbproj': 'fa-file-code-o',
+        'less': 'fa-file-code-o',
+        'xslt': 'fa-file-code-o',
+        'xaml': 'fa-file-code-o',
+        'sql': 'fa-file-code-o',
+        'ps1': 'fa-file-code-o'
+    };
+
+    var parts = fileName.split('.');
+
+    return exts[parts[parts.length - 1]] || "fa-file-o";
+}
+

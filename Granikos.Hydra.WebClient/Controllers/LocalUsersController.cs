@@ -6,7 +6,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Granikos.Hydra.WebClient.HydraConfigurationService;
+using Granikos.Hydra.Service.ConfigurationService.Models;
+using Granikos.Hydra.Service.Models;
 
 namespace Granikos.Hydra.WebClient.Controllers
 {
@@ -19,7 +20,7 @@ namespace Granikos.Hydra.WebClient.Controllers
         // GET api/LocalUsers/Templates
         [HttpGet]
         [Route("Templates")]
-        public UserTemplate[] GetTemplates()
+        public IEnumerable<UserTemplate> GetTemplates()
         {
             return _service.GetLocalUserTemplates();
         }
@@ -42,7 +43,7 @@ namespace Granikos.Hydra.WebClient.Controllers
         // GET api/LocalUsers
         [HttpGet]
         [Route("")]
-        public UsersWithTotal Paged([FromUri]PagedFilter filter)
+        public EntitiesWithTotal<User> Paged([FromUri]PagedFilter filter)
         {
             var page = filter != null ? filter.PageNumber : 1;
             var pageSize = filter != null ? filter.PageSize : 25;
@@ -87,7 +88,7 @@ namespace Granikos.Hydra.WebClient.Controllers
         {
             var stream = await GetUploadedFileStream();
 
-            return await _service.ImportLocalUsersAsync(stream);
+            return _service.ImportLocalUsers(stream);
         }
 
         // POST api/LocalUsers/ImportWithOverwrite
@@ -97,7 +98,7 @@ namespace Granikos.Hydra.WebClient.Controllers
         {
             var stream = await GetUploadedFileStream();
 
-            return await _service.ImportLocalUsersWithOverwriteAsync(stream);
+            return _service.ImportLocalUsersWithOverwrite(stream);
         }
 
         private async Task<Stream> GetUploadedFileStream()

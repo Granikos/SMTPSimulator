@@ -200,14 +200,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientHandler.cs" />
-    <Compile Include="ConfigurationService.cs" />
+    <Compile Include="ConfigurationServiceImpl.cs" />
     <Compile Include="DefaultReceiveSettings.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="IMailQueueProvider.cs" />
     <Compile Include="JsonFormatting.cs" />
     <Compile Include="MessageSender.cs" />
     <Compile Include="PriorityQueue\DelayedQueue.cs" />
-    <Compile Include="IConfigurationService.cs" />
     <Compile Include="ISMTPServerContainer.cs" />
     <Compile Include="MailExtensions.cs" />
     <Compile Include="MessageProcessor.cs" />
@@ -224,11 +223,6 @@
     <Compile Include="UserExporter.cs" />
     <Compile Include="UserGenerator.cs" />
     <Compile Include="UserImporter.cs" />
-    <Compile Include="ViewModels\JsonIPRange.cs" />
-    <Compile Include="ViewModels\ReceiveConnector.cs" />
-    <Compile Include="ViewModels\SendConnector.cs" />
-    <Compile Include="ViewModels\TimeTable.cs" />
-    <Compile Include="ViewModels\User.cs" />
     <Compile Include="TimeTables\DynamicTimeTableType.cs" />
     <Compile Include="Providers\IPRangeConverter.cs" />
     <Compile Include="Providers\LogProvider.cs" />
@@ -246,17 +240,11 @@
     <Compile Include="TimeTables\StaticTimeTableType.cs" />
     <Compile Include="TimeTables\TimeTableGenerator.cs" />
     <Compile Include="TLSConnector.cs" />
-    <Compile Include="ViewModels\EntitiesWithTotal.cs" />
-    <Compile Include="ViewModels\GroupWithMailboxCount.cs" />
-    <Compile Include="ViewModels\ImportResult.cs" />
-    <Compile Include="ViewModels\MailMessage.cs" />
-    <Compile Include="ViewModels\MailTemplateSchema.cs" />
-    <Compile Include="ViewModels\TimeTableTypeInfo.cs" />
-    <Compile Include="ViewModels\UserGroup.cs" />
-    <Compile Include="ViewModels\VersionInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="cert.pfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -282,6 +270,10 @@
     <ProjectReference Include="..\Granikos.Hydra.Core\Granikos.Hydra.Core.csproj">
       <Project>{6c923248-1b40-4a27-80f7-ddeeb9f6d4d5}</Project>
       <Name>Granikos.Hydra.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Granikos.Hydra.Service.ConfigurationService\Granikos.Hydra.Service.ConfigurationService.csproj">
+      <Project>{9b5c4156-d332-48b5-9a3a-d57402cd7d2b}</Project>
+      <Name>Granikos.Hydra.Service.ConfigurationService</Name>
     </ProjectReference>
     <ProjectReference Include="..\Granikos.Hydra.Service.Database\Granikos.Hydra.Service.Database.csproj">
       <Project>{a29dcd4f-b993-47fc-a095-563c62131ed9}</Project>

@@ -30,7 +30,9 @@
     "moment": "latest",
     "ng-file-upload": "latest",
     "ngTouchSpin": "latest",
-    "papaparse": "latest"
+    "papaparse": "latest",
+    "font-awesome": "latest",
+    "angular-xeditable": "latest"
   },
   "resolutions": {
     "angular": "1.4.7",

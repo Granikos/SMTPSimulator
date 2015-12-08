@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('Hydra', ['ngRoute', 'ui.bootstrap', 'ui-rangeSlider', 'Server', 'LocalUsers', 'ExternalUsers', 'Send', 'Receive', 'Timer', 'Mail', 'Logging', 'Register', 'Login', 'enumFlag', 'checklist-model', 'ui.select'])
+    angular.module('Hydra', ['ngRoute', 'ui.bootstrap', 'ui-rangeSlider', 'Server', 'LocalUsers', 'ExternalUsers', 'Send', 'Receive', 'Timer', 'Mail', 'Logging', 'Register', 'Login', 'Attachment', 'enumFlag', 'checklist-model', 'ui.select', 'xeditable'])
         .config([
             '$routeProvider', '$httpProvider', '$locationProvider', function($routeProvider, $httpProvider, $locationProvider) {
                 $locationProvider.hashPrefix('!').html5Mode(true);
@@ -33,6 +33,10 @@
                         templateUrl: 'Views/Timer/Index.html',
                         controller: 'TimerController'
                     })
+                    .when('/Attachment', {
+                        templateUrl: 'Views/Attachment/Index.html',
+                        controller: 'AttachmentController'
+                    })
                     .when('/Logging', {
                         templateUrl: 'Views/Logging/Index.html',
                         controller: 'LoggingController'
@@ -60,8 +64,9 @@
             }
         ])
         .run([
-            '$rootScope', '$location', '$http', function ($rootScope, $location, $http) {
+            '$rootScope', '$location', '$http', 'editableOptions', function ($rootScope, $location, $http, editableOptions) {
                 $rootScope.auth = {};
+                editableOptions.theme = 'bs3';
 
                 $http.get('/api/Account').
                        success(function (data) {
@@ -288,6 +293,15 @@
                     return parseFloat(value, 10);
                 });
             }
+        }
+    }).filter('bytes', function() {
+        return function (bytes, precision, si) {
+            var base = si ? 1000 : 1024;
+            if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
+            if (typeof precision === 'undefined') precision = 1;
+            var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
+                number = Math.floor(Math.log(bytes) / Math.log(base));
+            return (bytes / Math.pow(base, Math.floor(number))).toFixed(precision) + ' ' + units[number];
         }
     });
 })();

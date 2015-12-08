@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Reflection;
 using System.ServiceModel;
+using System.ServiceModel.Web;
 using System.ServiceProcess;
 using Granikos.Hydra.Core;
 using Granikos.Hydra.Service.Models;
@@ -19,7 +20,7 @@ using Granikos.Hydra.Service.TimeTables;
 using Granikos.Hydra.SmtpClient;
 using Granikos.Hydra.SmtpServer;
 using Granikos.Hydra.SmtpServer.CommandHandlers;
-using MailMessage = Granikos.Hydra.Service.Models.MailMessage;
+using MailMessage = Granikos.Hydra.Service.ConfigurationService.Models.MailMessage;
 
 namespace Granikos.Hydra.Service
 {
@@ -226,10 +227,10 @@ namespace Granikos.Hydra.Service
                 _host.Close();
             }
 
-            var service = new ConfigurationService(_smtpServer, this, this);
+            var service = new ConfigurationServiceImpl(_smtpServer, this, this);
             _container.ComposeParts(service);
 
-            _host = new ServiceHost(service);
+            _host = new WebServiceHost(service);
 
             _host.Open();
         }

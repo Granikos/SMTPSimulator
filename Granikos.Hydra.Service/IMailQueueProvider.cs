@@ -1,3 +1,4 @@
+using Granikos.Hydra.Service.ConfigurationService.Models;
 using Granikos.Hydra.Service.Models;
 
 namespace Granikos.Hydra.Service

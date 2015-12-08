@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Granikos.Hydra.Service.Models;
 using Granikos.Hydra.Service.Models.Providers;
-using User = Granikos.Hydra.Service.ViewModels.User;
+using User = Granikos.Hydra.Service.ConfigurationService.Models.User;
 
 namespace Granikos.Hydra.Service.Providers
 {

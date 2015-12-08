@@ -24,6 +24,8 @@ namespace Granikos.Hydra.Service.Database
         public DbSet<Domain> Domains { get; set; }
         public DbSet<TimeTable> TimeTables { get; set; }
         public DbSet<DbIPRange> IPRanges { get; set; }
+        public DbSet<Attachment> Attachments { get; set; }
+        public DbSet<AttachmentContent> AttachmentContents { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

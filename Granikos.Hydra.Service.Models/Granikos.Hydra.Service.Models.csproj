@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAttachment.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="IIpRange.cs" />
     <Compile Include="IMailTemplate.cs" />

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Granikos.Hydra.WebClient.HydraConfigurationService;
+using Granikos.Hydra.Service.ConfigurationService.Models;
 
 namespace Granikos.Hydra.WebClient.Controllers
 {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Granikos.Hydra.WebClient.HydraConfigurationService;
+using Granikos.Hydra.Service.ConfigurationService.Models;
 
 namespace Granikos.Hydra.WebClient.Controllers
 {
@@ -42,14 +42,14 @@ namespace Granikos.Hydra.WebClient.Controllers
 
         [HttpGet]
         [Route("Attachments")]
-        public IEnumerable<int> GetAttachments()
+        public IEnumerable<Attachment> GetAttachments()
         {
-            return _service.GetTimeTableAttachments();
+            return _service.GetAttachments();
         }
 
         [HttpGet]
         [Route("TypeData/{type}")]
-        public Dictionary<string, string> GetTypeData(string type)
+        public IDictionary<string, string> GetTypeData(string type)
         {
             return _service.GetTimeTableTypeData(type);
         }

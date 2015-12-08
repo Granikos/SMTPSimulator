@@ -1,10 +1,26 @@
+using System.Collections.Generic;
+
 namespace Granikos.Hydra.Service.Models.Providers
 {
-    public interface IAttachmentProvider
+    public interface IAttachmentProvider<TAttachment>
+        where TAttachment :  IAttachment
     {
+        int Total { get; }
 
-        int[] GetAttachmentIds();
+        IEnumerable<TAttachment> All();
 
-        byte[] GetAttachmentContent(int id);
+        TAttachment Get(string name);
+
+        bool Add(TAttachment entity);
+
+        bool Rename(string oldName, string newName);
+
+        bool Delete(string name);
+
+        bool Clear();
+    }
+
+    public interface IAttachmentProvider : IAttachmentProvider<IAttachment>
+    {
     }
 }

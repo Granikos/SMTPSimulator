@@ -1,6 +1,6 @@
 using System;
 using System.Net;
-using Granikos.Hydra.Service.ViewModels;
+using Granikos.Hydra.Service.ConfigurationService.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 

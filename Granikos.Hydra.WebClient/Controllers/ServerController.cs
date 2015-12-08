@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Web.Http;
-using Granikos.Hydra.WebClient.HydraConfigurationService;
+using Granikos.Hydra.Service.ConfigurationService.Models;
 
 namespace Granikos.Hydra.WebClient.Controllers
 {
@@ -59,7 +59,7 @@ namespace Granikos.Hydra.WebClient.Controllers
             return new ExtendedVersionInfo
             {
                 ServiceBuildDate = version.BuildDate,
-                ServiceVersion = new System.Version(version.Version._Major, version.Version._Minor, version.Version._Build, version.Version._Revision),
+                ServiceVersion = version.Version,
                 UiBuildDate = date,
                 UiVersion = uiVersion
             };

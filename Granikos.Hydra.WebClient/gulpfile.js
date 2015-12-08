@@ -38,7 +38,8 @@ var config = {
         'bower_components/angular-moment-duration/src/angular-moment-duration.js',
         'bower_components/ngTouchSpin/src/js/ngTouchSpin.js',
         'bower_components/angular-rangeslider/angular.rangeSlider.js',
-        'bower_components/ui-select/dist/select.js'
+        'bower_components/ui-select/dist/select.js',
+        'bower_components/angular-xeditable/dist/js/xeditable.min.js'
     ],
     angularbundle: 'Scripts/angular-bundle.min.js',
 
@@ -48,15 +49,20 @@ var config = {
     bootstrapcss: [
         'bower_components/bootstrap/dist/css/bootstrap.min.css',
         'bower_components/bootstrap-dialog/dist/css/bootstrap-dialog.min.css',
+        'bower_components/font-awesome/css/font-awesome.min.css',
         // 'bower_components/bootstrap-select/dist/css/bootstrap-select.css'
     ],
-    boostrapfonts: 'bower_components/bootstrap/dist/fonts/*.*',
+    boostrapfonts: [
+        'bower_components/bootstrap/dist/fonts/*.*',
+        'bower_components/font-awesome/fonts/*.*'
+    ],
 
     angularuicss: [
         'bower_components/angular-ui/build/angular-ui.min.css',
         'bower_components/angular-ui-grid/ui-grid.min.css',
         'bower_components/angular-rangeslider/angular.rangeSlider.css',
-        'bower_components/ui-select/dist/select.css'
+        'bower_components/ui-select/dist/select.css',
+        'bower_components/angular-xeditable/dist/css/xeditable.css'
     ],
     angularuifonts: [
         'bower_components/angular-ui-grid/ui-grid.eot',

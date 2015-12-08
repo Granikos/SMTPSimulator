@@ -1,0 +1,20 @@
+﻿<div class="container-fluid">
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="(idx, attachment) in attachments">
+            <div class="btn-group pull-right btn-group-sm">
+                <a target="_self" href="/api/Attachments/{{attachment.Name}}" class="btn btn-default" tooltip="Download attachment" tooltip-placement="bottom" tooltip-append-to-body="true" role="button"><i class="glyphicon glyphicon-download"></i></a>
+                <button type="button" class="btn btn-default" ng-click="renameForm.$show()" ng-disabled="renameForm.$visible" tooltip="Rename attachment" tooltip-placement="bottom" tooltip-append-to-body="true"><i class="glyphicon glyphicon-pencil"></i></button>
+                <button type="button" class="btn btn-danger" ng-click="delete(attachment.Name)" tooltip="Remove attachment" tooltip-placement="bottom" tooltip-append-to-body="true"><i class="glyphicon glyphicon-remove"></i></button>
+            </div>
+            <i class="fa fileIcon pull-left" ng-class="fileIcon(attachment.Name)"></i>
+            <h4 class="list-group-item-heading" ng-dblclick="renameForm.$show()" editable-text="attachment.Name" e-form="renameForm" onbeforesave="rename(attachment.Name, $data)">{{attachment.Name}}</h4>
+            <p class="list-group-item-text">{{attachment.Size | bytes}}</p>
+        </li>
+    </ul>
+    <div class="btn-group pull-right" style="margin-top: 10px;">
+        <label class="btn btn-primary" for="uploadfile">
+            <i class="glyphicon glyphicon-upload"></i> Upload
+        </label>
+        <input id="uploadfile" type="file" ngf-select="upload($files)" style="position: absolute; clip: rect(0 0 0 0)" />
+    </div>
+</div>

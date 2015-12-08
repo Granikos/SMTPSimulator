@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Net.Security;
 using Granikos.Hydra.Service.Database.Models;
 using Granikos.Hydra.Service.Models;
 using Granikos.Hydra.Service.Models.Providers;

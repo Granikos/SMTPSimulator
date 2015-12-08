@@ -21,7 +21,7 @@ namespace Granikos.Hydra.Service.Models
         string ReportMailAddress { get; set; }
         ReportType ReportType { get; set; }
         ProtocolLevel ProtocolLevel { get; set; }
-        int AttachmentId { get; set; }
+        string AttachmentName { get; set; }
         AttachmentType AttachmentType { get; set; }
         bool SendEicarFile { get; set; }
         int MailsSuccess { get; set; }

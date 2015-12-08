@@ -6,7 +6,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Granikos.Hydra.WebClient.HydraConfigurationService;
+using Granikos.Hydra.Service.ConfigurationService.Models;
+using Granikos.Hydra.Service.Models;
 
 namespace Granikos.Hydra.WebClient.Controllers
 {
@@ -15,10 +16,10 @@ namespace Granikos.Hydra.WebClient.Controllers
     public class ExternalUsersController : ApiController
     {
         readonly ConfigurationServiceClient _service = new ConfigurationServiceClient();
-
+        
         [HttpGet]
         [Route("")]
-        public UsersWithTotal All([FromUri]PagedFilter filter)
+        public EntitiesWithTotal<User> All([FromUri]PagedFilter filter)
         {
             return _service.GetExternalUsers(filter.PageNumber, filter.PageSize);
         }
@@ -39,7 +40,7 @@ namespace Granikos.Hydra.WebClient.Controllers
 
         [HttpGet]
         [Route("SearchDomains/{domain}")]
-        public stringWithCount[] SearchDomain(string domain)
+        public IEnumerable<ValueWithCount<string>> SearchDomain(string domain)
         {
             return _service.SearchExternalUserDomains(domain);
         }
@@ -72,7 +73,7 @@ namespace Granikos.Hydra.WebClient.Controllers
         {
             var stream = await GetUploadedFileStream();
 
-            return await _service.ImportExternalUsersAsync(stream);
+            return _service.ImportExternalUsers(stream);
         }
 
         [HttpPost]
@@ -81,7 +82,7 @@ namespace Granikos.Hydra.WebClient.Controllers
         {
             var stream = await GetUploadedFileStream();
 
-            return await _service.ImportExternalUsersWithOverwriteAsync(stream);
+            return _service.ImportExternalUsersWithOverwrite(stream);
         }
 
         private async Task<Stream> GetUploadedFileStream()

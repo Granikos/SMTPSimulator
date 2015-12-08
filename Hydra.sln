@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.Service.Data
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.Service.Models", "Granikos.Hydra.Service.Models\Granikos.Hydra.Service.Models.csproj", "{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.Service.ConfigurationService", "Granikos.Hydra.Service.ConfigurationService\Granikos.Hydra.Service.ConfigurationService.csproj", "{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -192,23 +192,21 @@ namespace Granikos.Hydra.Service.TimeTables
                 }
             }
 
-            int? attachment = null;
+            IAttachment attachment = null;
 
             if (_timeTable.AttachmentType == AttachmentType.Fixed)
             {
-                attachment = _timeTable.AttachmentId;
+                attachment = _attachments.Get(_timeTable.AttachmentName);
             }
             else if (_timeTable.AttachmentType == AttachmentType.Random)
             {
-                var attachments = _attachments.GetAttachmentIds();
+                var attachments = _attachments.All().ToArray();
                 attachment = attachments[_random.Next(attachments.Length)];
             }
 
             if (attachment != null)
             {
-                var data = _attachments.GetAttachmentContent(attachment.Value);
-
-                mc.AddAttachment("foo", data); // TODO 
+                mc.AddAttachment(attachment.Name, attachment.Content);
             }
 
             if (_timeTable.SendEicarFile)

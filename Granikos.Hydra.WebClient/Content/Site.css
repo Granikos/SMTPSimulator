@@ -189,63 +189,63 @@ input.ng-valid.ng-dirty {
     user-select: none;
 }
 
-.timeSelector .morning:before, .timeSelector .evening:before {
-    content: '☾';
-    display: block; 
-    text-align: center;
-    width: 1.5em;
-    color: darkblue;
-}
+    .timeSelector .morning:before, .timeSelector .evening:before {
+        content: '☾';
+        display: block;
+        text-align: center;
+        width: 1.5em;
+        color: darkblue;
+    }
 
-.timeSelector .morning:before {
-    margin-left: -0.75em;   
-}
+    .timeSelector .morning:before {
+        margin-left: -0.75em;
+    }
 
-.timeSelector .evening:before {
-    margin-right: -0.75em;   
-    float: right;
-}
+    .timeSelector .evening:before {
+        margin-right: -0.75em;
+        float: right;
+    }
 
-.timeSelector .noon {
-    color: orange;
-    text-align: center;
-}
+    .timeSelector .noon {
+        color: orange;
+        text-align: center;
+    }
 
-.timeSelector .biginterval td {
-    border: 1px solid black;
-    border-top: 0;
-    line-height: 5px;
-    height: 8px;
-}
+    .timeSelector .biginterval td {
+        border: 1px solid black;
+        border-top: 0;
+        line-height: 5px;
+        height: 8px;
+    }
 
-.timeSelector .smallinterval td {
-    border: 1px solid black;
-    border-bottom: 0;
-    line-height: 5px;
-    height: 5px;
-}
+    .timeSelector .smallinterval td {
+        border: 1px solid black;
+        border-bottom: 0;
+        line-height: 5px;
+        height: 5px;
+    }
 
-.timeSelector .dataRow th {
-    border: 1px solid black;
-    text-align: right;
-    padding: 2px;
-}
+    .timeSelector .dataRow th {
+        border: 1px solid black;
+        text-align: right;
+        padding: 2px;
+    }
 
-.timeSelector .dataRow td {
-    border: 1px solid darkgray;
-}
+    .timeSelector .dataRow td {
+        border: 1px solid darkgray;
+    }
 
-.timeSelector .selected {
-    background-color: lightblue;
-}
+    .timeSelector .selected {
+        background-color: lightblue;
+    }
 
-.timeSelector .toggeling {
-    background-color: lightcoral;
-}
+    .timeSelector .toggeling {
+        background-color: lightcoral;
+    }
 
-.timeSelector .toggeling.selected {
-    background-color: coral;
-}
+        .timeSelector .toggeling.selected {
+            background-color: coral;
+        }
 
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
@@ -254,6 +254,168 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 input[type=number] {
-    -moz-appearance:textfield;
+    -moz-appearance: textfield;
     text-align: right;
+}
+
+a.filelink:before {
+    display: inline-block;
+    font-family: FontAwesome;
+    font-feature-settings: normal;
+    font-kerning: auto;
+    font-language-override: normal;
+    font-size: inherit;
+    font-size-adjust: none;
+    font-stretch: normal;
+    font-style: normal;
+    font-synthesis: weight style;
+    font-variant: normal;
+    font-weight: normal;
+    line-height: 1;
+    text-rendering: auto;
+    padding-right: 5px;
+    content: "\f016";
+    color: #333;
+}
+
+a[href$=".pdf"].filelink:before,
+.fa-file-pdf-o {
+    content: "\f1c1";
+    color: #F26353;
+}
+
+a[href$=".txt"].filelink:before,
+.fa-file-text-o {
+    content: "\f0f6";
+    color: #808080;
+}
+
+a[href$=".doc"].filelink:before,
+a[href$=".docx"].filelink:before,
+.fa-file-word-o {
+    content: "\f1c2";
+    color: #2277bb;
+}
+
+a[href$=".xls"].filelink:before,
+a[href$=".xlsx"].filelink:before,
+.fa-file-excel-o {
+    content: "\f1c3";
+    color: #22bb66;
+}
+
+a[href$=".ppt"].filelink:before,
+a[href$=".pptx"].filelink:before,
+.fa-file-powerpoint-o {
+    content: "\f1c4";
+    color: #ff5533;
+}
+
+a[href$=".bmp"].filelink:before,
+a[href$=".gif"].filelink:before,
+a[href$=".jpeg"].filelink:before,
+a[href$=".jpg"].filelink:before,
+a[href$=".png"].filelink:before,
+.fa-file-image-o {
+    content: "\f1c5";
+    color: #ffaa00;
+}
+
+a[href$=".bz2"].filelink:before,
+a[href$=".dmg"].filelink:before,
+a[href$=".gz"].filelink:before,
+a[href$=".gzip"].filelink:before,
+a[href$=".iso"].filelink:before,
+a[href$=".rar"].filelink:before,
+a[href$=".tar"].filelink:before,
+a[href$=".tgz"].filelink:before,
+a[href$=".zip"].filelink:before,
+a[href$=".7z"].filelink:before,
+.fa-file-archive-o {
+    content: "\f1c6";
+    color: #333355;
+}
+
+a[href$=".mp3"].filelink:before,
+a[href$=".wav"].filelink:before,
+a[href$=".flac"].filelink:before,
+a[href$=".m4a"].filelink:before,
+a[href$=".cda"].filelink:before,
+a[href$=".wma"].filelink:before,
+a[href$=".ogg"].filelink:before,
+a[href$=".midi"].filelink:before,
+.fa-file-audio-o {
+    content: "\f1c7";
+    color: #2e77cd;
+}
+
+a[href$=".mov"].filelink:before,
+a[href$=".webm"].filelink:before,
+a[href$=".mkv"].filelink:before,
+a[href$=".flv"].filelink:before,
+a[href$=".ogv"].filelink:before,
+a[href$=".vob"].filelink:before,
+a[href$=".avi"].filelink:before,
+a[href$=".wmv"].filelink:before,
+a[href$=".mp4"].filelink:before,
+a[href$=".mpg"].filelink:before,
+a[href$=".mpeg"].filelink:before,
+a[href$=".mp2"].filelink:before,
+a[href$=".mpv"].filelink:before,
+a[href$=".m4v"].filelink:before,
+a[href$=".3gp"].filelink:before,
+a[href$=".3g2"].filelink:before,
+.fa-file-video-o {
+    content: "\f1c8";
+    color: #c96c4b;
+}
+
+a[href$=".java"].filelink:before,
+a[href$=".c"].filelink:before,
+a[href$=".cpp"].filelink:before,
+a[href$=".h"].filelink:before,
+a[href$=".hpp"].filelink:before,
+a[href$=".py"].filelink:before,
+a[href$=".js"].filelink:before,
+a[href$=".cs"].filelink:before,
+a[href$=".aspx"].filelink:before,
+a[href$=".php"].filelink:before,
+a[href$=".html"].filelink:before,
+a[href$=".xml"].filelink:before,
+a[href$=".htm"].filelink:before,
+a[href$=".pl"].filelink:before,
+a[href$=".bas"].filelink:before,
+a[href$=".sh"].filelink:before,
+a[href$=".fs"].filelink:before,
+a[href$=".dtd"].filelink:before,
+a[href$=".xsl"].filelink:before,
+a[href$=".bat"].filelink:before,
+a[href$=".cgi"].filelink:before,
+a[href$=".xsd"].filelink:before,
+a[href$=".cshtml"].filelink:before,
+a[href$=".lua"].filelink:before,
+a[href$=".cmake"].filelink:before,
+a[href$=".csx"].filelink:before,
+a[href$=".php3"].filelink:before,
+a[href$=".cc"].filelink:before,
+a[href$=".csproj"].filelink:before,
+a[href$=".vb"].filelink:before,
+a[href$=".vbproj"].filelink:before,
+a[href$=".less"].filelink:before,
+a[href$=".xslt"].filelink:before,
+a[href$=".xaml"].filelink:before,
+a[href$=".sql"].filelink:before,
+a[href$=".ps1"].filelink:before,
+.fa-file-code-o {
+    content: "\f1c9";
+    color: #808080;
+}
+
+.fileIcon {
+    font-size: 250%;
+}
+
+.editable-click {
+    border: none !important;
+    color: inherit !important;
 }

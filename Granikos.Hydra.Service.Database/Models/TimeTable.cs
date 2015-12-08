@@ -59,7 +59,7 @@ namespace Granikos.Hydra.Service.Database.Models
 
         public ProtocolLevel ProtocolLevel { get; set; }
 
-        public int AttachmentId { get; set; }
+        public string AttachmentName { get; set; }
 
         public AttachmentType AttachmentType { get; set; }
 

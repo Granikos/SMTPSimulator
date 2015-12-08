@@ -6,9 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using Granikos.Hydra.Service.ConfigurationService.Models;
 using Granikos.Hydra.Service.Models;
 using Granikos.Hydra.Service.Models.Providers;
-using Granikos.Hydra.Service.ViewModels;
 using Newtonsoft.Json;
 
 namespace Granikos.Hydra.Service.Providers

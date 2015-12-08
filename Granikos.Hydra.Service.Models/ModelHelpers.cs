@@ -96,7 +96,7 @@ namespace Granikos.Hydra.Service.Models
         {
             target.Id = source.Id;
             target.Active = source.Active;
-            target.AttachmentId = source.AttachmentId;
+            target.AttachmentName = source.AttachmentName;
             target.AttachmentType = source.AttachmentType;
             target.MailTemplateId = source.MailTemplateId;
             target.MailsError = source.MailsError;
@@ -120,6 +120,23 @@ namespace Granikos.Hydra.Service.Models
 
         public static T ConvertTo<T>(this ITimeTable source)
             where T : ITimeTable, new()
+        {
+            var target = new T();
+
+            source.CopyTo(target);
+
+            return target;
+        }
+
+        public static void CopyTo(this IAttachment source, IAttachment target)
+        {
+            target.Name = source.Name;
+            target.Size = source.Size;
+            target.Content = source.Content;
+        }
+
+        public static T ConvertTo<T>(this IAttachment source)
+            where T : IAttachment, new()
         {
             var target = new T();
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
-using Granikos.Hydra.Service.ViewModels;
+using Granikos.Hydra.Service.ConfigurationService.Models;
 using Granikos.Hydra.Service.Models;
 using Granikos.Hydra.Service.Models.Providers;
 
