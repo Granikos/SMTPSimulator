@@ -8,56 +8,64 @@ using Granikos.Hydra.Service.Models;
 
 namespace Granikos.Hydra.WebClient
 {
-    public partial class ConfigurationServiceClient : ClientBase<IConfigurationService>, IConfigurationService
+    public class ConfigurationServiceClient : ClientBase<IConfigurationService>, IConfigurationService
     {
-
         public ConfigurationServiceClient()
         {
-
         }
-
-
 
         public ConfigurationServiceClient(string endpointConfigurationName) :
-
             base(endpointConfigurationName)
         {
-
         }
-
-
 
         public ConfigurationServiceClient(
-
-          string endpointConfigurationName,
-
-          string remoteAddress) :
-
-            base(endpointConfigurationName, remoteAddress)
+            string endpointConfigurationName,
+            string remoteAddress) :
+                base(endpointConfigurationName, remoteAddress)
         {
-
         }
-
-
 
         public ConfigurationServiceClient(string endpointConfigurationName,
-
-          EndpointAddress remoteAddress) :
-
-            base(endpointConfigurationName, remoteAddress)
+            EndpointAddress remoteAddress) :
+                base(endpointConfigurationName, remoteAddress)
         {
-
         }
 
-
-
         public ConfigurationServiceClient(Binding binding,
-
             EndpointAddress remoteAddress) :
-
                 base(binding, remoteAddress)
         {
+        }
 
+        public bool DeleteMailTemplate(int id)
+        {
+            return Channel.DeleteMailTemplate(id);
+        }
+
+        public MailTemplate UpdateMailTemplate(MailTemplate template)
+        {
+            return Channel.UpdateMailTemplate(template);
+        }
+
+        public MailTemplate GetMailTemplate(int id)
+        {
+            return Channel.GetMailTemplate(id);
+        }
+
+        public Stream ExportMailTemplate(int id)
+        {
+            return Channel.ExportMailTemplate(id);
+        }
+
+        public MailTemplate ImportMailTemplate(Stream stream)
+        {
+            return Channel.ImportMailTemplate(stream);
+        }
+
+        public MailTemplate AddMailTemplate(MailTemplate template)
+        {
+            return Channel.AddMailTemplate(template);
         }
 
         public VersionInfo GetVersionInfo()
@@ -310,11 +318,6 @@ namespace Granikos.Hydra.WebClient
             return Channel.DeleteExternalUser(id);
         }
 
-        public IEnumerable<IMailTemplate> GetMailTemplates()
-        {
-            return Channel.GetMailTemplates();
-        }
-
         public IEnumerable<TimeTable> GetTimeTables()
         {
             return Channel.GetTimeTables();
@@ -413,6 +416,11 @@ namespace Granikos.Hydra.WebClient
         public bool DeleteAttachment(string name)
         {
             return Channel.DeleteAttachment(name);
+        }
+
+        public IEnumerable<MailTemplate> GetMailTemplates()
+        {
+            return Channel.GetMailTemplates();
         }
     }
 }

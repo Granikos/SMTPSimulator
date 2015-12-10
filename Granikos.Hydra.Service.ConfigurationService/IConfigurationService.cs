@@ -376,13 +376,6 @@ namespace Granikos.Hydra.Service.ConfigurationService
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "MailTemplates",
-            RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json)]
-        IEnumerable<IMailTemplate> GetMailTemplates();
-
-        [OperationContract]
-        [WebGet(
             UriTemplate = "TimeTables",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
@@ -528,5 +521,55 @@ namespace Granikos.Hydra.Service.ConfigurationService
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         bool DeleteAttachment(string name);
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "MailTemplates",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<MailTemplate> GetMailTemplates();
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "MailTemplate",
+            Method = "PUT")]
+        MailTemplate AddMailTemplate(MailTemplate template);
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "MailTemplate",
+            Method = "PUT",
+            BodyStyle = WebMessageBodyStyle.Bare)]
+        MailTemplate ImportMailTemplate(Stream stream);
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "MailTemplates/Export/{id}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        Stream ExportMailTemplate(int id);
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "MailTemplates/{id}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        MailTemplate GetMailTemplate(int id);
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "MailTemplates",
+            Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        MailTemplate UpdateMailTemplate(MailTemplate template);
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "MailTemplates/{id}",
+            Method = "DELETE",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool DeleteMailTemplate(int id);
     }
 }

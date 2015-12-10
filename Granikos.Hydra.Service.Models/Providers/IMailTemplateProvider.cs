@@ -2,8 +2,12 @@ using System.Collections.Generic;
 
 namespace Granikos.Hydra.Service.Models.Providers
 {
-    public interface IMailTemplateProvider
+    public interface IMailTemplateProvider<TTemplate> : IDataProvider<TTemplate, int>
+        where TTemplate : IMailTemplate
     {
-        IEnumerable<IMailTemplate> GetMailTemplates();
+    }
+
+    public interface IMailTemplateProvider : IMailTemplateProvider<IMailTemplate>
+    {
     }
 }

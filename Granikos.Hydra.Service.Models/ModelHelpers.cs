@@ -4,6 +4,29 @@ namespace Granikos.Hydra.Service.Models
 {
     public static class ModelHelpers
     {
+        public static void CopyTo(this IMailTemplate source, IMailTemplate target)
+        {
+            target.Id = source.Id;
+            target.Behaviour = source.Behaviour;
+            target.BodyEncoding = source.BodyEncoding;
+            target.HeaderEncoding = source.HeaderEncoding;
+            target.SubjectEncoding = source.SubjectEncoding;
+            target.Html = source.Html;
+            target.Subject = source.Subject;
+            target.Text = source.Text;
+            target.Title = source.Title;
+        }
+
+        public static T ConvertTo<T>(this IMailTemplate source)
+            where T : IMailTemplate, new()
+        {
+            var target = new T();
+
+            source.CopyTo(target);
+
+            return target;
+        }
+
         public static void CopyTo(this IUserGroup source, IUserGroup target)
         {
             target.Id = source.Id;

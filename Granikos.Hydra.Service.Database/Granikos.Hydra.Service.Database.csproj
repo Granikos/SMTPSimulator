@@ -105,6 +105,7 @@
     <Compile Include="Models\Attachment.cs" />
     <Compile Include="Models\DbIPRange.cs" />
     <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\MailTemplate.cs" />
     <Compile Include="Models\ReceiveConnector.cs" />
     <Compile Include="Models\SendConnector.cs" />
     <Compile Include="Models\TimeTable.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Providers\ExternalUserProvider.cs" />
     <Compile Include="Providers\LocalMailboxGroupProvider.cs" />
     <Compile Include="Providers\LocalUserProvider.cs" />
+    <Compile Include="Providers\MailTemplateProvider.cs" />
     <Compile Include="Providers\ReceiveConnectorProvider.cs" />
     <Compile Include="Providers\SendConnectorProvider.cs" />
     <Compile Include="Providers\TimeTableProvider.cs" />

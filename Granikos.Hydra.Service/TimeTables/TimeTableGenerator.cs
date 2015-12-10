@@ -167,7 +167,7 @@ namespace Granikos.Hydra.Service.TimeTables
 
         private MailContent CreateContent(MailAddress from, MailAddress[] to)
         {
-            var template = _mailTemplates.GetMailTemplates().First(t => t.Id == _timeTable.MailTemplateId);
+            var template = _mailTemplates.Get(_timeTable.MailTemplateId);
 
             var html = ReplaceTokens(template.Html, template.Title);
             var text = ReplaceTokens(template.Text, template.Title);

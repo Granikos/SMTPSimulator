@@ -381,9 +381,34 @@ namespace Granikos.Hydra.Service
             return _externalUsers.Delete(id);
         }
 
-        public IEnumerable<IMailTemplate> GetMailTemplates()
+        public MailTemplate AddMailTemplate(MailTemplate template)
         {
-            return _mailTemplates.GetMailTemplates();
+            return _mailTemplates.Add(template).ConvertTo<MailTemplate>();
+        }
+
+        public MailTemplate ImportMailTemplate(Stream stream)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Stream ExportMailTemplate(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MailTemplate GetMailTemplate(int id)
+        {
+            return _mailTemplates.Get(id).ConvertTo<MailTemplate>();
+        }
+
+        public MailTemplate UpdateMailTemplate(MailTemplate template)
+        {
+            return _mailTemplates.Update(template).ConvertTo<MailTemplate>();
+        }
+
+        public bool DeleteMailTemplate(int id)
+        {
+            return _mailTemplates.Delete(id);
         }
 
         public IEnumerable<TimeTable> GetTimeTables()
@@ -451,6 +476,11 @@ namespace Granikos.Hydra.Service
         public bool DeleteAttachment(string name)
         {
             return _attachments.Delete(name);
+        }
+
+        public IEnumerable<MailTemplate> GetMailTemplates()
+        {
+            return _mailTemplates.All().Select(ModelHelpers.ConvertTo<MailTemplate>).ToArray();
         }
 
         public IDictionary<string, string> GetTimeTableTypeData(string type)

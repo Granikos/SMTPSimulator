@@ -12,13 +12,13 @@ namespace Granikos.Hydra.Service.ConfigurationService.Models
     public class NikosTwo
     {
         [XmlElement("MailTemplate")]
-        public MailTemplateType MailTemplate { get; set; }
+        public MailTemplate MailTemplate { get; set; }
     }
 
     [Serializable]
     [XmlType(Namespace = "http://tempuri.org/MailTemplateSchema.xsd")]
     [DataContract]
-    public class MailTemplateType : IMailTemplate
+    public class MailTemplate : IMailTemplate
     {
         [DataMember]
         [XmlIgnore]

@@ -26,6 +26,7 @@ namespace Granikos.Hydra.Service.Database
         public DbSet<DbIPRange> IPRanges { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
         public DbSet<AttachmentContent> AttachmentContents { get; set; }
+        public DbSet<MailTemplate> MailTemplates { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

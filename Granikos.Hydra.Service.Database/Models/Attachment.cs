@@ -25,6 +25,7 @@ namespace Granikos.Hydra.Service.Database.Models
 
         public AttachmentContent InternalContent { get; set; }
     }
+
     public class AttachmentContent
     {
         [Key]
