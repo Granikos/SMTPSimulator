@@ -1,0 +1,98 @@
+﻿
+<div class="container-fluid">
+
+    <div class="panel panel-default" ng-repeat="template in templates">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-target="#collapse{{template.Id}}" class="collapsed">
+                    {{template.Title}}&nbsp;
+                </a>
+            </h4>
+        </div>
+        <div id="collapse{{template.Id}}" class="panel-collapse collapse">
+            <div class="panel-body">
+                <form id="templateForm{{template.Id}}" class="form-horizontal" name="templateForms.form{{template.Id}}" ng-submit="templateForms['form' + template.Id].$valid && (template.__adding__? add(template) : update(template))">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Title</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" ng-model="template.Title" placeholder="Title" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Subject</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" ng-model="template.Subject" placeholder="Subject" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Subject Encoding</label>
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" ng-options="idx*1 as encoding for (idx, encoding) in encodings" ng-model="template.SubjectEncoding" required></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Header Encoding</label>
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" ng-options="idx*1 as encoding for (idx, encoding) in encodings" ng-model="template.HeaderEncoding" required></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Body Encoding</label>
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" ng-options="idx*1 as encoding for (idx, encoding) in encodings" ng-model="template.BodyEncoding" required></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Text</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" ng-model="template.Text" placeholder="Text" style="resize: vertical;" rows="10"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">HTML</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" ng-model="template.Html" placeholder="HTML" style="resize: vertical;" rows="10"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Behaviour</label>
+                        <div class="col-sm-8">
+                            <select type="text" class="form-control" ng-options="idx*1 as behaviour for (idx, behaviour) in behaviours" ng-model="template.Behaviour" required></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="btn-group pull-right">
+                                <a role="button" target="_self" href="api/MailTemplates/Export/{{template.Id}}?name={{template.Title}}" class="btn btn-info" ng-hide="template.__adding__">
+                                    <i class="glyphicon glyphicon-download"></i> Export
+                                </a>
+                                <button type="submit" class="btn btn-success" ng-hide="template.__adding__">
+                                    <i class="glyphicon glyphicon-floppy-disk"></i> Update
+                                </button>
+                                <button type="button" class="btn btn-danger" ng-click="delete(template)" ng-hide="template.Id === defaultId || template.__adding__">
+                                    <i class="glyphicon glyphicon-remove-sign"></i> Remove
+                                </button>
+                                <button type="submit" class="btn btn-success" ng-show="template.__adding__">
+                                    <i class="glyphicon glyphicon-floppy-disk"></i> Add
+                                </button>
+                                <button type="button" class="btn btn-danger" ng-click="cancelAdd(template)" ng-show="template.__adding__">
+                                    <i class="glyphicon glyphicon-remove-sign"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-group pull-right" style="margin-top: 10px;">
+        <label class="btn btn-default" for="importfile">
+            <i class="glyphicon glyphicon-upload"></i> Import
+        </label>
+        <input id="importfile" type="file" ngf-select="import($files)" ngf-accept="'text/xml'" style="position: absolute; clip: rect(0 0 0 0)" />
+        <button class="btn btn-success" ng-click="startAdd()" ng-disabled="adding">
+            <i class="glyphicon glyphicon-plus-sign"></i> Add
+        </button>
+    </div>
+</div>

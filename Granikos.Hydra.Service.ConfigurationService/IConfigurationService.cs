@@ -496,7 +496,9 @@ namespace Granikos.Hydra.Service.ConfigurationService
         [WebInvoke(
             UriTemplate = "Attachments/{name}?size={size}",
             Method = "PUT",
-            BodyStyle = WebMessageBodyStyle.Bare)]
+            BodyStyle = WebMessageBodyStyle.Bare,
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
         Attachment UploadAttachment(string name, int size, Stream stream);
 
         [OperationContract]
@@ -531,27 +533,30 @@ namespace Granikos.Hydra.Service.ConfigurationService
 
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "MailTemplate",
-            Method = "PUT")]
+            UriTemplate = "MailTemplates",
+            Method = "PUT",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
         MailTemplate AddMailTemplate(MailTemplate template);
 
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "MailTemplate",
+            UriTemplate = "MailTemplates/Import",
             Method = "PUT",
-            BodyStyle = WebMessageBodyStyle.Bare)]
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json)]
         MailTemplate ImportMailTemplate(Stream stream);
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "MailTemplates/Export/{id}",
+            UriTemplate = "MailTemplates/Export?id={id}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         Stream ExportMailTemplate(int id);
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "MailTemplates/{id}",
+            UriTemplate = "MailTemplates?id={id}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         MailTemplate GetMailTemplate(int id);
@@ -566,7 +571,7 @@ namespace Granikos.Hydra.Service.ConfigurationService
 
         [OperationContract]
         [WebInvoke(
-            UriTemplate = "MailTemplates/{id}",
+            UriTemplate = "MailTemplates?id={id}",
             Method = "DELETE",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]

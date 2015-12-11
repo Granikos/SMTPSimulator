@@ -68,6 +68,8 @@ namespace Granikos.Hydra.Service.Database
         {
             Database.Set<TEntity>().Remove(Get(id));
 
+            Database.SaveChanges();
+
             return true;
         }
 

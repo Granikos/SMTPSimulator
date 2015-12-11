@@ -9,15 +9,30 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.ServiceModel;
-using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.Models.Providers;
+using System.ServiceModel.Channels;
 using Granikos.Hydra.Service.ConfigurationService;
 using Granikos.Hydra.Service.ConfigurationService.Models;
+using Granikos.Hydra.Service.Models;
+using Granikos.Hydra.Service.Models.Providers;
 using Granikos.Hydra.SmtpServer;
 using log4net;
 
 namespace Granikos.Hydra.Service
 {
+    public class JsonContentTypeMapper : WebContentTypeMapper
+    {
+        public override WebContentFormat GetMessageFormatForContentType(string contentType)
+        {
+            if (contentType.StartsWith("text/xml") || contentType.StartsWith("text/csv") || contentType.StartsWith("application/octet-stream"))
+            {
+                return WebContentFormat.Raw;
+            }
+
+            return WebContentFormat.Json;
+        }
+    }
+
+
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, AddressFilterMode = AddressFilterMode.Any)]
     public class ConfigurationServiceImpl : IConfigurationService
     {
@@ -388,12 +403,19 @@ namespace Granikos.Hydra.Service
 
         public MailTemplate ImportMailTemplate(Stream stream)
         {
-            throw new NotImplementedException();
+            return new MailTemplateImporter(_mailTemplates).ImportFromXml(stream);
         }
 
         public Stream ExportMailTemplate(int id)
         {
-            throw new NotImplementedException();
+            var template = _mailTemplates.Get(id).ConvertTo<MailTemplate>();
+            var exporter = new MailTemplateExporter();
+            var stream = new MemoryStream();
+            exporter.ExportAsXml(stream, template);
+
+            stream.Position = 0;
+
+            return stream;
         }
 
         public MailTemplate GetMailTemplate(int id)
@@ -465,7 +487,7 @@ namespace Granikos.Hydra.Service
         {
             var attachment = _attachments.Get(name);
 
-            return new MemoryStream(attachment.Content); 
+            return new MemoryStream(attachment.Content);
         }
 
         public bool RenameAttachment(string oldName, string newName)

@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('Hydra', ['ngRoute', 'ui.bootstrap', 'ui-rangeSlider', 'Server', 'LocalUsers', 'ExternalUsers', 'Send', 'Receive', 'Timer', 'Mail', 'Logging', 'Register', 'Login', 'Attachment', 'enumFlag', 'checklist-model', 'ui.select', 'xeditable'])
+    angular.module('Hydra', ['ngRoute', 'ui.bootstrap', 'ui-rangeSlider', 'Server', 'LocalUsers', 'ExternalUsers', 'Send', 'Receive', 'Timer', 'Mail', 'Logging', 'Register', 'Login', 'Attachment', 'enumFlag', 'checklist-model', 'ui.select', 'xeditable', 'MailTemplates'])
         .config([
             '$routeProvider', '$httpProvider', '$locationProvider', function($routeProvider, $httpProvider, $locationProvider) {
                 $locationProvider.hashPrefix('!').html5Mode(true);
@@ -36,6 +36,10 @@
                     .when('/Attachment', {
                         templateUrl: 'Views/Attachment/Index.html',
                         controller: 'AttachmentController'
+                    })
+                    .when('/MailTemplates', {
+                        templateUrl: 'Views/MailTemplates/Index.html',
+                        controller: 'MailTemplatesController'
                     })
                     .when('/Logging', {
                         templateUrl: 'Views/Logging/Index.html',

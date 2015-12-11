@@ -14,7 +14,7 @@ namespace Granikos.Hydra.Service
 {
     class UserImporter
     {
-        private readonly IDataProvider<IUser,int> _users;
+        private readonly IDataProvider<IUser, int> _users;
 
         public UserImporter(IDataProvider<IUser, int> users)
         {

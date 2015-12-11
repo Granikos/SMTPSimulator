@@ -6,7 +6,7 @@ using Granikos.Hydra.Service.Models.Providers;
 
 namespace Granikos.Hydra.Service.Database.Providers
 {
-    [Export(typeof(ILocalUserProvider))]
+    [Export(typeof(IMailTemplateProvider))]
     public class MailTemplateProvider : DefaultProvider<MailTemplate, IMailTemplate>, IMailTemplateProvider<MailTemplate>, IMailTemplateProvider
     {
 

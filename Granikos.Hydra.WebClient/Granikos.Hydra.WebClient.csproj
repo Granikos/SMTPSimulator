@@ -46,6 +46,7 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -180,6 +181,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="Controllers\MailController.cs" />
+    <Compile Include="Controllers\MailTemplateController.cs" />
     <Compile Include="Controllers\PagedFilter.cs" />
     <Compile Include="Controllers\SendConnectorsController.cs" />
     <Compile Include="Controllers\RecieveConnectorController.cs" />
@@ -203,6 +205,7 @@
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\angular-bundle.min.js" />
     <Content Include="Scripts\bootstrap-bundle.min.js" />
+    <Content Include="Scripts\Controllers\MailTemplates.js" />
     <Content Include="Scripts\Controllers\Mail.js" />
     <Content Include="Scripts\Controllers\Receive.js" />
     <Content Include="Scripts\Controllers\Attachment.js" />
@@ -232,6 +235,7 @@
     <Content Include="Views\ExternalUsers\AddGroupDialog.html" />
     <Content Include="Views\ExternalUsers\ImportDialog.html" />
     <Content Include="Views\ExternalUsers\Index.html" />
+    <Content Include="Views\MailTemplates\Index.html" />
     <Content Include="Views\LocalUsers\GenerateDialog.html" />
     <Content Include="Views\LocalUsers\ImportDialog.html" />
     <Content Include="Views\LocalUsers\AddDialog.html" />

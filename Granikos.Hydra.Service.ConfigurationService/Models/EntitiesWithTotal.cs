@@ -6,27 +6,16 @@ namespace Granikos.Hydra.Service.ConfigurationService.Models
     [DataContract(Name = "{0}sWithTotal")]
     public class EntitiesWithTotal<TEntity>
     {
-        private readonly IEnumerable<TEntity> _entities;
-        private readonly int _total;
-
         public EntitiesWithTotal(IEnumerable<TEntity> entities, int total)
         {
-            _entities = entities;
-            _total = total;
+            Entities = entities;
+            Total = total;
         }
 
         [DataMember]
-        public IEnumerable<TEntity> Entities
-        {
-            get { return _entities; }
-            set { }
-        }
+        public IEnumerable<TEntity> Entities { get; set; }
 
         [DataMember]
-        public int Total
-        {
-            get { return _total; }
-            set { }
-        }
+        public int Total { get; set; }
     }
 }

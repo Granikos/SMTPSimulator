@@ -14,6 +14,22 @@
                 $scope.IPRegexp = IPRegexp;
                 $scope.defaultId = 0;
 
+                $scope.sslProtocols = {
+                    0: 'None',
+                    12: 'SSL 2',
+                    48: 'SSL 3',
+                    192: 'TTL',
+                    240: 'Default',
+                    768: 'TLS 1.1',
+                    3072: 'TLS 1.2'
+                }
+
+                $scope.modes = ['Disabled', 'Enabled', 'Required', 'Full Tunnel'];
+
+                $scope.policies = ['Require Encryption', 'Allow No Encryption', 'No Encryption'];
+
+                $scope.authLevels = ['Encryption Only', 'Certificate Validation', 'Domain Validation'];
+
                 $http.get("api/SendConnectors/Default")
                     .success(function (connector) {
                         $scope.defaultId = connector.Id;

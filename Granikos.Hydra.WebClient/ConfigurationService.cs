@@ -2,6 +2,7 @@
 using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
+using System.ServiceModel.Web;
 using Granikos.Hydra.Service.ConfigurationService;
 using Granikos.Hydra.Service.ConfigurationService.Models;
 using Granikos.Hydra.Service.Models;
@@ -22,19 +23,19 @@ namespace Granikos.Hydra.WebClient
         public ConfigurationServiceClient(
             string endpointConfigurationName,
             string remoteAddress) :
-                base(endpointConfigurationName, remoteAddress)
+            base(endpointConfigurationName, remoteAddress)
         {
         }
 
         public ConfigurationServiceClient(string endpointConfigurationName,
             EndpointAddress remoteAddress) :
-                base(endpointConfigurationName, remoteAddress)
+            base(endpointConfigurationName, remoteAddress)
         {
         }
 
         public ConfigurationServiceClient(Binding binding,
             EndpointAddress remoteAddress) :
-                base(binding, remoteAddress)
+            base(binding, remoteAddress)
         {
         }
 

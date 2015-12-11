@@ -205,6 +205,8 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="IMailQueueProvider.cs" />
     <Compile Include="JsonFormatting.cs" />
+    <Compile Include="MailTemplateExporter.cs" />
+    <Compile Include="MailTemplateImporter.cs" />
     <Compile Include="MessageSender.cs" />
     <Compile Include="PriorityQueue\DelayedQueue.cs" />
     <Compile Include="ISMTPServerContainer.cs" />

@@ -115,32 +115,19 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Mode</label>
                                     <div class="col-sm-8">
-                                        <select ng-model="connector.TLSSettings.Mode" class="form-control">
-                                            <option value="0">Disabled</option>
-                                            <option value="1">Enabled</option>
-                                            <option value="2">Required</option>
-                                            <option value="3">Full Tunnel</option>
-                                        </select>
+                                        <select ng-model="connector.TLSSettings.Mode" ng-options="idx*1 as mode for (idx, mode) in modes" class="form-control"></select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Encryption Policy</label>
                                     <div class="col-sm-8">
-                                        <select ng-model="connector.TLSSettings.EncryptionPolicy" class="form-control">
-                                            <option value="0">Require Encryption</option>
-                                            <option value="1">Allow No Encryption</option>
-                                            <option value="2">No Encryption</option>
-                                        </select>
+                                        <select ng-model="connector.TLSSettings.EncryptionPolicy" ng-options="idx*1 as policy for (idx, policy) in policies" class=" form-control"></select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Auth Level</label>
                                     <div class="col-sm-8">
-                                        <select ng-model="connector.TLSSettings.AuthLevel" class="form-control">
-                                            <option value="0">Encryption Only</option>
-                                            <option value="1">Certificate Validation</option>
-                                            <option value="2">Domain Validation</option>
-                                        </select>
+                                        <select ng-model="connector.TLSSettings.AuthLevel" ng-options="idx*1 as level for (idx, level) in authLevels" class="form-control"></select>
                                     </div>
                                 </div>
                                 <div class="form-group">
