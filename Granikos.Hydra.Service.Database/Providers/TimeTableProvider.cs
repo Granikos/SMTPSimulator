@@ -21,7 +21,11 @@ namespace Granikos.Hydra.Service.Database.Providers
         {
         }
 
-        public string ResultFileName { get; private set; }
+        protected override void OnUpdate(TimeTable entity, TimeTable dbEntity)
+        {
+            Database.Entry(dbEntity).Property(t => t.MailsError).IsModified = false;
+            Database.Entry(dbEntity).Property(t => t.MailsSuccess).IsModified = false;
+        }
 
 #if DEBUG
         protected IEnumerable<TimeTable> Initializer()
@@ -31,7 +35,6 @@ namespace Granikos.Hydra.Service.Database.Providers
                 Name = "Test",
                 Active = true,
                 MailTemplateId = 1,
-                MailType = "default",
                 MinRecipients = 1,
                 MaxRecipients = 2,
                 ProtocolLevel = ProtocolLevel.On,
@@ -58,21 +61,21 @@ namespace Granikos.Hydra.Service.Database.Providers
         }
 #endif
 
-        public event TimeTableChangeHandler<TimeTable> OnAdd;
+        public event TimeTableChangeHandler<TimeTable> OnTimeTableAdd;
 
-        event TimeTableChangeHandler<ITimeTable> ITimeTableProvider<ITimeTable>.OnRemove
+        event TimeTableChangeHandler<ITimeTable> ITimeTableProvider<ITimeTable>.OnTimeTableRemove
         {
-            add { OnRemove += value; }
-            remove { OnRemove -= value; }
+            add { OnTimeTableRemove += value; }
+            remove { OnTimeTableRemove -= value; }
         }
 
-        event TimeTableChangeHandler<ITimeTable> ITimeTableProvider<ITimeTable>.OnAdd
+        event TimeTableChangeHandler<ITimeTable> ITimeTableProvider<ITimeTable>.OnTimeTableAdd
         {
-            add { OnAdd += value; }
-            remove { OnAdd -= value; }
+            add { OnTimeTableAdd += value; }
+            remove { OnTimeTableAdd -= value; }
         }
 
-        public event TimeTableChangeHandler<TimeTable> OnRemove;
+        public event TimeTableChangeHandler<TimeTable> OnTimeTableRemove;
 
         public void IncreaseErrorMailCount(int id)
         {

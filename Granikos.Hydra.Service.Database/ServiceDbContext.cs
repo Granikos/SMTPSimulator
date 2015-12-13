@@ -23,6 +23,7 @@ namespace Granikos.Hydra.Service.Database
         public DbSet<SendConnector> SendConnectors { get; set; }
         public DbSet<Domain> Domains { get; set; }
         public DbSet<TimeTable> TimeTables { get; set; }
+        public DbSet<TimeTableParameter> TimeTableParameters { get; set; }
         public DbSet<DbIPRange> IPRanges { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
         public DbSet<AttachmentContent> AttachmentContents { get; set; }
@@ -51,6 +52,12 @@ namespace Granikos.Hydra.Service.Database
                 .HasMany(r => r.RemoteIPRanges)
                 .WithRequired(i => i.Connector)
                 .WillCascadeOnDelete();
+
+            modelBuilder.Entity<TimeTable>()
+                .HasMany(t => t.InternalParameters)
+                .WithRequired(p => p.TimeTable)
+                .HasForeignKey(p => p.TimeTableId)
+                .WillCascadeOnDelete(true);
         }
     }
 }

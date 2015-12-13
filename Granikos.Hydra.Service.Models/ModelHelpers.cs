@@ -118,6 +118,7 @@ namespace Granikos.Hydra.Service.Models
         public static void CopyTo(this ITimeTable source, ITimeTable target)
         {
             target.Id = source.Id;
+            target.Type = source.Type;
             target.Active = source.Active;
             target.AttachmentName = source.AttachmentName;
             target.AttachmentType = source.AttachmentType;
@@ -125,7 +126,6 @@ namespace Granikos.Hydra.Service.Models
             target.MailsError = source.MailsError;
             target.MailsSuccess = source.MailsSuccess;
             target.Name = source.Name;
-            target.MailType = source.MailType;
             target.MinRecipients = source.MinRecipients;
             target.MaxRecipients = source.MaxRecipients;
             target.Parameters = source.Parameters;

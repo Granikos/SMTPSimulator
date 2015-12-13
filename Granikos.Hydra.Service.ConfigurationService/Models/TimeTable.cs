@@ -42,9 +42,6 @@ namespace Granikos.Hydra.Service.ConfigurationService.Models
         [Required]
         public string Type { get; set; }
         [DataMember]
-        [Required]
-        public string MailType { get; set; }
-        [DataMember]
         public string ReportMailAddress { get; set; }
         [DataMember]
         public ReportType ReportType { get; set; }

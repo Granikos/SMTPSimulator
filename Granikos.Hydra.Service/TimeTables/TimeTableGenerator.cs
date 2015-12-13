@@ -34,6 +34,8 @@ namespace Granikos.Hydra.Service.TimeTables
 
         private const string EICAR = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*";
 
+        public const double EicarProbability = 0.1; 
+
         private string EmlFolder
         {
             get
@@ -211,7 +213,17 @@ namespace Granikos.Hydra.Service.TimeTables
 
             if (_timeTable.SendEicarFile)
             {
-                mc.AddAttachment("eicar.html", EICAR, Encoding.ASCII, MediaTypeNames.Text.Html);
+                var roll = new Random().NextDouble();
+
+                if (roll <= EicarProbability)
+                {
+                    if (_timeTable.ProtocolLevel == ProtocolLevel.Verbose)
+                    {
+                        Logger.InfoFormat("Timetable '{0}': next mail will be sent with an EICAR file.", _timeTable.Name);
+                    }
+
+                    mc.AddAttachment("eicar.html", EICAR, Encoding.ASCII, MediaTypeNames.Text.Html);
+                }
             }
 
             if (EmlFolder != null)

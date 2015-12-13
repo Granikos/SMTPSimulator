@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects.DataClasses;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using Granikos.Hydra.Service.Models;
 using Granikos.Hydra.Service.Models.Providers;
@@ -41,9 +43,23 @@ namespace Granikos.Hydra.Service.Database
         public TEntity Add(TEntity entity)
         {
             Set.Add(entity);
-            Database.SaveChanges();
+
+            OnAdd(entity);
+
+            try
+            {
+                Database.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                throw;
+            }
 
             return entity;
+        }
+
+        protected virtual void OnAdd(TEntity entity)
+        {
         }
 
         protected virtual void OnUpdate(TEntity entity, TEntity dbEntity)
@@ -59,7 +75,14 @@ namespace Granikos.Hydra.Service.Database
 
             OnUpdate(entity, dbEntity);
 
-            Database.SaveChanges();
+            try
+            {
+                Database.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                throw;
+            }
 
             return dbEntity;
         }

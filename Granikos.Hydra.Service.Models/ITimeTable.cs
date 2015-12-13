@@ -17,7 +17,6 @@ namespace Granikos.Hydra.Service.Models
         int MaxRecipients { get; set; }
         int MailTemplateId { get; set; }
         string Type { get; set; }
-        string MailType { get; set; }
         string ReportMailAddress { get; set; }
         ReportType ReportType { get; set; }
         ProtocolLevel ProtocolLevel { get; set; }

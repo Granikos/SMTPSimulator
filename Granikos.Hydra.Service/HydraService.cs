@@ -86,8 +86,8 @@ namespace Granikos.Hydra.Service
                 if (tt.Active) generator.Start();
             }
 
-            _timeTables.OnAdd += OnTimeTableAdd;
-            _timeTables.OnRemove += OnTimeTableRemove;
+            _timeTables.OnTimeTableAdd += OnTimeTableAdd;
+            _timeTables.OnTimeTableRemove += OnTimeTableRemove;
 
             RefreshServers();
             RefreshSenders();

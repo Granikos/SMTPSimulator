@@ -6,9 +6,9 @@ namespace Granikos.Hydra.Service.Models.Providers
     public interface ITimeTableProvider<TTimeTable> : IDataProvider<TTimeTable, int>
         where TTimeTable : ITimeTable
     {
-        event TimeTableChangeHandler<TTimeTable> OnAdd;
+        event TimeTableChangeHandler<TTimeTable> OnTimeTableAdd;
 
-        event TimeTableChangeHandler<TTimeTable> OnRemove;
+        event TimeTableChangeHandler<TTimeTable> OnTimeTableRemove;
 
         void IncreaseErrorMailCount(int id);
 

@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Granikos.Hydra.Service.Models;
 
 namespace Granikos.Hydra.Service.Database.Models
 {
     public class TimeTable : ITimeTable
     {
-        private int _mailsSuccess;
-        private int _mailsError;
+        private ICollection<TimeTableParameter> _internaParameters = new List<TimeTableParameter>();
 
         public TimeTable()
         {
@@ -18,7 +19,22 @@ namespace Granikos.Hydra.Service.Database.Models
         public string Name { get; set; }
 
         [Required]
-        public IDictionary<string, string> Parameters { get; set; }
+        public IDictionary<string, string> Parameters
+        {
+            get { return InternalParameters.ToDictionary(p => p.Name, p => p.Value); }
+            set
+            {
+                InternalParameters = value
+                    .Select(entry => new TimeTableParameter { Name = entry.Key, Value = entry.Value })
+                    .ToList();
+            }
+        }
+
+        public virtual ICollection<TimeTableParameter> InternalParameters
+        {
+            get { return _internaParameters; }
+            set { _internaParameters = (value ?? new List<TimeTableParameter>()); }
+        }
 
         public bool Active { get; set; }
 
@@ -37,7 +53,7 @@ namespace Granikos.Hydra.Service.Database.Models
         [Range(1, 4)]
         public int MinRecipients { get; set; }
 
-        [Range(1,4)]
+        [Range(1, 4)]
         public int MaxRecipients { get; set; }
 
         public int MailTemplateId { get; set; }
@@ -49,9 +65,6 @@ namespace Granikos.Hydra.Service.Database.Models
 
         [Required]
         public string Type { get; set; }
-
-        [Required]
-        public string MailType { get; set; }
 
         public string ReportMailAddress { get; set; }
 
@@ -65,17 +78,9 @@ namespace Granikos.Hydra.Service.Database.Models
 
         public bool SendEicarFile { get; set; }
 
-        public int MailsSuccess
-        {
-            get { return _mailsSuccess; }
-            set {  }
-        }
+        public int MailsSuccess { get; set; }
 
-        public int MailsError
-        {
-            get { return _mailsError; }
-            set { }
-        }
+        public int MailsError { get; set; }
 
         public static TimeTable FromOther(ITimeTable source)
         {
@@ -85,5 +90,24 @@ namespace Granikos.Hydra.Service.Database.Models
 
             return target;
         }
+    }
+
+    public class TimeTableParameter
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [ForeignKey("TimeTableId")]
+        public virtual TimeTable TimeTable { get; set; }
+
+        [Index("KeyIndex", 2, IsUnique = true)]
+        public int TimeTableId { get; set; }
+
+        [Index("KeyIndex", 1, IsUnique = true)]
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string Value { get; set; }
     }
 }
