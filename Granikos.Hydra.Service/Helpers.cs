@@ -6,6 +6,7 @@ using System.ComponentModel.Composition.ReflectionModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Granikos.Hydra.Service.ConfigurationService.Models;
 
 namespace Granikos.Hydra.Service
 {
@@ -39,6 +40,17 @@ namespace Granikos.Hydra.Service
             dt = dt.AddSeconds(secondsSince1970);
             dt = dt.ToLocalTime();
             return dt;
+        }
+
+        // http://stackoverflow.com/questions/1600962/displaying-the-build-date
+        public static VersionInfo GetVersionInfo(this Assembly assembly)
+        {
+            return new VersionInfo
+            {
+                Assembly = assembly.GetName().Name,
+                BuildDate = assembly.GetBuildDate(),
+                Version = assembly.GetName().Version
+            };
         }
 
         public static IEnumerable<Tuple<Type,string>> GetExportedTypesWithContracts<T>(this CompositionContainer container)

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.ServiceModel;
@@ -16,7 +15,7 @@ namespace Granikos.Hydra.Service.ConfigurationService
             UriTemplate = "Version",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        VersionInfo GetVersionInfo();
+        IEnumerable<VersionInfo> GetVersionInfo();
 
         [OperationContract]
         [WebGet(

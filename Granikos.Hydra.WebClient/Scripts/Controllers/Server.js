@@ -20,10 +20,7 @@
             "$scope", "$modal", "TimeTableService", "$http", function ($scope, $modal, TimeTableService, $http) {
                 $scope.running = null;
                 $scope.status = "???";
-                $scope.serviceVersion = "???";
-                $scope.serviceBuildDate = "???";
-                $scope.uiVersion = "???";
-                $scope.uiBuildDate = "???";
+                $scope.versions = [];
                 $scope.localMailboxTotal = "???";
                 $scope.externalMailboxTotal = "???";
                 $scope.localGroups = [];
@@ -63,17 +60,10 @@
                 };
 
                 $http.get("api/Server/Version")
-                    .success(function (versionInfo) {
-                        var v = versionInfo.ServiceVersion;
-                        $scope.serviceVersion = v._Major + "." + v._Minor + "." + v._Build + "." + v._Revision;
-                        $scope.serviceBuildDate = versionInfo.ServiceBuildDate;
-                        v = versionInfo.UiVersion;
-                        $scope.uiVersion = v._Major + "." + v._Minor + "." + v._Build + "." + v._Revision;
-                        $scope.uiBuildDate = versionInfo.UiBuildDate;
+                    .success(function (versions) {
+                        $scope.versions = versions;
                     })
                     .error(function (data) {
-                        $scope.version = "Error";
-                        $scope.buildDate = "Error";
                         showError(data.Message);
                     });
 

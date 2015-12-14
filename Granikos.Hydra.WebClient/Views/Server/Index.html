@@ -17,30 +17,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-4">Service Version</label>
-            <div class="col-sm-6">
-                <p class="form-control-static">{{serviceVersion}}</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-4">Service Build Date</label>
-            <div class="col-sm-6">
-                <p class="form-control-static">{{serviceBuildDate | date : 'medium' }}</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-4">UI Version</label>
-            <div class="col-sm-6">
-                <p class="form-control-static">{{uiVersion}}</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-4">UI Build Date</label>
-            <div class="col-sm-6">
-                <p class="form-control-static">{{uiBuildDate | date : 'medium' }}</p>
-            </div>
-        </div>
-        <div class="form-group">
             <label class="control-label col-sm-4">Local Email-Addresses</label>
             <div class="col-sm-4">
                 <ul class="form-control-static list-group">
@@ -95,4 +71,28 @@
             </div>
         </div>
     </form>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-target="#versionPanel" class="collapsed">
+                    Version Info
+                </a>
+            </h4>
+        </div>
+        <div id="versionPanel" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="form-group" ng-repeat="version in versions">
+                        <label class="col-sm-4 control-label">{{version.Assembly}}</label>
+                        <div class="col-sm-4">
+                            <span class="form-control-static">{{version.Version | version}}</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <span class="form-control-static">{{version.BuildDate | date : 'medium'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

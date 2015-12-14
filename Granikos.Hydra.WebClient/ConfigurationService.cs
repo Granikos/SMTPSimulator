@@ -69,7 +69,7 @@ namespace Granikos.Hydra.WebClient
             return Channel.AddMailTemplate(template);
         }
 
-        public VersionInfo GetVersionInfo()
+        public IEnumerable<VersionInfo> GetVersionInfo()
         {
             return Channel.GetVersionInfo();
         }

@@ -212,17 +212,16 @@ namespace Granikos.Hydra.Service
             return true;
         }
 
-        public VersionInfo GetVersionInfo()
+        public IEnumerable<VersionInfo> GetVersionInfo()
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            var version = assembly.GetName().Version;
-            var date = assembly.GetBuildDate();
-
-            return new VersionInfo
-            {
-                BuildDate = date,
-                Version = version
-            };
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => a.FullName.StartsWith("Granikos.Hydra"))
+                .Select(a => new VersionInfo
+                {
+                    Assembly = a.GetName().Name.Substring(15),
+                    BuildDate = a.GetBuildDate(),
+                    Version = a.GetName().Version
+                });
         }
 
         public string[] GetLogNames()

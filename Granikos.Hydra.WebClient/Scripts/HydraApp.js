@@ -307,5 +307,9 @@
                 number = Math.floor(Math.log(bytes) / Math.log(base));
             return (bytes / Math.pow(base, Math.floor(number))).toFixed(precision) + ' ' + units[number];
         }
+    }).filter('version', function () {
+        return function (v) {
+            return v._Major + "." + v._Minor + "." + v._Build + "." + v._Revision;
+        }
     });
 })();

@@ -7,6 +7,9 @@ namespace Granikos.Hydra.Service.ConfigurationService.Models
     public struct VersionInfo
     {
         [DataMember]
+        public string Assembly { get; set; }
+
+        [DataMember]
         public Version Version { get; set; }
 
         [DataMember]
