@@ -173,6 +173,11 @@ namespace Granikos.Hydra.Service
             return _externalUsers.SearchDomains(domain);
         }
 
+        public IEnumerable<ValueWithCount<string>> SearchLocalUserDomains(string domain)
+        {
+            return _localUsers.SearchDomains(domain);
+        }
+
         public IEnumerable<User> GetExternalUsersByDomain(string domain)
         {
             return _externalUsers.GetByDomain(domain).Select(u => u.ConvertTo<User>());

@@ -219,6 +219,11 @@ namespace Granikos.Hydra.WebClient
             return Channel.SearchExternalUserDomains(domain);
         }
 
+        public IEnumerable<ValueWithCount<string>> SearchLocalUserDomains(string domain)
+        {
+            return Channel.SearchLocalUserDomains(domain);
+        }
+
         public IEnumerable<User> GetExternalUsersByDomain(string domain)
         {
             return Channel.GetExternalUsersByDomain(domain);

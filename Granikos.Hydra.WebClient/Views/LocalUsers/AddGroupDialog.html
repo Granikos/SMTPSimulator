@@ -1,0 +1,13 @@
+﻿<div class="modal-header">
+    <h4 class="modal-title"><span class="glyphicon glyphicon-plus-sign"></span> Add User Group</h4>
+</div>
+
+<div class="modal-body clearfix">
+    <form role="form" name="addGroupForm" ng-submit="addGroupForm.$valid && add()">
+        <div class="form-group">
+            <label for="groupInput">Name</label>
+            <input type="text" class="form-control" id="groupInput" placeholder="Enter group name" ng-model="Name" required />
+        </div>
+        <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-plus-sign"></i> Add</button>
+    </form>
+</div>

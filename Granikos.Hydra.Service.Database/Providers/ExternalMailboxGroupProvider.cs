@@ -15,13 +15,6 @@ namespace Granikos.Hydra.Service.Database.Providers
         {
         }
 
-#if DEBUG
-        protected IEnumerable<UserGroup> Initializer()
-        {
-            yield return new ExternalUserGroup("Group 1");
-            yield return new ExternalUserGroup("Group 2");
-        }
-#endif
         public ExternalUserGroup Add(string name)
         {
             return Add(new ExternalUserGroup { Name = name });

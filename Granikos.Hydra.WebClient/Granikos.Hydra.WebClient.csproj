@@ -235,6 +235,10 @@
     <Content Include="Views\ExternalUsers\AddGroupDialog.html" />
     <Content Include="Views\ExternalUsers\ImportDialog.html" />
     <Content Include="Views\ExternalUsers\Index.html" />
+    <Content Include="Views\LocalUsers\AddGroupDialog.html" />
+    <Content Include="Views\LocalUsers\GroupCellTemplate.html" />
+    <Content Include="Views\LocalUsers\GroupHeaderCellTemplate.html" />
+    <Content Include="Views\LocalUsers\SelectDomainDialog.html" />
     <Content Include="Views\MailTemplates\Index.html" />
     <Content Include="Views\LocalUsers\GenerateDialog.html" />
     <Content Include="Views\LocalUsers\ImportDialog.html" />

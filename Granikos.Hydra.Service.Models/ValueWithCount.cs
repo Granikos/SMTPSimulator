@@ -5,27 +5,16 @@ namespace Granikos.Hydra.Service.Models
     [DataContract(Name = "{0}WithCount")]
     public class ValueWithCount<TValue>
     {
-        private readonly TValue _value;
-        private readonly int _count;
-
         public ValueWithCount(TValue value, int count)
         {
-            _value = value;
-            _count = count;
+            Value = value;
+            Count = count;
         }
 
         [DataMember]
-        public TValue Value
-        {
-            get { return _value; }
-            set { }
-        }
+        public TValue Value { get; set; }
 
         [DataMember]
-        public int Count
-        {
-            get { return _count; }
-            set { }
-        }
+        public int Count { get; set; }
     }
 }

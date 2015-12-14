@@ -1,9 +1,12 @@
 ﻿
 <div class="container-fluid">
-    <div ui-grid="gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-selection ui-grid-auto-resize ui-grid-pagination>
+    <div id="usersGrid" ui-grid="gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-selection ui-grid-resize-columns ui-grid-pagination ng-if="!refreshGrid" style="height: 400px" class="top5">
 
     </div>
     <div class="btn-group pull-right" style="margin-top: 10px;">
+        <button class="btn btn-success" ng-click="addGroupDialog()">
+            <i class="glyphicon glyphicon-plus-sign"></i> AddGroup
+        </button>
         <a class="btn btn-default" target="_self" href="/api/LocalUsers/Export">
             <i class="glyphicon glyphicon-download"></i> Export
         </a>

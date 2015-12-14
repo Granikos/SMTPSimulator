@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Granikos.Hydra.Service.Models;
 
 namespace Granikos.Hydra.Service.Database.Models
@@ -9,7 +10,8 @@ namespace Granikos.Hydra.Service.Database.Models
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-
+        
+        [Index]
         [Required]
         public string Mailbox { get; set; }
 

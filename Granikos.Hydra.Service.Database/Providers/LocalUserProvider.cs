@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Data.Entity.SqlServer;
+using System.Data.Linq.SqlClient;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using Granikos.Hydra.Service.Database.Models;
@@ -35,29 +38,31 @@ namespace Granikos.Hydra.Service.Database.Providers
             if (domain.StartsWith("*"))
             {
                 domain = domain.Substring(1);
-                return All().Where(u => u.Mailbox.EndsWith(domain));
+                return Database.LocalUsers.Where(u => u.Mailbox.Substring(u.Mailbox.IndexOf("@") + 1).ToLower().EndsWith(domain));
             }
 
-            return All().Where(u => u.Mailbox.Equals(domain));
+            return Database.LocalUsers.Where(u => u.Mailbox.Substring(u.Mailbox.IndexOf("@") + 1).ToLower().Equals(domain));
         }
 
-#if DEBUG
-        protected IEnumerable<User> Initializer()
+        public IEnumerable<ValueWithCount<string>> SearchDomains(string domain)
         {
-            yield return new LocalUser
+
+            domain = domain.ToLower();
+
+            try
             {
-                FirstName = "Bernd",
-                LastName = "Müller",
-                Mailbox = "bernd.mueller@test.de"
-            };
-            yield return new LocalUser
+                return Database.LocalUsers
+                    .Where(u => u.Mailbox.Substring(u.Mailbox.IndexOf("@") + 1).ToLower().Contains(domain))
+                    .Select(u => u.Mailbox.Substring(u.Mailbox.IndexOf("@") + 1).ToLower())
+                    .GroupBy(v => v)
+                    .ToList()
+                    .Select(d => new ValueWithCount<string>(d.Key, d.Count()));
+            }
+            catch (Exception)
             {
-                FirstName = "Eva",
-                LastName = "Schmidt",
-                Mailbox = "eva.schmidt@test.de"
-            };
+                throw;
+            }
         }
-#endif
 
         protected override IOrderedQueryable<LocalUser> ApplyOrder(IQueryable<LocalUser> entities)
         {

@@ -11,13 +11,11 @@ using Granikos.Hydra.Service.Models;
 
 namespace Granikos.Hydra.WebClient.Controllers
 {
-    // [Authorize]
     [RoutePrefix("api/LocalUsers")]
     public class LocalUsersController : ApiController
     {
         readonly ConfigurationServiceClient _service = new ConfigurationServiceClient();
 
-        // GET api/LocalUsers/Templates
         [HttpGet]
         [Route("Templates")]
         public IEnumerable<UserTemplate> GetTemplates()
@@ -32,7 +30,6 @@ namespace Granikos.Hydra.WebClient.Controllers
             public string domain;
         }
 
-        // POST api/LocalUsers/Generate/10
         [HttpPost]
         [Route("Generate/{count:int}")]
         public bool Generate(GenerateParams parameters, int count)
@@ -50,7 +47,13 @@ namespace Granikos.Hydra.WebClient.Controllers
             return _service.GetLocalUsers(page, pageSize);
         }
 
-        // GET api/LocalUsers/Search
+        [HttpGet]
+        [Route("ByDomain/{domain}")]
+        public IEnumerable<int> ByDomain(string domain)
+        {
+            return _service.GetLocalUsersByDomain(domain).Select(u => u.Id);
+        }
+
         [HttpGet]
         [Route("Search/{search}")]
         public IEnumerable<string> Search(string search)
@@ -58,7 +61,13 @@ namespace Granikos.Hydra.WebClient.Controllers
             return _service.SearchLocalUsers(search);
         }
 
-        // GET api/LocalUsers/Export
+        [HttpGet]
+        [Route("SearchDomains/{domain}")]
+        public IEnumerable<ValueWithCount<string>> SearchDomain(string domain)
+        {
+            return _service.SearchLocalUserDomains(domain);
+        }
+
         [HttpGet]
         [Route("Export")]
         public HttpResponseMessage Export()
@@ -81,7 +90,6 @@ namespace Granikos.Hydra.WebClient.Controllers
             return response;
         }
 
-        // POST api/LocalUsers/Import
         [HttpPost]
         [Route("Import")]
         public async Task<ImportResult> Import()
@@ -91,7 +99,6 @@ namespace Granikos.Hydra.WebClient.Controllers
             return _service.ImportLocalUsers(stream);
         }
 
-        // POST api/LocalUsers/ImportWithOverwrite
         [HttpPost]
         [Route("ImportWithOverwrite")]
         public async Task<ImportResult> ImportWithOverwrite()
@@ -116,7 +123,6 @@ namespace Granikos.Hydra.WebClient.Controllers
             return stream;
         }
 
-        // GET api/LocalUsers/5
         [HttpGet]
         [Route("{id:int}")]
         public HttpResponseMessage Get(int id)
@@ -131,7 +137,6 @@ namespace Granikos.Hydra.WebClient.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, user);
         }
 
-        // POST api/LocalUsers
         [HttpPost]
         [Route("")]
         public HttpResponseMessage Add([FromBody]User user)
@@ -146,7 +151,6 @@ namespace Granikos.Hydra.WebClient.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, added);
         }
 
-        // PUT api/LocalUsers/5
         [HttpPut]
         [Route("{id:int}")]
         public HttpResponseMessage Update(int id, [FromBody]User user)
@@ -161,7 +165,6 @@ namespace Granikos.Hydra.WebClient.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, updated);
         }
 
-        // DELETE api/LocalUsers/5
         [HttpDelete]
         [Route("{id:int}")]
         public HttpResponseMessage Delete(int id)

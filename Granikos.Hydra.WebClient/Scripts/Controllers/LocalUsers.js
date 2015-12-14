@@ -1,19 +1,23 @@
 ﻿(function () {
-    angular.module('LocalUsers', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.selection', 'ui.grid.pagination', 'ui.bootstrap.modal'])
+    var DomainRegexp = /^(\*\.?)?([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/;
+
+    angular.module('LocalUsers', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.selection', 'ui.grid.pagination', 'ui.bootstrap.modal', 'checklist-model'])
 
         .service('LocalUsersService', ['$http', DataService('api/LocalUsers')])
+        .service("LocalGroupsService", ["$http", DataService("api/LocalGroups")])
 
         .controller('LocalUsersController', [
-            '$scope', '$modal', '$q', '$http', 'LocalUsersService', 'Upload', function ($scope, $modal, $q, $http, LocalUserService, Upload) {
+            '$scope', '$modal', '$q', '$http', '$timeout', 'LocalUsersService', 'Upload', 'LocalGroupsService', function ($scope, $modal, $q, $http, $timeout, LocalUserService, Upload, GroupService) {
                 $scope.users = [];
                 $scope.templates = [];
+                $scope.groups = {};
 
                 var paginationOptions = {
                     PageSize: 25,
                     PageNumber: 1
                 };
 
-                var columnDefs = [
+                $scope.columns = [
                     { name: 'firstName', field: 'FirstName', editableCellTemplate: simpleEditTemplate('required') },
                     { name: 'lastName', field: 'LastName', editableCellTemplate: simpleEditTemplate('required') },
                     { name: 'mailbox', field: 'Mailbox', displayName: 'Email Address', editableCellTemplate: simpleEditTemplate('required', 'email'), type: 'email' }
@@ -36,7 +40,7 @@
                     enableSelectAll: true,
                     selectionRowHeaderWidth: 35,
                     enableHorizontalScrollbar: 0,
-                    columnDefs: columnDefs,
+                    columnDefs: $scope.columns,
                     onRegisterApi: function (gridApi) {
                         $scope.gridApi = gridApi;
                         gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
@@ -47,6 +51,186 @@
                             $scope.refresh();
                         });
                     }
+                };
+
+                function getColumnDef(id) {
+                    return {
+                        name: 'group' + id,
+                        type: 'boolean',
+                        width: '1%',
+                        enableSorting: false,
+                        enableHiding: false,
+                        absMinWidth: 100,
+                        _groupId: id,
+                        headerCellTemplate: 'Views/LocalUsers/GroupHeaderCellTemplate.html',
+                        cellTemplate: 'Views/LocalUsers/GroupCellTemplate.html'
+                    };
+                }
+
+                $scope.refreshGridSizing = function () {
+                    var style = window.getComputedStyle($('#usersGrid')[0], null);
+                    var fontSize = style.getPropertyValue('font-size');
+                    var fontFamily = style.getPropertyValue('font-family');
+                    calculateColumnAutoWidths($scope.columns, $scope.users, fontFamily, fontSize, true);
+                    $scope.refreshGrid = true;
+                    $timeout(function () {
+                        $scope.refreshGrid = false;
+                    }, 0);
+
+                }
+
+                $scope.refreshGroups = function () {
+                    GroupService.all()
+                        .success(function (groups) {
+                            $scope.groups = groups;
+                            $scope.groupsById = {};
+                            if ($scope.columns.length > 3) {
+                                $scope.columns.splice(3, $scope.columns.length - 3);
+                            }
+                            for (var j = 0; j < groups.length; j++) {
+                                var id = groups[j].Id;
+                                $scope.groupsById[id] = groups[j];
+                                $scope.columns.push(getColumnDef(id));
+                            }
+                            $scope.refreshGridSizing();
+                        })
+                        .error(function (data) {
+                            showError(data.Message || data.data.Message);
+                        });
+                };
+
+                $scope.addGroupDialog = function () {
+                    $modal
+                        .open({
+                            templateUrl: 'Views/LocalUsers/AddGroupDialog.html',
+                            controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+                                $scope.Name = null;
+
+                                $scope.add = function () {
+                                    $modalInstance.close($scope.Name);
+                                };
+                            }]
+                        })
+                        .result.then(function (name) {
+                            $scope.addGroup(name);
+                        });
+                };
+
+                $scope.addGroup = function (name) {
+                    $http.post('api/LocalGroups/' + name)
+                        .success(function (group) {
+                            $scope.groups.push(group);
+                            $scope.groupsById[group.Id] = group;
+                            $scope.columns.push(getColumnDef(group.Id));
+                            $scope.refreshGridSizing();
+                        })
+                        .error(function (data) {
+                            showError(data.Message || data.data.Message);
+                        });
+                };
+
+                $scope.deleteGroupWithConfirm = function (id) {
+                    var name = $scope.groupsById[id].Name;
+                    BootstrapDialog.confirm({
+                        type: BootstrapDialog.TYPE_PRIMARY,
+                        title: 'Delete User Group',
+                        message: 'Do you want to delete the user group "' + name + '"?',
+                        btnCancelLabel: 'No',
+                        btnOKLabel: 'Yes',
+                        btnOKClass: 'btn-danger',
+                        callback: function (success) {
+                            if (success) {
+                                $scope.deleteGroup(id);
+                            }
+                        }
+                    });
+                };
+
+                $scope.deleteGroup = function (id) {
+                    var off;
+                    for (off = 0; off < $scope.groups.length; off++)
+                        if ($scope.groups[off].Id === id)
+                            break;
+                    GroupService.delete(id)
+                        .success(function () {
+                            $scope.groups.splice(off, 1);
+                            $scope.columns.splice(off + 3, 1);
+                            delete $scope.groupsById[id];
+                        })
+                        .error(function (data) {
+                            showError(data.Message || data.data.Message);
+                        });
+                };
+
+                $scope.removeAllFromGroup = function (id) {
+                    var name = $scope.groupsById[id].Name;
+                    BootstrapDialog.confirm({
+                        type: BootstrapDialog.TYPE_PRIMARY,
+                        title: 'Empty User Group',
+                        message: 'Do you want to remove all users from the group "' + name + '"?',
+                        btnCancelLabel: 'No',
+                        btnOKLabel: 'Yes',
+                        btnOKClass: 'btn-danger',
+                        callback: function (success) {
+                            if (success) {
+                                var group = $scope.groupsById[id];
+                                group.UserIds.length = 0;
+                                $scope.$apply();
+                            }
+                        }
+                    });
+                };
+
+                $scope.addToGroup = function (id) {
+                    $modal
+                        .open({
+                            templateUrl: 'Views/LocalUsers/SelectDomainDialog.html',
+                            controller: [
+                                '$scope', '$modalInstance', function ($scope, $modalInstance) {
+                                    $scope.Domain = null;
+                                    $scope.DomainRegexp = DomainRegexp;
+
+                                    $scope.searchDomains = function (search) {
+                                        return $http.get("api/LocalUsers/SearchDomains/" + search)
+                                            .then(function (data) {
+                                                return data.data;
+                                            });
+                                    };
+
+                                    $scope.submit = function () {
+                                        $modalInstance.close($scope.Domain);
+                                    };
+                                }
+                            ]
+                        })
+                        .result.then(function (domain) {
+                            $http.get("api/LocalUsers/ByDomain/" + domain)
+                                .then(function (data) {
+                                    var mbs = $scope.groupsById[id].UserIds;
+                                    var temp = {};
+                                    for (var i = 0; i < mbs.length; i++)
+                                        temp[mbs[i]] = true;
+                                    for (var i = 0; i < data.data.length; i++)
+                                        if (!temp[data.data[i]])
+                                            mbs.push(data.data[i]);
+                                    $scope.groupsById[id]._dirty = true;
+                                });
+                        });
+                };
+
+                $scope.saveGroup = function (id) {
+                    var group = $scope.groupsById[id];
+
+                    GroupService.update(group)
+                        .then(function (data) {
+                            var index = $scope.groups.indexOf(group);
+                            if (index > -1) {
+                                $scope.groups[index] = data.data;
+                            }
+                            $scope.groupsById[id] = data.data;
+                        }, function (data) {
+                            showError(data.Message || data.data.Message);
+                        });
                 };
 
                 $http.get("api/LocalUsers/Templates")
@@ -181,6 +365,7 @@
                     }
                 }, true);
 
+                $scope.refreshGroups();
                 $scope.refresh();
             }
         ])
