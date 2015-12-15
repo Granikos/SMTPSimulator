@@ -22,6 +22,10 @@ namespace Granikos.Hydra.Service.ConfigurationService.Models
             End = end;
         }
 
+        public JsonIPRange()
+        {
+        }
+
         public IPAddress Start
         {
             get { return _start; }

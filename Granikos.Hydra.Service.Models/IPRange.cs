@@ -26,7 +26,7 @@ namespace Granikos.Hydra.Service.Models
             set
             {
                 Contract.Requires<ArgumentNullException>(value != null, "value");
-                Contract.Requires<ArgumentException>(value.AddressFamily == _end.AddressFamily);
+                Contract.Requires<ArgumentException>(value.AddressFamily == End.AddressFamily);
 
                 _start = value;
             }
@@ -38,7 +38,7 @@ namespace Granikos.Hydra.Service.Models
             set
             {
                 Contract.Requires<ArgumentNullException>(value != null, "value");
-                Contract.Requires<ArgumentException>(value.AddressFamily == _start.AddressFamily);
+                Contract.Requires<ArgumentException>(value.AddressFamily == Start.AddressFamily);
                 
                 _end = value;
             }

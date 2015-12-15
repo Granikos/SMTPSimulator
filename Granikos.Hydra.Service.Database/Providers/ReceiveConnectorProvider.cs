@@ -26,9 +26,9 @@ namespace Granikos.Hydra.Service.Database.Providers
 
         protected override void OnUpdate(ReceiveConnector entity, ReceiveConnector dbEntity)
         {
-            foreach (var domain in dbEntity.RemoteIPRanges.ToArray())
+            foreach (var range in dbEntity.RemoteIPRanges.ToArray())
             {
-                Database.Entry(domain).State = EntityState.Deleted;
+                Database.Entry(range).State = EntityState.Deleted;
             }
 
             dbEntity.RemoteIPRanges.Clear();

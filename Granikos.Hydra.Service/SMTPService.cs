@@ -15,9 +15,11 @@ namespace Granikos.Hydra.Service
 {
     internal class SMTPService
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof (SMTPService));
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(SMTPService));
         private readonly CompositionContainer _container;
-        private readonly Dictionary<IPAddress, DateTime> _greyList = new Dictionary<IPAddress, DateTime>();
+
+        // TODO: Clean up grey list regularly
+        private readonly Dictionary<IPAddress, GreyslistTimeWindow> _greyList = new Dictionary<IPAddress, GreyslistTimeWindow>();
         private Thread _listenThread;
         private TcpListener _tcpListener;
 
@@ -58,32 +60,44 @@ namespace Granikos.Hydra.Service
         public IReceiveConnector Connector { get; private set; }
         public IPEndPoint LocalEndpoint { get; private set; }
 
+        struct GreyslistTimeWindow
+        {
+            public DateTime start;
+            public DateTime end;
+        }
+
+        private static readonly TimeSpan GreylistWindow = TimeSpan.FromMinutes(15);
+
         private void CheckGreylisting(SMTPServer.ConnectEventArgs connect)
         {
             if (Connector.GreylistingTime != null && Connector.GreylistingTime > TimeSpan.Zero)
             {
-                DateTime time;
+                GreyslistTimeWindow window;
 
-                if (_greyList.TryGetValue(connect.IP, out time))
+                if (_greyList.TryGetValue(connect.IP, out window))
                 {
-                    if (time > DateTime.Now)
+                    if (window.start > DateTime.Now)
                     {
-                        Console.WriteLine("Greylisting activate, time left: " + (time - DateTime.Now));
+                        Console.WriteLine("Greylisting activate, time left: " + (window.start - DateTime.Now));
                         connect.Cancel = true;
                         connect.ResponseCode = SMTPStatusCode.NotAvailiable;
+                        return;
                     }
-                    else
+
+                    if (window.end > DateTime.Now)
                     {
-                        _greyList.Remove(connect.IP);
+                        return;
                     }
+
+                    _greyList.Remove(connect.IP);
                 }
-                else
-                {
-                    Console.WriteLine("Greylisting started, time left: " + Connector.GreylistingTime);
-                    _greyList.Add(connect.IP, (DateTime) (DateTime.Now + Connector.GreylistingTime));
-                    connect.Cancel = true;
-                    connect.ResponseCode = SMTPStatusCode.NotAvailiable;
-                }
+
+                DateTime start = (DateTime)(DateTime.Now + Connector.GreylistingTime);
+
+                Console.WriteLine("Greylisting started, time left: " + Connector.GreylistingTime);
+                _greyList.Add(connect.IP, new GreyslistTimeWindow { start = start, end = start + GreylistWindow });
+                connect.Cancel = true;
+                connect.ResponseCode = SMTPStatusCode.NotAvailiable;
             }
         }
 
@@ -143,7 +157,7 @@ namespace Granikos.Hydra.Service
         {
             try
             {
-                var handler = new ClientHandler((TcpClient) obj, this);
+                var handler = new ClientHandler((TcpClient)obj, this);
                 _container.SatisfyImportsOnce(handler);
                 handler.Process().Wait();
             }
