@@ -138,6 +138,7 @@
     <Compile Include="CommandHandlers\MAILTest.cs" />
     <Compile Include="CommandHandlers\VRFYTest.cs" />
     <Compile Include="ResponseTest.cs" />
+    <Compile Include="Retention\RetentionManagerTest.cs" />
     <Compile Include="TransactionTest.cs" />
     <Compile Include="ValidationHelperTest.cs" />
   </ItemGroup>
@@ -145,6 +146,22 @@
     <ProjectReference Include="..\Granikos.Hydra.Core\Granikos.Hydra.Core.csproj">
       <Project>{6c923248-1b40-4a27-80f7-ddeeb9f6d4d5}</Project>
       <Name>Granikos.Hydra.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Granikos.Hydra.Service.ConfigurationService\Granikos.Hydra.Service.ConfigurationService.csproj">
+      <Project>{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}</Project>
+      <Name>Granikos.Hydra.Service.ConfigurationService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Granikos.Hydra.Service.Models\Granikos.Hydra.Service.Models.csproj">
+      <Project>{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}</Project>
+      <Name>Granikos.Hydra.Service.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Granikos.Hydra.Service\Granikos.Hydra.Service.csproj">
+      <Project>{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}</Project>
+      <Name>Granikos.Hydra.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Granikos.Hydra.SmtpClient\Granikos.Hydra.SmtpClient.csproj">
+      <Project>{e149ba1d-5095-4f46-bb16-a113757adcc9}</Project>
+      <Name>Granikos.Hydra.SmtpClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\Granikos.Hydra.SmtpServer\Granikos.Hydra.SmtpServer.csproj">
       <Project>{1109925F-690B-4E73-99F8-DC1FCE96CA97}</Project>

@@ -1,8 +1,9 @@
 ﻿using System.Net;
-using Granikos.Hydra.Core;
+using Granikos.Hydra.Service.ConfigurationService.Models;
+using Granikos.Hydra.Service.Models;
 using Xunit;
 
-namespace HydraTest
+namespace Granikos.Hydra.Test
 {
     public class IPRangeTest
     {
@@ -14,7 +15,7 @@ namespace HydraTest
             var ip3 = IPAddress.Parse("3.3.3.3");
             var ip4 = IPAddress.Parse("4.4.4.4");
 
-            var range = new IPRange(ip1, ip2);
+            var range = new JsonIPRange(ip1, ip2);
 
             Assert.Equal(ip1.ToString(), range.StartString);
             Assert.Equal(ip2.ToString(), range.EndString);
@@ -41,7 +42,7 @@ namespace HydraTest
             var ip1 = IPAddress.Parse(start);
             var ip2 = IPAddress.Parse(end);
             var ip3 = IPAddress.Parse(ip);
-            var range = new IPRange(ip1, ip2);
+            var range = new JsonIPRange(ip1, ip2);
 
             if (contains)
             {

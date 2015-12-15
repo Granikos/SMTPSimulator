@@ -221,6 +221,8 @@
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
+    <Compile Include="Retention\DirectoryRetentionConfig.cs" />
+    <Compile Include="Retention\RetentionManager.cs" />
     <Compile Include="UserExporter.cs" />
     <Compile Include="UserGenerator.cs" />
     <Compile Include="UserImporter.cs" />
