@@ -40,13 +40,13 @@ namespace Granikos.Hydra.Service.Database.Models
 
         public string RecipientMailbox { get; set; }
 
-        public int? RecipientGroupId { get; set; }
+        public int RecipientGroupId { get; set; }
 
         public bool StaticRecipient { get; set; }
 
         public string SenderMailbox { get; set; }
 
-        public int? SenderGroupId { get; set; }
+        public int SenderGroupId { get; set; }
 
         public bool StaticSender { get; set; }
 

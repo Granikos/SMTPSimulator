@@ -1,8 +1,11 @@
-﻿using System.ComponentModel.Composition.Hosting;
+﻿using System;
+using System.ComponentModel.Composition.Hosting;
 using System.Net;
 using System.Net.Mail;
 using Granikos.Hydra.Core;
+using Granikos.Hydra.Service.ConfigurationService.Models;
 using Granikos.Hydra.Service.Models;
+using Granikos.Hydra.Service.Retention;
 using Granikos.Hydra.SmtpClient;
 using Granikos.Hydra.SmtpServer;
 
@@ -14,6 +17,22 @@ namespace SMTPTestClient
     {
         static void Main(string[] args)
         {
+            var basedir =
+                @"C:\Users\Manuel\Documents\Visual Studio 2013\Projects\Hydra\Granikos.Hydra.Service\bin\Debug\Logs\SystemLogs\Service";
+
+            var manager = new RetentionManager(basedir);
+
+            manager.Config.MinTime = TimeSpan.FromDays(5);
+            // manager.Config.MaxTime = TimeSpan.FromDays(20);
+            // manager.Config.MaxFiles = 10;
+
+            manager.Config.MaxSize = 1024*1024;
+
+            manager.Run();
+
+            Console.ReadLine();
+
+            /*
             ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) =>
             {
                 return true;

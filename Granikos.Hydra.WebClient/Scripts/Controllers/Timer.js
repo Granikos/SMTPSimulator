@@ -31,7 +31,7 @@
                         $scope.localGroups = groups.Items;
                         // TODO: Make this cleaner
                         $scope.localGroups.unshift({
-                            Id: null,
+                            Id: 0,
                             Name: 'All',
                             Count: groups.MailboxTotal
                         });
@@ -46,7 +46,7 @@
                         $scope.externalGroups = groups.Items;
                         // TODO: Make this cleaner
                         $scope.externalGroups.unshift({
-                            Id: null,
+                            Id: 0,
                             Name: 'All',
                             Count: groups.MailboxTotal
                         });

@@ -49,6 +49,7 @@ namespace Granikos.Hydra.Service
 
         public HydraService()
         {
+            InitializeDataDirectory();
             InitializeComponent();
 
             var pluginFolder = ConfigurationManager.AppSettings["PluginFolder"];
@@ -91,6 +92,19 @@ namespace Granikos.Hydra.Service
 
             RefreshServers();
             RefreshSenders();
+        }
+
+        private static void InitializeDataDirectory()
+        {
+            // TODO: Customizable folder name
+            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var dataDir = Path.Combine(appData, "Hydra");
+            if (!Directory.Exists(dataDir))
+            {
+                Directory.CreateDirectory(dataDir);
+            }
+
+            AppDomain.CurrentDomain.SetData("DataDirectory", dataDir);
         }
 
         private void OnTimeTableRemove(ITimeTable tt)

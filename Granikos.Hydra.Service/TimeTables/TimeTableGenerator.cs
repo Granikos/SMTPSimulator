@@ -281,9 +281,9 @@ namespace Granikos.Hydra.Service.TimeTables
             {
                 return _timeTable.SenderMailbox;
             }
-            if (_timeTable.SenderGroupId != null)
+            if (_timeTable.SenderGroupId > 0)
             {
-                var mailboxes = _localGroups.Get(_timeTable.SenderGroupId.Value).UserIds;
+                var mailboxes = _localGroups.Get(_timeTable.SenderGroupId).UserIds;
 
                 var id = mailboxes[_random.Next(mailboxes.Length)];
 
@@ -302,9 +302,9 @@ namespace Granikos.Hydra.Service.TimeTables
 
             var num = _random.Next(_timeTable.MinRecipients, _timeTable.MaxRecipients + 1);
 
-            if (_timeTable.RecipientGroupId != null)
+            if (_timeTable.RecipientGroupId > 0)
             {
-                var mailboxes = _externalGroups.Get(_timeTable.RecipientGroupId.Value).UserIds;
+                var mailboxes = _externalGroups.Get(_timeTable.RecipientGroupId).UserIds;
 
                 return mailboxes
                     .OrderBy(x => _random.Next())

@@ -116,7 +116,7 @@ namespace Granikos.Hydra.Service.Retention
                         yield return fileInfo.Name;
                     }
                 }
-            };
+            }
         }
 
         public DirectoryRetentionConfig Config

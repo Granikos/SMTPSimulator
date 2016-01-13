@@ -8,10 +8,10 @@ namespace Granikos.Hydra.Service.Models
         IDictionary<string, string> Parameters { get; set; }
         bool Active { get; set; }
         string RecipientMailbox { get; set; }
-        int? RecipientGroupId { get; set; }
+        int RecipientGroupId { get; set; }
         bool StaticRecipient { get; set; }
         string SenderMailbox { get; set; }
-        int? SenderGroupId { get; set; }
+        int SenderGroupId { get; set; }
         bool StaticSender { get; set; }
         int MinRecipients { get; set; }
         int MaxRecipients { get; set; }
