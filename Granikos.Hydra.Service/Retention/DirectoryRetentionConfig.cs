@@ -10,6 +10,7 @@ namespace Granikos.Hydra.Service.Retention
         private TimeSpan _maxTime = TimeSpan.MaxValue;
         private int _minFiles = 1;
         private TimeSpan _minTime = TimeSpan.Zero;
+
         public string Directory { get; set; }
 
         public int MinFiles
@@ -67,6 +68,11 @@ namespace Granikos.Hydra.Service.Retention
 
                 _minTime = value;
             }
+        }
+
+        public DirectoryRetentionConfig Copy()
+        {
+            return (DirectoryRetentionConfig)MemberwiseClone();
         }
     }
 }

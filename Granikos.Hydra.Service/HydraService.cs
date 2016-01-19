@@ -16,6 +16,7 @@ using Granikos.Hydra.Service.Models;
 using Granikos.Hydra.Service.Models.Providers;
 using Granikos.Hydra.Service.PriorityQueue;
 using Granikos.Hydra.Service.Providers;
+using Granikos.Hydra.Service.Retention;
 using Granikos.Hydra.Service.TimeTables;
 using Granikos.Hydra.SmtpClient;
 using Granikos.Hydra.SmtpServer;
@@ -46,6 +47,7 @@ namespace Granikos.Hydra.Service
         private MessageSender[] _senders;
         private SMTPService[] _servers;
         private readonly Dictionary<int,TimeTableGenerator> _generators = new Dictionary<int, TimeTableGenerator>();
+        private readonly RetentionManager _retentionManager;
 
         public HydraService()
         {
@@ -89,6 +91,8 @@ namespace Granikos.Hydra.Service
 
             _timeTables.OnTimeTableAdd += OnTimeTableAdd;
             _timeTables.OnTimeTableRemove += OnTimeTableRemove;
+
+            _retentionManager = new RetentionManager();
 
             RefreshServers();
             RefreshSenders();
@@ -247,6 +251,8 @@ namespace Granikos.Hydra.Service
             _host = new WebServiceHost(service);
 
             _host.Open();
+
+            _retentionManager.Start();
         }
 
         protected override void OnStop()
@@ -259,6 +265,8 @@ namespace Granikos.Hydra.Service
                 _host.Close();
                 _host = null;
             }
+
+            _retentionManager.Stop();
         }
     }
 }

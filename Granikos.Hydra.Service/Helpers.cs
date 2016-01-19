@@ -68,5 +68,14 @@ namespace Granikos.Hydra.Service
                 
             }
         }
+
+        public static string ToCanonicalPath(this string directory)
+        {
+            var path = Path.GetFullPath(directory);
+            if (Path.GetDirectoryName(path) != null)
+                path = path.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+
+            return path.ToLower();
+        }
     }
 }

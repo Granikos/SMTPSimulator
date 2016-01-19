@@ -20,7 +20,7 @@ namespace SMTPTestClient
             var basedir =
                 @"C:\Users\Manuel\Documents\Visual Studio 2013\Projects\Hydra\Granikos.Hydra.Service\bin\Debug\Logs\SystemLogs\Service";
 
-            var manager = new RetentionManager(basedir);
+            var manager = new RetentionWorker(basedir);
 
             manager.Config.MinTime = TimeSpan.FromDays(5);
             // manager.Config.MaxTime = TimeSpan.FromDays(20);
