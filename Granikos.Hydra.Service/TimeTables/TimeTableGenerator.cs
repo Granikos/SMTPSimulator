@@ -40,7 +40,7 @@ namespace Granikos.Hydra.Service.TimeTables
         {
             get
             {
-                var folder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var folder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
                 var logFolder = ConfigurationManager.AppSettings["EmlFolder"];
                 return logFolder != null? Path.Combine(folder, logFolder) : null;
             }

@@ -16,7 +16,7 @@ namespace Granikos.Hydra.Service.Providers
         {
             get
             {
-                var folder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var folder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
                 var logFolder = ConfigurationManager.AppSettings["LogFolder"];
                 return Path.Combine(folder, logFolder);
             }

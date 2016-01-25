@@ -26,7 +26,7 @@ namespace Granikos.Hydra.Service.ConfigurationService
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "Logs/{name}",
+            UriTemplate = "Logs/{*name}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         Stream GetLogFile(string name);

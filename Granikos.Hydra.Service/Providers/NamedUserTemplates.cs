@@ -20,7 +20,7 @@ namespace Granikos.Hydra.Service.Providers
         {
             get
             {
-                var folder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var folder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
                 var logFolder = ConfigurationManager.AppSettings["UserTemplates"];
                 return Path.Combine(folder, logFolder);
             }
