@@ -55,7 +55,7 @@ namespace Granikos.Hydra.Service
 
         public HydraService()
         {
-            Logger.Info("The Nikos 2 Service is starting...");
+            Logger.Info("The Nikos Two Service is starting...");
 
             FixLoggerPaths();
             InitializeDataDirectory();
@@ -104,7 +104,7 @@ namespace Granikos.Hydra.Service
             RefreshServers();
             RefreshSenders();
 
-            Logger.Info("The Nikos 2 Service has started.");
+            Logger.Info("The Nikos Two Service has started.");
         }
 
         private static void InitializeDataDirectory()

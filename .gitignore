@@ -206,3 +206,4 @@ FakesAssemblies/
 /HydraWebClient.*
 /Granikos.Hydra.Service/AppData
 /Granikos.Hydra.Service/Attachments
+/Granikos.Hydra.Setup/*.bak

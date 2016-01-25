@@ -21,6 +21,24 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_03F4F937BB5EF048F5C75863AFD3DF1B"
+        "OwnerKey" = "8:_148A8E2D5E59226899361EFEF1A4D7C5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_03F4F937BB5EF048F5C75863AFD3DF1B"
+        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_03F4F937BB5EF048F5C75863AFD3DF1B"
+        "OwnerKey" = "8:_66E148413C060CB9E3DC81981062BAFC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_052C1801E32D381AE0CB251AFE939AA2"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
@@ -59,6 +77,12 @@
         {
         "MsmKey" = "8:_127831B6E5996D0544621CB1E2A0B949"
         "OwnerKey" = "8:_B84C8FDDB43718DE9C66206F7D5D90B7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_148A8E2D5E59226899361EFEF1A4D7C5"
+        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -225,7 +249,25 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_6179A15E5D2913F9AFC8C46C64639219"
+        "OwnerKey" = "8:_96CD67639E06B42E2948188E2160F449"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6179A15E5D2913F9AFC8C46C64639219"
+        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_66016F833B7362D4754A3EFA4FAE7487"
+        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_66E148413C060CB9E3DC81981062BAFC"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -267,6 +309,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_78DC3F4C700B1446CE2A28CF185D9678"
+        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_79B5A7AC68FD39FDA0982E766D4916C9"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
@@ -274,6 +322,30 @@
         "Entry"
         {
         "MsmKey" = "8:_7E8A99CB14A503D2EA3CC2961ECCCF58"
+        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_804C768BE0256E581B7539F26F946F89"
+        "OwnerKey" = "8:_66E148413C060CB9E3DC81981062BAFC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_804C768BE0256E581B7539F26F946F89"
+        "OwnerKey" = "8:_96CD67639E06B42E2948188E2160F449"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_804C768BE0256E581B7539F26F946F89"
+        "OwnerKey" = "8:_78DC3F4C700B1446CE2A28CF185D9678"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_804C768BE0256E581B7539F26F946F89"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -303,6 +375,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_96CD67639E06B42E2948188E2160F449"
+        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_979F02D952FB434D1B683607153D478C"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
@@ -322,7 +400,25 @@
         "Entry"
         {
         "MsmKey" = "8:_ABB6525A5918BF17BE76EBFECC80D93A"
+        "OwnerKey" = "8:_03F4F937BB5EF048F5C75863AFD3DF1B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_ABB6525A5918BF17BE76EBFECC80D93A"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_ABB6525A5918BF17BE76EBFECC80D93A"
+        "OwnerKey" = "8:_66E148413C060CB9E3DC81981062BAFC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_ABB6525A5918BF17BE76EBFECC80D93A"
+        "OwnerKey" = "8:_148A8E2D5E59226899361EFEF1A4D7C5"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -490,12 +586,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_69061D983ECEF8BC2E38C1B3940D07EF"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -503,6 +593,24 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_4E85BA1BE570CEB45C0DDCE9A1AFA58C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_96CD67639E06B42E2948188E2160F449"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_6179A15E5D2913F9AFC8C46C64639219"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_78DC3F4C700B1446CE2A28CF185D9678"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -521,6 +629,30 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_884E277BE1C4E459FCF77EBD299B27A6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_66E148413C060CB9E3DC81981062BAFC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_804C768BE0256E581B7539F26F946F89"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_148A8E2D5E59226899361EFEF1A4D7C5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_03F4F937BB5EF048F5C75863AFD3DF1B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -841,6 +973,12 @@
         "OwnerKey" = "8:_6C2F595535644BD3EBB86B0C63602FCD"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_69061D983ECEF8BC2E38C1B3940D07EF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -978,6 +1116,37 @@
                     }
                 }
             "SourcePath" = "8:System.Linq.Parallel.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_03F4F937BB5EF048F5C75863AFD3DF1B"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Granikos.Hydra.Service.Models, Version=0.1.5866.22411, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_03F4F937BB5EF048F5C75863AFD3DF1B"
+                    {
+                    "Name" = "8:Granikos.Hydra.Service.Models.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Granikos.Hydra.Service.Models.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
@@ -1133,6 +1302,37 @@
                     }
                 }
             "SourcePath" = "8:System.Diagnostics.Tools.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_148A8E2D5E59226899361EFEF1A4D7C5"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Granikos.Hydra.Service.ConfigurationService, Version=0.1.5866.22412, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_148A8E2D5E59226899361EFEF1A4D7C5"
+                    {
+                    "Name" = "8:Granikos.Hydra.Service.ConfigurationService.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Granikos.Hydra.Service.ConfigurationService.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
@@ -1739,6 +1939,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6179A15E5D2913F9AFC8C46C64639219"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_6179A15E5D2913F9AFC8C46C64639219"
+                    {
+                    "Name" = "8:System.Data.SqlServerCe.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:System.Data.SqlServerCe.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_66016F833B7362D4754A3EFA4FAE7487"
             {
             "AssemblyRegister" = "3:1"
@@ -1753,6 +1984,37 @@
                     }
                 }
             "SourcePath" = "8:System.ObjectModel.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_66E148413C060CB9E3DC81981062BAFC"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Granikos.Hydra.Service.Database, Version=0.1.5866.22415, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_66E148413C060CB9E3DC81981062BAFC"
+                    {
+                    "Name" = "8:Granikos.Hydra.Service.Database.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Granikos.Hydra.Service.Database.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
@@ -1894,6 +2156,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_78DC3F4C700B1446CE2A28CF185D9678"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_78DC3F4C700B1446CE2A28CF185D9678"
+                    {
+                    "Name" = "8:EntityFramework.SqlServer.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:EntityFramework.SqlServer.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_79B5A7AC68FD39FDA0982E766D4916C9"
             {
             "AssemblyRegister" = "3:1"
@@ -1956,11 +2249,42 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_804C768BE0256E581B7539F26F946F89"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_804C768BE0256E581B7539F26F946F89"
+                    {
+                    "Name" = "8:EntityFramework.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:EntityFramework.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_884E277BE1C4E459FCF77EBD299B27A6"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Granikos.Hydra.SmtpServer, Version=0.1.5792.21875, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Granikos.Hydra.SmtpServer, Version=0.1.5866.22411, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_884E277BE1C4E459FCF77EBD299B27A6"
@@ -2080,6 +2404,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_96CD67639E06B42E2948188E2160F449"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:EntityFramework.SqlServerCompact, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_96CD67639E06B42E2948188E2160F449"
+                    {
+                    "Name" = "8:EntityFramework.SqlServerCompact.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:EntityFramework.SqlServerCompact.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_979F02D952FB434D1B683607153D478C"
             {
             "AssemblyRegister" = "3:1"
@@ -2146,7 +2501,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Granikos.Hydra.SmtpClient, Version=0.1.5792.21874, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Granikos.Hydra.SmtpClient, Version=0.1.5866.22410, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_ABB6525A5918BF17BE76EBFECC80D93A"
@@ -2642,7 +2997,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Granikos.Hydra.Core, Version=0.1.5792.21872, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Granikos.Hydra.Core, Version=0.1.5866.22408, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_E4DD2CD2B02ACD708448CCDBE88DD575"
@@ -2812,7 +3167,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_0FC3D0C6CF44457BAC34A902964A938F"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFilesFolder]Granikos\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -2848,16 +3203,16 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Hydra"
-        "ProductCode" = "8:{9DE62B8D-D0ED-4266-B8DB-BE77F2FC83DC}"
-        "PackageCode" = "8:{5EB7654B-097E-4F22-A0B9-460CF6EDD016}"
+        "ProductName" = "8:Nikos 2"
+        "ProductCode" = "8:{F57805EF-4208-4423-80E1-7D45FCF8AE63}"
+        "PackageCode" = "8:{E339CF20-A90E-48A9-A6B8-7F6D65312BB6}"
         "UpgradeCode" = "8:{2D530948-25A6-4A8C-BA7E-CCE8069D5B3E}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.0.4"
         "Manufacturer" = "8:Granikos GmbH & Co. KG"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -2872,7 +3227,7 @@
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
         "TargetPlatform" = "3:0"
-        "PreBuildEvent" = "8:"
+        "PreBuildEvent" = "8:\"$(ProjectDir)\\NewSetupVersion.vbs\" \"$(ProjectDir)Hydra Setup.vdproj\""
         "PostBuildEvent" = "8:"
         "RunPostBuildEvent" = "3:0"
         }
