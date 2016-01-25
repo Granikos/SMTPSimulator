@@ -10,11 +10,15 @@ namespace Granikos.Hydra.Core
     {
         private static readonly Regex WhitespaceRegex = new Regex("^\\s", RegexOptions.Compiled);
 
+        private readonly string rawMail;
+
         public Mail(MailAddress from, IEnumerable<MailAddress> recipients, string mail)
         {
             From = from;
             Recipients = recipients.ToMailAddressCollection();
             Headers = new Dictionary<string, string>();
+
+            rawMail = mail;
             Parse(mail);
         }
 
@@ -76,6 +80,27 @@ namespace Granikos.Hydra.Core
             }
 
             Body = body.ToString();
+        }
+
+        public override string ToString()
+        {
+            // TODO: Quick hack, fixme!
+            if (rawMail != null) return rawMail;
+
+            var sb = new StringBuilder();
+
+            foreach (var header in Headers)
+            {
+                sb.Append(header.Key);
+                sb.Append(": ");
+                sb.Append(header.Value);
+                sb.Append("\r\n");
+            }
+
+            sb.Append("\r\n");
+            sb.Append(Body);
+
+            return sb.ToString();
         }
     }
 }

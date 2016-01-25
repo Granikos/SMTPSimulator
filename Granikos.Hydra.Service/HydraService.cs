@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition.Primitives;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -15,12 +16,13 @@ using Granikos.Hydra.Core;
 using Granikos.Hydra.Service.Models;
 using Granikos.Hydra.Service.Models.Providers;
 using Granikos.Hydra.Service.PriorityQueue;
-using Granikos.Hydra.Service.Providers;
 using Granikos.Hydra.Service.Retention;
 using Granikos.Hydra.Service.TimeTables;
 using Granikos.Hydra.SmtpClient;
 using Granikos.Hydra.SmtpServer;
 using Granikos.Hydra.SmtpServer.CommandHandlers;
+using log4net;
+using log4net.Appender;
 using MailMessage = Granikos.Hydra.Service.ConfigurationService.Models.MailMessage;
 
 namespace Granikos.Hydra.Service
@@ -49,8 +51,13 @@ namespace Granikos.Hydra.Service
         private readonly Dictionary<int,TimeTableGenerator> _generators = new Dictionary<int, TimeTableGenerator>();
         private readonly RetentionManager _retentionManager;
 
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(HydraService));
+
         public HydraService()
         {
+            Logger.Info("The Nikos 2 Service is starting...");
+
+            FixLoggerPaths();
             InitializeDataDirectory();
             InitializeComponent();
 
@@ -96,6 +103,8 @@ namespace Granikos.Hydra.Service
 
             RefreshServers();
             RefreshSenders();
+
+            Logger.Info("The Nikos 2 Service has started.");
         }
 
         private static void InitializeDataDirectory()
@@ -109,6 +118,21 @@ namespace Granikos.Hydra.Service
             }
 
             AppDomain.CurrentDomain.SetData("DataDirectory", dataDir);
+        }
+
+        private static void FixLoggerPaths()
+        {
+            var exeLocation = Assembly.GetEntryAssembly().Location;
+            var basePath = Path.GetFullPath(Path.GetDirectoryName(exeLocation));
+
+            var appenders = LogManager.GetAllRepositories()
+                .SelectMany(r => r.GetAppenders())
+                .OfType<FileAppender>();
+            foreach (var fileAppender in appenders)
+            {
+                fileAppender.File = Path.Combine(basePath, fileAppender.File);
+                fileAppender.ActivateOptions();
+            }
         }
 
         private void OnTimeTableRemove(ITimeTable tt)
@@ -156,6 +180,7 @@ namespace Granikos.Hydra.Service
 
         public void StopSMTPServers()
         {
+            Logger.Info("Stopping SMTP servers...");
             if (Running && _servers != null)
             {
                 foreach (var server in _servers)
@@ -165,10 +190,12 @@ namespace Granikos.Hydra.Service
             }
 
             Running = false;
+            Logger.Info("SMTP servers stopped.");
         }
 
         public void StartSMTPServers()
         {
+            Logger.Info("Starting SMTP servers...");
             if (!Running && _servers != null)
             {
                 foreach (var server in _servers)
@@ -178,16 +205,19 @@ namespace Granikos.Hydra.Service
             }
 
             Running = true;
+            Logger.Info("SMTP servers started.");
         }
 
         public void StopMessageProcessing()
         {
             if (_senders != null)
             {
+                Logger.Info("Stopping mail sending...");
                 foreach (var sender in _senders)
                 {
                     sender.Stop();
                 }
+                Logger.Info("Stopped mail sending.");
             }
         }
 
@@ -195,10 +225,12 @@ namespace Granikos.Hydra.Service
         {
             if (_senders != null)
             {
+                Logger.Info("Starting mail sending...");
                 foreach (var sender in _senders)
                 {
                     sender.Start();
                 }
+                Logger.Info("Started mail sending.");
             }
         }
 
@@ -237,6 +269,7 @@ namespace Granikos.Hydra.Service
 
         protected override void OnStart(string[] args)
         {
+            Logger.Info("Service starting...");
             StartSMTPServers();
             StartMessageProcessing();
 
@@ -253,10 +286,12 @@ namespace Granikos.Hydra.Service
             _host.Open();
 
             _retentionManager.Start();
+            Logger.Info("Service started.");
         }
 
         protected override void OnStop()
         {
+            Logger.Info("Service stopping...");
             StopSMTPServers();
             StopMessageProcessing();
 
@@ -267,6 +302,7 @@ namespace Granikos.Hydra.Service
             }
 
             _retentionManager.Stop();
+            Logger.Info("Service stopped...");
         }
     }
 }

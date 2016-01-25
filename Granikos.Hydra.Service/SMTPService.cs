@@ -22,6 +22,7 @@ namespace Granikos.Hydra.Service
         private readonly Dictionary<IPAddress, GreyslistTimeWindow> _greyList = new Dictionary<IPAddress, GreyslistTimeWindow>();
         private Thread _listenThread;
         private TcpListener _tcpListener;
+        private bool running = false;
 
         public SMTPService(IReceiveConnector connector, SMTPServer smtpServer, CompositionContainer container)
         {
@@ -108,6 +109,8 @@ namespace Granikos.Hydra.Service
                 _tcpListener.Stop();
             }
 
+            running = true;
+
             _tcpListener = new TcpListener(LocalEndpoint);
 
             if (_listenThread == null)
@@ -119,6 +122,9 @@ namespace Granikos.Hydra.Service
 
         public void Stop()
         {
+            running = false;
+            _listenThread = null;
+
             if (_tcpListener != null)
             {
                 _tcpListener.Stop();
@@ -132,7 +138,7 @@ namespace Granikos.Hydra.Service
             {
                 _tcpListener.Start();
 
-                while (true)
+                while (running)
                 {
                     try
                     {
