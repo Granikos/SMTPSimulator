@@ -201,7 +201,8 @@ FakesAssemblies/
 /Granikos.Hydra.WebClient/Content/dist
 /Granikos.Hydra.WebClient/Scripts/maps
 /Granikos.Hydra.WebClient/Scripts/*.min.js
-/Granikos.Hydra.Service/AppData/*.json
+/Granikos.Hydra.WebClient/Scripts/lib
+
 /WebDeploy
 /HydraWebClient.*
 /Granikos.Hydra.Service/AppData

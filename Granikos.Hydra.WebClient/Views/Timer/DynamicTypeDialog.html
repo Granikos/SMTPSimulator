@@ -5,7 +5,14 @@
 
 <div class="modal-body clearfix">
     {{$parent.timeTable.Type}}
+    <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" chart-legend="false" chart-click="onClick"></canvas>
     <form role="form" name="typeForm" ng-submit="typeForm.$valid && $close()">
+        <slider step="1" style="width: 100%">
+            <slider-range model="val.value" ng-repeat="(key, val) in rangeArray">
+                <div class="slider-handle"></div>
+                <div class="slider-label">{{ val.name }}</div>
+            </slider-range>
+        </slider>
         <div class="form-group">
             <label for="todo">TODO</label>
             <input type="text" class="form-control" id="todo" placeholder="TODO" ng-model="todo" required/>

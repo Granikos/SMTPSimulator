@@ -15,8 +15,18 @@ namespace Granikos.Hydra.WebClient
                 .Include("~/Scripts/FontDetector.js")
             );
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/css")
+                .Include("~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/dist")
+                .IncludeDirectory("~/Content/dist/", "*.css", true));
+
+            bundles.Add(new ScriptBundle("~/Scripts/dist")
+                .Include("~/Scripts/lib/jquery.js")
+                .Include("~/Scripts/lib/angular.js")
+                .Include("~/Scripts/lib/Chart.js")
+                .Include("~/Scripts/lib/bootstrap.js")
+                .IncludeDirectory("~/Scripts/lib/", "*.js", true));
 
             // BundleTable.EnableOptimizations = true;
         }

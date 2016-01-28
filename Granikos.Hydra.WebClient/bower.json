@@ -1,41 +1,65 @@
 {
-  "name": "Hydra",
-  "version": "0.0.0",
-  "homepage": "https://github.com/Granikos/HYDRA",
-  "authors": [
-    "Manuel Krebber <manuel.krebber@granikos.eu>"
-  ],
-  "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "angular": "latest",
-    "angular-aria": "latest",
-    "angular-bootstrap": "latest",
-    "angular-enum-flag-directive": "https://github.com/jvdvleuten/angular-enum-flag-directive.git",
-    "angular-moment-duration": "latest",
-    "angular-rangeslider": "~0.0.14",
-    "angular-route": "latest",
-    "angular-ui": "latest",
-    "angular-ui-grid": "latest",
-    "bootstrap": "latest",
-    "bootstrap-dialog": "latest",
-    "checklist-model": "*",
-    "jquery": "latest",
-    "moment": "latest",
-    "ng-file-upload": "latest",
-    "ngTouchSpin": "latest",
-    "papaparse": "latest",
-    "font-awesome": "latest",
-    "angular-xeditable": "latest"
-  },
-  "resolutions": {
-    "angular": "1.4.7",
-    "bootstrap-select": "~1.7.4"
-  }
+    "name": "Hydra",
+    "version": "0.0.0",
+    "homepage": "https://github.com/Granikos/HYDRA",
+    "authors": [
+        "Manuel Krebber <manuel.krebber@granikos.eu>"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "angular": "latest",
+        "angular-aria": "latest",
+        "angular-bootstrap": "latest",
+        "angular-enum-flag-directive": "https://github.com/jvdvleuten/angular-enum-flag-directive.git",
+        "angular-moment-duration": "latest",
+        "angular-rangeslider": "~0.0.14",
+        "angular-route": "latest",
+        "angular-ui": "latest",
+        "angular-ui-grid": "latest",
+        "bootstrap": "latest",
+        "bootstrap-dialog": "latest",
+        "checklist-model": "*",
+        "jquery": "latest",
+        "moment": "latest",
+        "ng-file-upload": "latest",
+        "ngTouchSpin": "latest",
+        "papaparse": "latest",
+        "font-awesome": "latest",
+        "angular-xeditable": "latest",
+        "angular-chart.js": "0.8.8",
+        "Chart.js": "1.0.2",
+        "multirange": "val-samonte/angular-multirange",
+        "angular-multirange-slider": "~1.1.1",
+        "angular-ui-select": "latest",
+        "bootstrap-dialog": "latest"
+    },
+    "resolutions": {
+        "angular": "~1.4.7",
+        "bootstrap-select": "~1.7.4"
+    },
+    "overrides": {
+        "angular-enum-flag-directive": {
+            "main": "angular-enum-flag-directive.js"
+        },
+        "bootstrap-dialog":  {             
+            "main": [
+                "dist/css/bootstrap-dialog.css",
+                "dist/js/bootstrap-dialog.js"
+            ]
+        },
+        "bootstrap":  {             
+            "main": [
+                "dist/css/bootstrap.css",
+                "dist/css/bootstrap-theme.css",
+                "dist/js/bootstrap.js"
+              ]
+        }
+    }
 }
