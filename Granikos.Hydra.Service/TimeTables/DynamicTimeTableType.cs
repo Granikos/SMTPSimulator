@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using Granikos.Hydra.Service.Models;
@@ -38,6 +39,14 @@ namespace Granikos.Hydra.Service.TimeTables
         public void Initialize()
         {
             throw new NotImplementedException();
+        }
+
+        public ReadOnlyDictionary<string, string> InitialParameters
+        {
+            get
+            {
+                return new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
+            }
         }
     }
 }

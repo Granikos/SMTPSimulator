@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Granikos.Hydra.Service.Models
 {
@@ -14,5 +15,7 @@ namespace Granikos.Hydra.Service.Models
         bool ValidateParameters(out string message);
 
         void Initialize();
+
+        ReadOnlyDictionary<string, string> InitialParameters { get; }
     }
 }

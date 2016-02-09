@@ -53,7 +53,7 @@
             <div class="form-group row">
                 <label class="col-sm-6 control-label">Total Number of Mails per Week</label>
                 <div class="col-sm-6">
-                    <span class="form-control-static">{{(data | filter: '1').length * tt.Parameters.staticMailsPerInterval}}</span>
+                    <span class="form-control-static">{{(data | filter: '1').length * (tt.Parameters.staticMailsPerInterval || 0)}}</span>
                 </div>
             </div>
             <span></span>

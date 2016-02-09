@@ -7,7 +7,6 @@ using System.Configuration;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using Granikos.Hydra.Service.ConfigurationService;
@@ -23,7 +22,8 @@ namespace Granikos.Hydra.Service
     {
         public override WebContentFormat GetMessageFormatForContentType(string contentType)
         {
-            if (contentType.StartsWith("text/xml") || contentType.StartsWith("text/csv") || contentType.StartsWith("application/octet-stream"))
+            if (contentType.StartsWith("text/xml") || contentType.StartsWith("text/csv") ||
+                contentType.StartsWith("application/octet-stream"))
             {
                 return WebContentFormat.Raw;
             }
@@ -36,11 +36,12 @@ namespace Granikos.Hydra.Service
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, AddressFilterMode = AddressFilterMode.Any)]
     public class ConfigurationServiceImpl : IConfigurationService
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof (IConfigurationService));
         private readonly IMailQueueProvider _mailQueue;
         private readonly ISMTPServerContainer _servers;
 
         [Import]
-        private ILocalMailboxGroupProvider _localGroups;
+        private IAttachmentProvider _attachments;
 
         [Import]
         private IExternalMailboxGroupProvider _externalGroups;
@@ -49,10 +50,16 @@ namespace Granikos.Hydra.Service
         private IExternalUserProvider _externalUsers;
 
         [Import]
+        private ILocalMailboxGroupProvider _localGroups;
+
+        [Import]
         private ILocalUserProvider _localUsers;
 
         [Import]
         private ILogProvider _logs;
+
+        [Import]
+        private IMailTemplateProvider _mailTemplates;
 
         [Import]
         private IReceiveConnectorProvider _receiveConnectors;
@@ -60,20 +67,11 @@ namespace Granikos.Hydra.Service
         [Import]
         private ISendConnectorProvider _sendConnectors;
 
-        [Import]
-        private ITimeTableProvider _timeTables;
-
-        [Import]
-        private IMailTemplateProvider _mailTemplates;
-
-        [Import]
-        private IAttachmentProvider _attachments;
-
         [ImportMany]
         private IEnumerable<IUserTemplateProvider> _templateProviders;
 
-
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(IConfigurationService));
+        [Import]
+        private ITimeTableProvider _timeTables;
 
         public ConfigurationServiceImpl(SMTPServer server, ISMTPServerContainer servers, IMailQueueProvider mailQueue)
         {
@@ -87,6 +85,9 @@ namespace Granikos.Hydra.Service
         }
 
         public SMTPServer SmtpServer { get; private set; }
+
+        [Import(AllowRecomposition = true)]
+        private CompositionContainer _container { get; set; }
 
         public IEnumerable<UserGroup> GetLocalGroups()
         {
@@ -190,7 +191,15 @@ namespace Granikos.Hydra.Service
 
         public TimeTable GetEmptyTimeTable()
         {
-            return _timeTables.GetEmptyTimeTable().ConvertTo<TimeTable>();
+            var tt = _timeTables.GetEmptyTimeTable().ConvertTo<TimeTable>();
+
+            tt.Parameters = _container.GetExportedTypesWithContracts<ITimeTableType>()
+                .Select(t => _container.GetExportedValue<ITimeTableType>(t.Item2))
+                .SelectMany(type => type.InitialParameters)
+                .ToLookup(pair => pair.Key, pair => pair.Value)
+                .ToDictionary(group => group.Key, group => group.First());
+
+            return tt;
         }
 
         public SendConnector GetDefaultSendConnector()
@@ -337,7 +346,7 @@ namespace Granikos.Hydra.Service
 
         public bool GenerateLocalUsers(string templateName, string pattern, string domain, int count)
         {
-            var parts = templateName.Split(new[] { '/' }, 2);
+            var parts = templateName.Split(new[] {'/'}, 2);
             var template = _templateProviders
                 .SelectMany(t => t.All())
                 .First(t => t.GetType().Name.Equals(parts[0], StringComparison.InvariantCultureIgnoreCase)
@@ -367,7 +376,8 @@ namespace Granikos.Hydra.Service
 
         public EntitiesWithTotal<User> GetExternalUsers(int page, int perPage)
         {
-            return new EntitiesWithTotal<User>(_externalUsers.Paged(page, perPage).Select(u => u.ConvertTo<User>()), _externalUsers.Total);
+            return new EntitiesWithTotal<User>(_externalUsers.Paged(page, perPage).Select(u => u.ConvertTo<User>()),
+                _externalUsers.Total);
         }
 
         public int GetExternalUserCount()
@@ -442,21 +452,17 @@ namespace Granikos.Hydra.Service
             return _timeTables.All().Select(t => t.ConvertTo<TimeTable>());
         }
 
-        [Import(AllowRecomposition = true)]
-        private CompositionContainer _container { get; set; }
-
         public IEnumerable<TimeTableTypeInfo> GetTimeTableTypes()
         {
             foreach (var type in _container.GetExportedTypesWithContracts<ITimeTableType>())
             {
-                DisplayNameAttribute dn = (DisplayNameAttribute)Attribute.GetCustomAttribute(type.Item1, typeof(DisplayNameAttribute));
+                var dn = (DisplayNameAttribute) Attribute.GetCustomAttribute(type.Item1, typeof (DisplayNameAttribute));
 
                 yield return new TimeTableTypeInfo
                 {
                     Name = type.Item2,
                     DisplayName = dn != null ? dn.DisplayName : type.Item2
                 };
-
             }
         }
 
@@ -511,7 +517,7 @@ namespace Granikos.Hydra.Service
 
         public IDictionary<string, string> GetTimeTableTypeData(string type)
         {
-            return _container.GetExport<ITimeTableType>(type).Value.Data;
+            return _container.GetExportedValue<ITimeTableType>(type).Data;
         }
 
         public TimeTable GetTimeTable(int id)
