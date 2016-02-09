@@ -27,6 +27,23 @@ namespace Granikos.Hydra.Service.Database.Providers
             Database.Entry(dbEntity).Property(t => t.MailsSuccess).IsModified = false;
         }
 
+        protected override void OnAdded(TimeTable entity)
+        {
+            if (OnTimeTableAdd != null) OnTimeTableAdd(entity);
+        }
+
+        protected override void OnUpdated(TimeTable entity)
+        {
+            if (OnTimeTableRemove != null) OnTimeTableRemove(entity);
+            if (OnTimeTableAdd != null) OnTimeTableAdd(entity);
+        }
+
+
+        protected override void OnDeleted(TimeTable entity)
+        {
+            if (OnTimeTableRemove != null) OnTimeTableRemove(entity);
+        }
+
 #if DEBUG
         protected IEnumerable<TimeTable> Initializer()
         {

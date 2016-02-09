@@ -55,6 +55,8 @@ namespace Granikos.Hydra.Service.Database
                 throw;
             }
 
+            OnAdded(entity);
+
             return entity;
         }
 
@@ -64,7 +66,19 @@ namespace Granikos.Hydra.Service.Database
 
         protected virtual void OnUpdate(TEntity entity, TEntity dbEntity)
         {
-            
+
+        }
+
+        protected virtual void OnAdded(TEntity entity)
+        {
+        }
+
+        protected virtual void OnUpdated(TEntity entity)
+        {
+        }
+
+        protected virtual void OnDeleted(TEntity entity)
+        {
         }
 
         public TEntity Update(TEntity entity)
@@ -84,14 +98,18 @@ namespace Granikos.Hydra.Service.Database
                 throw;
             }
 
+            OnUpdated(dbEntity);
+
             return dbEntity;
         }
 
         public bool Delete(TKey id)
         {
-            Database.Set<TEntity>().Remove(Get(id));
+            var entity = Database.Set<TEntity>().Remove(Get(id));
 
             Database.SaveChanges();
+
+            OnDeleted(entity);
 
             return true;
         }
