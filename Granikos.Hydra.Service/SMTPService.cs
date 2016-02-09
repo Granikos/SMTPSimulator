@@ -18,11 +18,9 @@ namespace Granikos.Hydra.Service
         private static readonly ILog Logger = LogManager.GetLogger(typeof(SMTPService));
         private readonly CompositionContainer _container;
 
-        // TODO: Clean up grey list regularly
-        private readonly Dictionary<IPAddress, GreyslistTimeWindow> _greyList = new Dictionary<IPAddress, GreyslistTimeWindow>();
         private Thread _listenThread;
         private TcpListener _tcpListener;
-        private bool running = false;
+        private bool _running;
 
         public SMTPService(IReceiveConnector connector, SMTPServer smtpServer, CompositionContainer container)
         {
@@ -33,27 +31,24 @@ namespace Granikos.Hydra.Service
             Connector = connector;
             Settings = new DefaultReceiveSettings(connector);
 
-            SMTPServer.OnConnect += (transaction, connect) =>
-            {
-                if (connector.RemoteIPRanges.Any() && !connector.RemoteIPRanges.Any(range => range.Contains(connect.IP)))
-                {
-                    connect.Cancel = true;
-                }
-
-                CheckGreylisting(connect);
-            };
-
-            SMTPServer.OnNewMessage += (transaction, mail) =>
-            {
-                Console.WriteLine("--------------------------------------");
-                Console.WriteLine("New message from " + mail.From);
-                Console.WriteLine("Recipients: " + string.Join(", ", mail.Recipients.Select(r => r.ToString())));
-                // Console.WriteLine();
-                // Console.WriteLine(body);
-                Console.WriteLine("--------------------------------------");
-            };
+            _greylistingManager = new GreylistingManager(connector.GreylistingTime ?? TimeSpan.Zero);
+            SMTPServer.OnConnect += SMTPServerOnOnConnect;
 
             _container.SatisfyImportsOnce(this);
+        }
+
+        private void SMTPServerOnOnConnect(SMTPTransaction transaction, SMTPServer.ConnectEventArgs connect)
+        {
+            if (Connector.RemoteIPRanges.Any() && !Connector.RemoteIPRanges.Any(range => range.Contains(connect.IP)))
+            {
+                connect.Cancel = true;
+            }
+
+            if (_greylistingManager.IsGreylisted(connect.IP))
+            {
+                connect.Cancel = true;
+                connect.ResponseCode = SMTPStatusCode.NotAvailiable;
+            }
         }
 
         public SMTPServer SMTPServer { get; private set; }
@@ -61,46 +56,7 @@ namespace Granikos.Hydra.Service
         public IReceiveConnector Connector { get; private set; }
         public IPEndPoint LocalEndpoint { get; private set; }
 
-        struct GreyslistTimeWindow
-        {
-            public DateTime start;
-            public DateTime end;
-        }
-
-        private static readonly TimeSpan GreylistWindow = TimeSpan.FromMinutes(15);
-
-        private void CheckGreylisting(SMTPServer.ConnectEventArgs connect)
-        {
-            if (Connector.GreylistingTime != null && Connector.GreylistingTime > TimeSpan.Zero)
-            {
-                GreyslistTimeWindow window;
-
-                if (_greyList.TryGetValue(connect.IP, out window))
-                {
-                    if (window.start > DateTime.Now)
-                    {
-                        Console.WriteLine("Greylisting activate, time left: " + (window.start - DateTime.Now));
-                        connect.Cancel = true;
-                        connect.ResponseCode = SMTPStatusCode.NotAvailiable;
-                        return;
-                    }
-
-                    if (window.end > DateTime.Now)
-                    {
-                        return;
-                    }
-
-                    _greyList.Remove(connect.IP);
-                }
-
-                DateTime start = (DateTime)(DateTime.Now + Connector.GreylistingTime);
-
-                Console.WriteLine("Greylisting started, time left: " + Connector.GreylistingTime);
-                _greyList.Add(connect.IP, new GreyslistTimeWindow { start = start, end = start + GreylistWindow });
-                connect.Cancel = true;
-                connect.ResponseCode = SMTPStatusCode.NotAvailiable;
-            }
-        }
+        private readonly GreylistingManager _greylistingManager;
 
         public void Start()
         {
@@ -109,7 +65,7 @@ namespace Granikos.Hydra.Service
                 _tcpListener.Stop();
             }
 
-            running = true;
+            _running = true;
 
             _tcpListener = new TcpListener(LocalEndpoint);
 
@@ -122,7 +78,7 @@ namespace Granikos.Hydra.Service
 
         public void Stop()
         {
-            running = false;
+            _running = false;
             _listenThread = null;
 
             if (_tcpListener != null)
@@ -138,7 +94,7 @@ namespace Granikos.Hydra.Service
             {
                 _tcpListener.Start();
 
-                while (running)
+                while (_running)
                 {
                     try
                     {
