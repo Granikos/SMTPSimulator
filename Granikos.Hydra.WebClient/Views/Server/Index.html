@@ -7,10 +7,10 @@
             </div>
             <div class="col-sm-4">
                 <div class="btn-group pull-right">
-                    <button type="button" class="btn btn-success" ng-click="start()" ng-disabled="running">
+                    <button type="button" class="btn btn-success" ng-click="start($event)" ng-disabled="running">
                         <i class="glyphicon glyphicon-play"></i> Start
                     </button>
-                    <button type="button" class="btn btn-danger" ng-click="stop()" ng-disabled="!running">
+                    <button type="button" class="btn btn-danger" ng-click="stop($event)" ng-disabled="!running">
                         <i class="glyphicon glyphicon-stop"></i> Stop
                     </button>
                 </div>

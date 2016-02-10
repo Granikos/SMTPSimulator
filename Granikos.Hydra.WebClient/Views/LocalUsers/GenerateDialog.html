@@ -6,22 +6,26 @@
     <form role="form" name="generateForm" ng-submit="generateForm.$valid && startGeneration()">
         <div class="form-group">
             <label for="numberOfUsers">Number of Users</label>
-            <input type="number" class="form-control" id="numberOfUsers" placeholder="Enter number of users" ng-model="generate.numberOfUsers" min="1" required />
+            <input type="number" class="form-control" id="numberOfUsers" placeholder="Enter number of users" ng-model="generation.numberOfUsers" min="1" required />
         </div>
         <div class="form-group">
             <label for="domain">Domain for Users' Mailboxes</label>
-            <input type="text" class="form-control" id="domain" placeholder="Enter domain" ng-model="generate.domain" required />
+            <input type="text" class="form-control" id="domain" placeholder="Enter domain" ng-model="generation.domain" required />
         </div>
-        <div class="form-group" ng-show="generate.supportsPattern">
+        <div class="form-group" ng-show="generation.supportsPattern">
             <label for="pattern">Pattern for Mailbox Name</label>
-            <input type="text" class="form-control" id="pattern" placeholder="Enter pattern" ng-model="generate.pattern" required />
-            <select class="form-control" ng-model="generate.pattern" required>
+            <input type="text" class="form-control" id="pattern" placeholder="Enter pattern" ng-model="generation.pattern" required />
+            <select class="form-control" ng-model="generation.pattern" required>
                 <option value="">-- Select pattern --</option>
                 <option value="%g.%s">%g.%s (max.musterman)</option>
                 <option value="%1g.%s">%1g.%s (m.musterman)</option>
                 <option value="%g_%s">%g.%s (max_musterman)</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-default pull-right">Start</button>
+        <button type="submit" class="btn btn-default pull-right" ng-disabled="generation.running">
+            <i class="glyphicon glyphicon-refresh glyphicon-spin" ng-show="generation.running"></i>
+            <span ng-hide="generation.running">Generate</span>
+            <span ng-show="generation.running">Generating...</span>
+        </button>
     </form>
 </div>

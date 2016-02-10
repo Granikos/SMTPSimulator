@@ -4,12 +4,14 @@
             <h4 class="panel-title">
                 <a data-toggle="collapse" data-target="#collapse{{connector.Id}}" class="collapsed">
                     {{connector.Name}}&nbsp;
+                    <span class="glyphicon glyphicon-exclamation-sign" ng-show="connectorForms['form' + connector.Id].$dirty"
+                          tooltip="This send connector has unsaved changes" tooltip-placement="top" tooltip-append-to-body="true"></span>
                 </a>
             </h4>
         </div>
         <div id="collapse{{connector.Id}}" class="panel-collapse collapse">
             <div class="panel-body">
-                <form id="connectorForm{{connector.Id}}" class="form-horizontal" name="connectorForms.form{{connector.Id}}" ng-submit="connectorForms['form' + connector.Id].$valid && (connector.__adding__? add(connector) : update(connector))">
+                <form id="connectorForm{{connector.Id}}" class="form-horizontal" name="connectorForms.form{{connector.Id}}" ng-submit="connectorForms['form' + connector.Id].$valid && (connector.__adding__? add(connector, $event) : update(connector, $event))" confirm-on-exit="There are unsaved changes in a send connector, are you sure you want to leave the page?">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Name</label>
                         <div class="col-sm-8">
@@ -53,19 +55,19 @@
                         <label class="col-sm-4 control-label">Retry Time</label>
                         <div class="col-sm-2">
                             <div class="input-group">
-                                <input type="text" class="form-control" data-momentduration="hours" data-ng-model="connector.RetryTimeDuration" />
+                                <input type="text" timespan-validator="timespanGreaterThanZero" class="form-control" data-momentduration="hours" data-ng-model="connector.RetryTimeDuration" />
                                 <span class="input-group-addon">h</span>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="input-group">
-                                <input type="text" class="form-control" data-momentduration="minutes" data-ng-model="connector.RetryTimeDuration" />
+                                <input type="text" timespan-validator="timespanGreaterThanZero" class="form-control" data-momentduration="minutes" data-ng-model="connector.RetryTimeDuration" />
                                 <span class="input-group-addon">m</span>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="input-group">
-                                <input type="text" class="form-control" data-momentduration="seconds" data-ng-model="connector.RetryTimeDuration" />
+                                <input type="text" timespan-validator="timespanGreaterThanZero" class="form-control" data-momentduration="seconds" data-ng-model="connector.RetryTimeDuration" />
                                 <span class="input-group-addon">s</span>
                             </div>
                         </div>
@@ -181,19 +183,19 @@
                     <div class="form-group">
                         <div class="col-sm-12">
                             <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-info" ng-click="makeDefault(connector)" ng-hide="connector.Id === defaultId || connector.__adding__">
+                                <button type="button" class="btn btn-info exclusive-action" ng-click="makeDefault(connector, $event)" ng-hide="connector.Id === defaultId || connector.__adding__">
                                     <i class="glyphicon glyphicon-default"></i> Make Default
                                 </button>
-                                <button type="submit" class="btn btn-success" ng-hide="connector.__adding__">
+                                <button type="submit" class="btn btn-success update-button exclusive-action" ng-hide="connector.__adding__">
                                     <i class="glyphicon glyphicon-floppy-disk"></i> Update
                                 </button>
-                                <button type="button" class="btn btn-danger" ng-click="delete(connector)" ng-hide="connector.Id === defaultId || connector.__adding__">
+                                <button type="button" class="btn btn-danger exclusive-action" ng-click="delete(connector, $event)" ng-hide="connector.Id === defaultId || connector.__adding__">
                                     <i class="glyphicon glyphicon-remove-sign"></i> Remove
                                 </button>
-                                <button type="submit" class="btn btn-success" ng-show="connector.__adding__">
+                                <button type="submit" class="btn btn-success add-button exclusive-action" ng-show="connector.__adding__">
                                     <i class="glyphicon glyphicon-floppy-disk"></i> Add
                                 </button>
-                                <button type="button" class="btn btn-danger" ng-click="cancelAdd(connector)" ng-show="connector.__adding__">
+                                <button type="button" class="btn btn-danger exclusive-action" ng-click="cancelAdd(connector)" ng-show="connector.__adding__">
                                     <i class="glyphicon glyphicon-remove-sign"></i> Cancel
                                 </button>
                             </div>

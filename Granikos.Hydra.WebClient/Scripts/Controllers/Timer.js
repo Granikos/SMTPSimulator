@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('Timer', ['ui.bootstrap.modal', 'ui-rangeSlider', 'ui.select'])
+    angular.module('Timer', ['ui.bootstrap.modal', 'ui-rangeSlider', 'ui.select', "chart.js", "angularMultiSlider"])
         .service("TimeTableService", ["$http", DataService("api/TimeTables")])
         .controller('TimerController', [
             '$scope', '$http', '$modal', 'TimeTableService', function ($scope, $http, $modal, TimeTableService) {
@@ -88,10 +88,13 @@
                         showError(data.Message || data.data.Message);
                     });
 
-                $scope.update = function (timeTable) {
+                $scope.update = function (timeTable, $event) {
+                    var button = $($event.currentTarget).find('button.update-button');
+                    var disabledButton = disableClickedButton(button);
                     TimeTableService
                         .update(timeTable)
                         .then(function (data) {
+                            disabledButton();
                             var index = $scope.timeTables.indexOf(timeTable);
                             if (index > -1) {
                                 $scope.timeTables[index] = data.data;
@@ -100,19 +103,23 @@
                                 $('#collapse' + timeTable.Id).addClass('in');
                             }, 10);
                         }, function (data) {
+                            disabledButton();
                             showError(data.Message || data.data.Message);
                         });
                 };
 
-                $scope.delete = function (timeTable) {
+                $scope.delete = function (timeTable, $event) {
+                    var disabledButton = disableClickedButton($event.currentTarget);
                     TimeTableService
                         .delete(timeTable.Id)
                         .then(function () {
+                            disabledButton();
                             var index = $scope.timeTables.indexOf(timeTable);
                             if (index > -1) {
                                 $scope.timeTables.splice(index, 1);
                             }
                         }, function (data) {
+                            disabledButton();
                             showError(data.Message || data.data.Message);
                         });
                 };
@@ -135,13 +142,16 @@
                         });
                 };
 
-                $scope.add = function (timeTable) {
+                $scope.add = function (timeTable, $event) {
+                    var button = $($event.currentTarget).find('button.add-button');
+                    var disabledButton = disableClickedButton(button);
+
                     delete timeTable.Id;
-                    delete timeTable.__adding__;
 
                     TimeTableService
                         .add(timeTable)
                         .then(function (data) {
+                            disabledButton();
                             var index = $scope.timeTables.indexOf(timeTable);
                             if (index > -1) {
                                 $scope.timeTables[index] = data.data;
@@ -151,6 +161,7 @@
                             }, 10);
                             $scope.adding = false;
                         }, function (data) {
+                            disabledButton();
                             showError(data.Message || data.data.Message);
                         });
                 };
@@ -171,7 +182,8 @@
                             controller: type + 'TimerTypeController',
                             scope: scope,
                             backdrop: 'static',
-                            keyboard: false
+                            keyboard: false,
+                            size: 'lg'
                         });
                 };
             }
@@ -249,7 +261,84 @@
             };
         })
         .controller('DynamicTimerTypeController', [
-            '$scope', '$http', '$modal', function ($scope, $http, $modal) {
+            '$scope', '$http', '$modal', '$timeout', function ($scope, $http, $modal, $timeout) {
+                $scope.$on('create', function (event, chart) {
+                    $timeout(function() { chart.resize(chart.render, true); }, 100);
+                });
+                $scope.labels = [];
+                $scope.data = [];
+                $scope.options = {
+                    responsive: true,
+                    maintainAspectRatio: false
+                };
+                $scope.normalizeDocument = [];
+                $scope.start = 8;
+                $scope.values = [];
+                $scope.sliders = [
+                  { value: 8,  title: 'Start' },
+                  { value: 10, title: 'Peak 1 Start' },
+                  { value: 11, title: 'Peak 1 End' },
+                  { value: 14, title: 'Peak 2 Start' },
+                  { value: 16, title: 'Peak 2 End' },
+                  { value: 18, title: 'End' }
+                ];
+                $scope.rangeArray = [
+                ]
+                $scope.peak1s = 10;
+                $scope.peak1e = 11;
+                $scope.peak2s = 14;
+                $scope.peak2e = 16;
+                $scope.end = 18;
+                var totalMails = 10000;
+                var i;
+                for (i = 0; i < 24; i++) {
+                    $scope.labels.push(i + '');
+                }
+                var data = [];
+                for (i = 0; i < $scope.start; i++) {
+                    data.push(0);
+                }
+                for (i = $scope.start; i < $scope.peak1s; i++) {
+                    data.push(1);
+                }
+                for (i = $scope.peak1s; i <= $scope.peak1e; i++) {
+                    data.push(1.5);
+                }
+                for (i = $scope.peak1e + 1; i < $scope.peak2s; i++) {
+                    data.push(1);
+                }
+                for (i = $scope.peak2s; i <= $scope.peak2e; i++) {
+                    data.push(1.5);
+                }
+                for (i = $scope.peak2e + 1; i <= $scope.end; i++) {
+                    data.push(1);
+                }
+                for (i = $scope.end + 1; i < 24; i++) {
+                    data.push(0);
+                }
+                var l = [];
+                var sum = 0;
+                for (i = 0; i < 24; i++) {
+                    var m2 = (i - 2) >= 0 ? data[i - 2] : 0;
+                    var m1 = (i - 1) >= 0 ? data[i - 1] : 0;
+                    var p1 = (i + 2) < 24 ? data[i + 1] : 0;
+                    var p2 = (i + 2) < 24 ? data[i + 2] : 0;
+
+                    var value = m2 + 2 * m1 + 5 * data[i] + 2 * p1 + p2;
+                    l.push(value);
+                    sum += value;
+                }
+                for (i = 0; i < 24; i++) {
+                    l[i] = l[i] / sum;
+                }
+                for (i = 0; i < 24; i++) {
+                    l[i] = Math.round(l[i] * totalMails);
+                }
+                $scope.data.push(l);
+
+                $scope.onClick = function (points, evt) {
+                    console.log(points, evt);
+                };
             }
         ])
         .controller('StaticTimerTypeController', ['$scope', function ($scope) {

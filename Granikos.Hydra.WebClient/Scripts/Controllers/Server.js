@@ -37,24 +37,30 @@
                         showError(data.Message);
                     });
 
-                $scope.start = function() {
+                $scope.start = function ($event) {
+                    var disabledButton = disableClickedButton($event.currentTarget);
                     $http.get("api/Server/Start")
-                        .success(function() {
+                        .success(function () {
+                            disabledButton();
                             $scope.running = true;
                             $scope.status = "Running";
                         })
-                        .error(function(data) {
+                        .error(function (data) {
+                            disabledButton();
                             showError(data.Message);
                         });
                 };
 
-                $scope.stop = function() {
+                $scope.stop = function ($event) {
+                    var disabledButton = disableClickedButton($event.currentTarget);
                     $http.get("api/Server/Stop")
-                        .success(function() {
+                        .success(function () {
+                            disabledButton();
                             $scope.running = false;
                             $scope.status = "Stopped";
                         })
-                        .error(function(data) {
+                        .error(function (data) {
+                            disabledButton();
                             showError(data.Message);
                         });
                 };

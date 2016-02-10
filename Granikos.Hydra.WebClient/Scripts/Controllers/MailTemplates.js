@@ -17,23 +17,40 @@
                         showError(data.Message || data.data.Message);
                     });
 
-                $scope.import = function (files) {
+                $scope.importing = false;
+
+                $scope.import = function (files, $event) {
                     if (files && files.length > 0) {
+                        var disabledButton = disableClickedButton($('#importButton'));
+                        $('#importfile').prop('disabled', true);
+                        $scope.importing = true;
                         var file = files[0];
 
                         Upload.upload({
                             url: 'api/MailTemplates/Import',
                             file: file
                         }).success(function (data, status, headers, config) {
+                            $scope.importing = false;
+                            disabledButton();
+                            $('#importfile').prop('disabled', false);
                             $scope.templates.push(data);
+                        }).error(function (data) {
+                            $scope.importing = false;
+                            disabledButton();
+                            $('#importfile').prop('disabled', false);
+                            showError(data.Message || data.data.Message);
                         });
                     }
                 };
 
-                $scope.update = function (template) {
+                $scope.update = function (template, $event) {
+                    var button = $($event.currentTarget).find('button.add-button');
+                    var disabledButton = disableClickedButton(button);
+
                     MailTemplateService
                         .update(template)
                         .then(function (data) {
+                            disabledButton();
                             var index = $scope.templates.indexOf(template);
                             if (index > -1) {
                                 $scope.templates[index] = data.data;
@@ -42,19 +59,23 @@
                                 $('#collapse' + template.Id).addClass('in');
                             }, 10);
                         }, function (data) {
+                            disabledButton();
                             showError(data.Message || data.data.Message);
                         });
                 };
 
-                $scope.delete = function (template) {
+                $scope.delete = function (template, $event) {
+                    var disabledButton = disableClickedButton($event.currentTarget);
                     MailTemplateService
                         .delete(template.Id)
                         .then(function (success) {
+                            disabledButton();
                             var index = $scope.templates.indexOf(template);
                             if (index > -1) {
                                 $scope.templates.splice(index, 1);
                             }
                         }, function (data) {
+                            disabledButton();
                             showError(data.Message || data.data.Message);
                         });
                 };
@@ -75,13 +96,16 @@
                         });
                 };
 
-                $scope.add = function (template) {
+                $scope.add = function (template, $event) {
+                    var button = $($event.currentTarget).find('button.add-button');
+                    var disabledButton = disableClickedButton(button);
+
                     delete template.Id;
-                    delete template.__adding__;
 
                     MailTemplateService
                         .add(template)
                         .then(function (data) {
+                            disabledButton();
                             var index = $scope.templates.indexOf(template);
                             if (index > -1) {
                                 $scope.templates[index] = data.data;
@@ -91,6 +115,7 @@
                             }, 10);
                             $scope.adding = false;
                         }, function (data) {
+                            disabledButton();
                             showError(data.Message || data.data.Message);
                         });
                 };

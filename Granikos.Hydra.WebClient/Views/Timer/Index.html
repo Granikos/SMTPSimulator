@@ -16,7 +16,7 @@
         </div>
         <div id="collapse{{tt.Id}}" class="panel-collapse collapse">
             <div class="panel-body">
-                <form id="timeTableForm{{tt.Id}}" class="form-horizontal" name="timeTableForms.form{{tt.Id}}" ng-submit="timeTableForms['form' + tt.Id].$valid && (tt.__adding__? add(tt) : update(tt))" confirm-on-exit="There are unsaved changes in a time table, are you sure you want to leave the page?">
+                <form id="timeTableForm{{tt.Id}}" class="form-horizontal" name="timeTableForms.form{{tt.Id}}" ng-submit="timeTableForms['form' + tt.Id].$valid && (tt.__adding__? add(tt, $event) : update(tt, $event))" confirm-on-exit="There are unsaved changes in a time table, are you sure you want to leave the page?">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Name</label>
                         <div class="col-sm-8">
@@ -30,7 +30,7 @@
                                 <select name="Type" class="form-control" ng-model="tt.Type" required ng-options="type.Name as type.DisplayName for type in types"></select>
 
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="showSettings(this)">
+                                    <button type="button" class="btn btn-default" ng-click="showSettings(this)" ng-disabled="!tt.Type">
                                         <i class="glyphicon glyphicon-calendar"></i> Configure Timetable
                                     </button>
                                 </span>
@@ -143,8 +143,7 @@
                                 <div class="col-sm-12">
                                     <div class="input-group">
                                         <span class="input-group-addon">Attachment File</span>
-                                        <select ng-options="attachment.Name as (attachment.Name + ' ('+(attachment.Size | bytes)+')') for attachment in attachments" name="Attachment" class="form-control" ng-model="tt.AttachmentName" ng-required="tt.AttachmentType === 2" ng-disabled="tt.AttachmentType !== 2">
-                                        </select>
+                                        <select ng-options="attachment.Name as (attachment.Name + ' ('+(attachment.Size | bytes)+')') for attachment in attachments" name="Attachment" class="form-control" ng-model="tt.AttachmentName" ng-required="tt.AttachmentType === 2" ng-disabled="tt.AttachmentType !== 2"></select>
                                     </div>
                                 </div>
                             </div>
@@ -204,16 +203,16 @@
                     <div class="form-group">
                         <div class="col-sm-12">
                             <div class="btn-group pull-right">
-                                <button type="submit" class="btn btn-success" ng-hide="tt.__adding__">
+                                <button type="submit" class="btn btn-success update-button exclusive-action" ng-hide="tt.__adding__">
                                     <i class="glyphicon glyphicon-floppy-disk"></i> Update
                                 </button>
-                                <button type="button" class="btn btn-danger" ng-click="delete(tt)" ng-hide="tt.__adding__">
+                                <button type="button" class="btn btn-danger exclusive-action" ng-click="delete(tt, $event)" ng-hide="tt.__adding__">
                                     <i class="glyphicon glyphicon-remove-sign"></i> Remove
                                 </button>
-                                <button type="submit" class="btn btn-success" ng-show="tt.__adding__">
+                                <button type="submit" class="btn btn-success add-button exclusive-action" ng-show="tt.__adding__">
                                     <i class="glyphicon glyphicon-floppy-disk"></i> Add
                                 </button>
-                                <button type="button" class="btn btn-danger" ng-click="cancelAdd(tt)" ng-show="tt.__adding__">
+                                <button type="button" class="btn btn-danger exclusive-action" ng-click="cancelAdd(tt, $event)" ng-show="tt.__adding__">
                                     <i class="glyphicon glyphicon-remove-sign"></i> Cancel
                                 </button>
                             </div>

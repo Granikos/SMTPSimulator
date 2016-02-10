@@ -283,11 +283,12 @@
                 };
 
                 $scope.generate = function (template) {
-                    $scope.generate = {
+                    $scope.generation = {
                         numberOfUsers: 1,
                         pattern: '%g.%s',
                         domain: '',
-                        supportsPattern: template.SupportsPattern
+                        supportsPattern: template.SupportsPattern,
+                        running: false
                     };
 
                     var modal = $modal
@@ -297,16 +298,19 @@
                         });
 
                     $scope.startGeneration = function () {
-                        $http.post("api/LocalUsers/Generate/" + $scope.generate.numberOfUsers, {
-                            pattern: $scope.generate.pattern,
+                        $scope.generation.running = true;
+                        $http.post("api/LocalUsers/Generate/" + $scope.generation.numberOfUsers, {
+                            pattern: $scope.generation.pattern,
                             template: template.Name,
-                            domain: $scope.generate.domain
+                            domain: $scope.generation.domain
                         })
                             .success(function (data) {
+                                $scope.generation.running = false;
                                 modal.close();
                                 $scope.refresh();
                             })
                             .error(function (data) {
+                                $scope.generation.running = false;
                                 showError(data.Message || data.data.Message);
                             });
                     };

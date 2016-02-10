@@ -1,6 +1,6 @@
 ﻿(function () {
     var IPRegexp = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-    var DomainRegexp = /^(\*\.?)?([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/;
+    var DomainRegexp = /^(\*\.?)?([a-z0-9]+(-[a-z0-9]+)*\.)*[a-z0-9]+(-[a-z0-9]+)*$/;
 
     angular.module('Send', ['ui.bootstrap.modal', 'enumFlag', 'checklist-model', 'ui.moment-duration', 'jkuri.touchspin'])
 
@@ -22,6 +22,10 @@
                     240: 'Default',
                     768: 'TLS 1.1',
                     3072: 'TLS 1.2'
+                }
+
+                $scope.timespanGreaterThanZero = function (value) {
+                    return value && value.asMilliseconds() > 0;
                 }
 
                 $scope.modes = ['Disabled', 'Enabled', 'Required', 'Full Tunnel'];
@@ -57,12 +61,15 @@
                         showError(data.Message || data.data.Message);
                     });
 
-                $scope.makeDefault = function (connector) {
+                $scope.makeDefault = function (connector, $event) {
+                    var disabledButton = disableClickedButton($event.currentTarget);
                     $http.post("api/SendConnectors/Default/" + connector.Id)
                         .success(function () {
+                            disabledButton();
                             $scope.defaultId = connector.Id;
                         })
                         .error(function (data) {
+                            disabledButton();
                             showError(data.Message || data.data.Message);
                         });
                 };
@@ -102,7 +109,10 @@
                     }
                 };
 
-                $scope.update = function (connector) {
+                $scope.update = function (connector, $event) {
+                    var button = $($event.currentTarget).find('button.update-button');
+                    var disabledButton = disableClickedButton(button);
+
                     if (connector.TLSSettings.CertificateName === '-- None --')
                         connector.TLSSettings.CertificateName = null;
 
@@ -113,6 +123,7 @@
                     SendConnectorService
                         .update(connector)
                         .then(function (data) {
+                            disabledButton();
                             var index = $scope.connectors.indexOf(connector);
                             if (index > -1) {
                                 data.data.RetryTimeDuration = moment.duration(data.data.RetryTime);
@@ -122,19 +133,23 @@
                                 $('#collapse' + connector.Id).addClass('in');
                             }, 10);
                         }, function (data) {
+                            disabledButton();
                             showError(data.Message || data.data.Message);
                         });
                 };
 
-                $scope.delete = function (connector) {
+                $scope.delete = function (connector, $event) {
+                    var disabledButton = disableClickedButton($event.currentTarget);
                     SendConnectorService
                         .delete(connector.Id)
                         .then(function (success) {
+                            disabledButton();
                             var index = $scope.connectors.indexOf(connector);
                             if (index > -1) {
                                 $scope.connectors.splice(index, 1);
                             }
                         }, function (data) {
+                            disabledButton();
                             showError(data.Message || data.data.Message);
                         });
                 };
@@ -156,12 +171,14 @@
                         });
                 };
 
-                $scope.add = function (connector) {
+                $scope.add = function (connector, $event) {
+                    var button = $($event.currentTarget).find('button.add-button');
+                    var disabledButton = disableClickedButton(button);
+
                     if (connector.TLSSettings.CertificateName === '-- None --')
                         connector.TLSSettings.CertificateName = null;
 
                     delete connector.Id;
-                    delete connector.__adding__;
                     connector.RetryTime = connector.RetryTimeDuration.hours() + ':' +
                         connector.RetryTimeDuration.minutes() + ':' +
                         connector.RetryTimeDuration.seconds();
@@ -169,8 +186,10 @@
                     SendConnectorService
                         .add(connector)
                         .then(function (data) {
+                            disabledButton();
                             var index = $scope.connectors.indexOf(connector);
                             if (index > -1) {
+                                data.data.RetryTimeDuration = moment.duration(data.data.RetryTime);
                                 $scope.connectors[index] = data.data;
                             }
                             window.setTimeout(function () {
@@ -178,6 +197,7 @@
                             }, 10);
                             $scope.adding = false;
                         }, function (data) {
+                            disabledButton();
                             showError(data.Message || data.data.Message);
                         });
                 };

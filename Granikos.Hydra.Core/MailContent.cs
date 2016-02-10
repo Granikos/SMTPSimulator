@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net.Mail;
@@ -45,7 +46,12 @@ namespace Granikos.Hydra.Core
             From = @from;
             Html = html;
             Text = text;
+
+            var host = ConfigurationManager.AppSettings["MessageIdHost"];
+            MessageId = string.Format("<{0}@{1}>", Guid.NewGuid().ToString("N"), host);
         }
+
+        public string MessageId { get; set; }
 
         public string Subject { get; set; }
 
@@ -165,6 +171,7 @@ namespace Granikos.Hydra.Core
             AddHeader(sb, "Content-Type", "multipart/mixed; boundary=" + boundary);
             AddHeader(sb, "MIME-Version", "1.0");
             AddHeader(sb, "Date", date);
+            AddHeader(sb, "Message-ID", MessageId);
 
             foreach (var additionalHeader in AdditionalHeaders)
             {

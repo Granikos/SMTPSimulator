@@ -32,6 +32,9 @@
 
                 ReceiveConnectorService.all()
                     .success(function (connectors) {
+                        $.each(connectors, function (i, c) {
+                            c.GreylistingTimeDuration = moment.duration(c.GreylistingTime);
+                        });
                         $scope.connectors = connectors;
                     })
                     .error(function (data) {
@@ -47,10 +50,19 @@
                     });
 
 
-                $scope.update = function (connector) {
+                $scope.update = function (connector, $event) {
+                    var button = $($event.currentTarget).find('button.update-button');
+                    var disabledButton = disableClickedButton(button);
+
+                    connector.GreylistingTime = connector.GreylistingTimeDuration.hours() + ':' +
+                        connector.GreylistingTimeDuration.minutes() + ':' +
+                        connector.GreylistingTimeDuration.seconds();
+
                     ReceiveConnectorService
                         .update(connector)
                         .then(function (data) {
+                            disabledButton();
+                            data.data.GreylistingTimeDuration = moment.duration(data.data.GreylistingTime);
                             for (var i = 0; i < $scope.connectors.length; i++) {
                                 if ($scope.connectors[i].Id === connector.Id) {
                                     $scope.connectors[i] = data.data;
@@ -61,19 +73,23 @@
                                 $('#collapse' + connector.Id).addClass('in');
                             }, 10);
                         }, function (data) {
+                            disabledButton();
                             showError(data.Message);
                         });
                 };
 
-                $scope.delete = function (connector) {
+                $scope.delete = function (connector, $event) {
+                    var disabledButton = disableClickedButton($event.currentTarget);
                     ReceiveConnectorService
                         .delete(connector.Id)
                         .then(function (success) {
+                            disabledButton();
                             var index = $scope.connectors.indexOf(connector);
                             if (index > -1) {
                                 $scope.connectors.splice(index, 1);
                             }
                         }, function (data) {
+                            disabledButton();
                             showError(data.Message);
                         });
                 };
@@ -84,6 +100,7 @@
                             $scope.adding = true;
                             data.data.__adding__ = true;
                             data.data.Id = 'Add';
+                            data.data.GreylistingTimeDuration = moment.duration(data.data.GreylistingTime);
                             $scope.connectors.push(data.data);
                             window.setTimeout(function () {
                                 $('#collapseAdd').addClass('in');
@@ -94,10 +111,19 @@
                         });
                 };
 
-                $scope.add = function (connector) {
+                $scope.add = function (connector, $event) {
+                    var button = $($event.currentTarget).find('button.add-button');
+                    var disabledButton = disableClickedButton(button);
+
+                    connector.GreylistingTime = connector.GreylistingTimeDuration.hours() + ':' +
+                        connector.GreylistingTimeDuration.minutes() + ':' +
+                        connector.GreylistingTimeDuration.seconds();
+
                     ReceiveConnectorService
                         .add(connector)
                         .then(function (data) {
+                            disabledButton();
+                            data.data.GreylistingTimeDuration = moment.duration(data.data.GreylistingTime);
                             var index = $scope.connectors.indexOf(connector);
                             if (index > -1) {
                                 $scope.connectors[index] = data.data;
@@ -107,6 +133,7 @@
                             }, 10);
                             $scope.adding = false;
                         }, function (data) {
+                            disabledButton();
                             showError(data.Message);
                         });
                 };

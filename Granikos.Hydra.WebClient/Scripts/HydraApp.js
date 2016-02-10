@@ -5,55 +5,55 @@
                 $locationProvider.hashPrefix('!').html5Mode(true);
 
                 $routeProvider
-                    .when('/Server', {
+                    .when('/Server/', {
                         templateUrl: 'Views/Server/Index.html',
                         controller: 'ServerController'
                     })
-                    .when('/LocalUsers', {
+                    .when('/LocalUsers/', {
                         templateUrl: 'Views/LocalUsers/Index.html',
                         controller: 'LocalUsersController'
                     })
-                    .when('/ExternalUsers', {
+                    .when('/ExternalUsers/', {
                         templateUrl: 'Views/ExternalUsers/Index.html',
                         controller: 'ExternalUsersController'
                     })
-                    .when('/Send', {
+                    .when('/Send/', {
                         templateUrl: 'Views/Send/Index.html',
                         controller: 'SendController'
                     })
-                    .when('/Receive', {
+                    .when('/Receive/', {
                         templateUrl: 'Views/Receive/Index.html',
                         controller: 'ReceiveController'
                     })
-                    .when('/Mail', {
+                    .when('/Mail/', {
                         templateUrl: 'Views/Mail/Index.html',
                         controller: 'MailController'
                     })
-                    .when('/Timer', {
+                    .when('/Timer/', {
                         templateUrl: 'Views/Timer/Index.html',
                         controller: 'TimerController'
                     })
-                    .when('/Attachment', {
+                    .when('/Attachment/', {
                         templateUrl: 'Views/Attachment/Index.html',
                         controller: 'AttachmentController'
                     })
-                    .when('/MailTemplates', {
+                    .when('/MailTemplates/', {
                         templateUrl: 'Views/MailTemplates/Index.html',
                         controller: 'MailTemplatesController'
                     })
-                    .when('/Logging', {
+                    .when('/Logging/', {
                         templateUrl: 'Views/Logging/Index.html',
                         controller: 'LoggingController'
                     })
-                    .when('/login', {
+                    .when('/login/', {
                         templateUrl: '/Views/Login.html',
                         controller: 'LoginController'
                     })
-                    .when('/logout', {
+                    .when('/logout/', {
                         template: '',
                         controller: 'LogoutController'
                     })
-                    .when('/register', {
+                    .when('/register/', {
                         templateUrl: '/Views/Register.html',
                         controller: 'RegisterController'
                     })
@@ -311,5 +311,16 @@
         return function (v) {
             return v._Major + "." + v._Minor + "." + v._Build + "." + v._Revision;
         }
+    })
+    .directive('timespanValidator', function () {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function (scope, elem, attr, ngModel) {
+                ngModel.$validators.timespan = function (duration) {
+                    return scope[attr.timespanValidator](duration);
+                }
+            }
+        };
     });
 })();

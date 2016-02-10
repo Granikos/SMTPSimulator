@@ -377,3 +377,33 @@ function fontawesomeFileIconClassForFileExtension(fileName) {
     return exts[parts[parts.length - 1]] || "fa-file-o";
 }
 
+function disableClickedButton(btn) {
+    btn = $(btn);
+    var icon = btn.find('i.glyphicon');
+
+    var exclusive = btn.hasClass('exclusive-action');
+
+    var oldClass = icon.attr("class");
+    icon.attr('class', 'glyphicon glyphicon-spin glyphicon-refresh');
+
+    btn.prop('disabled', true);
+    btn.addClass('disabled');
+
+    var others;
+
+    if (exclusive) {
+        others = btn.parent('.btn-group').find('button.exclusive-action');
+        others.prop('disabled', true);
+    }
+
+    return function () {
+        btn.prop('disabled', false);
+        btn.removeClass('disabled');
+        icon.attr('class', oldClass);
+
+        if (others) {
+            others.prop('disabled', false);
+        }
+    };
+}
+

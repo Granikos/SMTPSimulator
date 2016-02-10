@@ -5,18 +5,20 @@
 
 <div class="modal-body clearfix">
     {{$parent.timeTable.Type}}
-    <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" chart-legend="false" chart-click="onClick"></canvas>
-    <form role="form" name="typeForm" ng-submit="typeForm.$valid && $close()">
-        <slider step="1" style="width: 100%">
-            <slider-range model="val.value" ng-repeat="(key, val) in rangeArray">
-                <div class="slider-handle"></div>
-                <div class="slider-label">{{ val.name }}</div>
-            </slider-range>
-        </slider>
-        <div class="form-group">
-            <label for="todo">TODO</label>
-            <input type="text" class="form-control" id="todo" placeholder="TODO" ng-model="todo" required/>
-        </div>
-        <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-plus-sign"></i> Close</button>
-    </form>
-</div>
+    <div class="dynamicTimeChart">
+        <canvas class="chart chart-bar" chart-options="options" chart-data="data" chart-labels="labels" chart-legend="false" chart-click="onClick" height="300" width="100%"></canvas>
+    </div>
+        <form role="form" name="typeForm" ng-submit="typeForm.$valid && $close()">
+            <table class="hourSelector">
+                <tr class="selectBar">
+                    <td ng-class="{'work': hour >= start && hour <= end, 'peak': (hour >= peak1s && hour <= peak1e) || (hour >= peak2s && hour <= peak2e)}" ng-repeat="hour in labels"></td>
+                </tr>
+                <tr class="labelBar">
+                    <td ng-repeat="hour in labels">{{hour}}</td>
+                </tr>
+            </table>
+            <div class="form-group">
+            </div>
+            <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-plus-sign"></i> Close</button>
+        </form>
+    </div>
