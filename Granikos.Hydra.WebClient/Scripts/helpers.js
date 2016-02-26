@@ -234,9 +234,10 @@ function calculateColumnAutoWidths(columns, data, fontFamily, fontSize, hasMenu)
     for (var j = 0; j < columns.length; j++) {
         var name = columns[j].name || columns[j].field;
         var text = columns[j].displayName || columns[j].name;
+        var additonal = columns[j].additionalWidth || 0;
 
         var pixels = getTextWidth(text, fontSize + ' ' + font);
-        pixels += buttonWidth;
+        pixels += buttonWidth + additonal;
         if ((maximumsPixels[name] || 0) < pixels)
             maximumsPixels[name] = pixels;
 

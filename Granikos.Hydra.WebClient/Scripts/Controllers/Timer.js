@@ -262,15 +262,21 @@
         })
         .controller('DynamicTimerTypeController', [
             '$scope', '$http', '$modal', '$timeout', function ($scope, $http, $modal, $timeout) {
+                var rawData = $scope.$parent.tt.Parameters.dynamicData;
+
+                if (!$scope.$parent.tt.Parameters.dynamicTotalMails) $scope.$parent.tt.Parameters.dynamicTotalMails = 1000;
+                var actChart;
                 $scope.$on('create', function (event, chart) {
+                    actChart = chart;
                     $timeout(function() { chart.resize(chart.render, true); }, 100);
                 });
-                $scope.labels = [];
-                $scope.data = [];
+                $scope.labels = new Array(24).fill(1).map(function (x, i) { return i + ''; });
+                $scope.data = [new Array(24).fill(1)];
                 $scope.options = {
                     responsive: true,
                     maintainAspectRatio: false
                 };
+                /*
                 $scope.normalizeDocument = [];
                 $scope.start = 8;
                 $scope.values = [];
@@ -290,10 +296,6 @@
                 $scope.peak2e = 16;
                 $scope.end = 18;
                 var totalMails = 10000;
-                var i;
-                for (i = 0; i < 24; i++) {
-                    $scope.labels.push(i + '');
-                }
                 var data = [];
                 for (i = 0; i < $scope.start; i++) {
                     data.push(0);
@@ -335,10 +337,72 @@
                     l[i] = Math.round(l[i] * totalMails);
                 }
                 $scope.data.push(l);
+                */
+
+                var normalizedData = [];
+
+                $scope.normalizeData = function() {
+                    var totalMails = $scope.$parent.tt.Parameters.dynamicTotalMails;
+                    var sum = 0;
+                    var i;
+                    for (i = 0; i < 24; i++) {
+                        sum += $scope.data[0][i];
+                    }
+                    for (i = 0; i < 24; i++) {
+                        normalizedData[i] = $scope.data[0][i] / sum;
+                        $scope.data[0][i] = normalizedData[i] * totalMails;
+                    }
+                }
+
+                function getColFromEvent(evt) {
+                    var pos = Chart.helpers.getRelativePosition(evt);
+                    var col = -1;
+                    for (var j = 0; j < 24; j++) {
+                        var bar = actChart.datasets[0].bars[j];
+                        var minX = bar.x - bar.width / 2;
+                        var maxX = bar.x + bar.width / 2;
+
+                        if (minX <= pos.x && maxX >= pos.x) {
+                            col = j;
+                            break;
+                        }
+                    }
+
+                    return col;
+                }
+
+                function getYFromEvent(evt) {
+                    var pos = Chart.helpers.getRelativePosition(evt);
+
+                    var scalingFactor = actChart.scale.drawingArea() / (actChart.scale.min - actChart.scale.max);
+                    var y = (actChart.scale.endPoint - pos.y) / scalingFactor + actChart.scale.min;
+
+                    return y;
+                }
+
+                $scope.save = function () {
+                    $scope.$parent.tt.Parameters.dynamicData = normalizedData.join(',');
+                    $scope.$close();
+                };
 
                 $scope.onClick = function (points, evt) {
-                    console.log(points, evt);
+                    var col = getColFromEvent(evt);
+                    var y = getYFromEvent(evt);
+
+                    if (y < 0) y = 0;
+
+                    if (col !== -1) {
+                        $scope.data[0][col] = y;
+                        $scope.normalizeData();
+                    }
                 };
+
+                $scope.reset = function () {
+                    $scope.data[0] = rawData ? rawData.split(',').map(Number) : new Array(24).fill(1);
+                    $scope.normalizeData();
+                };
+
+                $scope.reset();
             }
         ])
         .controller('StaticTimerTypeController', ['$scope', function ($scope) {

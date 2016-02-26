@@ -105,7 +105,7 @@ namespace Granikos.Hydra.Service.TimeTables
                     case "0":
                         break;
                     default:
-                        message = "Invalid interval data value for stgatic time table: '" + values[i] + "'";
+                        message = "Invalid interval data value for static time table: '" + values[i] + "'";
                         return false;
                 }
             }

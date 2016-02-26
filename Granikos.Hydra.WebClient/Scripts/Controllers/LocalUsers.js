@@ -53,9 +53,11 @@
                     }
                 };
 
-                function getColumnDef(id) {
+                function getColumnDef(id, name) {
                     return {
                         name: 'group' + id,
+                        displayName: name,
+                        additionalWidth: 45,
                         type: 'boolean',
                         width: '1%',
                         enableSorting: false,
@@ -90,7 +92,7 @@
                             for (var j = 0; j < groups.length; j++) {
                                 var id = groups[j].Id;
                                 $scope.groupsById[id] = groups[j];
-                                $scope.columns.push(getColumnDef(id));
+                                $scope.columns.push(getColumnDef(id, groups[j].Name));
                             }
                             $scope.refreshGridSizing();
                         })
@@ -121,7 +123,7 @@
                         .success(function (group) {
                             $scope.groups.push(group);
                             $scope.groupsById[group.Id] = group;
-                            $scope.columns.push(getColumnDef(group.Id));
+                            $scope.columns.push(getColumnDef(group.Id, name));
                             $scope.refreshGridSizing();
                         })
                         .error(function (data) {

@@ -8,17 +8,21 @@
     <div class="dynamicTimeChart">
         <canvas class="chart chart-bar" chart-options="options" chart-data="data" chart-labels="labels" chart-legend="false" chart-click="onClick" height="300" width="100%"></canvas>
     </div>
-        <form role="form" name="typeForm" ng-submit="typeForm.$valid && $close()">
-            <table class="hourSelector">
-                <tr class="selectBar">
-                    <td ng-class="{'work': hour >= start && hour <= end, 'peak': (hour >= peak1s && hour <= peak1e) || (hour >= peak2s && hour <= peak2e)}" ng-repeat="hour in labels"></td>
-                </tr>
-                <tr class="labelBar">
-                    <td ng-repeat="hour in labels">{{hour}}</td>
-                </tr>
-            </table>
-            <div class="form-group">
+        <form role="form" name="typeForm" ng-submit="typeForm.$valid && save()">
+            <div class="form-group row">
+                <label class="col-sm-6 control-label" for="dynamicTotalMails">Total Number of Mails</label>
+                <div class="col-sm-6">
+                    <input id="dynamicTotalMails" type="number" class="form-control" placeholder="Total Mails" name="TotalMails"
+                           ng-model="tt.Parameters.dynamicTotalMails" min="1" max="100000" required string-to-number ng-change="normalizeData()" />
+                </div>
             </div>
-            <button type="submit" class="btn btn-success pull-right"><i class="glyphicon glyphicon-plus-sign"></i> Close</button>
+            <div class="btn-group pull-right top10">
+                <button type="button" class="btn btn-default" ng-click="reset()">
+                    <i class="glyphicon glyphicon-asterisk"></i> Reset
+                </button>
+                <button type="submit" class="btn btn-success">
+                    <i class="glyphicon glyphicon-remove"></i> Close
+                </button>
+            </div>
         </form>
     </div>

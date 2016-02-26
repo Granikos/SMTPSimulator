@@ -12,7 +12,7 @@
               ui-grid-one-bind-id-grid="col.uid + '-header-text'">
             <span class="glyphicon glyphicon-exclamation-sign" ng-show="grid.appScope.groupsById[col.colDef._groupId]._dirty"
                   tooltip="This group has unsaved changes" tooltip-placement="top" tooltip-append-to-body="true"></span>
-            {{ grid.appScope.groupsById[col.colDef._groupId].Name }}
+            <span title="{{ grid.appScope.groupsById[col.colDef._groupId].Name }}">{{ grid.appScope.groupsById[col.colDef._groupId].Name }}</span>
         </span>
     </div>
 
