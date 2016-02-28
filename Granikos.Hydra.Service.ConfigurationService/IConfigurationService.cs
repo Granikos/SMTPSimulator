@@ -457,13 +457,6 @@ namespace Granikos.Hydra.Service.ConfigurationService
 
         [OperationContract]
         [WebGet(
-            UriTemplate = "Certificates",
-            RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json)]
-        string[] GetCertificateFiles();
-
-        [OperationContract]
-        [WebGet(
             UriTemplate = "Server/Start",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]

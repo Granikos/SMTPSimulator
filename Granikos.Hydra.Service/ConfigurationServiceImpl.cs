@@ -619,17 +619,6 @@ namespace Granikos.Hydra.Service
             return new ImportResult(count, before);
         }
 
-        public string[] GetCertificateFiles()
-        {
-			// TODO: Fix
-            return new string[0];
-            /*
-            var folder = ConfigurationManager.AppSettings["CertificateFolder"];
-
-            return Directory.GetFiles(folder, "*.pfx").Select(Path.GetFileName).ToArray();
-                                  * */
-        }
-
         public void Start()
         {
             _servers.StartSMTPServers();

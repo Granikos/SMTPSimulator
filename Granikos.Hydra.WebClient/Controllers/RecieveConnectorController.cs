@@ -27,14 +27,6 @@ namespace Granikos.Hydra.WebClient.Controllers
             return _service.GetReceiveConnectors();
         }
 
-        // GET api/ReceiveConnectors/Certificates
-        [HttpGet]
-        [Route("Certificates")]
-        public IEnumerable<string> GetCertificates()
-        {
-            return _service.GetCertificateFiles();
-        }
-
         // GET api/ReceiveConnectors/5
         [HttpGet]
         [Route("{id:int}")]

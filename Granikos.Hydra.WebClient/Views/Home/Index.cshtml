@@ -12,16 +12,40 @@
             <ul class="nav navbar-nav navbar-left">
                 <li><a class="navbar-brand" href="/">Hydra</a></li>
                 <li><a href="/Server/">Server</a></li>
-                <li><a href="/LocalUsers/">Local Users</a></li>
-                <li><a href="/ExternalUsers/">External Users</a></li>
-                <li><a href="/Send/">Send</a></li>
-                <li><a href="/Receive/">Receive</a></li>
                 <li><a href="/Mail/">Mail</a></li>
-                <li><a href="/Timer/">Timer</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Users
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/LocalUsers/">Local</a></li>
+                        <li><a href="/ExternalUsers/">External</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Connectors
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/Send/">Send</a></li>
+                        <li><a href="/Receive/">Receive</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Settings
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/Timer/">Timer</a></li>
+                        <li><a href="/Attachments/">Attachments</a></li>
+                        <li><a href="/Certificates/">Certificates</a></li>
+                        <li><a href="/MailTemplates/">Mail Templates</a></li>
+                    </ul>
+                </li>
                 <li><a href="/Logging/">Logging</a></li>
-                <li><a href="/Attachments/">Attachments</a></li>
-                <li><a href="/Certificates/">Certificates</a></li>
-                <li><a href="/MailTemplates/">Mail Templates</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li ng-show="auth.user"><a href="/logout/">Logout</a></li>

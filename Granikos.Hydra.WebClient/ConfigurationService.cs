@@ -399,11 +399,6 @@ namespace Granikos.Hydra.WebClient
             return Channel.ImportExternalUsersWithOverwrite(stream);
         }
 
-        public string[] GetCertificateFiles()
-        {
-            return Channel.GetCertificateFiles();
-        }
-
         public void Start()
         {
             Channel.Start();

@@ -41,12 +41,18 @@
                         showError(data.Message);
                     });
 
-                $http.get("api/ReceiveConnectors/Certificates")
-                    .success(function (certificates) {
-                        $scope.certificates = certificates;
-                    })
-                    .error(function (data) {
-                        showError(data.Message);
+                $http.get("api/Certificates/By-Type/file")
+                    .then(function (data) {
+                        $scope.fileCertificates = data.data;
+                    }, function (data) {
+                        showError(data.Message || data.data.Message);
+                    });
+
+                $http.get("api/Certificates/By-Type/store")
+                    .then(function (data) {
+                        $scope.storeCertificates = data.data;
+                    }, function (data) {
+                        showError(data.Message || data.data.Message);
                     });
 
 
