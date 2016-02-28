@@ -7,7 +7,7 @@
         .service("SendConnectorService", ["$http", DataService("api/SendConnectors")])
 
         .controller('SendController', [
-            '$scope', '$modal', '$q', '$http', 'SendConnectorService', function ($scope, $modal, $q, $http, SendConnectorService ) {
+            '$scope', '$uibModal', '$q', '$http', 'SendConnectorService', function ($scope, $uibModal, $q, $http, SendConnectorService ) {
                 $scope.connectors = [];
                 $scope.fileCertificates = [];
                 $scope.storeCertificates = [];
@@ -82,11 +82,11 @@
                 };
 
                 $scope.addDomain = function (connector) {
-                    $modal
+                    $uibModal
                         .open({
                             templateUrl: 'Views/ExternalUsers/SelectDomainDialog.html',
                             controller: [
-                                '$scope', '$modalInstance', function ($scope, $modalInstance) {
+                                '$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                                     $scope.Domain = null;
                                     $scope.DomainRegexp = DomainRegexp;
 
@@ -98,7 +98,7 @@
                                     };
 
                                     $scope.submit = function () {
-                                        $modalInstance.close($scope.Domain);
+                                        $uibModalInstance.close($scope.Domain);
                                     };
                                 }
                             ]

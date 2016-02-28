@@ -284,15 +284,15 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Granikos.Hydra.Service.ConfigurationService\Granikos.NikosTwo.Service.ConfigurationService.csproj">
+    <ProjectReference Include="..\Granikos.NikosTwo.Service.ConfigurationService\Granikos.NikosTwo.Service.ConfigurationService.csproj">
       <Project>{9b5c4156-d332-48b5-9a3a-d57402cd7d2b}</Project>
       <Name>Granikos.NikosTwo.Service.ConfigurationService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.Service.Models\Granikos.NikosTwo.Service.Models.csproj">
+    <ProjectReference Include="..\Granikos.NikosTwo.Service.Models\Granikos.NikosTwo.Service.Models.csproj">
       <Project>{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}</Project>
       <Name>Granikos.NikosTwo.Service.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.SmtpClient\Granikos.NikosTwo.SmtpClient.csproj">
+    <ProjectReference Include="..\Granikos.NikosTwo.SmtpClient\Granikos.NikosTwo.SmtpClient.csproj">
       <Project>{E149BA1D-5095-4F46-BB16-A113757ADCC9}</Project>
       <Name>Granikos.NikosTwo.SmtpClient</Name>
     </ProjectReference>

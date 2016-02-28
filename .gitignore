@@ -198,14 +198,14 @@ FakesAssemblies/
 # Visual Studio 6 workspace options file
 *.opt
 
-/Granikos.Hydra.WebClient/Content/dist
-/Granikos.Hydra.WebClient/Scripts/maps
-/Granikos.Hydra.WebClient/Scripts/*.min.js
-/Granikos.Hydra.WebClient/Scripts/lib
+/Granikos.NikosTwo.WebClient/Content/dist
+/Granikos.NikosTwo.WebClient/Scripts/maps
+/Granikos.NikosTwo.WebClient/Scripts/*.min.js
+/Granikos.NikosTwo.WebClient/Scripts/lib
 
 /WebDeploy
 /HydraWebClient.*
-/Granikos.Hydra.Service/AppData
-/Granikos.Hydra.Service/Attachments
-/Granikos.Hydra.Setup/*.bak
+/Granikos.NikosTwo.Service/AppData
+/Granikos.NikosTwo.Service/Attachments
+/Granikos.NikosTwo.Setup/*.bak
 *.DotSettings

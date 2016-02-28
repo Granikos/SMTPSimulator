@@ -173,7 +173,7 @@
       <Project>{81de807d-d637-4b10-8ae1-13ea5ac1a80d}</Project>
       <Name>bbv.Common.EventBroker</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.Core\Granikos.NikosTwo.Core.csproj">
+    <ProjectReference Include="..\Granikos.NikosTwo.Core\Granikos.NikosTwo.Core.csproj">
       <Project>{6c923248-1b40-4a27-80f7-ddeeb9f6d4d5}</Project>
       <Name>Granikos.NikosTwo.Core</Name>
     </ProjectReference>

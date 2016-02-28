@@ -7,7 +7,7 @@
         .service("ReceiveConnectorService", ["$http", DataService("api/ReceiveConnectors")])
 
         .controller('ReceiveController', [
-            '$scope', '$modal', '$q', '$http', 'ReceiveConnectorService', function ($scope, $modal, $q, $http, ReceiveConnectorService) {
+            '$scope', '$uibModal', '$q', '$http', 'ReceiveConnectorService', function ($scope, $uibModal, $q, $http, ReceiveConnectorService) {
                 $scope.connectors = [];
                 $scope.adding = false;
 
@@ -153,7 +153,7 @@
                 };
 
                 $scope.showIPRangeDialog = function (connector) {
-                    $modal
+                    $uibModal
                         .open({
                             templateUrl: 'Views/Receive/AddIPRangeDialog.html',
                             controller: 'AddIPRangeDialogController'
@@ -174,7 +174,7 @@
             }
         ])
         .controller('AddIPRangeDialogController', [
-            '$scope', '$modalInstance', function ($scope, $modalInstance) {
+            '$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                 $scope.range = {
                     StartString: '',
                     EndString: ''
@@ -183,7 +183,7 @@
                 $scope.IPRegexp = IPRegexp;
 
                 $scope.submit = function () {
-                    $modalInstance.close($scope.range);
+                    $uibModalInstance.close($scope.range);
                 };
             }
         ]);

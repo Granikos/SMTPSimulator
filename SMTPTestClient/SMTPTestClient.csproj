@@ -49,27 +49,27 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Granikos.Hydra.Core\Granikos.NikosTwo.Core.csproj">
+    <ProjectReference Include="..\Granikos.NikosTwo.Core\Granikos.NikosTwo.Core.csproj">
       <Project>{6c923248-1b40-4a27-80f7-ddeeb9f6d4d5}</Project>
       <Name>Granikos.NikosTwo.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.Service.ConfigurationService\Granikos.NikosTwo.Service.ConfigurationService.csproj">
+    <ProjectReference Include="..\Granikos.NikosTwo.Service.ConfigurationService\Granikos.NikosTwo.Service.ConfigurationService.csproj">
       <Project>{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}</Project>
       <Name>Granikos.NikosTwo.Service.ConfigurationService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.Service.Models\Granikos.NikosTwo.Service.Models.csproj">
+    <ProjectReference Include="..\Granikos.NikosTwo.Service.Models\Granikos.NikosTwo.Service.Models.csproj">
       <Project>{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}</Project>
       <Name>Granikos.NikosTwo.Service.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.SmtpClient\Granikos.NikosTwo.SmtpClient.csproj">
+    <ProjectReference Include="..\Granikos.NikosTwo.SmtpClient\Granikos.NikosTwo.SmtpClient.csproj">
       <Project>{e149ba1d-5095-4f46-bb16-a113757adcc9}</Project>
       <Name>Granikos.NikosTwo.SmtpClient</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.SmtpServer\Granikos.NikosTwo.SmtpServer.csproj">
+    <ProjectReference Include="..\Granikos.NikosTwo.SmtpServer\Granikos.NikosTwo.SmtpServer.csproj">
       <Project>{1109925f-690b-4e73-99f8-dc1fce96ca97}</Project>
       <Name>Granikos.NikosTwo.SmtpServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.Service\Granikos.NikosTwo.Service.csproj">
+    <ProjectReference Include="..\Granikos.NikosTwo.Service\Granikos.NikosTwo.Service.csproj">
       <Project>{4606e839-7049-4ef3-b6e2-ef0ea0fea065}</Project>
       <Name>Granikos.NikosTwo.Service</Name>
     </ProjectReference>

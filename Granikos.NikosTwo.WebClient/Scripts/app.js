@@ -151,14 +151,14 @@
             }
         };
     }])
-      .directive('ngReallyClick', ['$modal', function ($modal) {
-          var ModalInstanceCtrl = ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+      .directive('ngReallyClick', ['$uibModal', function ($uibModal) {
+          var ModalInstanceCtrl = ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                 $scope.ok = function () {
-                    $modalInstance.close();
+                    $uibModalInstance.close();
                 };
 
                 $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
+                    $uibModalInstance.dismiss('cancel');
                 };
             }];
 
@@ -180,7 +180,7 @@
                         modalHtml += '<div class="modal-footer"><button class="btn ' + okCls + '" ng-click="ok()">' + okText + '</button>';
                         modalHtml += '<button class="btn ' + cancelCls + '" ng-click="cancel()">' + cancelText + '</button></div>';
 
-                        var modalInstance = $modal.open({
+                        var modalInstance = $uibModal.open({
                             template: modalHtml,
                             controller: ModalInstanceCtrl
                         });

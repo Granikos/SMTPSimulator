@@ -82,11 +82,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Granikos.Hydra.Core.Fakes">
-      <HintPath>FakesAssemblies\Granikos.Hydra.Core.Fakes.dll</HintPath>
+    <Reference Include="Granikos.NikosTwo.Core.Fakes">
+      <HintPath>FakesAssemblies\Granikos.NikosTwo.Core.Fakes.dll</HintPath>
     </Reference>
-    <Reference Include="Granikos.Hydra.SmtpServer.Fakes">
-      <HintPath>FakesAssemblies\Granikos.Hydra.SmtpServer.Fakes.dll</HintPath>
+    <Reference Include="Granikos.NikosTwo.SmtpServer.Fakes">
+      <HintPath>FakesAssemblies\Granikos.NikosTwo.SmtpServer.Fakes.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -143,34 +143,34 @@
     <Compile Include="ValidationHelperTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Granikos.Hydra.Core\Granikos.NikosTwo.Core.csproj">
+    <ProjectReference Include="..\Granikos.NikosTwo.Core\Granikos.NikosTwo.Core.csproj">
       <Project>{6c923248-1b40-4a27-80f7-ddeeb9f6d4d5}</Project>
       <Name>Granikos.NikosTwo.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.Service.ConfigurationService\Granikos.NikosTwo.Service.ConfigurationService.csproj">
+    <ProjectReference Include="..\Granikos.NikosTwo.Service.ConfigurationService\Granikos.NikosTwo.Service.ConfigurationService.csproj">
       <Project>{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}</Project>
       <Name>Granikos.NikosTwo.Service.ConfigurationService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.Service.Models\Granikos.NikosTwo.Service.Models.csproj">
+    <ProjectReference Include="..\Granikos.NikosTwo.Service.Models\Granikos.NikosTwo.Service.Models.csproj">
       <Project>{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}</Project>
       <Name>Granikos.NikosTwo.Service.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.Service\Granikos.NikosTwo.Service.csproj">
+    <ProjectReference Include="..\Granikos.NikosTwo.Service\Granikos.NikosTwo.Service.csproj">
       <Project>{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}</Project>
       <Name>Granikos.NikosTwo.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.SmtpClient\Granikos.NikosTwo.SmtpClient.csproj">
+    <ProjectReference Include="..\Granikos.NikosTwo.SmtpClient\Granikos.NikosTwo.SmtpClient.csproj">
       <Project>{e149ba1d-5095-4f46-bb16-a113757adcc9}</Project>
       <Name>Granikos.NikosTwo.SmtpClient</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.SmtpServer\Granikos.NikosTwo.SmtpServer.csproj">
+    <ProjectReference Include="..\Granikos.NikosTwo.SmtpServer\Granikos.NikosTwo.SmtpServer.csproj">
       <Project>{1109925F-690B-4E73-99F8-DC1FCE96CA97}</Project>
       <Name>Granikos.NikosTwo.SmtpServer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Fakes Include="Fakes\Granikos.Hydra.Core.fakes" />
-    <Fakes Include="Fakes\Granikos.Hydra.SmtpServer.fakes" />
+    <Fakes Include="Fakes\Granikos.NikosTwo.Core.fakes" />
+    <Fakes Include="Fakes\Granikos.NikosTwo.SmtpServer.fakes" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

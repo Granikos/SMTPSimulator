@@ -5,7 +5,7 @@
         .service("CertificateService", ["$http", DataService("api/Certificates")])
 
         .controller('CertificateController', [
-            '$scope', '$modal', '$q', '$http', 'CertificateService', 'Upload', function ($scope, $modal, $q, $http, CertificateService, Upload) {
+            '$scope', '$uibModal', '$q', '$http', 'CertificateService', 'Upload', function ($scope, $uibModal, $q, $http, CertificateService, Upload) {
                 $scope.certificates = [];
 
                 function refresh() {

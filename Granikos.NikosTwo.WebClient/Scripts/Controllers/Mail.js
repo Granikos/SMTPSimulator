@@ -8,7 +8,7 @@
         .service('LocalUsersService', ['$http', DataService('api/LocalUsers')])
 
         .controller('MailController', [
-            '$scope', '$http', '$modal', 'SendConnectorService', function ($scope, $http, $modal, SendConnectorService) {
+            '$scope', '$http', '$uibModal', 'SendConnectorService', function ($scope, $http, $uibModal, SendConnectorService) {
                 $scope.Mail = {
                     Sender: null,
                     Recipients: [],
@@ -48,11 +48,11 @@
                 }
 
                 $scope.addRecipientDialog = function () {
-                    $modal
+                    $uibModal
                         .open({
                             templateUrl: 'Views/Mail/AddUserDialog.html',
                             controller: [
-                                '$scope', '$modalInstance', function ($scope, $modalInstance) {
+                                '$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                                     $scope.Recipient = null;
                                     $scope.MailRegexp = mailRegexp;
 
@@ -64,7 +64,7 @@
                                     };
 
                                     $scope.submit = function () {
-                                        $modalInstance.close($scope.Recipient);
+                                        $uibModalInstance.close($scope.Recipient);
                                     };
                                 }
                             ]

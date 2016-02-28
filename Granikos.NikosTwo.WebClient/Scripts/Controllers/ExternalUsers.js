@@ -1,15 +1,12 @@
 ﻿(function () {
     var DomainRegexp = /^(\*\.?)?([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/;
 
-    angular.module('LocalUsers', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.selection', 'ui.grid.pagination', 'ui.bootstrap.modal', 'checklist-model'])
-
-        .service('LocalUsersService', ['$http', DataService('api/LocalUsers')])
-        .service("LocalGroupsService", ["$http", DataService("api/LocalGroups")])
-
-        .controller('LocalUsersController', [
-            '$scope', '$modal', '$q', '$http', '$timeout', 'LocalUsersService', 'Upload', 'LocalGroupsService', function ($scope, $modal, $q, $http, $timeout, LocalUserService, Upload, GroupService) {
+    angular.module('ExternalUsers', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.selection', 'ui.grid.pagination', 'ui.grid.resizeColumns', 'ui.bootstrap.modal', 'ngFileUpload', 'checklist-model'])
+        .service('ExternalUsersService', ['$http', DataService('api/ExternalUsers')])
+        .service("ExternalGroupsService", ["$http", DataService("api/ExternalGroups")])
+        .controller('ExternalUsersController', [
+            '$scope', '$uibModal', '$q', '$http', '$timeout', 'ExternalUsersService', 'Upload', 'ExternalGroupsService', 'uiGridConstants', function ($scope, $uibModal, $q, $http, $timeout, ExternalUsersService, Upload, GroupService, uiGridConstants) {
                 $scope.users = [];
-                $scope.templates = [];
                 $scope.groups = {};
 
                 var paginationOptions = {
@@ -18,9 +15,9 @@
                 };
 
                 $scope.columns = [
-                    { name: 'firstName', field: 'FirstName', editableCellTemplate: simpleEditTemplate('required') },
-                    { name: 'lastName', field: 'LastName', editableCellTemplate: simpleEditTemplate('required') },
-                    { name: 'mailbox', field: 'Mailbox', displayName: 'Email Address', editableCellTemplate: simpleEditTemplate('required', 'email'), type: 'email' }
+                    { name: 'firstName', field: 'FirstName', editableCellTemplate: simpleEditTemplate('required'), enableColumnMenu: false },
+                    { name: 'lastName', field: 'LastName', editableCellTemplate: simpleEditTemplate('required'), enableColumnMenu: false },
+                    { name: 'mailbox', field: 'Mailbox', displayName: 'Email Address', editableCellTemplate: simpleEditTemplate('required', 'email'), type: 'email', width: '*', enableColumnMenu: false }
                 ];
 
                 $scope.gridOptions = {
@@ -39,7 +36,6 @@
                     showSelectionCheckbox: true,
                     enableSelectAll: true,
                     selectionRowHeaderWidth: 35,
-                    enableHorizontalScrollbar: 0,
                     columnDefs: $scope.columns,
                     onRegisterApi: function (gridApi) {
                         $scope.gridApi = gridApi;
@@ -53,19 +49,48 @@
                     }
                 };
 
-                function getColumnDef(id, name) {
+                /*
+                function menuItems(id) {
+                    return [
+                        {
+                            title: 'Delete',
+                            icon: 'ui-grid-icon-cancel',
+                            action: function ($event) {
+                                this.context.deleteGroup(id);
+                            },
+                            context: $scope
+                        },
+                        {
+                            title: 'Remove All Users',
+                            icon: 'ui-grid-icon-minus-squared',
+                            action: function ($event) {
+
+                            },
+                            context: $scope
+                        },
+                        {
+                            title: 'Add Users From Domain',
+                            icon: 'ui-grid-icon-plus-squared',
+                            action: function ($event) {
+
+                            },
+                            context: $scope
+                        }
+                    ];
+                }
+                */
+
+                function getColumnDef(id) {
                     return {
                         name: 'group' + id,
-                        displayName: name,
-                        additionalWidth: 45,
                         type: 'boolean',
                         width: '1%',
                         enableSorting: false,
                         enableHiding: false,
                         absMinWidth: 100,
                         _groupId: id,
-                        headerCellTemplate: 'Views/LocalUsers/GroupHeaderCellTemplate.html',
-                        cellTemplate: 'Views/LocalUsers/GroupCellTemplate.html'
+                        headerCellTemplate: 'Views/ExternalUsers/GroupHeaderCellTemplate.html',
+                        cellTemplate: 'Views/ExternalUsers/GroupCellTemplate.html'
                     };
                 }
 
@@ -92,7 +117,7 @@
                             for (var j = 0; j < groups.length; j++) {
                                 var id = groups[j].Id;
                                 $scope.groupsById[id] = groups[j];
-                                $scope.columns.push(getColumnDef(id, groups[j].Name));
+                                $scope.columns.push(getColumnDef(id));
                             }
                             $scope.refreshGridSizing();
                         })
@@ -101,15 +126,70 @@
                         });
                 };
 
+                function doImport(file, overwrite) {
+                    $scope.importDone = false;
+                    $uibModal.open({
+                        templateUrl: 'Views/ExternalUsers/ImportDialog.html',
+                        scope: $scope
+                    });
+
+                    Upload.upload({
+                        url: 'api/ExternalUsers/Import' + (overwrite ? 'WithOverwrite' : ''),
+                        file: file
+                    }).success(function (data, status, headers, config) {
+                        $scope.importDone = true;
+                        $scope.importedUsers = data.ImportCount;
+                        $scope.overwrittenUsers = data.OverwrittenCount;
+
+                        $scope.refreshGroups();
+                        $scope.refresh();
+                    });
+                }
+
+                $scope.import = function (files) {
+                    if (files && files.length > 0) {
+                        var file = files[0];
+
+                        if ($scope.gridOptions.totalItems > 0) {
+                            BootstrapDialog.confirm({
+                                type: BootstrapDialog.TYPE_PRIMARY,
+                                title: 'Overwrite Existing Users',
+                                message: 'Do you want to delete all existing users?',
+                                btnCancelLabel: 'No',
+                                btnOKLabel: 'Yes',
+                                btnOKClass: 'btn-danger',
+                                callback: function (overwrite) {
+                                    doImport(file, overwrite);
+                                }
+                            });
+                        } else {
+                            doImport(file, false);
+                        }
+                    }
+                };
+
+                $scope.saveRow = function (rowEntity) {
+                    var promise = ExternalUsersService.update(rowEntity);
+                    $scope.gridApi.rowEdit.setSavePromise($scope.gridApi.grid, rowEntity, promise);
+                };
+
+                $scope.deleteSelected = function () {
+                    angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
+                        ExternalUsersService.delete(data.Id).success(function () {
+                            $scope.refresh();
+                        });
+                    });
+                };
+
                 $scope.addGroupDialog = function () {
-                    $modal
+                    $uibModal
                         .open({
-                            templateUrl: 'Views/LocalUsers/AddGroupDialog.html',
-                            controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+                            templateUrl: 'Views/ExternalUsers/AddGroupDialog.html',
+                            controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                                 $scope.Name = null;
 
                                 $scope.add = function () {
-                                    $modalInstance.close($scope.Name);
+                                    $uibModalInstance.close($scope.Name);
                                 };
                             }]
                         })
@@ -119,11 +199,11 @@
                 };
 
                 $scope.addGroup = function (name) {
-                    $http.post('api/LocalGroups/' + name)
+                    $http.post('api/ExternalGroups/' + name)
                         .success(function (group) {
                             $scope.groups.push(group);
                             $scope.groupsById[group.Id] = group;
-                            $scope.columns.push(getColumnDef(group.Id, name));
+                            $scope.columns.push(getColumnDef(group.Id));
                             $scope.refreshGridSizing();
                         })
                         .error(function (data) {
@@ -176,7 +256,7 @@
                         callback: function (success) {
                             if (success) {
                                 var group = $scope.groupsById[id];
-                                group.UserIds.length = 0;
+                                group.UserIds.length = 0; //.splice(0, group.MailboxIds.length);
                                 $scope.$apply();
                             }
                         }
@@ -184,29 +264,29 @@
                 };
 
                 $scope.addToGroup = function (id) {
-                    $modal
+                    $uibModal
                         .open({
-                            templateUrl: 'Views/LocalUsers/SelectDomainDialog.html',
+                            templateUrl: 'Views/ExternalUsers/SelectDomainDialog.html',
                             controller: [
-                                '$scope', '$modalInstance', function ($scope, $modalInstance) {
+                                '$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                                     $scope.Domain = null;
                                     $scope.DomainRegexp = DomainRegexp;
 
                                     $scope.searchDomains = function (search) {
-                                        return $http.get("api/LocalUsers/SearchDomains/" + search)
+                                        return $http.get("api/ExternalUsers/SearchDomains/" + search)
                                             .then(function (data) {
                                                 return data.data;
                                             });
                                     };
 
                                     $scope.submit = function () {
-                                        $modalInstance.close($scope.Domain);
+                                        $uibModalInstance.close($scope.Domain);
                                     };
                                 }
                             ]
                         })
                         .result.then(function (domain) {
-                            $http.get("api/LocalUsers/ByDomain/" + domain)
+                            $http.get("api/ExternalUsers/ByDomain/" + domain)
                                 .then(function (data) {
                                     var mbs = $scope.groupsById[id].UserIds;
                                     var temp = {};
@@ -216,6 +296,7 @@
                                         if (!temp[data.data[i]])
                                             mbs.push(data.data[i]);
                                     $scope.groupsById[id]._dirty = true;
+                                    // $scope.$apply();
                                 });
                         });
                 };
@@ -230,133 +311,15 @@
                                 $scope.groups[index] = data.data;
                             }
                             $scope.groupsById[id] = data.data;
+                            // $scope.$apply();
                         }, function (data) {
                             showError(data.Message || data.data.Message);
                         });
                 };
 
-                $http.get("api/LocalUsers/Templates")
-                    .success(function (data) {
-                        $scope.templates = data;
-                    })
-                    .error(function (data) {
-                        showError(data.Message || data.data.Message);
-                    });
-
-                function doImport(file, overwrite) {
-                    $scope.importDone = false;
-                    $modal.open({
-                            templateUrl: 'Views/LocalUsers/ImportDialog.html',
-                            scope: $scope
-                        });
-
-                    Upload.upload({
-                        url: 'api/LocalUsers/Import' + (overwrite? 'WithOverwrite' : ''),
-                        file: file
-                    }).success(function (data, status, headers, config) {
-                        $scope.importDone = true;
-                        $scope.importedUsers = data.ImportCount;
-                        $scope.overwrittenUsers = data.OverwrittenCount;
-
-                        $scope.refresh();
-                    });
-                }
-
-                $scope.import = function (files) {
-                    if (files && files.length > 0) {
-                        var file = files[0];
-
-                        if ($scope.gridOptions.totalItems > 0) {
-                            BootstrapDialog.confirm({
-                                type: BootstrapDialog.TYPE_PRIMARY,
-                                title: 'Overwrite Existing Users',
-                                message: 'Do you want to delete all existing users?',
-                                btnCancelLabel: 'No',
-                                btnOKLabel: 'Yes',
-                                btnOKClass: 'btn-danger',
-                                callback: function(overwrite) {
-                                    doImport(file, overwrite);
-                                }
-                            });
-                        } else {
-                            doImport(file, false);
-                        }
-                    }
-                };
-
-                $scope.generate = function (template) {
-                    $scope.generation = {
-                        numberOfUsers: 1,
-                        pattern: '%g.%s',
-                        domain: '',
-                        supportsPattern: template.SupportsPattern,
-                        running: false
-                    };
-
-                    var modal = $modal
-                        .open({
-                            templateUrl: 'Views/LocalUsers/GenerateDialog.html',
-                            scope: $scope
-                        });
-
-                    $scope.startGeneration = function () {
-                        $scope.generation.running = true;
-                        $http.post("api/LocalUsers/Generate/" + $scope.generation.numberOfUsers, {
-                            pattern: $scope.generation.pattern,
-                            template: template.Name,
-                            domain: $scope.generation.domain
-                        })
-                            .success(function (data) {
-                                $scope.generation.running = false;
-                                modal.close();
-                                $scope.refresh();
-                            })
-                            .error(function (data) {
-                                $scope.generation.running = false;
-                                showError(data.Message || data.data.Message);
-                            });
-                    };
-                };
-
-                $scope.saveRow = function (rowEntity) {
-                    var promise = LocalUserService.update(rowEntity);
-                    $scope.gridApi.rowEdit.setSavePromise($scope.gridApi.grid, rowEntity, promise);
-                };
-
-                $scope.addDialog = function () {
-                    $modal
-                        .open({
-                            templateUrl: 'Views/LocalUsers/AddDialog.html',
-                            controller: 'LocalUsersAddDialogController'
-                        })
-                        .result.then(function (user) {
-                            $scope.add(user);
-                        });
-                };
-
-                $scope.add = function (user) {
-                    var p = LocalUserService.add(user);
-
-                    p.success(function (u) {
-                        $scope.refresh();
-                        // $scope.users.push(u);
-                    });
-
-                    return p;
-                };
-
-                $scope.deleteSelected = function () {
-                    angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
-                        LocalUserService.delete(data.Id).success(function () {
-                            // $scope.users.splice($scope.users.lastIndexOf(data), 1);
-                            $scope.refresh();
-                        });
-                    });
-                };
-
                 $scope.refresh = function () {
                     setTimeout(function () {
-                        LocalUserService.all(paginationOptions)
+                        ExternalUsersService.all(paginationOptions)
                             .success(function (result) {
                                 $scope.gridOptions.totalItems = result.Total;
                                 $scope.users = result.Entities;
@@ -373,19 +336,6 @@
 
                 $scope.refreshGroups();
                 $scope.refresh();
-            }
-        ])
-        .controller('LocalUsersAddDialogController', [
-            '$scope', '$modalInstance', function ($scope, $modalInstance) {
-                $scope.user = {
-                    FirstName: '',
-                    LastName: '',
-                    Mailbox: ''
-                }
-
-                $scope.submit = function () {
-                    $modalInstance.close($scope.user);
-                };
             }
         ]);
 })();

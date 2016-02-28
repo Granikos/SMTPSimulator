@@ -2,7 +2,7 @@
     angular.module('Timer', ['ui.bootstrap.modal', 'ui-rangeSlider', 'ui.select', "chart.js", "angularMultiSlider"])
         .service("TimeTableService", ["$http", DataService("api/TimeTables")])
         .controller('TimerController', [
-            '$scope', '$http', '$modal', 'TimeTableService', function ($scope, $http, $modal, TimeTableService) {
+            '$scope', '$http', '$uibModal', 'TimeTableService', function ($scope, $http, $uibModal, TimeTableService) {
                 $scope.timeTables = [];
                 $scope.types = [];
                 $scope.templates = [];
@@ -176,7 +176,7 @@
 
                 $scope.showSettings = function (scope) {
                     var type = scope.tt.Type.charAt(0).toUpperCase() + scope.tt.Type.slice(1);
-                    $modal
+                    $uibModal
                         .open({
                             templateUrl: 'Views/Timer/' + type + 'TypeDialog.html',
                             controller: type + 'TimerTypeController',
@@ -261,7 +261,7 @@
             };
         })
         .controller('DynamicTimerTypeController', [
-            '$scope', '$http', '$modal', '$timeout', function ($scope, $http, $modal, $timeout) {
+            '$scope', '$http', '$uibModal', '$timeout', function ($scope, $http, $uibModal, $timeout) {
                 var rawData = $scope.$parent.tt.Parameters.dynamicData;
 
                 if (!$scope.$parent.tt.Parameters.dynamicTotalMails) $scope.$parent.tt.Parameters.dynamicTotalMails = 1000;
