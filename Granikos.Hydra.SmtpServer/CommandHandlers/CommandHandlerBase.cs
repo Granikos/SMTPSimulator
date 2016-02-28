@@ -1,8 +1,8 @@
 ﻿using System;
 using bbv.Common.EventBroker;
-using Granikos.Hydra.Core;
+using Granikos.NikosTwo.Core;
 
-namespace Granikos.Hydra.SmtpServer.CommandHandlers
+namespace Granikos.NikosTwo.SmtpServer.CommandHandlers
 {
     public abstract class CommandHandlerBase : ICommandHandler
     {

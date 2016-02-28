@@ -12,15 +12,15 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using Granikos.Hydra.Core;
-using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.Models.Providers;
-using Granikos.Hydra.Service.PriorityQueue;
-using Granikos.Hydra.Service.Providers;
-using Granikos.Hydra.SmtpClient;
+using Granikos.NikosTwo.Core;
+using Granikos.NikosTwo.Service.Models;
+using Granikos.NikosTwo.Service.Models.Providers;
+using Granikos.NikosTwo.Service.PriorityQueue;
+using Granikos.NikosTwo.Service.Providers;
+using Granikos.NikosTwo.SmtpClient;
 using log4net;
 
-namespace Granikos.Hydra.Service.TimeTables
+namespace Granikos.NikosTwo.Service.TimeTables
 {
     public class TimeTableGenerator
     {

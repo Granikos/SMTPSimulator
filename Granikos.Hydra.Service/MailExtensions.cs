@@ -2,9 +2,9 @@ using System.IO;
 using System.Net.Mail;
 using System.Reflection;
 using System.Text;
-using Granikos.Hydra.SmtpClient;
+using Granikos.NikosTwo.SmtpClient;
 
-namespace Granikos.Hydra.Service
+namespace Granikos.NikosTwo.Service
 {
     public static class MailExtensions
     {

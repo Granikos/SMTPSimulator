@@ -4,10 +4,10 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
-using Granikos.Hydra.Service.Models;
+using Granikos.NikosTwo.Service.Models;
 using log4net;
 
-namespace Granikos.Hydra.Service.TimeTables
+namespace Granikos.NikosTwo.Service.TimeTables
 {
     [DisplayName("Dynamic")]
     [Export("dynamic", typeof(ITimeTableType))]

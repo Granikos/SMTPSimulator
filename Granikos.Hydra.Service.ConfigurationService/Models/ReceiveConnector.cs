@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
-using Granikos.Hydra.Service.Models;
+using Granikos.NikosTwo.Service.Models;
 
-namespace Granikos.Hydra.Service.ConfigurationService.Models
+namespace Granikos.NikosTwo.Service.ConfigurationService.Models
 {
     [DataContract]
     public class ReceiveConnector : IReceiveConnector

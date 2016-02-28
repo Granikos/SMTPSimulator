@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.IO;
 
-namespace Granikos.Hydra.Service.Retention
+namespace Granikos.NikosTwo.Service.Retention
 {
     public class RetentionWatcher
     {

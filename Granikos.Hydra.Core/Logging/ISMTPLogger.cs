@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace Granikos.Hydra.Core.Logging
+namespace Granikos.NikosTwo.Core.Logging
 {
     public interface ISMTPLogger
     {

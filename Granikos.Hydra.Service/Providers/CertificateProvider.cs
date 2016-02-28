@@ -3,9 +3,9 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
-using Granikos.Hydra.Service.Models.Providers;
+using Granikos.NikosTwo.Service.Models.Providers;
 
-namespace Granikos.Hydra.Service.Providers
+namespace Granikos.NikosTwo.Service.Providers
 {
     [DisplayName("Store")]
     [Export("store", typeof(ICertificateProvider))]

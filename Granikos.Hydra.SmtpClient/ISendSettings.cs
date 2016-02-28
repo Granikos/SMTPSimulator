@@ -2,7 +2,7 @@
 using System.Net.Security;
 using System.Security.Authentication;
 
-namespace Granikos.Hydra.SmtpClient
+namespace Granikos.NikosTwo.SmtpClient
 {
     public interface ISendSettings
     {

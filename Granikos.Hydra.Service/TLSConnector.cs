@@ -4,10 +4,10 @@ using System.IO;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.Models.Providers;
+using Granikos.NikosTwo.Service.Models;
+using Granikos.NikosTwo.Service.Models.Providers;
 
-namespace Granikos.Hydra.Service
+namespace Granikos.NikosTwo.Service
 {
     public class TLSConnector
     {

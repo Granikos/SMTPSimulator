@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Granikos.Hydra.Core;
-using Granikos.Hydra.SmtpServer;
-using Granikos.Hydra.SmtpServer.CommandHandlers;
-using Granikos.Hydra.SmtpServer.Fakes;
+using Granikos.NikosTwo.Core;
+using Granikos.NikosTwo.SmtpServer;
+using Granikos.NikosTwo.SmtpServer.CommandHandlers;
+using Granikos.NikosTwo.SmtpServer.Fakes;
 using Xunit;
 
-namespace HydraTest.CommandHandlers
+namespace NikosTwoTest.CommandHandlers
 {
     public class EHLOTest : TestBase
     {

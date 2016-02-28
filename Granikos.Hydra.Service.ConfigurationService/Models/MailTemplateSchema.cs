@@ -2,14 +2,14 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
-using Granikos.Hydra.Service.Models;
+using Granikos.NikosTwo.Service.Models;
 
-namespace Granikos.Hydra.Service.ConfigurationService.Models
+namespace Granikos.NikosTwo.Service.ConfigurationService.Models
 {
     [Serializable]
     [XmlType(AnonymousType = true, Namespace = "http://tempuri.org/MailTemplateSchema.xsd")]
     [XmlRoot(Namespace = "http://tempuri.org/MailTemplateSchema.xsd", IsNullable = false)]
-    public class NikosTwo
+    public class NikosTwoXml
     {
         [XmlElement("MailTemplate")]
         public MailTemplate MailTemplate { get; set; }

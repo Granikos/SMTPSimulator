@@ -3,32 +3,32 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.Service", "Granikos.Hydra.Service\Granikos.Hydra.Service.csproj", "{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.Service", "Granikos.Hydra.Service\Granikos.NikosTwo.Service.csproj", "{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1109925F-690B-4E73-99F8-DC1FCE96CA97} = {1109925F-690B-4E73-99F8-DC1FCE96CA97}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.SmtpServer", "Granikos.Hydra.SmtpServer\Granikos.Hydra.SmtpServer.csproj", "{1109925F-690B-4E73-99F8-DC1FCE96CA97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.SmtpServer", "Granikos.Hydra.SmtpServer\Granikos.NikosTwo.SmtpServer.csproj", "{1109925F-690B-4E73-99F8-DC1FCE96CA97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.Test", "Granikos.Hydra.Test\Granikos.Hydra.Test.csproj", "{EB600132-5484-4537-977A-86D5FDFD6CB5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.Test", "Granikos.Hydra.Test\Granikos.NikosTwo.Test.csproj", "{EB600132-5484-4537-977A-86D5FDFD6CB5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMTPTestClient", "SMTPTestClient\SMTPTestClient.csproj", "{6F4987FD-D183-47F6-92AD-7DB28386E384}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bbv.Common.EventBroker", "EventBroker\bbv.Common.EventBroker.csproj", "{81DE807D-D637-4B10-8AE1-13EA5AC1A80D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.WebClient", "Granikos.Hydra.WebClient\Granikos.Hydra.WebClient.csproj", "{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.WebClient", "Granikos.Hydra.WebClient\Granikos.NikosTwo.WebClient.csproj", "{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Granikos.Hydra.Setup\Hydra Setup.vdproj", "{042F26B5-6DBD-4E49-814D-6B2B6647606E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.SmtpClient", "Granikos.Hydra.SmtpClient\Granikos.Hydra.SmtpClient.csproj", "{E149BA1D-5095-4F46-BB16-A113757ADCC9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.SmtpClient", "Granikos.Hydra.SmtpClient\Granikos.NikosTwo.SmtpClient.csproj", "{E149BA1D-5095-4F46-BB16-A113757ADCC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.Core", "Granikos.Hydra.Core\Granikos.Hydra.Core.csproj", "{6C923248-1B40-4A27-80F7-DDEEB9F6D4D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.Core", "Granikos.Hydra.Core\Granikos.NikosTwo.Core.csproj", "{6C923248-1B40-4A27-80F7-DDEEB9F6D4D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.Service.Database", "Granikos.Hydra.Service.Database\Granikos.Hydra.Service.Database.csproj", "{A29DCD4F-B993-47FC-A095-563C62131ED9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.Service.Database", "Granikos.Hydra.Service.Database\Granikos.NikosTwo.Service.Database.csproj", "{A29DCD4F-B993-47FC-A095-563C62131ED9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.Service.Models", "Granikos.Hydra.Service.Models\Granikos.Hydra.Service.Models.csproj", "{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.Service.Models", "Granikos.Hydra.Service.Models\Granikos.NikosTwo.Service.Models.csproj", "{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.Hydra.Service.ConfigurationService", "Granikos.Hydra.Service.ConfigurationService\Granikos.Hydra.Service.ConfigurationService.csproj", "{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.Service.ConfigurationService", "Granikos.Hydra.Service.ConfigurationService\Granikos.NikosTwo.Service.ConfigurationService.csproj", "{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

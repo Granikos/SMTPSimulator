@@ -1,4 +1,4 @@
-namespace Granikos.Hydra.Service.Models.Providers
+namespace Granikos.NikosTwo.Service.Models.Providers
 {
     public interface ILocalMailboxGroupProvider<TUserGroup> : IDataProvider<TUserGroup, int>
         where TUserGroup : IUserGroup

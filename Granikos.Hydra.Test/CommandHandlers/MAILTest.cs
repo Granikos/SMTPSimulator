@@ -1,9 +1,9 @@
 using System;
-using Granikos.Hydra.Core;
-using Granikos.Hydra.SmtpServer.CommandHandlers;
+using Granikos.NikosTwo.Core;
+using Granikos.NikosTwo.SmtpServer.CommandHandlers;
 using Xunit;
 
-namespace HydraTest.CommandHandlers
+namespace NikosTwoTest.CommandHandlers
 {
     public class MAILTest : TestBase
     {

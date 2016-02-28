@@ -3,7 +3,7 @@ using System.ComponentModel.Composition;
 using System.Net;
 using log4net;
 
-namespace Granikos.Hydra.Core.Logging
+namespace Granikos.NikosTwo.Core.Logging
 {
     [Export(typeof (ISMTPLogger))]
     public class Log4NetLogger : ISMTPLogger

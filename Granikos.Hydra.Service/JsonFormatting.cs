@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace Granikos.Hydra.Service
+namespace Granikos.NikosTwo.Service
 {
     public class NewtonsoftJsonDispatchFormatter : IDispatchMessageFormatter
     {

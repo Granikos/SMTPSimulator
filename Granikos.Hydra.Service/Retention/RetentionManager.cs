@@ -5,7 +5,7 @@ using System.Threading;
 using log4net;
 using log4net.Appender;
 
-namespace Granikos.Hydra.Service.Retention
+namespace Granikos.NikosTwo.Service.Retention
 {
     public class RetentionManager
     {

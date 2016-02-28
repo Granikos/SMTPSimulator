@@ -6,7 +6,7 @@ using System.ComponentModel.Composition.Primitives;
 using System.Diagnostics.Contracts;
 using System.Linq;
 
-namespace Granikos.Hydra.SmtpServer
+namespace Granikos.NikosTwo.SmtpServer
 {
     [Export(typeof (IModuleLoader<>))]
     public class DefaultModuleLoader<T> : IModuleLoader<T>

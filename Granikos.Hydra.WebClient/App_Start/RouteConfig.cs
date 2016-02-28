@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Granikos.Hydra.WebClient
+namespace Granikos.NikosTwo.WebClient
 {
     public class RouteConfig
     {

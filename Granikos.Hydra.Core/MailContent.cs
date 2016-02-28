@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace Granikos.Hydra.Core
+namespace Granikos.NikosTwo.Core
 {
     public class Attachment
     {

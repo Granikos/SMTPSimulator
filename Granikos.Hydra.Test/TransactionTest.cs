@@ -1,14 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Text;
-using Granikos.Hydra.Core;
-using Granikos.Hydra.SmtpServer;
-using Granikos.Hydra.SmtpServer.CommandHandlers.Fakes;
-using Granikos.Hydra.SmtpServer.Fakes;
+using Granikos.NikosTwo.Core;
+using Granikos.NikosTwo.SmtpServer;
+using Granikos.NikosTwo.SmtpServer.CommandHandlers.Fakes;
+using Granikos.NikosTwo.SmtpServer.Fakes;
 using Microsoft.QualityTools.Testing.Fakes;
 using Xunit;
 
-namespace HydraTest
+namespace NikosTwoTest
 {
     public class TransactionTest
     {

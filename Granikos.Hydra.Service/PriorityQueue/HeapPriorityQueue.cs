@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Granikos.Hydra.Service.PriorityQueue
+namespace Granikos.NikosTwo.Service.PriorityQueue
 {
     /// <summary>
     ///     An implementation of a min-Priority Queue using a heap.  Has O(1) .Contains()!

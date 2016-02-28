@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Granikos.Hydra.Service.Models.Providers
+namespace Granikos.NikosTwo.Service.Models.Providers
 {
     public interface ILocalUserProvider<TUser> : IDataProvider<TUser, int>
         where TUser : IUser

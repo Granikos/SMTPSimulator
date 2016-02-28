@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel.Composition;
 using System.Text.RegularExpressions;
-using Granikos.Hydra.Core;
+using Granikos.NikosTwo.Core;
 
-namespace Granikos.Hydra.SmtpServer.CommandHandlers
+namespace Granikos.NikosTwo.SmtpServer.CommandHandlers
 {
     [ExportMetadata("Command", "RCPT")]
     [Export(typeof (ICommandHandler))]

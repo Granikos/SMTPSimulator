@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 
-namespace Granikos.Hydra.SmtpServer
+namespace Granikos.NikosTwo.SmtpServer
 {
     public sealed class SMTPCommand
     {

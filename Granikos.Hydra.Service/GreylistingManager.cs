@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Net;
 using log4net;
 
-namespace Granikos.Hydra.Service
+namespace Granikos.NikosTwo.Service
 {
     // TODO: Clean up grey list regularly
     internal class GreylistingManager

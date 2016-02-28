@@ -2,7 +2,7 @@
 using System.Diagnostics.Contracts;
 using System.Linq;
 
-namespace Granikos.Hydra.Core
+namespace Granikos.NikosTwo.Core
 {
     public sealed class SMTPResponse
     {

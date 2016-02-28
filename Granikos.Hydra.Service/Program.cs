@@ -3,7 +3,7 @@ using System.ServiceProcess;
 using log4net;
 using log4net.Config;
 
-namespace Granikos.Hydra.Service
+namespace Granikos.NikosTwo.Service
 {
     internal static class Program
     {
@@ -19,7 +19,7 @@ namespace Granikos.Hydra.Service
                 XmlConfigurator.Configure();
                 if (Environment.UserInteractive)
                 {
-                    var service = new HydraService();
+                    var service = new NikosTwoService();
                     service.TestStartupAndStop(args);
                 }
                 else
@@ -27,7 +27,7 @@ namespace Granikos.Hydra.Service
                     ServiceBase[] ServicesToRun;
                     ServicesToRun = new ServiceBase[]
                     {
-                        new HydraService()
+                        new NikosTwoService()
                     };
                     ServiceBase.Run(ServicesToRun);
                 }

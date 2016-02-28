@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Granikos.Hydra.WebClient</RootNamespace>
-    <AssemblyName>Granikos.Hydra.WebClient</AssemblyName>
+    <RootNamespace>Granikos.NikosTwo.WebClient</RootNamespace>
+    <AssemblyName>Granikos.NikosTwo.WebClient</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -221,7 +221,7 @@
     <Content Include="Scripts\Controllers\Register.js" />
     <Content Include="Scripts\FontDetector.js" />
     <Content Include="Scripts\helpers.js" />
-    <Content Include="Scripts\HydraApp.js" />
+    <Content Include="Scripts\app.js" />
     <Content Include="bower.json" />
     <Content Include="Scripts\jquery-bundle.min.js" />
     <Content Include="Scripts\maps\angular-bundle.min.js.map" />
@@ -284,17 +284,17 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Granikos.Hydra.Service.ConfigurationService\Granikos.Hydra.Service.ConfigurationService.csproj">
+    <ProjectReference Include="..\Granikos.Hydra.Service.ConfigurationService\Granikos.NikosTwo.Service.ConfigurationService.csproj">
       <Project>{9b5c4156-d332-48b5-9a3a-d57402cd7d2b}</Project>
-      <Name>Granikos.Hydra.Service.ConfigurationService</Name>
+      <Name>Granikos.NikosTwo.Service.ConfigurationService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.Service.Models\Granikos.Hydra.Service.Models.csproj">
+    <ProjectReference Include="..\Granikos.Hydra.Service.Models\Granikos.NikosTwo.Service.Models.csproj">
       <Project>{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}</Project>
-      <Name>Granikos.Hydra.Service.Models</Name>
+      <Name>Granikos.NikosTwo.Service.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.SmtpClient\Granikos.Hydra.SmtpClient.csproj">
+    <ProjectReference Include="..\Granikos.Hydra.SmtpClient\Granikos.NikosTwo.SmtpClient.csproj">
       <Project>{E149BA1D-5095-4F46-BB16-A113757ADCC9}</Project>
-      <Name>Granikos.Hydra.SmtpClient</Name>
+      <Name>Granikos.NikosTwo.SmtpClient</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

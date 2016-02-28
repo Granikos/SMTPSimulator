@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Granikos.Hydra.Service.Models
+namespace Granikos.NikosTwo.Service.Models
 {
     public interface IEntity<TKey>
         where TKey : IComparable<TKey>

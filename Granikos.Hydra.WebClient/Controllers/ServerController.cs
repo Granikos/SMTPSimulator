@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Http;
-using Granikos.Hydra.Service.ConfigurationService.Models;
+using Granikos.NikosTwo.Service.ConfigurationService.Models;
 
-namespace Granikos.Hydra.WebClient.Controllers
+namespace Granikos.NikosTwo.WebClient.Controllers
 {
     // [Authorize]
     [RoutePrefix("api/Server")]
@@ -44,7 +44,7 @@ namespace Granikos.Hydra.WebClient.Controllers
             return versions.Concat(new[]
             { new VersionInfo
                 {
-                    Assembly = assembly.GetName().Name.Substring(15),
+                    Assembly = assembly.GetName().Name.Substring(18),
                     Version = assembly.GetName().Version,
                     BuildDate = assembly.GetBuildDate()
                 }

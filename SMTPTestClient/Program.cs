@@ -2,12 +2,12 @@
 using System.ComponentModel.Composition.Hosting;
 using System.Net;
 using System.Net.Mail;
-using Granikos.Hydra.Core;
-using Granikos.Hydra.Service.ConfigurationService.Models;
-using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.Retention;
-using Granikos.Hydra.SmtpClient;
-using Granikos.Hydra.SmtpServer;
+using Granikos.NikosTwo.Core;
+using Granikos.NikosTwo.Service.ConfigurationService.Models;
+using Granikos.NikosTwo.Service.Models;
+using Granikos.NikosTwo.Service.Retention;
+using Granikos.NikosTwo.SmtpClient;
+using Granikos.NikosTwo.SmtpServer;
 
 // using System.Net.Mail;
 
@@ -18,7 +18,7 @@ namespace SMTPTestClient
         static void Main(string[] args)
         {
             var basedir =
-                @"C:\Users\Manuel\Documents\Visual Studio 2013\Projects\Hydra\Granikos.Hydra.Service\bin\Debug\Logs\SystemLogs\Service";
+                @"C:\Users\Manuel\Documents\Visual Studio 2013\Projects\NikosTwo\Granikos.NikosTwo.Service\bin\Debug\Logs\SystemLogs\Service";
 
             var manager = new RetentionWorker(basedir);
 

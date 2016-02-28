@@ -1,7 +1,7 @@
-using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.SmtpServer;
+using Granikos.NikosTwo.Service.Models;
+using Granikos.NikosTwo.SmtpServer;
 
-namespace Granikos.Hydra.Service
+namespace Granikos.NikosTwo.Service
 {
     public class DefaultReceiveSettings : IReceiveSettings
     {

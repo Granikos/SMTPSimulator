@@ -6,12 +6,12 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Granikos.Hydra.Service.ConfigurationService.Models;
-using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.Models.Providers;
+using Granikos.NikosTwo.Service.ConfigurationService.Models;
+using Granikos.NikosTwo.Service.Models;
+using Granikos.NikosTwo.Service.Models.Providers;
 using Newtonsoft.Json;
 
-namespace Granikos.Hydra.Service.Providers
+namespace Granikos.NikosTwo.Service.Providers
 {
     [Export(typeof (IUserTemplateProvider))]
     public class NamedUserTemplates : IUserTemplateProvider

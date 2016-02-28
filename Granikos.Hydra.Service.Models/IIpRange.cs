@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Granikos.Hydra.Service.Models
+namespace Granikos.NikosTwo.Service.Models
 {
     public interface IIpRange
     {

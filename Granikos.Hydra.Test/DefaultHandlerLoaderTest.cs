@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
-using Granikos.Hydra.SmtpServer;
+using Granikos.NikosTwo.SmtpServer;
 using Microsoft.QualityTools.Testing.Fakes;
 using Xunit;
 
-namespace HydraTest
+namespace NikosTwoTest
 {
     public class DefaultHandlerLoaderTest
     {

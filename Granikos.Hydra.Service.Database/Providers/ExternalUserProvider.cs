@@ -7,11 +7,11 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Granikos.Hydra.Service.Database.Models;
-using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.Models.Providers;
+using Granikos.NikosTwo.Service.Database.Models;
+using Granikos.NikosTwo.Service.Models;
+using Granikos.NikosTwo.Service.Models.Providers;
 
-namespace Granikos.Hydra.Service.Database.Providers
+namespace Granikos.NikosTwo.Service.Database.Providers
 {
     [Export(typeof (IExternalUserProvider))]
     public class ExternalUserProvider : DefaultProvider<ExternalUser, IUser>, IExternalUserProvider<ExternalUser>, IExternalUserProvider

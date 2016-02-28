@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace Granikos.Hydra.WebClient
+namespace Granikos.NikosTwo.WebClient
 {
     public class MvcApplication : System.Web.HttpApplication
     {

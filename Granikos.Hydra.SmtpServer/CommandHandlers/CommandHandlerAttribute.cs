@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Granikos.Hydra.SmtpServer.CommandHandlers
+namespace Granikos.NikosTwo.SmtpServer.CommandHandlers
 {
     [MetadataAttribute]
     [AttributeUsage(AttributeTargets.Class)]

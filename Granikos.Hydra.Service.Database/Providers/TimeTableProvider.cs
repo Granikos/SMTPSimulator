@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using Granikos.Hydra.Service.Database.Models;
-using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.Models.Providers;
+using Granikos.NikosTwo.Service.Database.Models;
+using Granikos.NikosTwo.Service.Models;
+using Granikos.NikosTwo.Service.Models.Providers;
 
-namespace Granikos.Hydra.Service.Database.Providers
+namespace Granikos.NikosTwo.Service.Database.Providers
 {
     [Export(typeof(ITimeTableProvider))]
     public class TimeTableProvider : DefaultProvider<TimeTable, ITimeTable>, ITimeTableProvider<TimeTable>, ITimeTableProvider

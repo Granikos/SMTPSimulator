@@ -7,9 +7,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Security;
 using System.Security.Authentication;
-using Granikos.Hydra.Service.Models;
+using Granikos.NikosTwo.Service.Models;
 
-namespace Granikos.Hydra.Service.Database.Models
+namespace Granikos.NikosTwo.Service.Database.Models
 {
     public class SendConnector : ISendConnector
     {

@@ -1,9 +1,9 @@
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
-using Granikos.Hydra.Core;
+using Granikos.NikosTwo.Core;
 
-namespace Granikos.Hydra.SmtpServer.CommandHandlers
+namespace Granikos.NikosTwo.SmtpServer.CommandHandlers
 {
     [ExportMetadata("Command", "DATA")]
     [Export(typeof (ICommandHandler))]

@@ -1,7 +1,7 @@
 using System;
 using System.Xml.Serialization;
 
-namespace Granikos.Hydra.Service.Models
+namespace Granikos.NikosTwo.Service.Models
 {
     public interface IMailTemplate : IEntity<int>
     {

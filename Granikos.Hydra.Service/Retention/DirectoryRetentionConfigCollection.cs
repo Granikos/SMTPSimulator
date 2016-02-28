@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 
-namespace Granikos.Hydra.Service.Retention
+namespace Granikos.NikosTwo.Service.Retention
 {
     public class DirectoryRetentionConfigCollection : ConfigurationElementCollection
     {

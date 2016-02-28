@@ -7,8 +7,8 @@
     <ProjectGuid>{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Granikos.Hydra.Service</RootNamespace>
-    <AssemblyName>Granikos.Hydra.Service</AssemblyName>
+    <RootNamespace>Granikos.NikosTwo.Service</RootNamespace>
+    <AssemblyName>Granikos.NikosTwo.Service</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
@@ -278,29 +278,29 @@
       <Project>{81DE807D-D637-4B10-8AE1-13EA5AC1A80D}</Project>
       <Name>bbv.Common.EventBroker</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.Core\Granikos.Hydra.Core.csproj">
+    <ProjectReference Include="..\Granikos.Hydra.Core\Granikos.NikosTwo.Core.csproj">
       <Project>{6c923248-1b40-4a27-80f7-ddeeb9f6d4d5}</Project>
-      <Name>Granikos.Hydra.Core</Name>
+      <Name>Granikos.NikosTwo.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.Service.ConfigurationService\Granikos.Hydra.Service.ConfigurationService.csproj">
+    <ProjectReference Include="..\Granikos.Hydra.Service.ConfigurationService\Granikos.NikosTwo.Service.ConfigurationService.csproj">
       <Project>{9b5c4156-d332-48b5-9a3a-d57402cd7d2b}</Project>
-      <Name>Granikos.Hydra.Service.ConfigurationService</Name>
+      <Name>Granikos.NikosTwo.Service.ConfigurationService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.Service.Database\Granikos.Hydra.Service.Database.csproj">
+    <ProjectReference Include="..\Granikos.Hydra.Service.Database\Granikos.NikosTwo.Service.Database.csproj">
       <Project>{a29dcd4f-b993-47fc-a095-563c62131ed9}</Project>
-      <Name>Granikos.Hydra.Service.Database</Name>
+      <Name>Granikos.NikosTwo.Service.Database</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.Service.Models\Granikos.Hydra.Service.Models.csproj">
+    <ProjectReference Include="..\Granikos.Hydra.Service.Models\Granikos.NikosTwo.Service.Models.csproj">
       <Project>{3bc25918-8db6-44db-8d08-abb7e2a8a24e}</Project>
-      <Name>Granikos.Hydra.Service.Models</Name>
+      <Name>Granikos.NikosTwo.Service.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.SmtpClient\Granikos.Hydra.SmtpClient.csproj">
+    <ProjectReference Include="..\Granikos.Hydra.SmtpClient\Granikos.NikosTwo.SmtpClient.csproj">
       <Project>{e149ba1d-5095-4f46-bb16-a113757adcc9}</Project>
-      <Name>Granikos.Hydra.SmtpClient</Name>
+      <Name>Granikos.NikosTwo.SmtpClient</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.SmtpServer\Granikos.Hydra.SmtpServer.csproj">
+    <ProjectReference Include="..\Granikos.Hydra.SmtpServer\Granikos.NikosTwo.SmtpServer.csproj">
       <Project>{1109925f-690b-4e73-99f8-dc1fce96ca97}</Project>
-      <Name>Granikos.Hydra.SmtpServer</Name>
+      <Name>Granikos.NikosTwo.SmtpServer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

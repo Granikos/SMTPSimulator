@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Granikos.Hydra.Core;
-using Granikos.Hydra.SmtpServer;
-using Granikos.Hydra.SmtpServer.CommandHandlers;
-using Granikos.Hydra.SmtpServer.CommandHandlers.Fakes;
-using Granikos.Hydra.SmtpServer.Fakes;
+using Granikos.NikosTwo.Core;
+using Granikos.NikosTwo.SmtpServer;
+using Granikos.NikosTwo.SmtpServer.CommandHandlers;
+using Granikos.NikosTwo.SmtpServer.CommandHandlers.Fakes;
+using Granikos.NikosTwo.SmtpServer.Fakes;
 using Microsoft.QualityTools.Testing.Fakes;
 using Xunit;
 
-namespace HydraTest
+namespace NikosTwoTest
 {
     public class CoreTest
     {

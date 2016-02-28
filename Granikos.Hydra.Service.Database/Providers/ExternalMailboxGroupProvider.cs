@@ -2,11 +2,11 @@
 using System.ComponentModel.Composition;
 using System.Data.Entity;
 using System.Linq;
-using Granikos.Hydra.Service.Database.Models;
-using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.Models.Providers;
+using Granikos.NikosTwo.Service.Database.Models;
+using Granikos.NikosTwo.Service.Models;
+using Granikos.NikosTwo.Service.Models.Providers;
 
-namespace Granikos.Hydra.Service.Database.Providers
+namespace Granikos.NikosTwo.Service.Database.Providers
 {
     [Export(typeof(IExternalMailboxGroupProvider))]
     public class ExternalMailboxGroupProvider : DefaultProvider<ExternalUserGroup,IUserGroup>, IExternalMailboxGroupProvider<ExternalUserGroup>, IExternalMailboxGroupProvider

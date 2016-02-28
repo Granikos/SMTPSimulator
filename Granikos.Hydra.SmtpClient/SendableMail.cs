@@ -1,6 +1,6 @@
-using Granikos.Hydra.Core;
+using Granikos.NikosTwo.Core;
 
-namespace Granikos.Hydra.SmtpClient
+namespace Granikos.NikosTwo.SmtpClient
 {
     public delegate void MailResultHandler(bool success);
 

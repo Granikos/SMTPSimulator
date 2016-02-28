@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.Models.Providers;
+using Granikos.NikosTwo.Service.Models;
+using Granikos.NikosTwo.Service.Models.Providers;
 
-namespace Granikos.Hydra.Service.Database
+namespace Granikos.NikosTwo.Service.Database
 {
     public class DefaultProvider<TEntity, TInterface> : DatabaseProvider<TEntity, int>, IDataProvider<TInterface,int>
         where TEntity : class, TInterface, new()

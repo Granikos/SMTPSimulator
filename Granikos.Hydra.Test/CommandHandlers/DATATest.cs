@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Granikos.Hydra.Core;
-using Granikos.Hydra.SmtpServer.CommandHandlers;
-using Granikos.Hydra.SmtpServer.CommandHandlers.Fakes;
+using Granikos.NikosTwo.Core;
+using Granikos.NikosTwo.SmtpServer.CommandHandlers;
+using Granikos.NikosTwo.SmtpServer.CommandHandlers.Fakes;
 using Xunit;
 
-namespace HydraTest.CommandHandlers
+namespace NikosTwoTest.CommandHandlers
 {
     public class DATATest : TestBase
     {

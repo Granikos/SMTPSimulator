@@ -5,10 +5,10 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net;
 using bbv.Common.EventBroker;
-using Granikos.Hydra.Core;
-using Granikos.Hydra.SmtpServer.CommandHandlers;
+using Granikos.NikosTwo.Core;
+using Granikos.NikosTwo.SmtpServer.CommandHandlers;
 
-namespace Granikos.Hydra.SmtpServer
+namespace Granikos.NikosTwo.SmtpServer
 {
     public class SMTPServer
     {

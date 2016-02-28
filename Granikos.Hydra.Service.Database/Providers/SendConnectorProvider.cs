@@ -3,11 +3,11 @@ using System.ComponentModel.Composition;
 using System.Data.Entity;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using Granikos.Hydra.Service.Database.Models;
-using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.Models.Providers;
+using Granikos.NikosTwo.Service.Database.Models;
+using Granikos.NikosTwo.Service.Models;
+using Granikos.NikosTwo.Service.Models.Providers;
 
-namespace Granikos.Hydra.Service.Database.Providers
+namespace Granikos.NikosTwo.Service.Database.Providers
 {
     [Export(typeof(ISendConnectorProvider))]
     public class SendConnectorProvider : DefaultProvider<SendConnector, ISendConnector>, ISendConnectorProvider<SendConnector>, ISendConnectorProvider

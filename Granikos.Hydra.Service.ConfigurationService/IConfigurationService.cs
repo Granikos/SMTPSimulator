@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using Granikos.Hydra.Service.ConfigurationService.Models;
-using Granikos.Hydra.Service.Models;
+using Granikos.NikosTwo.Service.ConfigurationService.Models;
+using Granikos.NikosTwo.Service.Models;
 
-namespace Granikos.Hydra.Service.ConfigurationService
+namespace Granikos.NikosTwo.Service.ConfigurationService
 {
     [ServiceContract]
     public interface IConfigurationService

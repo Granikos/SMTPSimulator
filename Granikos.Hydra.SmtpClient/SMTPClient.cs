@@ -6,10 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using Granikos.Hydra.Core;
-using Granikos.Hydra.Core.Logging;
+using Granikos.NikosTwo.Core;
+using Granikos.NikosTwo.Core.Logging;
+using Granikos.NikosTwo.Core;
 
-namespace Granikos.Hydra.SmtpClient
+namespace Granikos.NikosTwo.SmtpClient
 {
     public class SMTPClient
     {

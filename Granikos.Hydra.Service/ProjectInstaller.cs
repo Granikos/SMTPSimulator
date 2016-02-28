@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Configuration.Install;
 using System.ServiceProcess;
 
-namespace Granikos.Hydra.Service
+namespace Granikos.NikosTwo.Service
 {
     [RunInstaller(true)]
     public partial class ProjectInstaller : Installer

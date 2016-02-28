@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Granikos.Hydra.Service.ConfigurationService.Models
+namespace Granikos.NikosTwo.Service.ConfigurationService.Models
 {
     [DataContract]
     public struct VersionInfo

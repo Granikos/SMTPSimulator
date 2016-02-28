@@ -3,7 +3,7 @@ using System.Diagnostics.Contracts;
 using System.Net;
 using System.Text.RegularExpressions;
 
-namespace Granikos.Hydra.Core
+namespace Granikos.NikosTwo.Core
 {
     public static class ValidationHelpers
     {

@@ -1,4 +1,4 @@
-﻿namespace Granikos.Hydra.SmtpServer
+﻿namespace Granikos.NikosTwo.SmtpServer
 {
     public interface IReceiveSettings
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net;
-using Granikos.Hydra.SmtpClient;
+using Granikos.NikosTwo.SmtpClient;
 
-namespace Granikos.Hydra.Service.Models
+namespace Granikos.NikosTwo.Service.Models
 {
     public interface ISendConnector : IEntity<int>, ISendSettings
     {

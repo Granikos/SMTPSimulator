@@ -2,10 +2,10 @@ using System;
 using System.Data.Entity;
 using System.Net;
 using System.Net.Security;
-using Granikos.Hydra.Service.Database.Models;
-using Granikos.Hydra.Service.Models;
+using Granikos.NikosTwo.Service.Database.Models;
+using Granikos.NikosTwo.Service.Models;
 
-namespace Granikos.Hydra.Service.Database
+namespace Granikos.NikosTwo.Service.Database
 {
     public class DbInitializer : DropCreateDatabaseIfModelChanges<ServiceDbContext>
     {

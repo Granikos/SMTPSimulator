@@ -2,7 +2,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Primitives;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Granikos.Hydra.SmtpServer.CommandHandlers
+namespace Granikos.NikosTwo.SmtpServer.CommandHandlers
 {
     [Export(typeof (ICommandHandlerLoader))]
     public class CommandHandlerLoader : DefaultModuleLoader<ICommandHandler>, ICommandHandlerLoader

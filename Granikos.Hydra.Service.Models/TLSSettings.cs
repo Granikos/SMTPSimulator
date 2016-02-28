@@ -3,7 +3,7 @@ using System.Net.Security;
 using System.Runtime.Serialization;
 using System.Security.Authentication;
 
-namespace Granikos.Hydra.Service.Models
+namespace Granikos.NikosTwo.Service.Models
 {
     [ComplexType]
     [DataContract]

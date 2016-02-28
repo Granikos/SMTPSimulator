@@ -6,15 +6,15 @@ using System.Linq;
 using System.Net.Mail;
 using System.Net.Sockets;
 using ARSoft.Tools.Net.Dns;
-using Granikos.Hydra.Core;
-using Granikos.Hydra.Core.Logging;
-using Granikos.Hydra.Service.Database.Models;
-using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.Models.Providers;
-using Granikos.Hydra.Service.Providers;
-using Granikos.Hydra.SmtpClient;
+using Granikos.NikosTwo.Core;
+using Granikos.NikosTwo.Core.Logging;
+using Granikos.NikosTwo.Service.Database.Models;
+using Granikos.NikosTwo.Service.Models;
+using Granikos.NikosTwo.Service.Models.Providers;
+using Granikos.NikosTwo.Service.Providers;
+using Granikos.NikosTwo.SmtpClient;
 
-namespace Granikos.Hydra.Service
+namespace Granikos.NikosTwo.Service
 {
     public class NoMailHostFoundException : Exception
     {

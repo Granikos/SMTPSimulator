@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net.Mail;
-using Granikos.Hydra.Core;
+using Granikos.NikosTwo.Core;
 using Xunit;
 
-namespace HydraTest
+namespace NikosTwoTest
 {
     public class PathTest
     {

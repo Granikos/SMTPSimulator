@@ -4,9 +4,9 @@ using System.Net;
 using System.Net.Security;
 using System.Runtime.Serialization;
 using System.Security.Authentication;
-using Granikos.Hydra.Service.Models;
+using Granikos.NikosTwo.Service.Models;
 
-namespace Granikos.Hydra.Service.ConfigurationService.Models
+namespace Granikos.NikosTwo.Service.ConfigurationService.Models
 {
     [DataContract]
     public class SendConnector : ISendConnector

@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using System.Text;
 using System.Xml.Serialization;
-using Granikos.Hydra.Service.ConfigurationService.Models;
-using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.Models.Providers;
+using Granikos.NikosTwo.Service.ConfigurationService.Models;
+using Granikos.NikosTwo.Service.Models;
+using Granikos.NikosTwo.Service.Models.Providers;
 
-namespace Granikos.Hydra.Service
+namespace Granikos.NikosTwo.Service
 {
     class MailTemplateImporter
     {
@@ -20,8 +20,8 @@ namespace Granikos.Hydra.Service
         {
             using (var reader = new StreamReader(stream, Encoding.UTF8))
             {
-                var serializer = new XmlSerializer(typeof(NikosTwo));
-                var n2 = (NikosTwo)serializer.Deserialize(reader);
+                var serializer = new XmlSerializer(typeof(NikosTwoXml));
+                var n2 = (NikosTwoXml)serializer.Deserialize(reader);
 
                 return _mailTemplates.Add(n2.MailTemplate).ConvertTo<MailTemplate>();
             }

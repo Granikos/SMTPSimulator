@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using log4net;
 
-namespace Granikos.Hydra.Service.Retention
+namespace Granikos.NikosTwo.Service.Retention
 {
     public class RetentionWorker
     {

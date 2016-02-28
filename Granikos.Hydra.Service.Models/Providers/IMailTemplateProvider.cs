@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Granikos.Hydra.Service.Models.Providers
+namespace Granikos.NikosTwo.Service.Models.Providers
 {
     public interface IMailTemplateProvider<TTemplate> : IDataProvider<TTemplate, int>
         where TTemplate : IMailTemplate

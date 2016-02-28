@@ -1,6 +1,6 @@
 using System.ComponentModel.Composition;
 
-namespace Granikos.Hydra.SmtpServer.AuthMethods
+namespace Granikos.NikosTwo.SmtpServer.AuthMethods
 {
     [ExportMetadata("Name", "PLAIN")]
     [Export(typeof (IAuthMethod))]

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Text;
-using Granikos.Hydra.Core;
+using Granikos.NikosTwo.Core;
 
-namespace Granikos.Hydra.SmtpServer
+namespace Granikos.NikosTwo.SmtpServer
 {
     public class SMTPTransaction
     {

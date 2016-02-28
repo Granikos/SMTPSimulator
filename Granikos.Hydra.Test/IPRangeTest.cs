@@ -1,9 +1,9 @@
 ﻿using System.Net;
-using Granikos.Hydra.Service.ConfigurationService.Models;
-using Granikos.Hydra.Service.Models;
+using Granikos.NikosTwo.Service.ConfigurationService.Models;
+using Granikos.NikosTwo.Service.Models;
 using Xunit;
 
-namespace Granikos.Hydra.Test
+namespace Granikos.NikosTwo.Test
 {
     public class IPRangeTest
     {

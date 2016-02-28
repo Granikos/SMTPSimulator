@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using bbv.Common.EventBroker;
 using bbv.Common.EventBroker.Handlers;
-using Granikos.Hydra.Core;
-using Granikos.Hydra.SmtpServer.AuthMethods;
+using Granikos.NikosTwo.Core;
+using Granikos.NikosTwo.SmtpServer.AuthMethods;
 
-namespace Granikos.Hydra.SmtpServer.CommandHandlers
+namespace Granikos.NikosTwo.SmtpServer.CommandHandlers
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class RequiresAuthAttribute : Attribute

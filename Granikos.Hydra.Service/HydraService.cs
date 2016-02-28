@@ -12,22 +12,22 @@ using System.Reflection;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.ServiceProcess;
-using Granikos.Hydra.Core;
-using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.Models.Providers;
-using Granikos.Hydra.Service.PriorityQueue;
-using Granikos.Hydra.Service.Retention;
-using Granikos.Hydra.Service.TimeTables;
-using Granikos.Hydra.SmtpClient;
-using Granikos.Hydra.SmtpServer;
-using Granikos.Hydra.SmtpServer.CommandHandlers;
+using Granikos.NikosTwo.Core;
+using Granikos.NikosTwo.Service.Models;
+using Granikos.NikosTwo.Service.Models.Providers;
+using Granikos.NikosTwo.Service.PriorityQueue;
+using Granikos.NikosTwo.Service.Retention;
+using Granikos.NikosTwo.Service.TimeTables;
+using Granikos.NikosTwo.SmtpClient;
+using Granikos.NikosTwo.SmtpServer;
+using Granikos.NikosTwo.SmtpServer.CommandHandlers;
 using log4net;
 using log4net.Appender;
-using MailMessage = Granikos.Hydra.Service.ConfigurationService.Models.MailMessage;
+using MailMessage = Granikos.NikosTwo.Service.ConfigurationService.Models.MailMessage;
 
-namespace Granikos.Hydra.Service
+namespace Granikos.NikosTwo.Service
 {
-    public partial class HydraService : ServiceBase, ISMTPServerContainer, IMailQueueProvider
+    public partial class NikosTwoService : ServiceBase, ISMTPServerContainer, IMailQueueProvider
     {
         private const int NumSenders = 4;
         // TODO: Use locks
@@ -51,9 +51,9 @@ namespace Granikos.Hydra.Service
         private readonly Dictionary<int,TimeTableGenerator> _generators = new Dictionary<int, TimeTableGenerator>();
         private readonly RetentionManager _retentionManager;
 
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(HydraService));
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(NikosTwoService));
 
-        public HydraService()
+        public NikosTwoService()
         {
             Logger.Info("The Nikos Two Service is starting...");
 
@@ -68,7 +68,7 @@ namespace Granikos.Hydra.Service
             if (!string.IsNullOrEmpty(pluginFolder))
             {
                 catalog = new AggregateCatalog(
-                    new AssemblyCatalog(typeof (HydraService).Assembly),
+                    new AssemblyCatalog(typeof (NikosTwoService).Assembly),
                     new DirectoryCatalog(AssemblyDirectory),
                     new DirectoryCatalog(pluginFolder)
                     );
@@ -76,7 +76,7 @@ namespace Granikos.Hydra.Service
             else
             {
                 catalog = new AggregateCatalog(
-                    new AssemblyCatalog(typeof (HydraService).Assembly),
+                    new AssemblyCatalog(typeof (NikosTwoService).Assembly),
                     new DirectoryCatalog(AssemblyDirectory)
                     );
             }
@@ -111,7 +111,7 @@ namespace Granikos.Hydra.Service
         {
             // TODO: Customizable folder name
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var dataDir = Path.Combine(appData, "Hydra");
+            var dataDir = Path.Combine(appData, "NikosTwo");
             if (!Directory.Exists(dataDir))
             {
                 Directory.CreateDirectory(dataDir);

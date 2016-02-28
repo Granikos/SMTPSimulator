@@ -1,7 +1,7 @@
 using System;
 using System.Configuration;
 
-namespace Granikos.Hydra.Service.Retention
+namespace Granikos.NikosTwo.Service.Retention
 {
     public class DirectoryRetentionConfigElement : ConfigurationElement
     {

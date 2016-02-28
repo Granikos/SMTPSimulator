@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Core.Objects;
-using Granikos.Hydra.Service.Models;
+using Granikos.NikosTwo.Service.Models;
 
-namespace Granikos.Hydra.Service.Database.Models
+namespace Granikos.NikosTwo.Service.Database.Models
 {
     public abstract class Entity : IEntity<int>
     {

@@ -1,6 +1,6 @@
 using log4net.Appender;
 
-namespace Granikos.Hydra.Core.Logging
+namespace Granikos.NikosTwo.Core.Logging
 {
     public class HeaderOnceAppender : RollingFileAppender
     {

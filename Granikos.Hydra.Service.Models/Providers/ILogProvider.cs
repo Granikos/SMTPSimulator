@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace Granikos.Hydra.Service.Models.Providers
+namespace Granikos.NikosTwo.Service.Models.Providers
 {
     public interface ILogProvider
     {

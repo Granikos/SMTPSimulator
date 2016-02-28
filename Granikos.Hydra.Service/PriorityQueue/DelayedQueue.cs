@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 
-namespace Granikos.Hydra.Service.PriorityQueue
+namespace Granikos.NikosTwo.Service.PriorityQueue
 {
     public class DelayedQueue<T>
     {

@@ -1,6 +1,6 @@
-﻿using Granikos.Hydra.Service.Models;
+﻿using Granikos.NikosTwo.Service.Models;
 
-namespace Granikos.Hydra.Service.ConfigurationService.Models
+namespace Granikos.NikosTwo.Service.ConfigurationService.Models
 {
     public class Attachment : IAttachment
     {

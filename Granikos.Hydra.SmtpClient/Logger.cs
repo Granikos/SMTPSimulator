@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Diagnostics.Contracts;
 using System.Net;
-using Granikos.Hydra.Core.Logging;
+using Granikos.NikosTwo.Core.Logging;
 
-namespace Granikos.Hydra.SmtpClient
+namespace Granikos.NikosTwo.SmtpClient
 {
     public class Logger
     {

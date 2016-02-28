@@ -1,8 +1,8 @@
 using System.ComponentModel.Composition;
 using System.Text.RegularExpressions;
-using Granikos.Hydra.Core;
+using Granikos.NikosTwo.Core;
 
-namespace Granikos.Hydra.SmtpServer.CommandHandlers
+namespace Granikos.NikosTwo.SmtpServer.CommandHandlers
 {
     [RequiresAuth]
     [ExportMetadata("Command", "MAIL")]

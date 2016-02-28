@@ -7,8 +7,8 @@
     <ProjectGuid>{1109925F-690B-4E73-99F8-DC1FCE96CA97}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Granikos.Hydra.SmtpServer</RootNamespace>
-    <AssemblyName>Granikos.Hydra.SmtpServer</AssemblyName>
+    <RootNamespace>Granikos.NikosTwo.SmtpServer</RootNamespace>
+    <AssemblyName>Granikos.NikosTwo.SmtpServer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
@@ -173,9 +173,9 @@
       <Project>{81de807d-d637-4b10-8ae1-13ea5ac1a80d}</Project>
       <Name>bbv.Common.EventBroker</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Granikos.Hydra.Core\Granikos.Hydra.Core.csproj">
+    <ProjectReference Include="..\Granikos.Hydra.Core\Granikos.NikosTwo.Core.csproj">
       <Project>{6c923248-1b40-4a27-80f7-ddeeb9f6d4d5}</Project>
-      <Name>Granikos.Hydra.Core</Name>
+      <Name>Granikos.NikosTwo.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

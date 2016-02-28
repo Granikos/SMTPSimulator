@@ -1,6 +1,6 @@
-﻿namespace Granikos.Hydra.Service
+﻿namespace Granikos.NikosTwo.Service
 {
-    partial class HydraService
+    partial class NikosTwoService
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            this.ServiceName = "HydraService";
+            this.ServiceName = "NikosTwoService";
         }
 
         #endregion

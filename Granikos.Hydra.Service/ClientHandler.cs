@@ -8,14 +8,14 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using Granikos.Hydra.Core;
-using Granikos.Hydra.Core.Logging;
-using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.Models.Providers;
-using Granikos.Hydra.SmtpServer;
+using Granikos.NikosTwo.Core;
+using Granikos.NikosTwo.Core.Logging;
+using Granikos.NikosTwo.Service.Models;
+using Granikos.NikosTwo.Service.Models.Providers;
+using Granikos.NikosTwo.SmtpServer;
 using log4net;
 
-namespace Granikos.Hydra.Service
+namespace Granikos.NikosTwo.Service
 {
     internal class ClientHandler
     {

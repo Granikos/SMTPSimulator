@@ -1,10 +1,10 @@
 ﻿using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
-using Granikos.Hydra.Core;
+using Granikos.NikosTwo.Core;
 using Xunit;
 
-namespace Granikos.Hydra.Test.Core
+namespace Granikos.NikosTwo.Test.Core
 {
     public class MailContentTest
     {

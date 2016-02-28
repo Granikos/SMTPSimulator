@@ -8,14 +8,14 @@ using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
-using Granikos.Hydra.Service.ConfigurationService;
-using Granikos.Hydra.Service.ConfigurationService.Models;
-using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.Models.Providers;
-using Granikos.Hydra.SmtpServer;
+using Granikos.NikosTwo.Service.ConfigurationService;
+using Granikos.NikosTwo.Service.ConfigurationService.Models;
+using Granikos.NikosTwo.Service.Models;
+using Granikos.NikosTwo.Service.Models.Providers;
+using Granikos.NikosTwo.SmtpServer;
 using log4net;
 
-namespace Granikos.Hydra.Service
+namespace Granikos.NikosTwo.Service
 {
     public class JsonContentTypeMapper : WebContentTypeMapper
     {
@@ -226,10 +226,10 @@ namespace Granikos.Hydra.Service
         public IEnumerable<VersionInfo> GetVersionInfo()
         {
             return AppDomain.CurrentDomain.GetAssemblies()
-                .Where(a => a.FullName.StartsWith("Granikos.Hydra"))
+                .Where(a => a.FullName.StartsWith("Granikos.NikosTwo"))
                 .Select(a => new VersionInfo
                 {
-                    Assembly = a.GetName().Name.Substring(15),
+                    Assembly = a.GetName().Name.Substring(18),
                     BuildDate = a.GetBuildDate(),
                     Version = a.GetName().Version
                 });

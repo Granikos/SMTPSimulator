@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using Granikos.Hydra.Service.Models;
-using Granikos.Hydra.Service.Models.Providers;
-using User = Granikos.Hydra.Service.ConfigurationService.Models.User;
+using Granikos.NikosTwo.Service.Models;
+using Granikos.NikosTwo.Service.Models.Providers;
+using User = Granikos.NikosTwo.Service.ConfigurationService.Models.User;
 
-namespace Granikos.Hydra.Service.Providers
+namespace Granikos.NikosTwo.Service.Providers
 {
     [Export(typeof (IUserTemplateProvider))]
     public class TechnicalUserTemplates : IUserTemplateProvider

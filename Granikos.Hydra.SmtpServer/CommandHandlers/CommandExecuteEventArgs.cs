@@ -1,7 +1,7 @@
 ﻿using System;
-using Granikos.Hydra.Core;
+using Granikos.NikosTwo.Core;
 
-namespace Granikos.Hydra.SmtpServer.CommandHandlers
+namespace Granikos.NikosTwo.SmtpServer.CommandHandlers
 {
     public class CommandExecuteEventArgs : EventArgs
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Granikos.Hydra.Service.Models
+namespace Granikos.NikosTwo.Service.Models
 {
     public interface ITimeTable : IEntity<int>
     {

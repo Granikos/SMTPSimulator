@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace Granikos.Hydra.Service.Models
+namespace Granikos.NikosTwo.Service.Models
 {
     [DataContract(Name = "{0}WithCount")]
     public class ValueWithCount<TValue>

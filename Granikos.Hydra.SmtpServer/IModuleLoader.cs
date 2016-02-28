@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Granikos.Hydra.SmtpServer
+namespace Granikos.NikosTwo.SmtpServer
 {
     public interface IModuleLoader<T>
         where T : class

@@ -3,9 +3,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Granikos.Hydra.Service.ConfigurationService.Models;
+using Granikos.NikosTwo.Service.ConfigurationService.Models;
 
-namespace Granikos.Hydra.WebClient.Controllers
+namespace Granikos.NikosTwo.WebClient.Controllers
 {
     // [Authorize]
     [RoutePrefix("api/LocalGroups")]

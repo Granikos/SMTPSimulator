@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.Composition;
 using System.Net;
 
-namespace Granikos.Hydra.Core.Logging
+namespace Granikos.NikosTwo.Core.Logging
 {
     [Export(typeof (ISMTPLogger))]
     public class ConsoleLogger : ISMTPLogger

@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(Granikos.Hydra.WebClient.Startup))]
-namespace Granikos.Hydra.WebClient
+[assembly: OwinStartupAttribute(typeof(Granikos.NikosTwo.WebClient.Startup))]
+namespace Granikos.NikosTwo.WebClient
 {
     public partial class Startup
     {

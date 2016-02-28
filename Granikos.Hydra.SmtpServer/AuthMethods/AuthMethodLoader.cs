@@ -2,7 +2,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Primitives;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Granikos.Hydra.SmtpServer.AuthMethods
+namespace Granikos.NikosTwo.SmtpServer.AuthMethods
 {
     [Export(typeof (IAuthMethodLoader))]
     public class AuthMethodLoader : DefaultModuleLoader<IAuthMethod>, IAuthMethodLoader

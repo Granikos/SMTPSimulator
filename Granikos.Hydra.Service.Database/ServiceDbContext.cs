@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Data.Entity;
-using Granikos.Hydra.Service.Database.Models;
+using Granikos.NikosTwo.Service.Database.Models;
 
-namespace Granikos.Hydra.Service.Database
+namespace Granikos.NikosTwo.Service.Database
 {
     [Export]
     [PartCreationPolicy(CreationPolicy.NonShared)]

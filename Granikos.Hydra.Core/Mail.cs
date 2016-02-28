@@ -4,7 +4,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Granikos.Hydra.Core
+namespace Granikos.NikosTwo.Core
 {
     public class Mail
     {

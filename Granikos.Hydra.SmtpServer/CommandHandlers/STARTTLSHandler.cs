@@ -3,9 +3,9 @@ using System.ComponentModel;
 using System.Linq;
 using bbv.Common.EventBroker;
 using bbv.Common.EventBroker.Handlers;
-using Granikos.Hydra.Core;
+using Granikos.NikosTwo.Core;
 
-namespace Granikos.Hydra.SmtpServer.CommandHandlers
+namespace Granikos.NikosTwo.SmtpServer.CommandHandlers
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class UnsecureAllowedAttribute : Attribute

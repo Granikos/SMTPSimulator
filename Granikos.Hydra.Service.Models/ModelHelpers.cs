@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace Granikos.Hydra.Service.Models
+namespace Granikos.NikosTwo.Service.Models
 {
     public static class ModelHelpers
     {

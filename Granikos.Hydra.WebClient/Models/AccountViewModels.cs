@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Granikos.Hydra.WebClient.Models
+namespace Granikos.NikosTwo.WebClient.Models
 {
     public class ExternalLoginConfirmationViewModel
     {

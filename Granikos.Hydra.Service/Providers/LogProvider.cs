@@ -5,9 +5,9 @@ using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Granikos.Hydra.Service.Models.Providers;
+using Granikos.NikosTwo.Service.Models.Providers;
 
-namespace Granikos.Hydra.Service.Providers
+namespace Granikos.NikosTwo.Service.Providers
 {
     [Export(typeof (ILogProvider))]
     public class FileLogProvider : ILogProvider

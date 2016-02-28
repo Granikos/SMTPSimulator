@@ -1,4 +1,4 @@
-namespace Granikos.Hydra.Service
+namespace Granikos.NikosTwo.Service
 {
     public interface ISMTPServerContainer
     {

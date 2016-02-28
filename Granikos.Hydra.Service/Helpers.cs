@@ -6,9 +6,9 @@ using System.ComponentModel.Composition.ReflectionModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Granikos.Hydra.Service.ConfigurationService.Models;
+using Granikos.NikosTwo.Service.ConfigurationService.Models;
 
-namespace Granikos.Hydra.Service
+namespace Granikos.NikosTwo.Service
 {
     public static class Helpers
     {

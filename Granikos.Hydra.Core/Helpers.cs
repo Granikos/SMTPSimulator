@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Net.Mail;
 using System.Text;
 
-namespace Granikos.Hydra.Core
+namespace Granikos.NikosTwo.Core
 {
     public static class Helpers
     {

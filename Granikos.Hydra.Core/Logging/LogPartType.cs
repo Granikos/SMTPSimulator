@@ -1,4 +1,4 @@
-namespace Granikos.Hydra.Core.Logging
+namespace Granikos.NikosTwo.Core.Logging
 {
     public enum LogPartType
     {

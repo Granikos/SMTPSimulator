@@ -1,4 +1,4 @@
-namespace Granikos.Hydra.SmtpServer.AuthMethods
+namespace Granikos.NikosTwo.SmtpServer.AuthMethods
 {
     public interface IAuthMethod
     {

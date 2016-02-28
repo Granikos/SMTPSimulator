@@ -1,4 +1,4 @@
-﻿namespace Granikos.Hydra.Service
+﻿namespace Granikos.NikosTwo.Service
 {
     partial class ProjectInstaller
     {

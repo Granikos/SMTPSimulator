@@ -1,8 +1,8 @@
 using System;
 using System.Net;
-using Granikos.Hydra.Core;
+using Granikos.NikosTwo.Core;
 
-namespace Granikos.Hydra.Service.Models
+namespace Granikos.NikosTwo.Service.Models
 {
     public interface IReceiveConnector : IEntity<int>
     {

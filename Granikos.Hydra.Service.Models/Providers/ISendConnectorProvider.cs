@@ -1,4 +1,4 @@
-namespace Granikos.Hydra.Service.Models.Providers
+namespace Granikos.NikosTwo.Service.Models.Providers
 {
     public interface ISendConnectorProvider<TSendConnector> : IDataProvider<TSendConnector, int>
         where TSendConnector : ISendConnector

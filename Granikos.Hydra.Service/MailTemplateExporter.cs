@@ -1,9 +1,9 @@
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
-using Granikos.Hydra.Service.ConfigurationService.Models;
+using Granikos.NikosTwo.Service.ConfigurationService.Models;
 
-namespace Granikos.Hydra.Service
+namespace Granikos.NikosTwo.Service
 {
     class MailTemplateExporter
     {
@@ -11,8 +11,8 @@ namespace Granikos.Hydra.Service
         {
             using (var writer = new StreamWriter(stream, Encoding.UTF8, 1000, true))
             {
-                var n2 = new NikosTwo {MailTemplate = template};
-                var serializer = new XmlSerializer(typeof(NikosTwo));
+                var n2 = new NikosTwoXml {MailTemplate = template};
+                var serializer = new XmlSerializer(typeof(NikosTwoXml));
                 serializer.Serialize(writer, n2);
             }
         }

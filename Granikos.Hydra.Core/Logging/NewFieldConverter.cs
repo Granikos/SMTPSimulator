@@ -1,7 +1,7 @@
 using System.IO;
 using log4net.Util;
 
-namespace Granikos.Hydra.Core.Logging
+namespace Granikos.NikosTwo.Core.Logging
 {
     public class NewFieldConverter : PatternConverter
     {

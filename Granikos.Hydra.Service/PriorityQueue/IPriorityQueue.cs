@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Granikos.Hydra.Service.PriorityQueue
+namespace Granikos.NikosTwo.Service.PriorityQueue
 {
     /// <summary>
     ///     The IPriorityQueue interface.  This is mainly here for purists, and in case I decide to add more implementations

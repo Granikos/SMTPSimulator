@@ -1,4 +1,4 @@
-namespace Granikos.Hydra.SmtpServer.CommandHandlers
+namespace Granikos.NikosTwo.SmtpServer.CommandHandlers
 {
     public interface ICommandHandlerLoader : IModuleLoader<ICommandHandler>
     {

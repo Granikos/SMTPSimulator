@@ -1,4 +1,4 @@
-namespace Granikos.Hydra.Service.Models.Providers
+namespace Granikos.NikosTwo.Service.Models.Providers
 {
     public delegate void TimeTableChangeHandler<in TTimeTable>(TTimeTable timeTable)
         where TTimeTable : ITimeTable;

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Granikos.Hydra.SmtpServer.Fakes;
+using Granikos.NikosTwo.SmtpServer.Fakes;
 using Microsoft.QualityTools.Testing.Fakes;
 
-namespace HydraTest.CommandHandlers
+namespace NikosTwoTest.CommandHandlers
 {
     public class TestBase : IDisposable
     {

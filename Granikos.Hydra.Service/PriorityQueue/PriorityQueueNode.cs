@@ -1,4 +1,4 @@
-namespace Granikos.Hydra.Service.PriorityQueue
+namespace Granikos.NikosTwo.Service.PriorityQueue
 {
     public class PriorityQueueNode<K>
     {

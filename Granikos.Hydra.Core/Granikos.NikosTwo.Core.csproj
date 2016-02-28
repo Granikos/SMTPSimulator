@@ -7,8 +7,8 @@
     <ProjectGuid>{6C923248-1B40-4A27-80F7-DDEEB9F6D4D5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Granikos.Hydra.Core</RootNamespace>
-    <AssemblyName>Granikos.Hydra.Core</AssemblyName>
+    <RootNamespace>Granikos.NikosTwo.Core</RootNamespace>
+    <AssemblyName>Granikos.NikosTwo.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>

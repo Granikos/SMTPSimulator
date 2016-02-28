@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Granikos.Hydra.Core
+namespace Granikos.NikosTwo.Core
 {
     public static class RegularExpressions
     {

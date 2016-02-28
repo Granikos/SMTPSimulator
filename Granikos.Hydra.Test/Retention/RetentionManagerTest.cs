@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 using System.IO;
-using Granikos.Hydra.Service.Retention;
+using Granikos.NikosTwo.Service.Retention;
 using Microsoft.QualityTools.Testing.Fakes;
 using Xunit;
 
-namespace Granikos.Hydra.Test.Retention
+namespace Granikos.NikosTwo.Test.Retention
 {
     public class RetentionManagerTest
     {
@@ -12,7 +12,7 @@ namespace Granikos.Hydra.Test.Retention
         public void TestHandlers()
         {
             var basedir =
-                @"C:\Users\Manuel\Documents\Visual Studio 2013\Projects\Hydra\Granikos.Hydra.Service\bin\Debug\Logs\SystemLogs\Service";
+                @"C:\Users\Manuel\Documents\Visual Studio 2013\Projects\NikosTwo\Granikos.NikosTwo.Service\bin\Debug\Logs\SystemLogs\Service";
 
             var manager = new RetentionWorker(basedir);
             

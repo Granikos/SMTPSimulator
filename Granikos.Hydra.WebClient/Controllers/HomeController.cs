@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Granikos.Hydra.WebClient.Controllers
+namespace Granikos.NikosTwo.WebClient.Controllers
 {
     public class HomeController : Controller
     {

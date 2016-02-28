@@ -1,12 +1,12 @@
 using System;
 using System.ComponentModel.Composition.Hosting;
 using System.Threading;
-using Granikos.Hydra.Core;
-using Granikos.Hydra.Service.PriorityQueue;
-using Granikos.Hydra.SmtpClient;
+using Granikos.NikosTwo.Core;
+using Granikos.NikosTwo.Service.PriorityQueue;
+using Granikos.NikosTwo.SmtpClient;
 using log4net;
 
-namespace Granikos.Hydra.Service
+namespace Granikos.NikosTwo.Service
 {
     internal class MessageSender
     {

@@ -1,4 +1,4 @@
-namespace Granikos.Hydra.Core
+namespace Granikos.NikosTwo.Core
 {
     public enum SMTPStatusCode
     {

@@ -4,7 +4,7 @@ using System.Reflection;
 using log4net.Core;
 using log4net.Layout;
 
-namespace Granikos.Hydra.Core.Logging
+namespace Granikos.NikosTwo.Core.Logging
 {
     public class CsvPatternLayout : PatternLayout
     {

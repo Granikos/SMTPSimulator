@@ -1,10 +1,10 @@
 using System;
 using System.Net;
-using Granikos.Hydra.Service.ConfigurationService.Models;
+using Granikos.NikosTwo.Service.ConfigurationService.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Granikos.Hydra.Service.Providers
+namespace Granikos.NikosTwo.Service.Providers
 {
     public class IPRangeConverter : JsonConverter
     {

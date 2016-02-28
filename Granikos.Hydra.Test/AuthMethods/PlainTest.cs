@@ -1,9 +1,9 @@
 ﻿using System;
-using Granikos.Hydra.SmtpServer.AuthMethods;
-using HydraTest.CommandHandlers;
+using Granikos.NikosTwo.SmtpServer.AuthMethods;
+using NikosTwoTest.CommandHandlers;
 using Xunit;
 
-namespace HydraTest.AuthMethods
+namespace NikosTwoTest.AuthMethods
 {
     public class PlainTest : TestBase
     {
