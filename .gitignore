@@ -204,7 +204,7 @@ FakesAssemblies/
 /Granikos.NikosTwo.WebClient/Scripts/lib
 
 /WebDeploy
-/HydraWebClient.*
+/NikosTwoWebClient.*
 /Granikos.NikosTwo.Service/AppData
 /Granikos.NikosTwo.Service/Attachments
 /Granikos.NikosTwo.Setup/*.bak
