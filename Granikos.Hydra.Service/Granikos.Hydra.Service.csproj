@@ -223,6 +223,7 @@
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
+    <Compile Include="Providers\CertificateProvider.cs" />
     <Compile Include="Retention\DirectoryRetentionConfig.cs" />
     <Compile Include="Retention\DirectoryRetentionConfigCollection.cs" />
     <Compile Include="Retention\DirectoryRetentionConfigElement.cs" />

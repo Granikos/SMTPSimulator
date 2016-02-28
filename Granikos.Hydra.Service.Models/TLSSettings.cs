@@ -42,7 +42,7 @@ namespace Granikos.Hydra.Service.Models
         public string CertificateDomain { get; set; }
 
         [DataMember]
-        public bool IsFilesystemCertificate { get; set; }
+        public string CertificateType { get; set; }
     }
 
     public enum TLSAuthLevel

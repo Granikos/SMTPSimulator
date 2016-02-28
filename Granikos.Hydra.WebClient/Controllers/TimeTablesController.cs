@@ -28,7 +28,7 @@ namespace Granikos.Hydra.WebClient.Controllers
 
         [HttpGet]
         [Route("Types")]
-        public IEnumerable<TimeTableTypeInfo> GetTypes()
+        public IEnumerable<NameWithDisplayName> GetTypes()
         {
             return _service.GetTimeTableTypes();
         }

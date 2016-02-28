@@ -392,7 +392,7 @@ namespace Granikos.Hydra.Service.ConfigurationService
             UriTemplate = "TimeTables/Types",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        IEnumerable<TimeTableTypeInfo> GetTimeTableTypes();
+        IEnumerable<NameWithDisplayName> GetTimeTableTypes();
 
         [OperationContract]
         [WebGet(
@@ -582,5 +582,43 @@ namespace Granikos.Hydra.Service.ConfigurationService
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         bool DeleteMailTemplate(int id);
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "Certificates/types",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<NameWithDisplayName> GetCertificateTypes();
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "Certificates/all-by-type/{type}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<string> GetCertificates(string type);
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "Certificates/{name}",
+            Method = "PUT",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool UploadCertificate(string name, Stream stream);
+
+        [OperationContract]
+        [WebGet(
+            UriTemplate = "Certificates/by-name/{name}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        Stream DownloadCertificate(string name);
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "Certificates/{name}",
+            Method = "DELETE",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool DeleteCertificate(string name);
     }
 }

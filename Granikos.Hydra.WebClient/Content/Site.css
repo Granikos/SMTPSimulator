@@ -258,7 +258,16 @@ input[type=number] {
     text-align: right;
 }
 
-a.filelink:before {
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('dist/fontawesome-webfont.eot?v=4.5.0');
+  src: url('dist/fontawesome-webfont.eot?#iefix&v=4.5.0') format('embedded-opentype'), url('dist/fontawesome-webfont.woff2?v=4.5.0') format('woff2'), url('dist/fontawesome-webfont.woff?v=4.5.0') format('woff'), url('dist/fontawesome-webfont.ttf?v=4.5.0') format('truetype'), url('dist/fontawesome-webfont.svg?v=4.5.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+a.filelink:before,
+.fileIcon:before {
     display: inline-block;
     font-family: FontAwesome;
     font-feature-settings: normal;
@@ -279,34 +288,34 @@ a.filelink:before {
 }
 
 a[href$=".pdf"].filelink:before,
-.fa-file-pdf-o {
+.fa-file-pdf-o:before {
     content: "\f1c1";
     color: #F26353;
 }
 
 a[href$=".txt"].filelink:before,
-.fa-file-text-o {
+.fa-file-text-o:before {
     content: "\f0f6";
     color: #808080;
 }
 
 a[href$=".doc"].filelink:before,
 a[href$=".docx"].filelink:before,
-.fa-file-word-o {
+.fa-file-word-o:before {
     content: "\f1c2";
     color: #2277bb;
 }
 
 a[href$=".xls"].filelink:before,
 a[href$=".xlsx"].filelink:before,
-.fa-file-excel-o {
+.fa-file-excel-o:before {
     content: "\f1c3";
     color: #22bb66;
 }
 
 a[href$=".ppt"].filelink:before,
 a[href$=".pptx"].filelink:before,
-.fa-file-powerpoint-o {
+.fa-file-powerpoint-o:before {
     content: "\f1c4";
     color: #ff5533;
 }
@@ -316,7 +325,7 @@ a[href$=".gif"].filelink:before,
 a[href$=".jpeg"].filelink:before,
 a[href$=".jpg"].filelink:before,
 a[href$=".png"].filelink:before,
-.fa-file-image-o {
+.fa-file-image-o:before {
     content: "\f1c5";
     color: #ffaa00;
 }
@@ -331,7 +340,7 @@ a[href$=".tar"].filelink:before,
 a[href$=".tgz"].filelink:before,
 a[href$=".zip"].filelink:before,
 a[href$=".7z"].filelink:before,
-.fa-file-archive-o {
+.fa-file-archive-o:before {
     content: "\f1c6";
     color: #333355;
 }
@@ -344,7 +353,7 @@ a[href$=".cda"].filelink:before,
 a[href$=".wma"].filelink:before,
 a[href$=".ogg"].filelink:before,
 a[href$=".midi"].filelink:before,
-.fa-file-audio-o {
+.fa-file-audio-o:before {
     content: "\f1c7";
     color: #2e77cd;
 }
@@ -365,7 +374,7 @@ a[href$=".mpv"].filelink:before,
 a[href$=".m4v"].filelink:before,
 a[href$=".3gp"].filelink:before,
 a[href$=".3g2"].filelink:before,
-.fa-file-video-o {
+.fa-file-video-o:before {
     content: "\f1c8";
     color: #c96c4b;
 }
@@ -406,7 +415,7 @@ a[href$=".xslt"].filelink:before,
 a[href$=".xaml"].filelink:before,
 a[href$=".sql"].filelink:before,
 a[href$=".ps1"].filelink:before,
-.fa-file-code-o {
+.fa-file-code-o:before {
     content: "\f1c9";
     color: #808080;
 }

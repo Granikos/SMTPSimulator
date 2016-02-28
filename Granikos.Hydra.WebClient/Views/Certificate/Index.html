@@ -1,0 +1,17 @@
+﻿<div class="container-fluid">
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="(idx, certificate) in certificates">
+            <div class="btn-group pull-right btn-group-sm">
+                <a target="_self" href="/api/Certificates/Download/{{certificate}}" class="btn btn-default" tooltip="Download certificate" tooltip-placement="bottom" tooltip-append-to-body="true" role="button"><i class="glyphicon glyphicon-download"></i></a>
+                <button type="button" class="btn btn-danger" ng-click="delete(certificate)" tooltip="Remove certificate" tooltip-placement="bottom" tooltip-append-to-body="true"><i class="glyphicon glyphicon-remove"></i></button>
+            </div>
+            <h4 class="list-group-item-heading">{{certificate}}</h4>
+        </li>
+    </ul>
+    <div class="btn-group pull-right" style="margin-top: 10px;">
+        <label class="btn btn-primary" for="uploadfile">
+            <i class="glyphicon glyphicon-upload"></i> Upload
+        </label>
+        <input id="uploadfile" type="file" ngf-select="upload($files)" style="position: absolute; clip: rect(0 0 0 0)" />
+    </div>
+</div>

@@ -28,6 +28,8 @@ namespace Granikos.Hydra.Service.Database
         public DbSet<Attachment> Attachments { get; set; }
         public DbSet<AttachmentContent> AttachmentContents { get; set; }
         public DbSet<MailTemplate> MailTemplates { get; set; }
+        public DbSet<Certificate> Certificates { get; set; }
+        public DbSet<CertificateContent> CertificateContents { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -39,6 +39,31 @@ namespace Granikos.Hydra.WebClient
         {
         }
 
+        public IEnumerable<NameWithDisplayName> GetCertificateTypes()
+        {
+            return Channel.GetCertificateTypes();
+        }
+
+        public IEnumerable<string> GetCertificates(string type)
+        {
+            return Channel.GetCertificates(type);
+        }
+
+        public bool UploadCertificate(string name, Stream stream)
+        {
+            return Channel.UploadCertificate(name, stream);
+        }
+
+        public Stream DownloadCertificate(string name)
+        {
+            return Channel.DownloadCertificate(name);
+        }
+
+        public bool DeleteCertificate(string name)
+        {
+            return Channel.DeleteCertificate(name);
+        }
+
         public bool DeleteMailTemplate(int id)
         {
             return Channel.DeleteMailTemplate(id);
@@ -329,7 +354,7 @@ namespace Granikos.Hydra.WebClient
             return Channel.GetTimeTables();
         }
 
-        public IEnumerable<TimeTableTypeInfo> GetTimeTableTypes()
+        public IEnumerable<NameWithDisplayName> GetTimeTableTypes()
         {
             return Channel.GetTimeTableTypes();
         }

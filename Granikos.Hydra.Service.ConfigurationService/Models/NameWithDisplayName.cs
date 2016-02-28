@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 namespace Granikos.Hydra.Service.ConfigurationService.Models
 {
     [DataContract]
-    public class TimeTableTypeInfo
+    public class NameWithDisplayName
     {
         [DataMember]
         public string Name { get; set; }

@@ -22,12 +22,13 @@ gulp.task("bower-css", ['bower-restore'], function () {
         .pipe(gulp.dest("./Content/dist"));
 });
 
-gulp.task("bower-fonts", ['bower-restore'], function () {
+gulp.task("fonts", ['bower-restore'], function () {
     var files = mainBowerFiles({
         filter: new RegExp('.*(otf|eot|svg|ttf|woff2?)$', 'i')
     });
 
     files.push('bower_components/bootstrap/dist/fonts/*');
+    files.push('bower_components/font-awesome/fonts/*');
 
     return gulp.src(files)
         .pipe(gulp.dest("./Content/dist"));
@@ -53,7 +54,7 @@ gulp.task('bower-restore', function () {
 });
 
 //Restore all bower packages
-gulp.task('bower-dist', ['bower-js', 'bower-css', 'bower-fonts'], function () {});
+gulp.task('bower-dist', ['bower-js', 'bower-css', 'fonts'], function () {});
 
 //Set a default tasks
 gulp.task('default', ['bower-dist'], function () {

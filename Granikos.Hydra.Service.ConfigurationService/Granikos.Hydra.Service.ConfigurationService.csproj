@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IConfigurationService.cs" />
+    <Compile Include="Models\Certificate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Attachment.cs" />
     <Compile Include="Models\EntitiesWithTotal.cs" />
@@ -99,7 +100,7 @@
     <Compile Include="Models\ReceiveConnector.cs" />
     <Compile Include="Models\SendConnector.cs" />
     <Compile Include="Models\TimeTable.cs" />
-    <Compile Include="Models\TimeTableTypeInfo.cs" />
+    <Compile Include="Models\NameWithDisplayName.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserGroup.cs" />
     <Compile Include="Models\VersionInfo.cs" />

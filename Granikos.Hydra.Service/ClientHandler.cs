@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 using Granikos.Hydra.Core;
 using Granikos.Hydra.Core.Logging;
 using Granikos.Hydra.Service.Models;
+using Granikos.Hydra.Service.Models.Providers;
 using Granikos.Hydra.SmtpServer;
 using log4net;
 
@@ -35,12 +37,14 @@ namespace Granikos.Hydra.Service
         private SMTPTransaction _transaction;
         private StreamWriter _writer;
 
-        public ClientHandler(TcpClient client, SMTPService smtpServer)
+        public ClientHandler(TcpClient client, SMTPService smtpServer, CompositionContainer container)
         {
             _client = client;
             _smtpServer = smtpServer;
 
-            _tlsConnector = new TLSConnector(_smtpServer.Connector.TLSSettings, CertificateLog);
+            var certProvider = container.GetExportedValue<ICertificateProvider>(_smtpServer.Connector.TLSSettings.CertificateType);
+
+            _tlsConnector = new TLSConnector(_smtpServer.Connector.TLSSettings, CertificateLog, certProvider);
             _localEndpoint = (IPEndPoint) _client.Client.LocalEndPoint;
             _remoteEndpoint = (IPEndPoint) _client.Client.RemoteEndPoint;
             _name = _localEndpoint.Address.ToString();

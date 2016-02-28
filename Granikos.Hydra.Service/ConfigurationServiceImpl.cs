@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.Configuration;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
@@ -42,6 +41,9 @@ namespace Granikos.Hydra.Service
 
         [Import]
         private IAttachmentProvider _attachments;
+
+        [Import]
+        private ICertificateFileProvider _certificates;
 
         [Import]
         private IExternalMailboxGroupProvider _externalGroups;
@@ -447,18 +449,67 @@ namespace Granikos.Hydra.Service
             return _mailTemplates.Delete(id);
         }
 
+        public IEnumerable<NameWithDisplayName> GetCertificateTypes()
+        {
+            foreach (var type in _container.GetExportedTypesWithContracts<ICertificateProvider>())
+            {
+                var dn = (DisplayNameAttribute)Attribute.GetCustomAttribute(type.Item1, typeof(DisplayNameAttribute));
+
+                yield return new NameWithDisplayName
+                {
+                    Name = type.Item2,
+                    DisplayName = dn != null ? dn.DisplayName : type.Item2
+                };
+            }
+        }
+
+        public IEnumerable<string> GetCertificates(string type)
+        {
+            var provider = _container.GetExportedValue<ICertificateProvider>(type);
+
+            return provider.ListCertificates().ToArray();
+        }
+
+        public bool UploadCertificate(string name, Stream stream)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                stream.CopyTo(memoryStream);
+                var content = memoryStream.ToArray();
+
+                return _certificates.Add(new Certificate
+                {
+                    Name = name,
+                    Content = content
+                });
+            }
+        }
+
+        public Stream DownloadCertificate(string name)
+        {
+            var cert = _certificates.Get(name);
+
+            return new MemoryStream(cert.Content);
+        }
+
+        public bool DeleteCertificate(string name)
+        {
+            return _certificates.Delete(name);
+        }
+
+
         public IEnumerable<TimeTable> GetTimeTables()
         {
             return _timeTables.All().Select(t => t.ConvertTo<TimeTable>());
         }
 
-        public IEnumerable<TimeTableTypeInfo> GetTimeTableTypes()
+        public IEnumerable<NameWithDisplayName> GetTimeTableTypes()
         {
             foreach (var type in _container.GetExportedTypesWithContracts<ITimeTableType>())
             {
                 var dn = (DisplayNameAttribute) Attribute.GetCustomAttribute(type.Item1, typeof (DisplayNameAttribute));
 
-                yield return new TimeTableTypeInfo
+                yield return new NameWithDisplayName
                 {
                     Name = type.Item2,
                     DisplayName = dn != null ? dn.DisplayName : type.Item2

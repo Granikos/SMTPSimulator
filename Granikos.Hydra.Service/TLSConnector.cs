@@ -5,16 +5,19 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Granikos.Hydra.Service.Models;
+using Granikos.Hydra.Service.Models.Providers;
 
 namespace Granikos.Hydra.Service
 {
     public class TLSConnector
     {
         private readonly Action<string> _logger;
+        private readonly ICertificateProvider _certProvider;
 
-        public TLSConnector(TLSSettings settings, Action<string> logger)
+        public TLSConnector(TLSSettings settings, Action<string> logger, ICertificateProvider certProvider)
         {
             _logger = logger;
+            _certProvider = certProvider;
             Contract.Requires<ArgumentNullException>(settings != null);
             Settings = settings;
         }
@@ -23,15 +26,7 @@ namespace Granikos.Hydra.Service
 
         public X509Certificate2 GetCertificate()
         {
-            if (Settings.IsFilesystemCertificate)
-            {
-                return new X509Certificate2(Settings.CertificateName, Settings.CertificatePassword);
-            }
-
-            var store = new X509Store("Personal", StoreLocation.LocalMachine);
-            var certs = store.Certificates.Find(X509FindType.FindBySubjectName, Settings.CertificateName, true);
-
-            return certs[0];
+            return _certProvider.GetCertificate(Settings.CertificateName, Settings.CertificatePassword);
         }
 
         public X509Certificate2Collection GetCertificateCollection()

@@ -175,6 +175,7 @@
     <Compile Include="ConfigurationService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AttachmentController.cs" />
+    <Compile Include="Controllers\CertificateController.cs" />
     <Compile Include="Controllers\LocalGroupsController.cs" />
     <Compile Include="Controllers\ExternalGroupsController.cs" />
     <Compile Include="Controllers\ExternalUsersController.cs" />
@@ -205,6 +206,7 @@
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\angular-bundle.min.js" />
     <Content Include="Scripts\bootstrap-bundle.min.js" />
+    <Content Include="Scripts\Controllers\Certificate.js" />
     <Content Include="Scripts\Controllers\MailTemplates.js" />
     <Content Include="Scripts\Controllers\Mail.js" />
     <Content Include="Scripts\Controllers\Receive.js" />
@@ -231,6 +233,7 @@
     <None Include="Scripts\UserTemplates\en.json" />
     <Content Include="Scripts\papaparse.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Certificate\Index.html" />
     <Content Include="Views\ExternalUsers\SelectDomainDialog.html" />
     <Content Include="Views\ExternalUsers\AddGroupDialog.html" />
     <Content Include="Views\ExternalUsers\ImportDialog.html" />

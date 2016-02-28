@@ -119,7 +119,7 @@ namespace Granikos.Hydra.Service
         {
             try
             {
-                var handler = new ClientHandler((TcpClient)obj, this);
+                var handler = new ClientHandler((TcpClient)obj, this, _container);
                 _container.SatisfyImportsOnce(handler);
                 handler.Process().Wait();
             }

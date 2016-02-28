@@ -9,7 +9,8 @@
         .controller('SendController', [
             '$scope', '$modal', '$q', '$http', 'SendConnectorService', function ($scope, $modal, $q, $http, SendConnectorService ) {
                 $scope.connectors = [];
-                $scope.certificates = [];
+                $scope.fileCertificates = [];
+                $scope.storeCertificates = [];
                 $scope.adding = false;
                 $scope.IPRegexp = IPRegexp;
                 $scope.defaultId = 0;
@@ -53,11 +54,17 @@
                         showError(data.Message || data.data.Message);
                     });
 
-                $http.get("api/SendConnectors/Certificates")
-                    .success(function (certificates) {
-                        $scope.certificates = certificates;
-                    })
-                    .error(function (data) {
+                $http.get("api/Certificates/By-Type/file")
+                    .then(function(data) {
+                        $scope.fileCertificates = data.data;
+                    }, function (data) {
+                        showError(data.Message || data.data.Message);
+                    });
+
+                $http.get("api/Certificates/By-Type/store")
+                    .then(function (data) {
+                        $scope.storeCertificates = data.data;
+                    }, function (data) {
                         showError(data.Message || data.data.Message);
                     });
 
