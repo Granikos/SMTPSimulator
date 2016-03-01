@@ -3,8 +3,8 @@
 <head>
     <base href="/">
     <title>NikosTwo</title>
-    @Styles.Render("~/Content/dist")
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/dist/dist.css")
+    @Styles.Render("~/Content/main.css")
 </head>
 <body style="max-width: 1000px;">
     <nav class="navbar navbar-default">
@@ -58,6 +58,6 @@
 
     <div ng-view></div>
 </body>
-@Scripts.Render("~/Scripts/dist")
-@Scripts.Render("~/Scripts/NikosTwo")
+@Scripts.Render("~/Scripts/dist.js")
+@Scripts.Render("~/Scripts/main.js")
 </html>
