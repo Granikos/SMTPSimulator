@@ -13,7 +13,7 @@
     <form role="form" name="addToGroupForm" ng-submit="addToGroupForm.$valid && submit()">
         <div class="form-group has-feedback">
             <label for="domainForGroupAdd">Domain</label>
-            <input placeholder="Domain" id="domainForGroupAdd" type="text" ng-model="Domain" typeahead="domain.Value as domain.Value for domain in searchDomains($viewValue)"
+            <input placeholder="Domain" id="domainForGroupAdd" type="text" ng-model="Domain" uib-typeahead="domain.Value as domain.Value for domain in searchDomains($viewValue)"
                    typeahead-loading="loadingDomains" typeahead-template-url="domainAutocompleteTemplate" class="form-control" ng-pattern="DomainRegexp" required>
             <i class="glyphicon form-control-feedback" ng-class="{'glyphicon-refresh': loadingDomains}"></i>
         </div>

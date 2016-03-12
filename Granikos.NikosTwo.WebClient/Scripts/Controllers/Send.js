@@ -9,8 +9,6 @@
         .controller('SendController', [
             '$scope', '$uibModal', '$q', '$http', 'SendConnectorService', function ($scope, $uibModal, $q, $http, SendConnectorService ) {
                 $scope.connectors = [];
-                $scope.fileCertificates = [];
-                $scope.storeCertificates = [];
                 $scope.adding = false;
                 $scope.IPRegexp = IPRegexp;
                 $scope.defaultId = 0;
@@ -51,20 +49,6 @@
                         $scope.connectors = connectors;
                     })
                     .error(function (data) {
-                        showError(data.Message || data.data.Message);
-                    });
-
-                $http.get("api/Certificates/By-Type/file")
-                    .then(function(data) {
-                        $scope.fileCertificates = data.data;
-                    }, function (data) {
-                        showError(data.Message || data.data.Message);
-                    });
-
-                $http.get("api/Certificates/By-Type/store")
-                    .then(function (data) {
-                        $scope.storeCertificates = data.data;
-                    }, function (data) {
                         showError(data.Message || data.data.Message);
                     });
 
@@ -119,9 +103,6 @@
                 $scope.update = function (connector, $event) {
                     var button = $($event.currentTarget).find('button.update-button');
                     var disabledButton = disableClickedButton(button);
-
-                    if (connector.TLSSettings.CertificateName === '-- None --')
-                        connector.TLSSettings.CertificateName = null;
 
                     connector.RetryTime = connector.RetryTimeDuration.hours() + ':' +
                         connector.RetryTimeDuration.minutes() + ':' +
@@ -181,9 +162,6 @@
                 $scope.add = function (connector, $event) {
                     var button = $($event.currentTarget).find('button.add-button');
                     var disabledButton = disableClickedButton(button);
-
-                    if (connector.TLSSettings.CertificateName === '-- None --')
-                        connector.TLSSettings.CertificateName = null;
 
                     delete connector.Id;
                     connector.RetryTime = connector.RetryTimeDuration.hours() + ':' +

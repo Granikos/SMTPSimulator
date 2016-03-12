@@ -47,7 +47,7 @@
                                     </label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <input name="SenderMailbox" type="text" ng-model="tt.SenderMailbox" typeahead="user as user for user in searchLocalUsers($viewValue)" typeahead-loading="loadingLocalUsers"
+                                    <input name="SenderMailbox" type="text" ng-model="tt.SenderMailbox" uib-typeahead="user as user for user in searchLocalUsers($viewValue)" typeahead-loading="loadingLocalUsers"
                                            class="form-control" typeahead-template-url="escapingTemplate" ng-pattern="MailRegexp" ng-required="tt.StaticSender" ng-disabled="!tt.StaticSender">
                                     <i class="glyphicon form-control-feedback" ng-class="{'glyphicon-refresh': loadingLocalUsers, 'glyphicon-envelope': !loadingLocalUsers}"></i>
                                 </div>
@@ -82,7 +82,7 @@
                                     </label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <input name="RecipientMailbox" type="text" ng-model="tt.RecipientMailbox" typeahead="user as user for user in searchExternalUsers($viewValue)" typeahead-loading="loadingExternalUsers"
+                                    <input name="RecipientMailbox" type="text" ng-model="tt.RecipientMailbox" uib-typeahead="user as user for user in searchExternalUsers($viewValue)" typeahead-loading="loadingExternalUsers"
                                            class="form-control" typeahead-template-url="escapingTemplate" ng-pattern="MailRegexp" ng-required="tt.StaticRecipient" ng-disabled="!tt.StaticRecipient">
                                     <i class="glyphicon form-control-feedback" ng-class="{'glyphicon-refresh': loadingExternalUsers, 'glyphicon-envelope': !loadingExternalUsers}"></i>
                                 </div>

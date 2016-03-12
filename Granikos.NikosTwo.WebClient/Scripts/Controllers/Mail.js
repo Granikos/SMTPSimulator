@@ -1,7 +1,7 @@
 ﻿(function () {
     var mailRegexp = /^([\u00C0-\u017F\w\s'-]+<[\w\.]+@([\w\d-]+\.)+[\w]{2,4}>|[\w\.]+@([\w\d-]+\.)+[\w]{2,4})$/;
 
-    angular.module('Mail', ['ui.bootstrap.modal'])
+    angular.module('Mail', ['ui.bootstrap.typeahead', 'ui.bootstrap.modal'])
 
         .service("SendConnectorService", ["$http", DataService("api/SendConnectors")])
 
@@ -12,18 +12,45 @@
                 $scope.Mail = {
                     Sender: null,
                     Recipients: [],
-                    ConnectorId: null,
                     Content: null
                 };
                 $scope.connectors = [];
                 $scope.MailRegexp = mailRegexp;
+                $scope.emptyConnector = {};
+                $scope.connector = {};
+
+                $scope.timespanGreaterThanZero = function (value) {
+                    return value && value.asMilliseconds() > 0;
+                }
+
+                $scope.modes = ['Disabled', 'Enabled', 'Required', 'Full Tunnel'];
+
+                $scope.policies = ['Require Encryption', 'Allow No Encryption', 'No Encryption'];
+
+                $scope.authLevels = ['Encryption Only', 'Certificate Validation', 'Domain Validation'];
+
+                $scope.connectorChanged = function () {
+                    var conn = $scope.selectedConnector || $scope.emptyConnector;
+                    console.log(conn);
+                    angular.copy(conn, $scope.connector);
+                };
 
                 SendConnectorService.all()
                     .success(function (connectors) {
+                        $.each(connectors, function (i, c) {
+                            c.RetryTimeDuration = moment.duration(c.RetryTime);
+                        });
                         $scope.connectors = connectors;
                     })
                     .error(function (data) {
                         showError(data.Message || data.data.Message);
+                    });
+
+                $http.get("api/SendConnectors/Empty")
+                    .then(function (data) {
+                        data.data.RetryTimeDuration = moment.duration(data.data.RetryTime);
+                        $scope.emptyConnector = data.data;
+                        angular.copy(data.data, $scope.connector);
                     });
 
                 $scope.searchLocalUsers = function(search) {
