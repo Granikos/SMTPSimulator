@@ -49,37 +49,6 @@
                     }
                 };
 
-                /*
-                function menuItems(id) {
-                    return [
-                        {
-                            title: 'Delete',
-                            icon: 'ui-grid-icon-cancel',
-                            action: function ($event) {
-                                this.context.deleteGroup(id);
-                            },
-                            context: $scope
-                        },
-                        {
-                            title: 'Remove All Users',
-                            icon: 'ui-grid-icon-minus-squared',
-                            action: function ($event) {
-
-                            },
-                            context: $scope
-                        },
-                        {
-                            title: 'Add Users From Domain',
-                            icon: 'ui-grid-icon-plus-squared',
-                            action: function ($event) {
-
-                            },
-                            context: $scope
-                        }
-                    ];
-                }
-                */
-
                 function getColumnDef(id) {
                     return {
                         name: 'group' + id,
@@ -256,7 +225,7 @@
                         callback: function (success) {
                             if (success) {
                                 var group = $scope.groupsById[id];
-                                group.UserIds.length = 0; //.splice(0, group.MailboxIds.length);
+                                group.UserIds.length = 0;
                                 $scope.$apply();
                             }
                         }
@@ -296,7 +265,6 @@
                                         if (!temp[data.data[i]])
                                             mbs.push(data.data[i]);
                                     $scope.groupsById[id]._dirty = true;
-                                    // $scope.$apply();
                                 });
                         });
                 };
@@ -317,12 +285,18 @@
                         });
                 };
 
+                var usersResized = false;
+
                 $scope.refresh = function () {
                     setTimeout(function () {
                         ExternalUsersService.all(paginationOptions)
                             .success(function (result) {
                                 $scope.gridOptions.totalItems = result.Total;
                                 $scope.users = result.Entities;
+                                if (!usersResized) {
+                                    $scope.refreshGridSizing();
+                                    usersResized = true;
+                                }
                             });
                     }, 100);
                 };

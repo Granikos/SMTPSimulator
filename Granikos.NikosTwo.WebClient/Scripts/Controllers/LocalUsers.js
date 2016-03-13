@@ -39,7 +39,6 @@
                     showSelectionCheckbox: true,
                     enableSelectAll: true,
                     selectionRowHeaderWidth: 35,
-                    enableHorizontalScrollbar: 0,
                     columnDefs: $scope.columns,
                     onRegisterApi: function (gridApi) {
                         $scope.gridApi = gridApi;
@@ -337,9 +336,8 @@
                 $scope.add = function (user) {
                     var p = LocalUserService.add(user);
 
-                    p.success(function (u) {
+                    p.success(function () {
                         $scope.refresh();
-                        // $scope.users.push(u);
                     });
 
                     return p;
@@ -348,11 +346,12 @@
                 $scope.deleteSelected = function () {
                     angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
                         LocalUserService.delete(data.Id).success(function () {
-                            // $scope.users.splice($scope.users.lastIndexOf(data), 1);
                             $scope.refresh();
                         });
                     });
                 };
+
+                var usersResized = false;
 
                 $scope.refresh = function () {
                     setTimeout(function () {
@@ -360,11 +359,14 @@
                             .success(function (result) {
                                 $scope.gridOptions.totalItems = result.Total;
                                 $scope.users = result.Entities;
+                                if (!usersResized) {
+                                    $scope.refreshGridSizing();
+                                    usersResized = true;
+                                }
                             });
                     }, 100);
                 };
 
-                // watches
                 $scope.$watch('pagingOptions', function (newVal, oldVal) {
                     if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
                         $scope.refresh();
