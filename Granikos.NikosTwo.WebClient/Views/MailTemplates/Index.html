@@ -57,6 +57,24 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-4 control-label">Placeholders</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static">
+                                The following placeholders are replaced in both Text and HTML content:
+                                <dl>
+                                    <dt>[TEMPLATETITLE]</dt>
+                                    <dd>The title of this template</dd>
+                                    <dt>[DATE]</dt>
+                                    <dd>The current date (e.g. "Monday, June 15, 2009")</dd>
+                                    <dt>[DATETIME]</dt>
+                                    <dd>The current date and time (e.g. "Monday, June 15, 2009 1:45:30 PM")</dd>
+                                    <dt>[DATETIMEUTC]</dt>
+                                    <dd>The current UTC date and time (e.g. "Monday, June 15, 2009 1:45:30 PM")</dd>
+                                </dl>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-4 control-label">Behaviour</label>
                         <div class="col-sm-8">
                             <select type="text" class="form-control" ng-options="idx*1 as behaviour for (idx, behaviour) in behaviours" ng-model="template.Behaviour" required></select>
