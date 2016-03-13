@@ -139,7 +139,7 @@
 
                 $scope.saveRow = function (rowEntity) {
                     var promise = ExternalUsersService.update(rowEntity);
-                    $scope.gridApi.rowEdit.setSavePromise($scope.gridApi.grid, rowEntity, promise);
+                    $scope.gridApi.rowEdit.setSavePromise(rowEntity, promise);
                 };
 
                 $scope.deleteSelected = function () {

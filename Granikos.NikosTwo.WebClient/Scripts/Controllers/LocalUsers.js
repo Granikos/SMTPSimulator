@@ -319,7 +319,7 @@
 
                 $scope.saveRow = function (rowEntity) {
                     var promise = LocalUserService.update(rowEntity);
-                    $scope.gridApi.rowEdit.setSavePromise($scope.gridApi.grid, rowEntity, promise);
+                    $scope.gridApi.rowEdit.setSavePromise(rowEntity, promise);
                 };
 
                 $scope.addDialog = function () {
