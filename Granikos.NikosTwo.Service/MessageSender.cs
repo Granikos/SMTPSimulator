@@ -113,7 +113,10 @@ namespace Granikos.NikosTwo.Service
                     {
                         var success = _processor.ProcessMail(mail);
 
-                        mail.ResultHandler(success);
+                        if (mail.ResultHandler != null)
+                        {
+                            mail.ResultHandler(success);
+                        }
                     }
 
                     Thread.Sleep(TickDefaultMilliseconds);

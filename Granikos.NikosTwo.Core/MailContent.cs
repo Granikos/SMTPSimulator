@@ -254,7 +254,7 @@ namespace Granikos.NikosTwo.Core
         private string encodeQuotedPrintable(string input, Encoding encoding, params char[] additionalChars)
         {
             var sb = new StringBuilder();
-            var bytes = encoding.GetBytes(input);
+            var bytes = encoding.GetBytes(input ?? String.Empty);
 
             for (int i = 0; i < bytes.Length; i++)
             {

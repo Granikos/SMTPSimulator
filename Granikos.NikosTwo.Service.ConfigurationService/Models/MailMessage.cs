@@ -6,7 +6,7 @@ namespace Granikos.NikosTwo.Service.ConfigurationService.Models
     public class MailMessage
     {
         [DataMember]
-        public int? ConnectorId { get; set; }
+        public SendConnector Connector { get; set; }
 
         [DataMember]
         public string Sender { get; set; }
@@ -15,6 +15,12 @@ namespace Granikos.NikosTwo.Service.ConfigurationService.Models
         public string[] Recipients { get; set; }
 
         [DataMember]
-        public string Content { get; set; }
+        public string Subject { get; set; }
+
+        [DataMember]
+        public string Text { get; set; }
+
+        [DataMember]
+        public string Html { get; set; }
     }
 }

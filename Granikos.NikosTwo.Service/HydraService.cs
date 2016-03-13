@@ -170,8 +170,13 @@ namespace Granikos.NikosTwo.Service
         {
             var from = new MailAddress(mail.Sender);
             var to = mail.Recipients.Select(r => new MailAddress(r)).ToArray();
-            var parsed = new Mail(from, to, mail.Content);
-            var sendableMail = new SendableMail(parsed, _sendConnectors.DefaultConnector);
+            var content = new MailContent(mail.Subject, from, mail.Html, mail.Text);
+            foreach (var recipient in to)
+            {
+                content.AddRecipient(recipient);
+            }
+            var parsed = new Mail(from, to, content.ToString());
+            var sendableMail = new SendableMail(parsed, mail.Connector);
 
             _mailQueue.Enqueue(sendableMail, TimeSpan.Zero);
         }

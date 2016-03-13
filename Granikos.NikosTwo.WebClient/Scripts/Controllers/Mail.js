@@ -12,12 +12,14 @@
                 $scope.Mail = {
                     Sender: null,
                     Recipients: [],
-                    Content: null
+                    Text: null,
+                    Html: null,
+                    Subject: null,
+                    Connector: {}
                 };
                 $scope.connectors = [];
                 $scope.MailRegexp = mailRegexp;
                 $scope.emptyConnector = {};
-                $scope.connector = {};
 
                 $scope.timespanGreaterThanZero = function (value) {
                     return value && value.asMilliseconds() > 0;
@@ -32,7 +34,7 @@
                 $scope.connectorChanged = function () {
                     var conn = $scope.selectedConnector || $scope.emptyConnector;
                     console.log(conn);
-                    angular.copy(conn, $scope.connector);
+                    angular.copy(conn, $scope.Mail.Connector);
                 };
 
                 SendConnectorService.all()
@@ -50,7 +52,7 @@
                     .then(function (data) {
                         data.data.RetryTimeDuration = moment.duration(data.data.RetryTime);
                         $scope.emptyConnector = data.data;
-                        angular.copy(data.data, $scope.connector);
+                        angular.copy(data.data, $scope.Mail.Connector);
                     });
 
                 $scope.searchLocalUsers = function(search) {
@@ -61,11 +63,18 @@
                 };
 
                 $scope.send = function () {
+                    var reenable = disableClickedButton($('#sendButton'));
                     return $http.post("api/Mail/Send", $scope.Mail)
                     .success(function (data) {
-                        // TODO
+                            reenable();
+                        BootstrapDialog.alert({
+                            message: "The mail has been enqueued successfully",
+                            title: "Success",
+                            type: BootstrapDialog.TYPE_SUCCESS
+                        });
                     })
                     .error(function (data) {
+                        reenable();
                         showError(data.Message || data.data.Message);
                     });
                 };

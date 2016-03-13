@@ -26,53 +26,53 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Local IP</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" ng-model="connector.LocalAddressString" placeholder="IP Address"
+                                <input type="text" class="form-control" ng-model="Mail.Connector.LocalAddressString" placeholder="IP Address"
                                        ng-pattern="IPRegexp">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Smarthost</label>
                             <div class="col-sm-8">
-                                <input type="radio" ng-model="connector.UseSmarthost" ng-value="true" name="form{{connector.Id}}.smarthost" /> Use Smarthost
-                                <input type="radio" ng-model="connector.UseSmarthost" ng-value="false" name="form{{connector.Id}}.smarthost" /> Use MX Record
+                                <input type="radio" ng-model="Mail.Connector.UseSmarthost" ng-value="true" name="form{{Mail.Connector.Id}}.smarthost" /> Use Smarthost
+                                <input type="radio" ng-model="Mail.Connector.UseSmarthost" ng-value="false" name="form{{Mail.Connector.Id}}.smarthost" /> Use MX Record
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Remote IP</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" ng-model="connector.RemoteAddressString" placeholder="IP Address"
-                                       ng-pattern="IPRegexp" ng-disabled="!connector.UseSmarthost" ng-required="connector.UseSmarthost">
+                                <input type="text" class="form-control" ng-model="Mail.Connector.RemoteAddressString" placeholder="IP Address"
+                                       ng-pattern="IPRegexp" ng-disabled="!Mail.Connector.UseSmarthost" ng-required="Mail.Connector.UseSmarthost">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Remote Port</label>
                             <div class="col-sm-8">
-                                <input type="number" class="form-control" ng-model="connector.RemotePort" placeholder="Port" ng-disabled="!connector.UseSmarthost" ng-required="connector.UseSmarthost">
+                                <input type="number" class="form-control" ng-model="Mail.Connector.RemotePort" placeholder="Port" ng-disabled="!Mail.Connector.UseSmarthost" ng-required="Mail.Connector.UseSmarthost">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Retry Count</label>
                             <div class="col-sm-8">
-                                <input type="number" class="form-control" ng-model="connector.RetryCount" placeholder="Retry Count" min="0" required>
+                                <input type="number" class="form-control" ng-model="Mail.Connector.RetryCount" placeholder="Retry Count" min="0" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Retry Time</label>
                             <div class="col-sm-2">
                                 <div class="input-group">
-                                    <input type="text" timespan-validator="timespanGreaterThanZero" class="form-control" data-momentduration="hours" data-ng-model="connector.RetryTimeDuration" />
+                                    <input type="text" timespan-validator="timespanGreaterThanZero" class="form-control" data-momentduration="hours" data-ng-model="Mail.Connector.RetryTimeDuration" />
                                     <span class="input-group-addon">h</span>
                                 </div>
                             </div>
                             <div class="col-sm-2">
                                 <div class="input-group">
-                                    <input type="text" timespan-validator="timespanGreaterThanZero" class="form-control" data-momentduration="minutes" data-ng-model="connector.RetryTimeDuration" />
+                                    <input type="text" timespan-validator="timespanGreaterThanZero" class="form-control" data-momentduration="minutes" data-ng-model="Mail.Connector.RetryTimeDuration" />
                                     <span class="input-group-addon">m</span>
                                 </div>
                             </div>
                             <div class="col-sm-2">
                                 <div class="input-group">
-                                    <input type="text" timespan-validator="timespanGreaterThanZero" class="form-control" data-momentduration="seconds" data-ng-model="connector.RetryTimeDuration" />
+                                    <input type="text" timespan-validator="timespanGreaterThanZero" class="form-control" data-momentduration="seconds" data-ng-model="Mail.Connector.RetryTimeDuration" />
                                     <span class="input-group-addon">s</span>
                                 </div>
                             </div>
@@ -80,19 +80,19 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Auth</label>
                             <div class="col-sm-8">
-                                <input type="checkbox" ng-model="connector.UseAuth" /> Use Authentification
+                                <input type="checkbox" ng-model="Mail.Connector.UseAuth" /> Use Authentification
                             </div>
                         </div>
-                        <div class="form-group" ng-show="connector.UseAuth">
+                        <div class="form-group" ng-show="Mail.Connector.UseAuth">
                             <label class="col-sm-4 control-label">Username</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" ng-model="connector.Username" placeholder="Username" ng-required="connector.UseAuth">
+                                <input type="text" class="form-control" ng-model="Mail.Connector.Username" placeholder="Username" ng-required="Mail.Connector.UseAuth">
                             </div>
                         </div>
-                        <div class="form-group" ng-show="connector.UseAuth">
+                        <div class="form-group" ng-show="Mail.Connector.UseAuth">
                             <label class="col-sm-4 control-label">Password</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" ng-model="connector.Password" placeholder="Password" ng-required="connector.UseAuth">
+                                <input type="text" class="form-control" ng-model="Mail.Connector.Password" placeholder="Password" ng-required="Mail.Connector.UseAuth">
                             </div>
                         </div>
                 <div class="panel panel-default">
@@ -106,36 +106,36 @@
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">Mode</label>
                                 <div class="col-sm-8">
-                                    <select ng-model="connector.TLSSettings.Mode" ng-options="idx*1 as mode for (idx, mode) in modes" class="form-control"></select>
+                                    <select ng-model="Mail.Connector.TLSSettings.Mode" ng-options="idx*1 as mode for (idx, mode) in modes" class="form-control"></select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">Encryption Policy</label>
                                 <div class="col-sm-8">
-                                    <select ng-model="connector.TLSSettings.EncryptionPolicy" ng-options="idx*1 as policy for (idx, policy) in policies" class=" form-control"></select>
+                                    <select ng-model="Mail.Connector.TLSSettings.EncryptionPolicy" ng-options="idx*1 as policy for (idx, policy) in policies" class=" form-control"></select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">Auth Level</label>
                                 <div class="col-sm-8">
-                                    <select ng-model="connector.TLSSettings.AuthLevel" ng-options="idx*1 as level for (idx, level) in authLevels" class="form-control"></select>
+                                    <select ng-model="Mail.Connector.TLSSettings.AuthLevel" ng-options="idx*1 as level for (idx, level) in authLevels" class="form-control"></select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">Validate Certificate Revocation</label>
                                 <div class="col-sm-8">
-                                    <input type="radio" ng-value="true" ng-model="connector.TLSSettings.ValidateCertificateRevocation" /> Yes
-                                    <input type="radio" ng-value="false" ng-model="connector.TLSSettings.ValidateCertificateRevocation" /> No
+                                    <input type="radio" ng-value="true" ng-model="Mail.Connector.TLSSettings.ValidateCertificateRevocation" /> Yes
+                                    <input type="radio" ng-value="false" ng-model="Mail.Connector.TLSSettings.ValidateCertificateRevocation" /> No
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">SSL Protocols</label>
                                 <div class="col-sm-8">
-                                    <input type="checkbox" ng-enum-flag="12" ng-enum-model="connector.TLSSettings.SslProtocols" /> SSL 2 &nbsp;
-                                    <input type="checkbox" ng-enum-flag="48" ng-enum-model="connector.TLSSettings.SslProtocols" /> SSL 3 &nbsp;
-                                    <input type="checkbox" ng-enum-flag="192" ng-enum-model="connector.TLSSettings.SslProtocols" /> TLS &nbsp;
-                                    <input type="checkbox" ng-enum-flag="768" ng-enum-model="connector.TLSSettings.SslProtocols" /> TLS 1.1 &nbsp;
-                                    <input type="checkbox" ng-enum-flag="3072" ng-enum-model="connector.TLSSettings.SslProtocols" /> TLS 1.2
+                                    <input type="checkbox" ng-enum-flag="12" ng-enum-model="Mail.Connector.TLSSettings.SslProtocols" /> SSL 2 &nbsp;
+                                    <input type="checkbox" ng-enum-flag="48" ng-enum-model="Mail.Connector.TLSSettings.SslProtocols" /> SSL 3 &nbsp;
+                                    <input type="checkbox" ng-enum-flag="192" ng-enum-model="Mail.Connector.TLSSettings.SslProtocols" /> TLS &nbsp;
+                                    <input type="checkbox" ng-enum-flag="768" ng-enum-model="Mail.Connector.TLSSettings.SslProtocols" /> TLS 1.1 &nbsp;
+                                    <input type="checkbox" ng-enum-flag="3072" ng-enum-model="Mail.Connector.TLSSettings.SslProtocols" /> TLS 1.2
                                 </div>
                             </div>
                         </div>
@@ -174,15 +174,21 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-4 control-label">Content</label>
+            <label class="col-sm-4 control-label">Text</label>
             <div class="col-sm-8">
-                <textarea class="form-control" rows="5" ng-model="Mail.Content" required></textarea>
+                <textarea class="form-control" rows="5" ng-model="Mail.Text" required></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Html</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" rows="5" ng-model="Mail.Html" required></textarea>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-12">
                 <div class="btn-group pull-right">
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-success" id="sendButton">
                         <i class="glyphicon glyphicon-envelope"></i> Send
                     </button>
                 </div>
