@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -81,6 +82,8 @@ namespace Granikos.NikosTwo.Service.Database.Models
         public int MailsSuccess { get; set; }
 
         public int MailsError { get; set; }
+        public DateTime? ActiveSince { get; set; }
+        public DateTime? ActiveUntil { get; set; }
 
         public static TimeTable FromOther(ITimeTable source)
         {

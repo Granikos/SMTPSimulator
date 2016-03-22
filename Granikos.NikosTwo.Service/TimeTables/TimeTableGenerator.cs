@@ -112,6 +112,8 @@ namespace Granikos.NikosTwo.Service.TimeTables
             result = ReplaceFormatted(result, "SUCCESSTOTAL", events.Sum(r => r.Success).ToString());
             result = ReplaceFormatted(result, "FAILURETOTAL", events.Sum(r => r.Failure).ToString());
             result = ReplaceFormatted(result, "EICARTOTAL", events.Sum(r => r.Eicar).ToString());
+            result = result.Replace("[ACTIVESINCE]", _timeTable.ActiveSince != null ? _timeTable.ActiveSince.Value.ToString("F") : "---");
+            result = result.Replace("[ACTIVEUNTIL]", _timeTable.ActiveUntil != null ? _timeTable.ActiveUntil.Value.ToString("F") : "---");
 
             return result.Replace("[ROWS]",
                 string.Join("",

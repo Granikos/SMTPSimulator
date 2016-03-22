@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Granikos.NikosTwo.Service.Models
@@ -25,6 +26,9 @@ namespace Granikos.NikosTwo.Service.Models
         bool SendEicarFile { get; set; }
         int MailsSuccess { get; set; }
         int MailsError { get; set; }
+
+        DateTime? ActiveSince { get; set; }
+        DateTime? ActiveUntil { get; set; }
     }
 
     public enum ReportType

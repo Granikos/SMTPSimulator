@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
@@ -57,5 +58,10 @@ namespace Granikos.NikosTwo.Service.ConfigurationService.Models
         public int MailsSuccess { get; set; }
         [DataMember]
         public int MailsError { get; set; }
+
+        [DataMember]
+        public DateTime? ActiveSince { get; set; }
+        [DataMember]
+        public DateTime? ActiveUntil { get; set; }
     }
 }

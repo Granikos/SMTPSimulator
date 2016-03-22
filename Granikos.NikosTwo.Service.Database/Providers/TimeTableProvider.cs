@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Granikos.NikosTwo.Service.Database.Models;
@@ -23,6 +24,21 @@ namespace Granikos.NikosTwo.Service.Database.Providers
 
         protected override void OnUpdate(TimeTable entity, TimeTable dbEntity)
         {
+            var oldActive = Database.Entry(dbEntity).OriginalValues.GetValue<bool>("Active");
+            if (entity.Active != oldActive)
+            {
+                if (entity.Active)
+                {
+                    Database.Entry(dbEntity).Property(t => t.ActiveSince).CurrentValue = DateTime.Now;
+                    Database.Entry(dbEntity).Property(t => t.ActiveUntil).IsModified = false;
+                }
+                else
+                {
+                    Database.Entry(dbEntity).Property(t => t.ActiveSince).IsModified = false;
+                    Database.Entry(dbEntity).Property(t => t.ActiveUntil).CurrentValue = DateTime.Now;
+                }
+            }
+
             Database.Entry(dbEntity).Property(t => t.MailsError).IsModified = false;
             Database.Entry(dbEntity).Property(t => t.MailsSuccess).IsModified = false;
         }

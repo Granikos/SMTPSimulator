@@ -139,6 +139,8 @@ namespace Granikos.NikosTwo.Service.Models
             target.RecipientMailbox = source.RecipientMailbox;
             target.StaticRecipient = source.StaticRecipient;
             target.StaticSender = source.StaticSender;
+            target.ActiveSince = source.ActiveSince;
+            target.ActiveUntil = source.ActiveUntil;
         }
 
         public static T ConvertTo<T>(this ITimeTable source)
