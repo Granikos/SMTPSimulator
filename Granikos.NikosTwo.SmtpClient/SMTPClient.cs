@@ -46,7 +46,7 @@ namespace Granikos.NikosTwo.SmtpClient
 
         public string ClientName
         {
-            get { return _clientName ?? Dns.GetHostName(); }
+            get { return _clientName ?? Dns.GetHostByName("LocalHost").HostName; }
             set { _clientName = value; }
         }
 
@@ -129,7 +129,7 @@ namespace Granikos.NikosTwo.SmtpClient
                 return false;
             }
 
-            if (success || LastStatus != SMTPStatusCode.Ready) return true;
+            if (success || LastStatus != SMTPStatusCode.Ready) return DoandParseEHLO();
 
             return DoConnectionSequence() && DoandParseEHLO();
         }

@@ -231,6 +231,8 @@
     <Compile Include="Retention\RetentionManager.cs" />
     <Compile Include="Retention\RetentionWorker.cs" />
     <Compile Include="Retention\RetentionWatcher.cs" />
+    <Compile Include="TimeTables\ConfigurationTextElement.cs" />
+    <Compile Include="TimeTables\ReportTemplateConfig.cs" />
     <Compile Include="UserExporter.cs" />
     <Compile Include="UserGenerator.cs" />
     <Compile Include="UserImporter.cs" />

@@ -114,7 +114,7 @@ namespace Granikos.NikosTwo.Service
                     continue;
                 }
 
-                if (!client.SendMail(mail.From.ToString(), addresses, mail.ToString()))
+                if (!client.SendMail(mail.From.Address, addresses, mail.ToString()))
                 {
                     success = false;
 

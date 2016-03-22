@@ -73,19 +73,19 @@ namespace Granikos.NikosTwo.Core
 
         public Encoding BodyEncoding
         {
-            get { return _bodyEncoding ?? Encoding.Default; }
+            get { return _bodyEncoding ?? Encoding.UTF8; }
             set { _bodyEncoding = value; }
         }
 
         public Encoding SubjectEncoding
         {
-            get { return _subjectEncoding ?? Encoding.Default; }
+            get { return _subjectEncoding ?? Encoding.UTF8; }
             set { _subjectEncoding = value; }
         }
 
         public Encoding HeaderEncoding
         {
-            get { return _headerEncoding ?? Encoding.Default; }
+            get { return _headerEncoding ?? Encoding.UTF8; }
             set { _headerEncoding = value; }
         }
 
@@ -168,7 +168,6 @@ namespace Granikos.NikosTwo.Core
             if (To.Any()) AddHeader(sb, "To", String.Join(", ", To.Select(t => FormatMailAddress(t, HeaderEncoding))));
             if (Cc.Any()) AddHeader(sb, "Cc", String.Join(", ", Cc.Select(t => FormatMailAddress(t, HeaderEncoding))));
             AddHeader(sb, "Subject", subject);
-            AddHeader(sb, "Content-Type", "multipart/mixed; boundary=" + boundary);
             AddHeader(sb, "MIME-Version", "1.0");
             AddHeader(sb, "Date", date);
             AddHeader(sb, "Message-ID", MessageId);
@@ -177,10 +176,15 @@ namespace Granikos.NikosTwo.Core
             {
                 AddHeader(additionalHeader.Name, additionalHeader.Value);
             }
+            
+            if (Attachments.Any())
+            {
+                AddHeader(sb, "Content-Type", "multipart/mixed; boundary=" + boundary);
 
-            AddLine(sb, "");
+                AddLine(sb, "");
 
-            AddLine(sb, "--" + boundary);
+                AddLine(sb, "--" + boundary);
+            }
 
             string boundary2 = Guid.NewGuid().ToString();
 
@@ -209,29 +213,33 @@ namespace Granikos.NikosTwo.Core
             AddLine(sb, encodeQuotedPrintable(Html, BodyEncoding));
 
             AddLine(sb, "--" + boundary2 + "--");
-            AddLine(sb, "");
 
-            foreach (var attachment in Attachments)
+            if (Attachments.Any())
             {
-                AddLine(sb, "--" + boundary);
-
-                if (attachment.Encoding != null)
-                {
-                    AddHeader(sb, "Content-Type", attachment.Type + "; charset=" + attachment.Encoding.HeaderName);
-                }
-                else
-                {
-                    AddHeader(sb, "Content-Type", attachment.Type);
-                }
-                AddHeader(sb, "Content-Transfer-Encoding", "base64");
-                AddHeader(sb, "Content-Disposition", "attachment; filename=" + attachment.Name);
-
                 AddLine(sb, "");
 
-                AddLine(sb, Convert.ToBase64String(attachment.Data, Base64FormattingOptions.InsertLineBreaks));
-            }
+                foreach (var attachment in Attachments)
+                {
+                    AddLine(sb, "--" + boundary);
 
-            AddLine(sb, "--" + boundary + "--");
+                    if (attachment.Encoding != null)
+                    {
+                        AddHeader(sb, "Content-Type", attachment.Type + "; charset=" + attachment.Encoding.HeaderName);
+                    }
+                    else
+                    {
+                        AddHeader(sb, "Content-Type", attachment.Type);
+                    }
+                    AddHeader(sb, "Content-Transfer-Encoding", "base64");
+                    AddHeader(sb, "Content-Disposition", "attachment; filename=" + attachment.Name);
+
+                    AddLine(sb, "");
+
+                    AddLine(sb, Convert.ToBase64String(attachment.Data, Base64FormattingOptions.InsertLineBreaks));
+                }
+
+                AddLine(sb, "--" + boundary + "--");
+            }
 
             return sb.ToString();
         }

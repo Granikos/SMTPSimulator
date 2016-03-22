@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Configuration;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
@@ -16,7 +17,6 @@ using Granikos.NikosTwo.Core;
 using Granikos.NikosTwo.Service.Models;
 using Granikos.NikosTwo.Service.Models.Providers;
 using Granikos.NikosTwo.Service.PriorityQueue;
-using Granikos.NikosTwo.Service.Providers;
 using Granikos.NikosTwo.SmtpClient;
 using log4net;
 
@@ -24,27 +24,18 @@ namespace Granikos.NikosTwo.Service.TimeTables
 {
     public class TimeTableGenerator
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(TimeTableGenerator));
+        private const string EICAR = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*";
+        public const double EicarProbability = 0.1;
+        private static readonly ILog Logger = LogManager.GetLogger(typeof (TimeTableGenerator));
+        private readonly ICollection<MailEvent> _events = new List<MailEvent>();
         private readonly object _lockObject = new object();
-        private readonly Random _random = new Random();
-
         private readonly DelayedQueue<SendableMail> _queue;
+        private readonly Random _random = new Random();
         private readonly ITimeTable _timeTable;
         private readonly ITimeTableType _timeTableType;
 
-        private const string EICAR = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*";
-
-        public const double EicarProbability = 0.1; 
-
-        private string EmlFolder
-        {
-            get
-            {
-                var folder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-                var logFolder = ConfigurationManager.AppSettings["EmlFolder"];
-                return logFolder != null? Path.Combine(folder, logFolder) : null;
-            }
-        }
+        [Import]
+        private IAttachmentProvider _attachments;
 
         [Import]
         private IExternalMailboxGroupProvider _externalGroups;
@@ -59,15 +50,13 @@ namespace Granikos.NikosTwo.Service.TimeTables
         private ILocalUserProvider _localUsers;
 
         [Import]
-        private ITimeTableProvider _timeTables;
-
-        [Import]
         private IMailTemplateProvider _mailTemplates;
 
-        [Import]
-        private IAttachmentProvider _attachments;
-
+        private Timer _reportTimer;
         private Timer _timer;
+
+        [Import]
+        private ITimeTableProvider _timeTables;
 
         public TimeTableGenerator(ITimeTable timeTable, DelayedQueue<SendableMail> queue, CompositionContainer container)
         {
@@ -85,9 +74,83 @@ namespace Granikos.NikosTwo.Service.TimeTables
             container.SatisfyImportsOnce(this);
         }
 
+        private string EmlFolder
+        {
+            get
+            {
+                var folder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+                var logFolder = ConfigurationManager.AppSettings["EmlFolder"];
+                return logFolder != null ? Path.Combine(folder, logFolder) : null;
+            }
+        }
+
         public bool IsRunning
         {
             get { return _timer != null; }
+        }
+
+        private ArggregatedEvent[] AggregateEvents(IEnumerable<MailEvent> events)
+        {
+            return events.GroupBy(e => new DateTime(e.Time.Year, e.Time.Month, e.Time.Day, e.Time.Hour, 0, 0))
+                .Select(g => new ArggregatedEvent
+                {
+                    Time = g.Key,
+                    Total = g.Count(),
+                    Success = g.Count(r => r.Success),
+                    Failure = g.Count(r => !r.Success),
+                    Eicar = g.Count(r => r.Eicar)
+                })
+                .OrderBy(r => r.Time)
+                .ToArray();
+        }
+
+        private string GenerateReportText(string text, string rowText, IEnumerable<ArggregatedEvent> events)
+        {
+            var result = ReplaceTokens(text, _timeTable.Name);
+
+            result = ReplaceFormatted(result, "TOTAL", events.Sum(r => r.Total).ToString());
+            result = ReplaceFormatted(result, "SUCCESSTOTAL", events.Sum(r => r.Success).ToString());
+            result = ReplaceFormatted(result, "FAILURETOTAL", events.Sum(r => r.Failure).ToString());
+            result = ReplaceFormatted(result, "EICARTOTAL", events.Sum(r => r.Eicar).ToString());
+
+            return result.Replace("[ROWS]",
+                string.Join("",
+                    events.Select(r => string.Format(rowText, r.Time, r.Total, r.Success, r.Failure, r.Eicar))));
+        }
+
+        public MailContent GenerateReportMail(IEnumerable<MailEvent> mailEvents)
+        {
+            var text = ReportTemplateConfig.GetConfig().TextTemplate;
+            var rowText = ReportTemplateConfig.GetConfig().RowTextTemplate;
+            var html = ReportTemplateConfig.GetConfig().HtmlTemplate;
+            var rowHtml = ReportTemplateConfig.GetConfig().RowHtmlTemplate;
+
+            var events = AggregateEvents(mailEvents);
+
+            var mailText = GenerateReportText(text, rowText, events);
+            var mailHtml = GenerateReportText(html, rowHtml, events);
+
+            var subject = ReplaceTokens(ReportTemplateConfig.GetConfig().SubjectTemplate, _timeTable.Name);
+
+            var sender = ConfigurationManager.AppSettings["ReportSender"];
+
+            var mail = new MailContent(subject, new MailAddress(sender, "Report"), mailHtml, mailText);
+
+            mail.AddRecipient(_timeTable.ReportMailAddress, "Report");
+
+            return mail;
+        }
+
+        private string ReplaceFormatted(string str, string name, string value)
+        {
+            str = str.Replace("[" + name + "]", value);
+
+            for (var i = 2; i < 100; i++)
+            {
+                str = str.Replace("[" + name + ":" + i + "]", value.PadLeft(i));
+            }
+
+            return str;
         }
 
         public void Start()
@@ -100,7 +163,68 @@ namespace Granikos.NikosTwo.Service.TimeTables
                     {
                         Logger.Info(string.Format("Timetable '{0}' was started.", _timeTable.Name));
                     }
-                    _timer = new Timer(Callback, null, GetWaitTime(), TimeSpan.Zero);
+                    _timer = new Timer(OnMailTimer, null, GetWaitTime(), TimeSpan.Zero);
+
+                    DateTime? nextReportTime = null;
+                    var reportFrequency = TimeSpan.Zero;
+
+                    if (_timeTable.ReportType == ReportType.Daily)
+                    {
+                        var tomorrow = DateTime.Today.AddDays(1);
+                        nextReportTime = tomorrow - TimeSpan.FromMinutes(5);
+                        reportFrequency = TimeSpan.FromDays(1);
+                    }
+                    else if (_timeTable.ReportType == ReportType.Weekly)
+                    {
+                        var firstDayNextWeek = DateTime.Today.AddDays(7 - (int) DateTime.Today.DayOfWeek);
+                        nextReportTime = firstDayNextWeek - TimeSpan.FromMinutes(5);
+                        reportFrequency = TimeSpan.FromDays(7);
+                    }
+
+                    if (nextReportTime != null)
+                    {
+                        if (_timeTable.ProtocolLevel > ProtocolLevel.Off)
+                        {
+                            Logger.Info(string.Format("Timetable '{0}': next report is scheduled for {1}",
+                                _timeTable.Name, nextReportTime));
+                        }
+                        _reportTimer = new Timer(OnReportTimer, null, nextReportTime.Value - DateTime.Now,
+                            reportFrequency);
+                    }
+                }
+            }
+        }
+
+        private void OnReportTimer(object state)
+        {
+            MailEvent[] events;
+            lock (_events)
+            {
+                events = _events.ToArray();
+                _events.Clear();
+            }
+
+            var mail = GenerateReportMail(events);
+
+            if (_timeTable.ProtocolLevel > ProtocolLevel.Off)
+            {
+                Logger.InfoFormat("Timetable '{0}' sent a report.", _timeTable.Name);
+            }
+
+            var parsed = new Mail(mail.From, mail.To, mail.ToString());
+            _queue.Enqueue(new SendableMail(parsed, null), TimeSpan.Zero);
+
+            if (EmlFolder != null)
+            {
+                if (!File.Exists(EmlFolder)) Directory.CreateDirectory(EmlFolder);
+
+                var name = _timeTable.Name + " Report " + DateTime.Now.ToString("s");
+                var safeName = Regex.Replace(name, "\\W+", "-");
+
+                using (var file = File.OpenWrite(Path.Combine(EmlFolder, safeName + ".eml")))
+                using (var writer = new StreamWriter(file))
+                {
+                    writer.Write(mail.ToString());
                 }
             }
         }
@@ -118,24 +242,45 @@ namespace Granikos.NikosTwo.Service.TimeTables
                     _timer.Dispose();
                     _timer = null;
                 }
+
+                if (_reportTimer != null)
+                {
+                    _reportTimer.Dispose();
+                    _reportTimer = null;
+                }
             }
         }
 
-        private void Callback(object state)
+        private void OnMailTimer(object state)
         {
             try
             {
+                var time = DateTime.Now;
+                var sendEicar = _timeTable.SendEicarFile && new Random().NextDouble() <= EicarProbability;
+
                 var from = GetFrom();
                 var to = GetRecipients();
                 var fromMail = new MailAddress(from);
                 var toMail = to.Select(r => new MailAddress(r)).ToArray();
-                var content = CreateContent(fromMail, toMail);
+                var content = CreateContent(fromMail, toMail, sendEicar);
                 var parsed = new Mail(fromMail, toMail, content.ToString());
 
                 var sendableMail = new SendableMail(parsed, null)
                 {
                     ResultHandler = success =>
                     {
+                        var evt = new MailEvent
+                        {
+                            Eicar = sendEicar,
+                            Success = success,
+                            Time = time
+                        };
+
+                        lock (_events)
+                        {
+                            _events.Add(evt);
+                        }
+
                         if (success)
                             _timeTables.IncreaseSuccessMailCount(_timeTable.Id);
                         else
@@ -159,7 +304,8 @@ namespace Granikos.NikosTwo.Service.TimeTables
             }
             catch (Exception e)
             {
-                Logger.Error(String.Format("Timetable '{0}': An exception occured while sending a mail.", _timeTable.Name), e);
+                Logger.Error(
+                    string.Format("Timetable '{0}': An exception occured while sending a mail.", _timeTable.Name), e);
             }
             finally
             {
@@ -167,7 +313,7 @@ namespace Granikos.NikosTwo.Service.TimeTables
             }
         }
 
-        private MailContent CreateContent(MailAddress from, MailAddress[] to)
+        private MailContent CreateContent(MailAddress from, MailAddress[] to, bool sendEicar)
         {
             var template = _mailTemplates.Get(_timeTable.MailTemplateId);
 
@@ -211,19 +357,14 @@ namespace Granikos.NikosTwo.Service.TimeTables
                 mc.AddAttachment(attachment.Name, attachment.Content);
             }
 
-            if (_timeTable.SendEicarFile)
+            if (sendEicar)
             {
-                var roll = new Random().NextDouble();
-
-                if (roll <= EicarProbability)
+                if (_timeTable.ProtocolLevel == ProtocolLevel.Verbose)
                 {
-                    if (_timeTable.ProtocolLevel == ProtocolLevel.Verbose)
-                    {
-                        Logger.InfoFormat("Timetable '{0}': next mail will be sent with an EICAR file.", _timeTable.Name);
-                    }
-
-                    mc.AddAttachment("eicar.html", EICAR, Encoding.ASCII, MediaTypeNames.Text.Html);
+                    Logger.InfoFormat("Timetable '{0}': next mail will be sent with an EICAR file.", _timeTable.Name);
                 }
+
+                mc.AddAttachment("eicar.html", EICAR, Encoding.ASCII, MediaTypeNames.Text.Html);
             }
 
             if (EmlFolder != null)
@@ -297,7 +438,7 @@ namespace Granikos.NikosTwo.Service.TimeTables
         {
             if (_timeTable.StaticSender)
             {
-                return new[] { _timeTable.RecipientMailbox };
+                return new[] {_timeTable.RecipientMailbox};
             }
 
             var num = _random.Next(_timeTable.MinRecipients, _timeTable.MaxRecipients + 1);
@@ -318,6 +459,22 @@ namespace Granikos.NikosTwo.Service.TimeTables
                 .Take(num)
                 .Select(u => u.Mailbox)
                 .ToArray();
+        }
+
+        public class MailEvent
+        {
+            public DateTime Time { get; set; }
+            public bool Success { get; set; }
+            public bool Eicar { get; set; }
+        }
+
+        private class ArggregatedEvent
+        {
+            public DateTime Time { get; set; }
+            public int Success { get; set; }
+            public int Eicar { get; set; }
+            public int Failure { get; set; }
+            public int Total { get; set; }
         }
     }
 }
