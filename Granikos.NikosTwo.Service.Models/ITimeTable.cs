@@ -29,6 +29,9 @@ namespace Granikos.NikosTwo.Service.Models
 
         DateTime? ActiveSince { get; set; }
         DateTime? ActiveUntil { get; set; }
+
+        int ReportHour { get; set; }
+        DayOfWeek ReportDay { get; set; }
     }
 
     public enum ReportType

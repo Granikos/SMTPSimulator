@@ -172,19 +172,24 @@ namespace Granikos.NikosTwo.Service.TimeTables
 
                     if (_timeTable.ReportType == ReportType.Daily)
                     {
-                        var tomorrow = DateTime.Today.AddDays(1);
-                        nextReportTime = tomorrow - TimeSpan.FromMinutes(5);
+                        nextReportTime = DateTime.Today.AddHours(_timeTable.ReportHour);
+
                         reportFrequency = TimeSpan.FromDays(1);
                     }
                     else if (_timeTable.ReportType == ReportType.Weekly)
                     {
-                        var firstDayNextWeek = DateTime.Today.AddDays(7 - (int) DateTime.Today.DayOfWeek);
-                        nextReportTime = firstDayNextWeek - TimeSpan.FromMinutes(5);
+                        var dayDiff = (7 + _timeTable.ReportDay - DateTime.Today.DayOfWeek) % 7;
+                        nextReportTime = DateTime.Today.AddDays(dayDiff).AddHours(_timeTable.ReportHour);
                         reportFrequency = TimeSpan.FromDays(7);
                     }
 
                     if (nextReportTime != null)
                     {
+                        if (nextReportTime < DateTime.Now)
+                        {
+                            nextReportTime += reportFrequency;
+                        }
+
                         if (_timeTable.ProtocolLevel > ProtocolLevel.Off)
                         {
                             Logger.Info(string.Format("Timetable '{0}': next report is scheduled for {1}",

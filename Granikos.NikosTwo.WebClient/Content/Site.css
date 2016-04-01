@@ -428,3 +428,7 @@ a[href$=".ps1"].filelink:before,
     border: none !important;
     color: inherit !important;
 }
+
+.form-control-feedback.for-select {
+  right: 30px !important;
+}

@@ -63,5 +63,10 @@ namespace Granikos.NikosTwo.Service.ConfigurationService.Models
         public DateTime? ActiveSince { get; set; }
         [DataMember]
         public DateTime? ActiveUntil { get; set; }
+
+        [DataMember]
+        public int ReportHour { get; set; }
+        [DataMember]
+        public DayOfWeek ReportDay { get; set; }
     }
 }

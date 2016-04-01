@@ -178,10 +178,30 @@
                             <div class="row vertical-align top5">
                                 <div class="col-sm-12">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Report Recipient</span>
+                                        <span class="input-group-addon" style="min-width: 10em; text-align: left">Report Recipient</span>
                                         <input name="ReportMailAddress" type="text" ng-model="tt.ReportMailAddress" class="form-control" ng-pattern="MailRegexp" ng-required="tt.ReportType !== 0" ng-disabled="tt.ReportType === 0">
                                     </div>
                                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                </div>
+                            </div>
+                            <div class="row vertical-align top5" ng-show="tt.ReportType > 0">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" style="min-width: 10em; text-align: left">Report Hour</span>
+                                        <select name="ReportHour" ng-model="tt.ReportHour" class="form-control" required ng-options="n for n in [] | range:0:24">
+                                        </select>
+                                    </div>
+                                    <span class="glyphicon glyphicon-time form-control-feedback for-select"></span>
+                                </div>
+                            </div>
+                            <div class="row vertical-align top5" ng-show="tt.ReportType > 1">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" style="min-width: 10em; text-align: left">Report Day</span>
+                                        <select name="ReportDay" ng-model="tt.ReportDay" class="form-control" required ng-options="day.value as day.name for day in days">
+                                        </select>
+                                    </div>
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback for-select"></span>
                                 </div>
                             </div>
                         </div>

@@ -315,6 +315,14 @@
         return function (v) {
             return v._Major + "." + v._Minor + "." + v._Build + "." + v._Revision;
         }
+    }).filter('range', function() {
+        return function(input, min, max) {
+            min = parseInt(min); //Make string input int
+            max = parseInt(max);
+            for (var i=min; i<max; i++)
+                input.push(i);
+            return input;
+        };
     })
     .directive('timespanValidator', function () {
         return {

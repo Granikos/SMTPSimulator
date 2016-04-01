@@ -84,6 +84,9 @@ namespace Granikos.NikosTwo.Service.Database.Models
         public int MailsError { get; set; }
         public DateTime? ActiveSince { get; set; }
         public DateTime? ActiveUntil { get; set; }
+        [Range(0, 23)]
+        public int ReportHour { get; set; }
+        public DayOfWeek ReportDay { get; set; }
 
         public static TimeTable FromOther(ITimeTable source)
         {

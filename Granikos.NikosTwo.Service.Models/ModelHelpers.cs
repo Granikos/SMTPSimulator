@@ -141,6 +141,8 @@ namespace Granikos.NikosTwo.Service.Models
             target.StaticSender = source.StaticSender;
             target.ActiveSince = source.ActiveSince;
             target.ActiveUntil = source.ActiveUntil;
+            target.ReportDay = source.ReportDay;
+            target.ReportHour = source.ReportHour;
         }
 
         public static T ConvertTo<T>(this ITimeTable source)
