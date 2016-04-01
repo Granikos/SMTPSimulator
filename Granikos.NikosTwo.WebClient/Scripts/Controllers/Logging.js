@@ -4,7 +4,9 @@
     angular.module('Logging', ['ui.bootstrap.modal', 'ui.grid', 'ui.grid.resizeColumns'])
 
         .controller('LoggingController', [
-            '$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
+            '$scope', '$http', '$timeout', '$rootScope', function ($scope, $http, $timeout, $rootScope) {
+                $rootScope.pageTitle = 'Logging';
+                $rootScope.pageSubtitle = '';
                 $scope.logs = [];
                 $scope.loading = false;
                 $scope.log = null;
@@ -24,6 +26,7 @@
                     });
 
                 $scope.load = function () {
+                    if (!$scope.logName) return;
                     $scope.loading = true;
                     $http.get("api/Logs/Get/" + $scope.logName)
                         .success(function (data, status, headers) {

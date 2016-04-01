@@ -5,7 +5,9 @@
         .service('ExternalUsersService', ['$http', DataService('api/ExternalUsers')])
         .service("ExternalGroupsService", ["$http", DataService("api/ExternalGroups")])
         .controller('ExternalUsersController', [
-            '$scope', '$uibModal', '$q', '$http', '$timeout', 'ExternalUsersService', 'Upload', 'ExternalGroupsService', 'uiGridConstants', function ($scope, $uibModal, $q, $http, $timeout, ExternalUsersService, Upload, GroupService, uiGridConstants) {
+            '$scope', '$uibModal', '$q', '$http', '$timeout', 'ExternalUsersService', 'Upload', 'ExternalGroupsService', 'uiGridConstants', '$rootScope', function ($scope, $uibModal, $q, $http, $timeout, ExternalUsersService, Upload, GroupService, uiGridConstants, $rootScope) {
+                $rootScope.pageTitle = 'Users';
+                $rootScope.pageSubtitle = 'External';
                 $scope.users = [];
                 $scope.groups = {};
 

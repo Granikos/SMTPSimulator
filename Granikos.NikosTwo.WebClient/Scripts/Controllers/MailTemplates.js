@@ -4,7 +4,9 @@
         .service('MailTemplateService', ['$http', DataService('api/MailTemplates')])
 
         .controller('MailTemplatesController', [
-            '$scope', '$uibModal', '$q', '$http', 'MailTemplateService', 'Upload', function ($scope, $uibModal, $q, $http, MailTemplateService, Upload) {
+            '$scope', '$uibModal', '$q', '$http', 'MailTemplateService', 'Upload', '$rootScope', function ($scope, $uibModal, $q, $http, MailTemplateService, Upload, $rootScope) {
+                $rootScope.pageTitle = 'Settings';
+                $rootScope.pageSubtitle = 'Mail Templates';
                 $scope.templates = [];
                 $scope.encodings = ['ASCII', 'UTF8', 'UTF32'];
                 $scope.behaviours = ['SMTP Compliant'];

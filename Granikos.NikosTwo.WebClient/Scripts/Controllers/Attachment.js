@@ -5,7 +5,9 @@
         .service("AttachmentService", ["$http", DataService("api/Attachments")])
 
         .controller('AttachmentController', [
-            '$scope', '$uibModal', '$q', '$http', 'AttachmentService', 'Upload', function ($scope, $uibModal, $q, $http, AttachmentService, Upload) {
+            '$scope', '$uibModal', '$q', '$http', 'AttachmentService', 'Upload', '$rootScope', function ($scope, $uibModal, $q, $http, AttachmentService, Upload, $rootScope) {
+                $rootScope.pageTitle = 'Settings';
+                $rootScope.pageSubtitle = 'Attachments';
                 $scope.attachments = [];
 
                 AttachmentService.all()

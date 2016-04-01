@@ -7,7 +7,9 @@
         .service("LocalGroupsService", ["$http", DataService("api/LocalGroups")])
 
         .controller('LocalUsersController', [
-            '$scope', '$uibModal', '$q', '$http', '$timeout', 'LocalUsersService', 'Upload', 'LocalGroupsService', function ($scope, $uibModal, $q, $http, $timeout, LocalUserService, Upload, GroupService) {
+            '$scope', '$uibModal', '$q', '$http', '$timeout', 'LocalUsersService', 'Upload', 'LocalGroupsService', '$rootScope', function ($scope, $uibModal, $q, $http, $timeout, LocalUserService, Upload, GroupService, $rootScope) {
+                $rootScope.pageTitle = 'Users';
+                $rootScope.pageSubtitle = 'Local';
                 $scope.users = [];
                 $scope.templates = [];
                 $scope.groups = {};

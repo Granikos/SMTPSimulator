@@ -7,7 +7,9 @@
         .service("ReceiveConnectorService", ["$http", DataService("api/ReceiveConnectors")])
 
         .controller('ReceiveController', [
-            '$scope', '$uibModal', '$q', '$http', 'ReceiveConnectorService', function ($scope, $uibModal, $q, $http, ReceiveConnectorService) {
+            '$scope', '$uibModal', '$q', '$http', 'ReceiveConnectorService', '$rootScope', function ($scope, $uibModal, $q, $http, ReceiveConnectorService, $rootScope) {
+                $rootScope.pageTitle = 'Connectors';
+                $rootScope.pageSubtitle = 'Receive';
                 $scope.connectors = [];
                 $scope.adding = false;
 

@@ -26,12 +26,12 @@ namespace Granikos.NikosTwo.Service
 
         public X509Certificate2 GetCertificate()
         {
-            return _certProvider.GetCertificate(Settings.CertificateName, Settings.CertificatePassword);
+            return _certProvider != null? _certProvider.GetCertificate(Settings.CertificateName, Settings.CertificatePassword) : null;
         }
 
         public X509Certificate2Collection GetCertificateCollection()
         {
-            return new X509Certificate2Collection(new[] {GetCertificate()});
+            return _certProvider != null? new X509Certificate2Collection(new[] {GetCertificate()}) : new X509Certificate2Collection();
         }
 
         public SslStream GetSslStream(Stream stream)

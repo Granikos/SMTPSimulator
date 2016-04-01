@@ -2,7 +2,9 @@
     angular.module('Timer', ['ui.bootstrap.modal', 'ui-rangeSlider', 'ui.select', "chart.js", "angularMultiSlider"])
         .service("TimeTableService", ["$http", DataService("api/TimeTables")])
         .controller('TimerController', [
-            '$scope', '$http', '$uibModal', 'TimeTableService', function ($scope, $http, $uibModal, TimeTableService) {
+            '$scope', '$http', '$uibModal', 'TimeTableService', '$rootScope', function ($scope, $http, $uibModal, TimeTableService, $rootScope) {
+                $rootScope.pageTitle = 'Settings';
+                $rootScope.pageSubtitle = 'Timer';
                 $scope.timeTables = [];
                 $scope.types = [];
                 $scope.templates = [];

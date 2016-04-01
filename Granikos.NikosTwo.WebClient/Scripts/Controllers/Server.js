@@ -17,7 +17,9 @@
             }
         ])
         .controller("ServerController", [
-            "$scope", "$uibModal", "TimeTableService", "$http", function ($scope, $uibModal, TimeTableService, $http) {
+            "$scope", "$uibModal", "TimeTableService", "$http", '$rootScope', function ($scope, $uibModal, TimeTableService, $http, $rootScope) {
+                $rootScope.pageTitle = 'Server';
+                $rootScope.pageSubtitle = '';
                 $scope.running = null;
                 $scope.status = "???";
                 $scope.versions = [];

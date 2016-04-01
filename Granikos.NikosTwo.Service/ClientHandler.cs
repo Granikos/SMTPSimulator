@@ -42,7 +42,9 @@ namespace Granikos.NikosTwo.Service
             _client = client;
             _smtpServer = smtpServer;
 
-            var certProvider = container.GetExportedValue<ICertificateProvider>(_smtpServer.Connector.TLSSettings.CertificateType);
+            var certProvider = _smtpServer.Connector.TLSSettings.CertificateType != null
+                ? container.GetExportedValue<ICertificateProvider>(_smtpServer.Connector.TLSSettings.CertificateType)
+                : null;
 
             _tlsConnector = new TLSConnector(_smtpServer.Connector.TLSSettings, CertificateLog, certProvider);
             _localEndpoint = (IPEndPoint) _client.Client.LocalEndPoint;

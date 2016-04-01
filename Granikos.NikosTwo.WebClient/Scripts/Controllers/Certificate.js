@@ -5,7 +5,9 @@
         .service("CertificateService", ["$http", DataService("api/Certificates")])
 
         .controller('CertificateController', [
-            '$scope', '$uibModal', '$q', '$http', 'CertificateService', 'Upload', function ($scope, $uibModal, $q, $http, CertificateService, Upload) {
+            '$scope', '$uibModal', '$q', '$http', 'CertificateService', 'Upload', '$rootScope', function ($scope, $uibModal, $q, $http, CertificateService, Upload, $rootScope) {
+                $rootScope.pageTitle = 'Settings';
+                $rootScope.pageSubtitle = 'Certificates';
                 $scope.certificates = [];
 
                 function refresh() {

@@ -8,7 +8,9 @@
         .service('LocalUsersService', ['$http', DataService('api/LocalUsers')])
 
         .controller('MailController', [
-            '$scope', '$http', '$uibModal', 'SendConnectorService', function ($scope, $http, $uibModal, SendConnectorService) {
+            '$scope', '$http', '$uibModal', 'SendConnectorService', '$rootScope', function ($scope, $http, $uibModal, SendConnectorService, $rootScope) {
+                $rootScope.pageTitle = 'Mail';
+                $rootScope.pageSubtitle = '';
                 $scope.Mail = {
                     Sender: null,
                     Recipients: [],

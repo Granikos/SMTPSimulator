@@ -7,7 +7,9 @@
         .service("SendConnectorService", ["$http", DataService("api/SendConnectors")])
 
         .controller('SendController', [
-            '$scope', '$uibModal', '$q', '$http', 'SendConnectorService', function ($scope, $uibModal, $q, $http, SendConnectorService ) {
+            '$scope', '$uibModal', '$q', '$http', 'SendConnectorService', '$rootScope', function ($scope, $uibModal, $q, $http, SendConnectorService, $rootScope) {
+                $rootScope.pageTitle = 'Connectors';
+                $rootScope.pageSubtitle = 'Send';
                 $scope.connectors = [];
                 $scope.adding = false;
                 $scope.IPRegexp = IPRegexp;
