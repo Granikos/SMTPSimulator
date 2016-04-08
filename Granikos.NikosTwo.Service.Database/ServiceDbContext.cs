@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Data.Entity;
+using Granikos.NikosTwo.Service.Database.Migrations;
 using Granikos.NikosTwo.Service.Database.Models;
 
 namespace Granikos.NikosTwo.Service.Database
@@ -9,9 +10,9 @@ namespace Granikos.NikosTwo.Service.Database
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class ServiceDbContext : DbContext
     {
-        protected ServiceDbContext()
+        public ServiceDbContext()
         {
-            System.Data.Entity.Database.SetInitializer(new DbInitializer());
+            System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<ServiceDbContext, Configuration>());
         }
 
         public DbSet<ExternalUser> ExternalUsers { get; set; }

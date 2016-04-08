@@ -13,6 +13,7 @@ namespace Granikos.NikosTwo.Service.Database.Models
         
         [Index]
         [Required]
+        [MaxLength(450)]
         public string Mailbox { get; set; }
 
         [Key]

@@ -100,8 +100,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseProvider.cs" />
-    <Compile Include="DbInitializer.cs" />
     <Compile Include="DefaultProvider.cs" />
+    <Compile Include="Migrations\201604081020531_Initial.cs" />
+    <Compile Include="Migrations\201604081020531_Initial.Designer.cs">
+      <DependentUpon>201604081020531_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attachment.cs" />
     <Compile Include="Models\Certificate.cs" />
     <Compile Include="Models\DbIPRange.cs" />
@@ -138,6 +142,11 @@
       <Project>{E149BA1D-5095-4F46-BB16-A113757ADCC9}</Project>
       <Name>Granikos.NikosTwo.SmtpClient</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201604081020531_Initial.resx">
+      <DependentUpon>201604081020531_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

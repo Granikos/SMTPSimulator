@@ -111,6 +111,7 @@ namespace Granikos.NikosTwo.Service.Database.Models
 
         [Index("KeyIndex", 1, IsUnique = true)]
         [Required]
+        [MaxLength(150)]
         public string Name { get; set; }
 
         [Required]

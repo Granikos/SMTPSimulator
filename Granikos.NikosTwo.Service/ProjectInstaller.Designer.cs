@@ -39,6 +39,7 @@
             // 
             // serviceInstaller1
             // 
+            this.serviceInstaller1.Description = "nikos two SMTP service";
             this.serviceInstaller1.DisplayName = "Nikos Two Service";
             this.serviceInstaller1.ServiceName = "NikosTwoService";
             this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;

@@ -10,6 +10,7 @@ namespace Granikos.NikosTwo.Service.Database.Models
         public int Id { get; set; }
 
         [Index(IsUnique = true)]
+        [MaxLength(450)]
         public string Name { get; set; }
 
         [NotMapped]
