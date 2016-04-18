@@ -18,7 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bbv.Common.EventBroker", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.WebClient", "Granikos.NikosTwo.WebClient\Granikos.NikosTwo.WebClient.csproj", "{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Granikos.NikosTwo.Setup\Hydra Setup.vdproj", "{042F26B5-6DBD-4E49-814D-6B2B6647606E}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Hydra Setup.vdproj", "{042F26B5-6DBD-4E49-814D-6B2B6647606E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.SmtpClient", "Granikos.NikosTwo.SmtpClient\Granikos.NikosTwo.SmtpClient.csproj", "{E149BA1D-5095-4F46-BB16-A113757ADCC9}"
 EndProject

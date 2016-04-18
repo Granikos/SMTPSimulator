@@ -209,3 +209,4 @@ FakesAssemblies/
 /Granikos.NikosTwo.Service/Attachments
 /Granikos.NikosTwo.Setup/*.bak
 *.DotSettings
+*.bak
