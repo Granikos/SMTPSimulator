@@ -327,6 +327,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Granikos.NikosTwo.Core\Granikos.NikosTwo.Core.csproj">
+      <Project>{6C923248-1B40-4A27-80F7-DDEEB9F6D4D5}</Project>
+      <Name>Granikos.NikosTwo.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Granikos.NikosTwo.Service.ConfigurationService\Granikos.NikosTwo.Service.ConfigurationService.csproj">
       <Project>{9b5c4156-d332-48b5-9a3a-d57402cd7d2b}</Project>
       <Name>Granikos.NikosTwo.Service.ConfigurationService</Name>

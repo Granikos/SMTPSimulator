@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net;
-using Granikos.NikosTwo.SmtpClient;
+using Granikos.NikosTwo.Core;
 
 namespace Granikos.NikosTwo.Service.Models
 {

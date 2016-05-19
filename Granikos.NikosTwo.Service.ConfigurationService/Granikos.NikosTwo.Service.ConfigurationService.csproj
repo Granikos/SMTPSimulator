@@ -106,6 +106,10 @@
     <Compile Include="Models\VersionInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Granikos.NikosTwo.Core\Granikos.NikosTwo.Core.csproj">
+      <Project>{6C923248-1B40-4A27-80F7-DDEEB9F6D4D5}</Project>
+      <Name>Granikos.NikosTwo.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Granikos.NikosTwo.Service.Models\Granikos.NikosTwo.Service.Models.csproj">
       <Project>{3bc25918-8db6-44db-8d08-abb7e2a8a24e}</Project>
       <Name>Granikos.NikosTwo.Service.Models</Name>

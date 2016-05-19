@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.Service.M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.Service.ConfigurationService", "Granikos.NikosTwo.Service.ConfigurationService\Granikos.NikosTwo.Service.ConfigurationService.csproj", "{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.ImapClient", "Granikos.NikosTwo.ImapClient\Granikos.NikosTwo.ImapClient.csproj", "{F6736892-FA11-453C-9A36-34E308DCA6A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +84,10 @@ Global
 		{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6736892-FA11-453C-9A36-34E308DCA6A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6736892-FA11-453C-9A36-34E308DCA6A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6736892-FA11-453C-9A36-34E308DCA6A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6736892-FA11-453C-9A36-34E308DCA6A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
