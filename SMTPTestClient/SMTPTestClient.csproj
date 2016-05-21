@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="S22.Imap">
+      <HintPath>..\packages\S22.Imap.3.6.0.0\lib\net40\S22.Imap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -52,6 +55,10 @@
     <ProjectReference Include="..\Granikos.NikosTwo.Core\Granikos.NikosTwo.Core.csproj">
       <Project>{6c923248-1b40-4a27-80f7-ddeeb9f6d4d5}</Project>
       <Name>Granikos.NikosTwo.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Granikos.NikosTwo.ImapClient\Granikos.NikosTwo.ImapClient.csproj">
+      <Project>{F6736892-FA11-453C-9A36-34E308DCA6A3}</Project>
+      <Name>Granikos.NikosTwo.ImapClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\Granikos.NikosTwo.Service.ConfigurationService\Granikos.NikosTwo.Service.ConfigurationService.csproj">
       <Project>{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}</Project>
