@@ -4,16 +4,16 @@ using Granikos.NikosTwo.Service.ConfigurationService.Models;
 namespace Granikos.NikosTwo.WebClient.Controllers
 {
     // [Authorize]
-    [RoutePrefix("api/Mail")]
-    public class MailController : ApiController
+    [RoutePrefix("api/ImapTest")]
+    public class ImapTestController : ApiController
     {
         readonly ConfigurationServiceClient _service = new ConfigurationServiceClient();
 
         [HttpPost]
-        [Route("Send")]
-        public void Send(MailMessage msg)
+        [Route("")]
+        public ImapTestResult Send(ImapTestSettings msg)
         {
-            _service.SendMail(msg);
+            return _service.TestImap(msg);
         }
     }
 }

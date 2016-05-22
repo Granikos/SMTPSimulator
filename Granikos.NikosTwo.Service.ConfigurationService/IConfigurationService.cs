@@ -613,5 +613,13 @@ namespace Granikos.NikosTwo.Service.ConfigurationService
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         bool DeleteCertificate(string name);
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "ImapTest",
+            Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        ImapTestResult TestImap(ImapTestSettings settings);
     }
 }

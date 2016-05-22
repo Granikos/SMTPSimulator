@@ -14,6 +14,7 @@ using Granikos.NikosTwo.Service.Models;
 using Granikos.NikosTwo.Service.Models.Providers;
 using Granikos.NikosTwo.SmtpServer;
 using log4net;
+using S22.Imap;
 
 namespace Granikos.NikosTwo.Service
 {
@@ -495,6 +496,14 @@ namespace Granikos.NikosTwo.Service
         public bool DeleteCertificate(string name)
         {
             return _certificates.Delete(name);
+        }
+
+        public ImapTestResult TestImap(ImapTestSettings settings)
+        {
+            AuthMethod method = AuthMethod.Auto;
+            Enum.TryParse<AuthMethod>(settings.AuthMethod, out method);
+            return ImapTester.Test(settings.Host, settings.Port, settings.Ssl,
+                settings.Username, settings.Password, method);
         }
 
 

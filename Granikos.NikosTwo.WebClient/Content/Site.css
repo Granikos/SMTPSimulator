@@ -432,3 +432,17 @@ a[href$=".ps1"].filelink:before,
 .form-control-feedback.for-select {
   right: 30px !important;
 }
+
+.result-icon {
+    font-size: 200%;
+    vertical-align: middle;
+}
+
+.result-icon.glyphicon-ok {
+    color: #4cae4c;
+}
+
+.result-icon.glyphicon-remove {
+    color: #d43f3a;
+}
+

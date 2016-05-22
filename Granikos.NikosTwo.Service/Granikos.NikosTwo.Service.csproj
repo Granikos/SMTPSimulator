@@ -209,6 +209,7 @@
     <Compile Include="GreylistingManager.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="IMailQueueProvider.cs" />
+    <Compile Include="ImapTester.cs" />
     <Compile Include="JsonFormatting.cs" />
     <Compile Include="MailTemplateExporter.cs" />
     <Compile Include="MailTemplateImporter.cs" />

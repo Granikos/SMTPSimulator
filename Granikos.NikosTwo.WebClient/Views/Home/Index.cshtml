@@ -12,7 +12,16 @@
             <ul class="nav navbar-nav navbar-left">
                 <li><a class="navbar-brand" href="/">NikosTwo</a></li>
                 <li><a href="/Server/">Server</a></li>
-                <li><a href="/Mail/">Mail</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Quick Actions
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/Mail/">Send Mail</a></li>
+                        <li><a href="/ImapTest/">Test IMAP</a></li>
+                    </ul>
+                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         Users

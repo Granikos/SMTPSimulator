@@ -1,0 +1,106 @@
+﻿<div class="container-fluid">
+    <form id="imapForm" class="form-horizontal" name="imapForm" ng-submit="imapForm.$valid && test()">
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="hostField">Host</label>
+            <div class="col-sm-8">
+                <input id="hostField" type="text" ng-model="settings.Host" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="portField">Port</label>
+            <div class="col-sm-8">
+                <input id="portField" type="number" min="1" max="65535" ng-model="settings.Port" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">SSL</label>
+            <div class="col-sm-8">
+                <input type="radio" ng-model="settings.Ssl" ng-value="true" ng-change="updatePort()"> Yes
+                <input type="radio" ng-model="settings.Ssl" ng-value="false" ng-change="updatePort()"> No
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="usernameField">Username</label>
+            <div class="col-sm-8">
+                <input id="usernameField" type="text" ng-model="settings.Username" class="form-control" ng-required="settings.Password">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="passwordField">Password</label>
+            <div class="col-sm-8">
+                <input id="passwordField" type="text" ng-model="settings.Password" class="form-control" ng-required="settings.Username">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="methodField">Auth Method</label>
+            <div class="col-sm-8">
+                <select id="methodField" ng-model="settings.AuthMethod" class="form-control" required>
+                    <option value="Auto" class="active">Auto</option>
+                    <option value="Login">Plaintext</option>
+                    <option value="Plain">SASL PLAIN</option>
+                    <option value="CramMd5">CRAM-MD5</option>
+                    <option value="DigestMd5">DIGEST-MD5</option>
+                    <option value="OAuth">OAuth via SASL XOAuth</option>
+                    <option value="OAuth2">OAuth 2.0 via SASL XOAUTH2</option>
+                    <option value="Ntlm">NTLM</option>
+                    <option value="Ntlmv2">NTLMv2</option>
+                    <option value="NtlmOverSspi">NTLM/NTLMv2 via SSPI</option>
+                    <option value="ScramSha1">SCRAM-SHA-1</option>
+                    <option value="Srp">Secure Remote Password (SRP)</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <div class="btn-group pull-right">
+                    <button type="submit" class="btn btn-success" id="testButton">
+                        <i class="glyphicon glyphicon-envelope"></i> Test
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="well" ng-show="result">
+        <h3>Result</h3>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Connection</label>
+                <div class="col-sm-2">
+                    <span class="glyphicon result-icon" ng-class="{'glyphicon-ok': result.ConnectSuccess, 'glyphicon-remove': !result.ConnectSuccess}"></span>
+                </div>
+                <label class="col-sm-4 control-label" ng-show="result.LoginSuccess !== null">Login</label>
+                <div class="col-sm-2" ng-show="result.LoginSuccess !== null">
+                    <span class="glyphicon result-icon" ng-class="{'glyphicon-ok': result.LoginSuccess, 'glyphicon-remove': !result.LoginSuccess}"></span>
+                </div>
+            </div>
+            <div class="form-group bg-danger" ng-show="result.ErrorMessage">
+                <label class="col-sm-4 control-label">Error Message</label>
+                <div class="col-sm-8">
+                    <p class="form-control-static">{{result.ErrorMessage}}</p>
+                </div>
+            </div>
+            <div class="form-group" ng-show="result.PreAuthCapabilities">
+                <label class="col-sm-4 control-label">Pre-Auth Capabilities</label>
+                <div class="col-sm-8">
+                    <span ng-repeat="capability in result.PreAuthCapabilities" class="tag label label-default">
+                        <span>{{capability}}</span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" ng-show="result.PostAuthCapabilities">
+                <label class="col-sm-4 control-label">Post-Auth Capabilities</label>
+                <div class="col-sm-8">
+                    <span ng-repeat="capability in result.PostAuthCapabilities" class="tag label label-default">
+                        <span>{{capability}}</span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" ng-show="result.ProtocolLog">
+                <label class="col-sm-4 control-label">Protocol Log</label>
+                <div class="col-sm-8">
+                    <textarea readonly="readonly" rows="10" class="form-control">{{result.ProtocolLog}}</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

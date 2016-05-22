@@ -176,6 +176,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AttachmentController.cs" />
     <Compile Include="Controllers\CertificateController.cs" />
+    <Compile Include="Controllers\ImapTestController.cs" />
     <Compile Include="Controllers\LocalGroupsController.cs" />
     <Compile Include="Controllers\ExternalGroupsController.cs" />
     <Compile Include="Controllers\ExternalUsersController.cs" />
@@ -220,6 +221,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\Controllers\Certificate.js" />
+    <Content Include="Scripts\Controllers\ImapTest.js" />
     <Content Include="Scripts\Controllers\MailTemplates.js" />
     <Content Include="Scripts\Controllers\Mail.js" />
     <Content Include="Scripts\Controllers\Receive.js" />
@@ -285,6 +287,7 @@
     <Content Include="Views\LocalUsers\GroupCellTemplate.html" />
     <Content Include="Views\LocalUsers\GroupHeaderCellTemplate.html" />
     <Content Include="Views\LocalUsers\SelectDomainDialog.html" />
+    <Content Include="Views\ImapTest\Index.html" />
     <Content Include="Views\MailTemplates\Index.html" />
     <Content Include="Views\LocalUsers\GenerateDialog.html" />
     <Content Include="Views\LocalUsers\ImportDialog.html" />
