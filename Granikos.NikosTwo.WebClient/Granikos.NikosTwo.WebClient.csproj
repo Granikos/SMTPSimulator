@@ -176,7 +176,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AttachmentController.cs" />
     <Compile Include="Controllers\CertificateController.cs" />
-    <Compile Include="Controllers\ImapTestController.cs" />
+    <Compile Include="Controllers\ConnectionTestController.cs" />
     <Compile Include="Controllers\LocalGroupsController.cs" />
     <Compile Include="Controllers\ExternalGroupsController.cs" />
     <Compile Include="Controllers\ExternalUsersController.cs" />

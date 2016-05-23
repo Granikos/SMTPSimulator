@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Granikos.NikosTwo.Service.ConfigurationService.Models
 {
     [DataContract]
-    public class ImapTestSettings
+    public class ConnectionTestSettings
     {
         [DataMember]
         [Required]

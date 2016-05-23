@@ -11,7 +11,12 @@ namespace Granikos.NikosTwo.WebClient
 {
     public class ConfigurationServiceClient : ClientBase<IConfigurationService>, IConfigurationService
     {
-        public ImapTestResult TestImap(ImapTestSettings settings)
+        public Pop3TestResult TestPop3(ConnectionTestSettings settings)
+        {
+            return Channel.TestPop3(settings);
+        }
+
+        public ImapTestResult TestImap(ConnectionTestSettings settings)
         {
             return Channel.TestImap(settings);
         }

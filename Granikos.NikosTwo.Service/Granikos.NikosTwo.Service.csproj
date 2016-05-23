@@ -176,6 +176,9 @@
     <Reference Include="S22.Imap">
       <HintPath>..\packages\S22.Imap.3.6.0.0\lib\net40\S22.Imap.dll</HintPath>
     </Reference>
+    <Reference Include="S22.Pop3">
+      <HintPath>..\packages\S22.Pop3.1.2.4694.18487\lib\net40\S22.Pop3.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -209,6 +212,7 @@
     <Compile Include="GreylistingManager.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="IMailQueueProvider.cs" />
+    <Compile Include="Pop3Tester.cs" />
     <Compile Include="ImapTester.cs" />
     <Compile Include="JsonFormatting.cs" />
     <Compile Include="MailTemplateExporter.cs" />

@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('NikosTwo', ['ngRoute', 'ui.bootstrap', 'ui-rangeSlider', 'Server', 'LocalUsers', 'ExternalUsers', 'Send', 'Receive', 'Timer', 'Mail', 'Logging', 'Register', 'Login', 'Attachment', 'enumFlag', 'checklist-model', 'ui.select', 'xeditable', 'MailTemplates', 'Certificate', 'ImapTest'])
+    angular.module('NikosTwo', ['ngRoute', 'ui.bootstrap', 'ui-rangeSlider', 'Server', 'LocalUsers', 'ExternalUsers', 'Send', 'Receive', 'Timer', 'Mail', 'Logging', 'Register', 'Login', 'Attachment', 'enumFlag', 'checklist-model', 'ui.select', 'xeditable', 'MailTemplates', 'Certificate', 'ImapTest', 'Pop3Test'])
         .config([
             '$routeProvider', '$httpProvider', '$locationProvider', function($routeProvider, $httpProvider, $locationProvider) {
                 $locationProvider.hashPrefix('!').html5Mode(true);
@@ -52,6 +52,10 @@
                     .when('/ImapTest/', {
                         templateUrl: 'Views/ImapTest/Index.html',
                         controller: 'ImapTestController'
+                    })
+                    .when('/Pop3Test/', {
+                        templateUrl: 'Views/ImapTest/Index.html',
+                        controller: 'Pop3TestController'
                     })
                     .when('/login/', {
                         templateUrl: '/Views/Login.html',

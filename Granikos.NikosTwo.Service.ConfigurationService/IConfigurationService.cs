@@ -620,6 +620,14 @@ namespace Granikos.NikosTwo.Service.ConfigurationService
             Method = "POST",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        ImapTestResult TestImap(ImapTestSettings settings);
+        ImapTestResult TestImap(ConnectionTestSettings settings);
+
+        [OperationContract]
+        [WebInvoke(
+            UriTemplate = "Pop3Test",
+            Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        Pop3TestResult TestPop3(ConnectionTestSettings settings);
     }
 }

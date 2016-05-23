@@ -498,11 +498,19 @@ namespace Granikos.NikosTwo.Service
             return _certificates.Delete(name);
         }
 
-        public ImapTestResult TestImap(ImapTestSettings settings)
+        public ImapTestResult TestImap(ConnectionTestSettings settings)
         {
-            AuthMethod method = AuthMethod.Auto;
-            Enum.TryParse<AuthMethod>(settings.AuthMethod, out method);
+            AuthMethod method;
+            Enum.TryParse(settings.AuthMethod, out method);
             return ImapTester.Test(settings.Host, settings.Port, settings.Ssl,
+                settings.Username, settings.Password, method);
+        }
+
+        public Pop3TestResult TestPop3(ConnectionTestSettings settings)
+        {
+            S22.Pop3.AuthMethod method;
+            Enum.TryParse(settings.AuthMethod, out method);
+            return Pop3Tester.Test(settings.Host, settings.Port, settings.Ssl,
                 settings.Username, settings.Password, method);
         }
 

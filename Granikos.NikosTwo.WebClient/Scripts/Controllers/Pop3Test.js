@@ -1,25 +1,25 @@
 ﻿(function () {
-    angular.module('ImapTest', [])
+    angular.module('Pop3Test', [])
 
-        .controller('ImapTestController', [
+        .controller('Pop3TestController', [
             '$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
-                $rootScope.pageTitle = 'Imap Test';
+                $rootScope.pageTitle = 'Pop3 Test';
                 $rootScope.pageSubtitle = '';
                 $scope.settings = {
-                    Port: 143,
-                    AuthMethod: 'Auto',
+                    Port: 110,
+                    AuthMethod: 'Login',
                     Ssl: false
                 };
                 $scope.result = null;
 
                 $scope.updatePort = function() {
-                    $scope.settings.Port = $scope.settings.Ssl ? 993 : 143;
+                    $scope.settings.Port = $scope.settings.Ssl ? 995 : 110;
                 }
 
                 $scope.test = function () {
                     $scope.result = null;
                     var reenable = disableClickedButton($('#testButton'));
-                    return $http.post("api/ConnectionTest/Imap", $scope.settings)
+                    return $http.post("api/ConnectionTest/Pop3", $scope.settings)
                     .success(function (data) {
                         $scope.result = data;
                         reenable();
