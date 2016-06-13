@@ -221,6 +221,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\Controllers\Certificate.js" />
+    <Content Include="Scripts\Controllers\Pop3Test.js" />
     <Content Include="Scripts\Controllers\ImapTest.js" />
     <Content Include="Scripts\Controllers\MailTemplates.js" />
     <Content Include="Scripts\Controllers\Mail.js" />
@@ -283,6 +284,7 @@
     <Content Include="Views\ExternalUsers\AddGroupDialog.html" />
     <Content Include="Views\ExternalUsers\ImportDialog.html" />
     <Content Include="Views\ExternalUsers\Index.html" />
+    <Content Include="Views\Pop3Test\Index.html" />
     <Content Include="Views\LocalUsers\AddGroupDialog.html" />
     <Content Include="Views\LocalUsers\GroupCellTemplate.html" />
     <Content Include="Views\LocalUsers\GroupHeaderCellTemplate.html" />
