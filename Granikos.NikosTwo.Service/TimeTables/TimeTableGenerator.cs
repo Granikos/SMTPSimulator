@@ -218,8 +218,7 @@ namespace Granikos.NikosTwo.Service.TimeTables
                 Logger.InfoFormat("Timetable '{0}' sent a report.", _timeTable.Name);
             }
 
-            var parsed = new Mail(mail.From, mail.To, mail.ToString());
-            _queue.Enqueue(new SendableMail(parsed, null), TimeSpan.Zero);
+            _queue.Enqueue(new SendableMail(mail.From, mail.To, mail.ToString(), null), TimeSpan.Zero);
 
             if (EmlFolder != null)
             {
@@ -270,9 +269,8 @@ namespace Granikos.NikosTwo.Service.TimeTables
                 var fromMail = new MailAddress(from);
                 var toMail = to.Select(r => new MailAddress(r)).ToArray();
                 var content = CreateContent(fromMail, toMail, sendEicar);
-                var parsed = new Mail(fromMail, toMail, content.ToString());
 
-                var sendableMail = new SendableMail(parsed, null)
+                var sendableMail = new SendableMail(fromMail, toMail, content.ToString(), null)
                 {
                     ResultHandler = success =>
                     {
