@@ -93,6 +93,11 @@ namespace Granikos.NikosTwo.Service
                 PerformanceCounters.TriggerReceived();
             };
 
+            _mailQueue.OnQueueChanged += (sender, args) =>
+            {
+                PerformanceCounters.ForQueueLength("Total").RawValue = _mailQueue.Count;
+            };
+
             foreach (var tt in _timeTables.All())
             {
                 var generator = new TimeTableGenerator(tt, _mailQueue, _container);

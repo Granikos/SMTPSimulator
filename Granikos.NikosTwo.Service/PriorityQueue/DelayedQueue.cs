@@ -13,6 +13,8 @@ namespace Granikos.NikosTwo.Service.PriorityQueue
             _queue = new HeapPriorityQueue<DateTime, QueueItem>(maxItems);
         }
 
+        public event EventHandler OnQueueChanged;
+
         public int Count
         {
             get { return _queue.Count; }
@@ -29,6 +31,8 @@ namespace Granikos.NikosTwo.Service.PriorityQueue
             {
                 _queue.Enqueue(new QueueItem {Value = item}, DateTime.Now + delay);
             }
+            
+            TiggerQueueChanged();
         }
 
         public T Peek()
@@ -43,7 +47,15 @@ namespace Granikos.NikosTwo.Service.PriorityQueue
         {
             lock (_queue)
             {
-                return Peek() != null ? _queue.Dequeue().Value : default(T);
+                var hasValue = Peek() != null;
+                var value = hasValue ? _queue.Dequeue().Value : default(T);
+
+                if (hasValue)
+                {
+                    TiggerQueueChanged();
+                }
+                    
+                return value;
             }
         }
 
@@ -53,11 +65,19 @@ namespace Granikos.NikosTwo.Service.PriorityQueue
             {
                 _queue.Clear();
             }
+
+            TiggerQueueChanged();
         }
 
         private class QueueItem : PriorityQueueNode<DateTime>
         {
             public T Value { get; set; }
+        }
+
+        protected void TiggerQueueChanged()
+        {
+            var handler = OnQueueChanged;
+            if (handler != null) handler(this, EventArgs.Empty);
         }
     }
 }

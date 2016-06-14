@@ -107,12 +107,16 @@ namespace Granikos.NikosTwo.Service
 
         public static PerformanceCounter ForQueueLength(string connectorName)
         {
-            if (!QueueLengthCounters.ContainsKey(connectorName))
+            lock (QueueLengthCounters)
             {
-                QueueLengthCounters.Add(connectorName, new PerformanceCounter("nikos two Mail Service", "Emails received (last 60 mins)", connectorName, false));
-            }
+                if (!QueueLengthCounters.ContainsKey(connectorName))
+                {
+                    QueueLengthCounters.Add(connectorName,
+                        new PerformanceCounter("nikos two Mail Service", "​Queue length", connectorName, false));
+                }
 
-            return QueueLengthCounters[connectorName];
+                return QueueLengthCounters[connectorName];
+            }
         }
 
         public static void TriggerSent()
