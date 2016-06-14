@@ -117,6 +117,11 @@ namespace Granikos.NikosTwo.Service
                         {
                             mail.ResultHandler(success);
                         }
+
+                        if (success)
+                        {
+                            PerformanceCounters.TriggerSent();
+                        }
                     }
 
                     Thread.Sleep(TickDefaultMilliseconds);

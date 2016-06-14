@@ -88,6 +88,11 @@ namespace Granikos.NikosTwo.Service
             var loader = new CommandHandlerLoader(catalog);
             _smtpServer = new SMTPServer(loader);
 
+            _smtpServer.OnNewMessage += (transaction, mail) =>
+            {
+                PerformanceCounters.TriggerReceived();
+            };
+
             foreach (var tt in _timeTables.All())
             {
                 var generator = new TimeTableGenerator(tt, _mailQueue, _container);
