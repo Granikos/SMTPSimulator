@@ -212,6 +212,7 @@
     <Compile Include="GreylistingManager.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="IMailQueueProvider.cs" />
+    <Compile Include="MailDispatcher.cs" />
     <Compile Include="PerformanceCounters.cs" />
     <Compile Include="Pop3Tester.cs" />
     <Compile Include="ImapTester.cs" />
@@ -222,7 +223,6 @@
     <Compile Include="PriorityQueue\DelayedQueue.cs" />
     <Compile Include="ISMTPServerContainer.cs" />
     <Compile Include="MailExtensions.cs" />
-    <Compile Include="MessageProcessor.cs" />
     <Compile Include="PriorityQueue\HeapPriorityQueue.cs" />
     <Compile Include="PriorityQueue\IPriorityQueue.cs" />
     <Compile Include="PriorityQueue\PriorityQueueNode.cs" />

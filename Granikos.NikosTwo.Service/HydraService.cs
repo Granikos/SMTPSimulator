@@ -29,11 +29,7 @@ namespace Granikos.NikosTwo.Service
 {
     public partial class NikosTwoService : ServiceBase, ISMTPServerContainer, IMailQueueProvider
     {
-        private const int NumSenders = 4;
-        // TODO: Use locks
-
         private readonly CompositionContainer _container;
-        private readonly DelayedQueue<SendableMail> _mailQueue = new DelayedQueue<SendableMail>(1000);
         private readonly SMTPServer _smtpServer;
         private ServiceHost _host;
 
@@ -52,6 +48,7 @@ namespace Granikos.NikosTwo.Service
         private readonly RetentionManager _retentionManager;
 
         private static readonly ILog Logger = LogManager.GetLogger(typeof(NikosTwoService));
+        private readonly MailDispatcher _dispatcher;
 
         public NikosTwoService()
         {
@@ -93,14 +90,11 @@ namespace Granikos.NikosTwo.Service
                 PerformanceCounters.TriggerReceived();
             };
 
-            _mailQueue.OnQueueChanged += (sender, args) =>
-            {
-                PerformanceCounters.ForQueueLength("Total").RawValue = _mailQueue.Count;
-            };
+            _dispatcher = new MailDispatcher(_sendConnectors, _container);
 
             foreach (var tt in _timeTables.All())
             {
-                var generator = new TimeTableGenerator(tt, _mailQueue, _container);
+                var generator = new TimeTableGenerator(tt, _dispatcher, _container);
                 _generators.Add(tt.Id, generator);
 
                 if (tt.Active) generator.Start();
@@ -112,7 +106,6 @@ namespace Granikos.NikosTwo.Service
             _retentionManager = new RetentionManager();
 
             RefreshServers();
-            RefreshSenders();
 
             Logger.Info("The Nikos Two Service has started.");
         }
@@ -158,7 +151,7 @@ namespace Granikos.NikosTwo.Service
         {
             lock (_generators)
             {
-                var generator = new TimeTableGenerator(tt, _mailQueue, _container);
+                var generator = new TimeTableGenerator(tt, _dispatcher, _container);
                 _generators.Add(tt.Id, generator);
 
                 if (tt.Active) generator.Start();
@@ -188,7 +181,7 @@ namespace Granikos.NikosTwo.Service
             var parsed = new Mail(from, to, content.ToString());
             var sendableMail = new SendableMail(parsed, mail.Connector);
 
-            _mailQueue.Enqueue(sendableMail, TimeSpan.Zero);
+            _dispatcher.Enqueue(sendableMail, TimeSpan.Zero);
         }
 
         public bool Running { get; private set; }
@@ -225,28 +218,12 @@ namespace Granikos.NikosTwo.Service
 
         public void StopMessageProcessing()
         {
-            if (_senders != null)
-            {
-                Logger.Info("Stopping mail sending...");
-                foreach (var sender in _senders)
-                {
-                    sender.Stop();
-                }
-                Logger.Info("Stopped mail sending.");
-            }
+            _dispatcher.StopMessageProcessing();
         }
 
         public void StartMessageProcessing()
         {
-            if (_senders != null)
-            {
-                Logger.Info("Starting mail sending...");
-                foreach (var sender in _senders)
-                {
-                    sender.Start();
-                }
-                Logger.Info("Started mail sending.");
-            }
+            _dispatcher.StartMessageProcessing();
         }
 
         internal void RefreshServers()
@@ -264,17 +241,6 @@ namespace Granikos.NikosTwo.Service
             StartSMTPServers();
         }
 
-        internal void RefreshSenders()
-        {
-            StopMessageProcessing();
-
-            _senders = Enumerable.Range(0, NumSenders)
-                .Select(r => new MessageSender(_container, _mailQueue))
-                .ToArray();
-
-            StartMessageProcessing();
-        }
-
         internal void TestStartupAndStop(string[] args)
         {
             OnStart(args);
@@ -286,7 +252,7 @@ namespace Granikos.NikosTwo.Service
         {
             Logger.Info("Service starting...");
             StartSMTPServers();
-            StartMessageProcessing();
+            _dispatcher.RefreshSendConnectors();
 
             if (_host != null)
             {

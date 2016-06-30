@@ -29,7 +29,6 @@ namespace Granikos.NikosTwo.Service.TimeTables
         private static readonly ILog Logger = LogManager.GetLogger(typeof (TimeTableGenerator));
         private readonly ICollection<MailEvent> _events = new List<MailEvent>();
         private readonly object _lockObject = new object();
-        private readonly DelayedQueue<SendableMail> _queue;
         private readonly Random _random = new Random();
         private readonly ITimeTable _timeTable;
         private readonly ITimeTableType _timeTableType;
@@ -58,14 +57,16 @@ namespace Granikos.NikosTwo.Service.TimeTables
         [Import]
         private ITimeTableProvider _timeTables;
 
-        public TimeTableGenerator(ITimeTable timeTable, DelayedQueue<SendableMail> queue, CompositionContainer container)
+        private readonly MailDispatcher _dispatcher;
+
+        public TimeTableGenerator(ITimeTable timeTable, MailDispatcher dispatcher, CompositionContainer container)
         {
             Contract.Requires<ArgumentNullException>(timeTable != null, "timeTable");
-            Contract.Requires<ArgumentNullException>(queue != null, "queue");
+            Contract.Requires<ArgumentNullException>(dispatcher != null, "dispatcher");
             Contract.Requires<ArgumentNullException>(container != null, "container");
 
             _timeTable = timeTable;
-            _queue = queue;
+            _dispatcher = dispatcher;
 
             _timeTableType = container.GetExport<ITimeTableType>(timeTable.Type).Value;
             _timeTableType.Parameters = _timeTable.Parameters;
@@ -219,7 +220,7 @@ namespace Granikos.NikosTwo.Service.TimeTables
             }
 
             var parsed = new Mail(mail.From, mail.To, mail.ToString());
-            _queue.Enqueue(new SendableMail(parsed, null), TimeSpan.Zero);
+            _dispatcher.Enqueue(new SendableMail(parsed, null), TimeSpan.Zero);
 
             if (EmlFolder != null)
             {
@@ -307,7 +308,7 @@ namespace Granikos.NikosTwo.Service.TimeTables
                     }
                 }
 
-                _queue.Enqueue(sendableMail, TimeSpan.Zero);
+                _dispatcher.Enqueue(sendableMail, TimeSpan.Zero);
             }
             catch (Exception e)
             {

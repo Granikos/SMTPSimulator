@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.Composition.Hosting;
+using System.Linq;
 using System.Threading;
 using Granikos.NikosTwo.Core;
 using Granikos.NikosTwo.Service.PriorityQueue;
@@ -16,20 +17,20 @@ namespace Granikos.NikosTwo.Service
         private readonly ManualResetEvent _askStop;
         private readonly ManualResetEvent _informStopped;
         private readonly object _lockObject = new object();
-        private readonly DelayedQueue<SendableMail> _mailQueue;
-        private readonly MessageProcessor _processor;
+        private readonly CompositionContainer _container;
+        private readonly DelayedQueue<MailWithConnectorInfo> _mailQueue;
         private Thread _thread;
         protected int TickDefaultMilliseconds = 1000;
 
-        public MessageSender(CompositionContainer container, DelayedQueue<SendableMail> queue)
+        public event MailErrorHandler OnMailError;
+
+        public MessageSender(CompositionContainer container, DelayedQueue<MailWithConnectorInfo> queue)
         {
             _askStop = new ManualResetEvent(false);
             _informStopped = new ManualResetEvent(false);
 
-            _processor = new MessageProcessor(container);
+            _container = container;
             _mailQueue = queue;
-
-            _processor.OnMailError += HandleMailError;
         }
 
         public bool IsRunning
@@ -45,37 +46,6 @@ namespace Granikos.NikosTwo.Service
             {
                 ThreadFinishedEvent();
             }
-        }
-
-        public void HandleMailError(SendableMail mail, MessageProcessor.ConnectorInfo info, SMTPStatusCode? status,
-            Exception e)
-        {
-            var connector = info.Connector;
-            if (status == SMTPStatusCode.NotAvailiable)
-            {
-                if (mail.RetryCount < connector.RetryCount)
-                {
-                    Logger.InfoFormat("Remote host was not availiable, retrying to send mail in {0} (try {1}/{2})",
-                        connector.RetryTime, mail.RetryCount + 1, connector.RetryCount + 1);
-                    mail.RetryCount++;
-                    lock (_mailQueue)
-                    {
-                        _mailQueue.Enqueue(mail, connector.RetryTime);
-                    }
-                }
-                else
-                {
-                    Logger.InfoFormat("Remote host was not availiable, but retry count exceeded (try {0}/{0}).",
-                        connector.RetryCount + 1);
-                }
-            }
-
-            if (e != null)
-            {
-                Logger.Error("An error occured while sending a mail:", e);
-            }
-
-            // TODO
         }
 
         public virtual void Start()
@@ -100,7 +70,7 @@ namespace Granikos.NikosTwo.Service
             {
                 try
                 {
-                    SendableMail mail = null;
+                    MailWithConnectorInfo mail = null;
                     lock (_mailQueue)
                     {
                         if (_mailQueue.Peek() != null)
@@ -111,11 +81,11 @@ namespace Granikos.NikosTwo.Service
 
                     if (mail != null)
                     {
-                        var success = _processor.ProcessMail(mail);
+                        var success = ProcessMail(mail);
 
-                        if (mail.ResultHandler != null)
+                        if (mail.Mail.ResultHandler != null)
                         {
-                            mail.ResultHandler(success);
+                            mail.Mail.ResultHandler(success);
                         }
 
                         if (success)
@@ -141,6 +111,33 @@ namespace Granikos.NikosTwo.Service
             RaiseFinishedEvent();
         }
 
+        public bool ProcessMail(MailWithConnectorInfo mail)
+        {
+            var addresses = mail.Addresses.Select(a => a.Address).ToArray();
+            var connector = mail.Connector;
+
+            var client = SMTPClient.Create(_container, connector, mail.Host, mail.Port);
+
+                if (!client.Connect())
+                {
+
+                    TriggerMailError(mail, client.LastStatus, client.LastException);
+
+                    return false;
+                }
+
+                if (!client.SendMail(mail.Mail.From.Address, addresses, mail.ToString()))
+                {
+                    TriggerMailError(mail, client.LastStatus, client.LastException);
+
+                    return false;
+                }
+
+                client.Close();
+
+            return true;
+        }
+
         public bool HasStopped()
         {
             return _informStopped.WaitOne(1, true);
@@ -164,6 +161,13 @@ namespace Granikos.NikosTwo.Service
                     _thread = null;
                 }
             }
+        }
+
+        protected virtual void TriggerMailError(MailWithConnectorInfo info, SMTPStatusCode? status = null,
+            Exception e = null)
+        {
+            var handler = OnMailError;
+            if (handler != null) handler(info, status, e);
         }
     }
 }

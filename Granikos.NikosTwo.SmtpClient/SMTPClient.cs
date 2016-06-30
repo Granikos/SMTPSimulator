@@ -129,6 +129,8 @@ namespace Granikos.NikosTwo.SmtpClient
                 return false;
             }
 
+            if (!success) LastException = null;
+
             if (success || LastStatus != SMTPStatusCode.Ready) return DoandParseEHLO();
 
             return DoConnectionSequence() && DoandParseEHLO();
