@@ -9,9 +9,9 @@ using Xunit;
 [assembly: AssemblyTitle("NikosTwoTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Granikos GmbH & Co. KG")]
 [assembly: AssemblyProduct("Nikos Two")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: CollectionBehavior(MaxParallelThreads = 1)] // TODO: Issues with Shims and multiple tests running parallel

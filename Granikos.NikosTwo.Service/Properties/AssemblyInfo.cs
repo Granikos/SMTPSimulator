@@ -9,9 +9,9 @@ using log4net.Config;
 [assembly: AssemblyTitle("NikosTwoService")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Granikos GmbH & Co. KG")]
 [assembly: AssemblyProduct("Nikos Two")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
