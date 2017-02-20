@@ -261,6 +261,7 @@
     <None Include="cert.pfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Granikos.NikosTwo.Service.licenseheader" />
     <None Include="HydraService_TemporaryKey.pfx" />
     <None Include="MailTemplates\MailTemplateSchema.xsd">
       <SubType>Designer</SubType>

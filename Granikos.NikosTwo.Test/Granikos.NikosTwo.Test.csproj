@@ -171,6 +171,7 @@
   <ItemGroup>
     <Fakes Include="Fakes\Granikos.NikosTwo.Core.fakes" />
     <Fakes Include="Fakes\Granikos.NikosTwo.SmtpServer.fakes" />
+    <None Include="Granikos.NikosTwo.Test.licenseheader" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

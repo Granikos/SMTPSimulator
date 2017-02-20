@@ -116,6 +116,7 @@
     <Compile Include="ValidationHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Granikos.NikosTwo.Core.licenseheader" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

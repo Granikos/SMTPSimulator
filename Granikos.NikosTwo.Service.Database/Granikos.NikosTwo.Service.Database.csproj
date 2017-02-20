@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Granikos.NikosTwo.Service.Database.licenseheader" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

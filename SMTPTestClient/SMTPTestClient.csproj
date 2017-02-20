@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="SMTPTestClient.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Granikos.NikosTwo.Core\Granikos.NikosTwo.Core.csproj">

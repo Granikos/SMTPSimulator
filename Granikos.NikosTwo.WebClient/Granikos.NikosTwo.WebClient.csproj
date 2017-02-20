@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -248,6 +249,7 @@
     <Content Include="Content\dist\ui-grid.eot" />
     <Content Include="Content\dist\ui-grid.ttf" />
     <Content Include="Content\dist\ui-grid.woff" />
+    <Content Include="Granikos.NikosTwo.WebClient.licenseheader" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\UserTemplates\en.json" />
     <Content Include="Scripts\lib\angular-aria.js" />

@@ -1,0 +1,13 @@
+﻿extensions: designer.cs generated.cs
+extensions: .cs .cpp .h
+// Copyright (c) 2017 Granikos GmbH & Co. KG
+extensions: .aspx .ascx
+<%-- 
+	Copyright (c) 2017 Granikos GmbH & Co. KG
+--%>
+extensions: .vb
+'Sample license text.
+extensions:  .xml .config .xsd
+<!--
+	Copyright (c) 2017 Granikos GmbH and Co. KG
+-->
