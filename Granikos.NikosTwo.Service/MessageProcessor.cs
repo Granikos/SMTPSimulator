@@ -60,8 +60,7 @@ namespace Granikos.NikosTwo.Service
 
                 if (!connector.UseSmarthost)
                 {
-                    var response = DnsClient.Default.Resolve(recipientGroup.Key, RecordType.Mx);
-                    var records = response.AnswerRecords.OfType<MxRecord>();
+                    var records = new DnsStubResolver().Resolve<MxRecord>(recipientGroup.Key);
                     var record = records.OrderBy(r => r.Preference).FirstOrDefault();
 
                     if (record == null)
@@ -75,7 +74,7 @@ namespace Granikos.NikosTwo.Service
                         }, null, new NoMailHostFoundException(recipientGroup.Key));
                         continue;
                     }
-                    remoteHost = record.ExchangeDomainName;
+                    remoteHost = record.ExchangeDomainName.ToString();
                     remotePort = 25;
                 }
                 else

@@ -76,10 +76,11 @@
                 $rootScope.auth = {};
                 editableOptions.theme = 'bs3';
 
-                $http.get('/api/Account').
-                       success(function (data) {
-                        if (data) $rootScope.auth.user = data;
-                    });
+                $http.get('/api/Account').then(
+                    function (response) {
+                        if (response.data) $rootScope.auth.user = response.data;
+                    }
+                );
 
                 $rootScope.$on('$locationChangeSuccess', function() {
                     var url = $location.url();

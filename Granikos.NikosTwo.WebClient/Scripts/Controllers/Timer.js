@@ -26,20 +26,21 @@
 
                 $scope.searchLocalUsers = function (search) {
                     return $http.get("api/LocalUsers/Search/" + search)
-                        .then(function (data) {
-                            return data.data;
+                        .then(function (response) {
+                            return response.data;
                         });
                 };
 
                 $scope.searchExternalUsers = function (search) {
                     return $http.get("api/ExternalUsers/Search/" + search)
-                        .then(function (data) {
-                            return data.data;
+                        .then(function (response) {
+                            return response.data;
                         });
                 };
 
                 $http.get("api/LocalGroups/WithCounts")
-                    .success(function (groups) {
+                    .then(function (response) {
+                        var groups = response.data;
                         $scope.localGroups = groups.Items;
                         // TODO: Make this cleaner
                         $scope.localGroups.unshift({
@@ -48,13 +49,13 @@
                             Count: groups.MailboxTotal
                         });
                         $scope.localMailboxTotal = groups.MailboxTotal;
-                    })
-                    .error(function (data) {
-                        showError(data.Message || data.data.Message);
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
 
                 $http.get("api/ExternalGroups/WithCounts")
-                    .success(function (groups) {
+                    .then(function (response) {
+                        var groups = response.data;
                         $scope.externalGroups = groups.Items;
                         // TODO: Make this cleaner
                         $scope.externalGroups.unshift({
@@ -63,41 +64,36 @@
                             Count: groups.MailboxTotal
                         });
                         $scope.externalMailboxTotal = groups.MailboxTotal;
-                    })
-                    .error(function (data) {
-                        showError(data.Message || data.data.Message);
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
 
                 TimeTableService.all()
-                    .success(function (timeTables) {
-                        $scope.timeTables = timeTables;
-                    })
-                    .error(function (data) {
-                        showError(data.Message || data.data.Message);
+                    .then(function (response) {
+                        $scope.timeTables = response.data;
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
 
                 $http.get("api/TimeTables/Types")
-                    .success(function (types) {
-                        $scope.types = types;
-                    })
-                    .error(function (data) {
-                        showError(data.Message || data.data.Message);
+                    .then(function (response) {
+                        $scope.types = response.data;
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
 
                 $http.get("api/TimeTables/MailTemplates")
-                    .success(function (templates) {
-                        $scope.templates = templates;
-                    })
-                    .error(function (data) {
-                        showError(data.Message || data.data.Message);
+                    .then(function (response) {
+                        $scope.templates = response.data;
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
 
                 $http.get("api/TimeTables/Attachments")
-                    .success(function (attachments) {
-                        $scope.attachments = attachments;
-                    })
-                    .error(function (data) {
-                        showError(data.Message || data.data.Message);
+                    .then(function (response) {
+                        $scope.attachments = response.data;
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
 
                 $scope.update = function (timeTable, $event) {
@@ -105,18 +101,18 @@
                     var disabledButton = disableClickedButton(button);
                     TimeTableService
                         .update(timeTable)
-                        .then(function (data) {
+                        .then(function (response) {
                             disabledButton();
                             var index = $scope.timeTables.indexOf(timeTable);
                             if (index > -1) {
-                                $scope.timeTables[index] = data.data;
+                                $scope.timeTables[index] = response.data;
                             }
                             window.setTimeout(function () {
                                 $('#collapse' + timeTable.Id).addClass('in');
                             }, 10);
-                        }, function (data) {
+                        }, function (response) {
                             disabledButton();
-                            showError(data.Message || data.data.Message);
+                            showError(response.data.Message);
                         });
                 };
 
@@ -130,27 +126,27 @@
                             if (index > -1) {
                                 $scope.timeTables.splice(index, 1);
                             }
-                        }, function (data) {
+                        }, function (response) {
                             disabledButton();
-                            showError(data.Message || data.data.Message);
+                            showError(response.data.Message);
                         });
                 };
 
                 $scope.startAdd = function () {
                     $http.get("api/TimeTables/Empty")
-                        .then(function (data) {
+                        .then(function (response) {
                             $scope.adding = true;
-                            data.data.__adding__ = true;
-                            data.data.Id = 'Add';
-                            $scope.timeTables.push(data.data);
+                            response.data.__adding__ = true;
+                            response.data.Id = 'Add';
+                            $scope.timeTables.push(response.data);
                             window.setTimeout(function () {
                                 $('#collapseAdd').addClass('in');
                                 $('#timeTableFormAdd :input').first().focus();
                                 $('#timeTableFormAdd').scope().timeTableForms.formAdd.$setDirty();
                                 $scope.$apply();
                             }, 10);
-                        }, function (data) {
-                            showError(data.Message || data.data.Message);
+                        }, function (response) {
+                            showError(response.data.Message);
                         });
                 };
 
@@ -162,19 +158,19 @@
 
                     TimeTableService
                         .add(timeTable)
-                        .then(function (data) {
+                        .then(function (response) {
                             disabledButton();
                             var index = $scope.timeTables.indexOf(timeTable);
                             if (index > -1) {
-                                $scope.timeTables[index] = data.data;
+                                $scope.timeTables[index] = response.data;
                             }
                             window.setTimeout(function () {
-                                $('#collapse' + data.data.Id).addClass('in');
+                                $('#collapse' + response.data.Id).addClass('in');
                             }, 10);
                             $scope.adding = false;
-                        }, function (data) {
+                        }, function (response) {
                             disabledButton();
-                            showError(data.Message || data.data.Message);
+                            showError(response.data.Message);
                         });
                 };
 

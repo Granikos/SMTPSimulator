@@ -13,17 +13,17 @@
                                 Password: password,
                                 ConfirmPassword: confirmPassword
                             }
-                        ).
-                        success(function(data) {
-                            if (data == "True") {
-                                deferredObject.resolve({ success: true });
-                            } else {
-                                deferredObject.resolve({ success: false, errors: data.Messages });
+                        ).then(
+                            function (response) {
+                                if (response.data == "True") {
+                                    deferredObject.resolve({ success: true });
+                                } else {
+                                    deferredObject.resolve({ success: false, errors: response.data.Messages });
+                                }
+                            }, function() {
+                                deferredObject.resolve({ success: false });
                             }
-                        }).
-                        error(function() {
-                            deferredObject.resolve({ success: false });
-                        });
+                        );
 
                     return deferredObject.promise;
                 }
@@ -40,16 +40,17 @@
                 };
 
                 $scope.register = function() {
-                    var result = RegistrationFactory($scope.registerForm.emailAddress, $scope.registerForm.password, $scope.registerForm.confirmPassword);
-                    result.then(function (result) {
-                        $rootScope.auth.user = $scope.registerForm.emailAddress;
-                        if (result.success) {
-                            $location.path('/');
-                        } else {
-                            $scope.registerForm.registrationFailure = true;
-                            $scope.registerForm.errors = result.errors;
+                    RegistrationFactory($scope.registerForm.emailAddress, $scope.registerForm.password, $scope.registerForm.confirmPassword).then(
+                        function (registerResult) {
+                            $rootScope.auth.user = $scope.registerForm.emailAddress;
+                            if (registerResult.success) {
+                                $location.path('/');
+                            } else {
+                                $scope.registerForm.registrationFailure = true;
+                                $scope.registerForm.errors = registerResult.errors;
+                            }
                         }
-                    });
+                    );
                 }
             }
         ]);

@@ -10,12 +10,12 @@
                 $rootScope.pageSubtitle = 'Attachments';
                 $scope.attachments = [];
 
-                AttachmentService.all()
-                    .success(function (attachments) {
-                        $scope.attachments = attachments;
-                    })
-                    .error(function (data) {
-                        showError(data.Message || data.data.Message);
+                AttachmentService.all().then(
+                    function (response) {
+                        $scope.attachments = response.data;
+                    },
+                    function (response) {
+                        showError(response.data.Message);
                     });
 
                 $scope.upload = function (files) {
@@ -24,30 +24,29 @@
                         Upload.upload({
                             url: 'api/Attachments/' + file.name + '?size=' + file.size,
                             file: file
-                        }).success(function (data, status, headers, config) {
-                            AttachmentService.all()
-                                .success(function (attachments) {
-                                    $scope.attachments = attachments;
-                                })
-                                .error(function (data) {
-                                    showError(data.Message || data.data.Message);
+                        }).then(function () {
+                            AttachmentService.all().then(
+                                function (response) {
+                                    $scope.attachments = response.data;
+                                },
+                                function (response) {
+                                    showError(response.data.Message);
                                 });
                         });
                     }
                 };
 
                 $scope.delete = function (file) {
-                    AttachmentService.delete(file)
-                                .success(function () {
+                    AttachmentService.delete(file).then(
+                                function () {
                                     for (var i = 0; i < $scope.attachments.length; i++) {
                                         if ($scope.attachments[i].Name === file) {
                                             $scope.attachments.splice(i, 1);
                                             break;
                                         }
                                     }
-                                })
-                                .error(function (data) {
-                                    showError(data.Message || data.data.Message);
+                                },function (response) {
+                                    showError(response.data.Message);
                                 });
                 };
 

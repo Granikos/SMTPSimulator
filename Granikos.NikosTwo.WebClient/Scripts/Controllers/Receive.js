@@ -33,28 +33,27 @@
                 $scope.TimeRegexp = TimeRegexp;
 
                 ReceiveConnectorService.all()
-                    .success(function (connectors) {
-                        $.each(connectors, function (i, c) {
+                    .then(function (response) {
+                        $.each(response.data, function (i, c) {
                             c.GreylistingTimeDuration = moment.duration(c.GreylistingTime);
                         });
-                        $scope.connectors = connectors;
-                    })
-                    .error(function (data) {
-                        showError(data.Message);
+                        $scope.connectors = response.data;
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
 
                 $http.get("api/Certificates/By-Type/file")
-                    .then(function (data) {
-                        $scope.fileCertificates = data.data;
-                    }, function (data) {
-                        showError(data.Message || data.data.Message);
+                    .then(function (response) {
+                        $scope.fileCertificates = response.data;
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
 
                 $http.get("api/Certificates/By-Type/store")
-                    .then(function (data) {
-                        $scope.storeCertificates = data.data;
-                    }, function (data) {
-                        showError(data.Message || data.data.Message);
+                    .then(function (response) {
+                        $scope.storeCertificates = response.data;
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
 
 
@@ -68,21 +67,21 @@
 
                     ReceiveConnectorService
                         .update(connector)
-                        .then(function (data) {
+                        .then(function (response) {
                             disabledButton();
-                            data.data.GreylistingTimeDuration = moment.duration(data.data.GreylistingTime);
+                            response.data.GreylistingTimeDuration = moment.duration(response.data.GreylistingTime);
                             for (var i = 0; i < $scope.connectors.length; i++) {
                                 if ($scope.connectors[i].Id === connector.Id) {
-                                    $scope.connectors[i] = data.data;
+                                    $scope.connectors[i] = response.data;
                                     break;
                                 }
                             }
                             window.setTimeout(function () {
                                 $('#collapse' + connector.Id).addClass('in');
                             }, 10);
-                        }, function (data) {
+                        }, function (response) {
                             disabledButton();
-                            showError(data.Message);
+                            showError(response.data.Message);
                         });
                 };
 
@@ -90,32 +89,32 @@
                     var disabledButton = disableClickedButton($event.currentTarget);
                     ReceiveConnectorService
                         .delete(connector.Id)
-                        .then(function (success) {
+                        .then(function () {
                             disabledButton();
                             var index = $scope.connectors.indexOf(connector);
                             if (index > -1) {
                                 $scope.connectors.splice(index, 1);
                             }
-                        }, function (data) {
+                        }, function (response) {
                             disabledButton();
-                            showError(data.Message);
+                            showError(response.data.Message);
                         });
                 };
 
                 $scope.startAdd = function () {
                     $http.get("api/ReceiveConnectors/Default")
-                        .then(function (data) {
+                        .then(function (response) {
                             $scope.adding = true;
-                            data.data.__adding__ = true;
-                            data.data.Id = 'Add';
-                            data.data.GreylistingTimeDuration = moment.duration(data.data.GreylistingTime);
-                            $scope.connectors.push(data.data);
+                            response.data.__adding__ = true;
+                            response.data.Id = 'Add';
+                            response.data.GreylistingTimeDuration = moment.duration(response.data.GreylistingTime);
+                            $scope.connectors.push(response.data);
                             window.setTimeout(function () {
                                 $('#collapseAdd').addClass('in');
                                 $('#connectorFormAdd :input').first().focus();
                             }, 10);
-                        }, function (data) {
-                            showError(data.Message);
+                        }, function (response) {
+                            showError(response.data.Message);
                         });
                 };
 
@@ -129,20 +128,20 @@
 
                     ReceiveConnectorService
                         .add(connector)
-                        .then(function (data) {
+                        .then(function (response) {
                             disabledButton();
-                            data.data.GreylistingTimeDuration = moment.duration(data.data.GreylistingTime);
+                            response.data.GreylistingTimeDuration = moment.duration(response.data.GreylistingTime);
                             var index = $scope.connectors.indexOf(connector);
                             if (index > -1) {
-                                $scope.connectors[index] = data.data;
+                                $scope.connectors[index] = response.data;
                             }
                             window.setTimeout(function () {
-                                $('#collapse' + data.data.Id).addClass('in');
+                                $('#collapse' + response.data.Id).addClass('in');
                             }, 10);
                             $scope.adding = false;
-                        }, function (data) {
+                        }, function (response) {
                             disabledButton();
-                            showError(data.Message);
+                            showError(response.data.Message);
                         });
                 };
 

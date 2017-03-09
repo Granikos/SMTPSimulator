@@ -33,15 +33,14 @@
                                 Password: password,
                                 RememberMe: rememberMe
                             }
-                        ).
-                        success(function (data) {
-                            if (data) {
+                        ).then(
+                        function (response) {
+                            if (response.data) {
                                 deferredObject.resolve({ success: true });
                             } else {
                                 deferredObject.resolve({ success: false });
                             }
-                        }).
-                        error(function () {
+                        }, function () {
                             deferredObject.resolve({ success: false });
                         });
 
@@ -61,19 +60,20 @@
                 };
 
                 $scope.login = function () {
-                    var result = LoginFactory($scope.loginForm.emailAddress, $scope.loginForm.password, $scope.loginForm.rememberMe);
-                    result.then(function (result) {
-                        if (result.success) {
-                            $rootScope.auth.user = $scope.loginForm.emailAddress;
-                            if ($scope.loginForm.returnUrl !== undefined) {
-                                $location.path($scope.loginForm.returnUrl);
+                    LoginFactory($scope.loginForm.emailAddress, $scope.loginForm.password, $scope.loginForm.rememberMe).then(
+                        function (loginResult) {
+                            if (loginResult.success) {
+                                $rootScope.auth.user = $scope.loginForm.emailAddress;
+                                if ($scope.loginForm.returnUrl !== undefined) {
+                                    $location.path($scope.loginForm.returnUrl);
+                                } else {
+                                    $location.path('/');
+                                }
                             } else {
-                                $location.path('/');
+                                $scope.loginForm.loginFailure = true;
                             }
-                        } else {
-                            $scope.loginForm.loginFailure = true;
                         }
-                    });
+                    );
                 }
             }
         ])
@@ -82,8 +82,8 @@
             '$rootScope', '$http', '$routeParams', '$location', function ($rootScope, $http, $routeParams, $location) {
 
                 $http.delete('/api/Account').
-                    success(function (data) {
-                        if (data) {
+                    then(function (response) {
+                        if (response.data) {
                             $rootScope.auth.user = null;
                         }
                         if ($routeParams.returnUrl !== undefined) {
@@ -91,8 +91,7 @@
                         } else {
                             $location.path('/');
                         }
-                    }).
-                    error(function () {
+                    }, function () {
                         // TODO
                     });
             }

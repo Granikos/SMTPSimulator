@@ -1,6 +1,6 @@
 {
-  "name": "NikosTwo",
-  "version": "0.0.0",
+  "name": "nikos-two",
+  "version": "0.1.0",
   "homepage": "https://github.com/Granikos/HYDRA",
   "authors": [
     "Manuel Krebber <manuel.krebber@granikos.eu>"
@@ -14,10 +14,10 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "latest",
+    "angular": "^1.6.3",
     "angular-aria": "latest",
     "angular-bootstrap": "latest",
-    "angular-enum-flag-directive": "https://github.com/jvdvleuten/angular-enum-flag-directive.git",
+    "angular-enum-flag-directive": "jvdvleuten/angular-enum-flag-directive",
     "angular-moment-duration": "latest",
     "angular-rangeslider": "~0.0.14",
     "angular-route": "latest",
@@ -29,20 +29,19 @@
     "jquery": "latest",
     "moment": "latest",
     "ng-file-upload": "latest",
-    "ngTouchSpin": "latest",
+    "ngTouchSpin": "giolvani/ngTouchSpin",
     "papaparse": "latest",
     "font-awesome": "latest",
     "angular-xeditable": "latest",
     "angular-chart.js": "0.8.8",
     "Chart.js": "1.0.2",
     "multirange": "val-samonte/angular-multirange",
-    "angular-multirange-slider": "~1.1.1",
+    "angular-multirange-slider": "^1.1.1",
     "angular-ui-select": "latest",
     "angular-multi-slider": "~0.1.3"
   },
   "resolutions": {
-    "angular": "~1.4.7",
-    "bootstrap-select": "~1.7.4"
+    "angular": "~1.6.3"
   },
   "overrides": {
     "angular-enum-flag-directive": {
@@ -59,6 +58,16 @@
         "dist/css/bootstrap.css",
         "dist/css/bootstrap-theme.css",
         "dist/js/bootstrap.js"
+      ]
+    },
+    "angular-ui-grid": {
+      "main": [
+        "ui-grid.css",
+        "ui-grid.js",        
+        "ui-grid.eot",     
+        "ui-grid.svg",     
+        "ui-grid.ttf",     
+        "ui-grid.woff"
       ]
     }
   }

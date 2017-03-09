@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.Service", "Granikos.NikosTwo.Service\Granikos.NikosTwo.Service.csproj", "{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -11,10 +11,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.SmtpServer", "Granikos.NikosTwo.SmtpServer\Granikos.NikosTwo.SmtpServer.csproj", "{1109925F-690B-4E73-99F8-DC1FCE96CA97}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.Test", "Granikos.NikosTwo.Test\Granikos.NikosTwo.Test.csproj", "{EB600132-5484-4537-977A-86D5FDFD6CB5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMTPTestClient", "SMTPTestClient\SMTPTestClient.csproj", "{6F4987FD-D183-47F6-92AD-7DB28386E384}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bbv.Common.EventBroker", "EventBroker\bbv.Common.EventBroker.csproj", "{81DE807D-D637-4B10-8AE1-13EA5AC1A80D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.NikosTwo.WebClient", "Granikos.NikosTwo.WebClient\Granikos.NikosTwo.WebClient.csproj", "{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}"
 EndProject
@@ -50,14 +46,6 @@ Global
 		{EB600132-5484-4537-977A-86D5FDFD6CB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB600132-5484-4537-977A-86D5FDFD6CB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB600132-5484-4537-977A-86D5FDFD6CB5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F4987FD-D183-47F6-92AD-7DB28386E384}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F4987FD-D183-47F6-92AD-7DB28386E384}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F4987FD-D183-47F6-92AD-7DB28386E384}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F4987FD-D183-47F6-92AD-7DB28386E384}.Release|Any CPU.Build.0 = Release|Any CPU
-		{81DE807D-D637-4B10-8AE1-13EA5AC1A80D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81DE807D-D637-4B10-8AE1-13EA5AC1A80D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{81DE807D-D637-4B10-8AE1-13EA5AC1A80D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81DE807D-D637-4B10-8AE1-13EA5AC1A80D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -12,10 +12,10 @@
 
                 function refresh() {
                     $http.get("/api/Certificates/By-Type/file")
-                        .then(function(data) {
-                            $scope.certificates = data.data;
-                        }, function(data) {
-                            showError(data.Message || data.data.Message);
+                        .then(function(response) {
+                            $scope.certificates = response.data;
+                        }, function(response) {
+                            showError(response.data.Message);
                         });
                 }
 
@@ -29,26 +29,25 @@
                         Upload.upload({
                             url: 'api/Certificates/' + file.name,
                             file: file
-                        }).then(function (data, status, headers, config) {
+                        }).then(function () {
                             refresh();
-                        }, function (data) {
-                            showError(data.Message || data.data.Message);
+                        }, function (response) {
+                            showError(response.data.Message);
                         });
                     }
                 };
 
                 $scope.delete = function (file) {
-                    CertificateService.delete(file)
-                                .success(function () {
+                    CertificateService.delete(file).then(
+                                function () {
                                     for (var i = 0; i < $scope.certificates.length; i++) {
                                         if ($scope.certificates[i] === file) {
                                             $scope.certificates.splice(i, 1);
                                             break;
                                         }
                                     }
-                                })
-                                .error(function (data) {
-                                    showError(data.Message || data.data.Message);
+                                }, function (response) {
+                                    showError(response.data.Message);
                                 });
                 };
 

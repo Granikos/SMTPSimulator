@@ -30,75 +30,68 @@
                 $scope.timeTables = [];
 
                 $http.get("api/Server/IsRunning")
-                    .success(function(running) {
-                        $scope.running = running;
-                        $scope.status = running ? "Running" : "Stopped";
-                    })
-                    .error(function(data) {
+                    .then(function(response) {
+                        $scope.running = response.data;
+                        $scope.status = response.data ? "Running" : "Stopped";
+                    }, function(response) {
                         $scope.status = "Error";
-                        showError(data.Message);
+                        showError(response.data.Message);
                     });
 
                 $scope.start = function ($event) {
                     var disabledButton = disableClickedButton($event.currentTarget);
                     $http.get("api/Server/Start")
-                        .success(function () {
+                        .then(function () {
                             disabledButton();
                             $scope.running = true;
                             $scope.status = "Running";
-                        })
-                        .error(function (data) {
+                        }, function (response) {
                             disabledButton();
-                            showError(data.Message);
+                            showError(response.data.Message);
                         });
                 };
 
                 $scope.stop = function ($event) {
                     var disabledButton = disableClickedButton($event.currentTarget);
                     $http.get("api/Server/Stop")
-                        .success(function () {
+                        .then(function () {
                             disabledButton();
                             $scope.running = false;
                             $scope.status = "Stopped";
-                        })
-                        .error(function (data) {
+                        }, function (response) {
                             disabledButton();
-                            showError(data.Message);
+                            showError(response.data.Message);
                         });
                 };
 
                 $http.get("api/Server/Version")
-                    .success(function (versions) {
-                        $scope.versions = versions;
-                    })
-                    .error(function (data) {
-                        showError(data.Message);
+                    .then(function (response) {
+                        $scope.versions = response.data;
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
 
                 $http.get("api/LocalGroups/WithCounts")
-                    .success(function (groups) {
-                        $scope.localGroups = groups.Items;
-                        $scope.localMailboxTotal = groups.MailboxTotal;
-                    })
-                    .error(function (data) {
-                        showError(data.Message || data.data.Message);
+                    .then(function (response) {
+                        $scope.localGroups = response.data.Items;
+                        $scope.localMailboxTotal = response.data.MailboxTotal;
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
 
                 $http.get("api/ExternalGroups/WithCounts")
-                    .success(function (groups) {
-                        $scope.externalGroups = groups.Items;
-                        $scope.externalMailboxTotal = groups.MailboxTotal;
-                    })
-                    .error(function (data) {
-                        showError(data.Message || data.data.Message);
+                    .then(function (response) {
+                        $scope.externalGroups = response.data.Items;
+                        $scope.externalMailboxTotal = response.data.MailboxTotal;
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
 
                 TimeTableService.all()
-                    .success(function (timeTables) {
-                        $scope.timeTables = timeTables;
-                    })
-                    .error(function (data) {
-                        showError(data.Message || data.data.Message);
+                    .then(function (response) {
+                        $scope.timeTables = response.data;
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
             }
         ]);

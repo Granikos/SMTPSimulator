@@ -40,44 +40,42 @@
                 };
 
                 SendConnectorService.all()
-                    .success(function (connectors) {
-                        $.each(connectors, function (i, c) {
+                    .then(function (response) {
+                        $.each(response.data, function (i, c) {
                             c.RetryTimeDuration = moment.duration(c.RetryTime);
                         });
-                        $scope.connectors = connectors;
-                    })
-                    .error(function (data) {
-                        showError(data.Message || data.data.Message);
+                        $scope.connectors = response.data;
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
 
                 $http.get("api/SendConnectors/Empty")
-                    .then(function (data) {
-                        data.data.RetryTimeDuration = moment.duration(data.data.RetryTime);
-                        $scope.emptyConnector = data.data;
-                        angular.copy(data.data, $scope.Mail.Connector);
+                    .then(function (response) {
+                        response.data.RetryTimeDuration = moment.duration(response.data.RetryTime);
+                        $scope.emptyConnector = response.data;
+                        angular.copy(response.data, $scope.Mail.Connector);
                     });
 
                 $scope.searchLocalUsers = function(search) {
                     return $http.get("api/LocalUsers/Search/" + search)
-                        .then(function(data) {
-                            return data.data;
+                        .then(function(response) {
+                            return response.data;
                         });
                 };
 
                 $scope.send = function () {
                     var reenable = disableClickedButton($('#sendButton'));
                     return $http.post("api/Mail/Send", $scope.Mail)
-                    .success(function (data) {
-                            reenable();
+                    .then(function () {
+                        reenable();
                         BootstrapDialog.alert({
                             message: "The mail has been enqueued successfully",
                             title: "Success",
                             type: BootstrapDialog.TYPE_SUCCESS
                         });
-                    })
-                    .error(function (data) {
+                    }, function (response) {
                         reenable();
-                        showError(data.Message || data.data.Message);
+                        showError(response.data.Message);
                     });
                 };
 
@@ -96,8 +94,8 @@
 
                                     $scope.searchExternalUsers = function (search) {
                                         return $http.get("api/ExternalUsers/Search/" + search)
-                                            .then(function (data) {
-                                                return data.data;
+                                            .then(function (response) {
+                                                return response.data;
                                             });
                                     };
 
@@ -107,8 +105,8 @@
                                 }
                             ]
                         })
-                        .result.then(function (user) {
-                            $scope.Mail.Recipients.push(user);
+                        .result.then(function (recipient) {
+                            $scope.Mail.Recipients.push(recipient);
                         });
                 };
             }

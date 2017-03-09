@@ -36,34 +36,31 @@
                 $scope.authLevels = ['Encryption Only', 'Certificate Validation', 'Domain Validation'];
 
                 $http.get("api/SendConnectors/Default")
-                    .success(function (connector) {
-                        $scope.defaultId = connector.Id;
-                    })
-                    .error(function (data) {
-                        showError(data.Message || data.data.Message);
+                    .then(function (response) {
+                        $scope.defaultId = response.data.Id;
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
 
                 SendConnectorService.all()
-                    .success(function (connectors) {
-                        $.each(connectors, function (i, c) {
+                    .then(function (response) {
+                        $.each(response.data, function (i, c) {
                             c.RetryTimeDuration = moment.duration(c.RetryTime);
                         });
-                        $scope.connectors = connectors;
-                    })
-                    .error(function (data) {
-                        showError(data.Message || data.data.Message);
+                        $scope.connectors = response.data;
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
 
                 $scope.makeDefault = function (connector, $event) {
                     var disabledButton = disableClickedButton($event.currentTarget);
                     $http.post("api/SendConnectors/Default/" + connector.Id)
-                        .success(function () {
+                        .then(function () {
                             disabledButton();
                             $scope.defaultId = connector.Id;
-                        })
-                        .error(function (data) {
+                        }, function (response) {
                             disabledButton();
-                            showError(data.Message || data.data.Message);
+                            showError(response.data.Message);
                         });
                 };
 
@@ -78,8 +75,8 @@
 
                                     $scope.searchDomains = function (search) {
                                         return $http.get("api/ExternalUsers/SearchDomains/" + search)
-                                            .then(function (data) {
-                                                return data.data;
+                                            .then(function (response) {
+                                                return response.data;
                                             });
                                     };
 
@@ -112,19 +109,19 @@
 
                     SendConnectorService
                         .update(connector)
-                        .then(function (data) {
+                        .then(function (response) {
                             disabledButton();
                             var index = $scope.connectors.indexOf(connector);
                             if (index > -1) {
-                                data.data.RetryTimeDuration = moment.duration(data.data.RetryTime);
-                                $scope.connectors[index] = data.data;
+                                response.data.RetryTimeDuration = moment.duration(response.data.RetryTime);
+                                $scope.connectors[index] = response.data;
                             }
                             window.setTimeout(function () {
                                 $('#collapse' + connector.Id).addClass('in');
                             }, 10);
-                        }, function (data) {
+                        }, function (response) {
                             disabledButton();
-                            showError(data.Message || data.data.Message);
+                            showError(response.data.Message);
                         });
                 };
 
@@ -132,32 +129,32 @@
                     var disabledButton = disableClickedButton($event.currentTarget);
                     SendConnectorService
                         .delete(connector.Id)
-                        .then(function (success) {
+                        .then(function () {
                             disabledButton();
                             var index = $scope.connectors.indexOf(connector);
                             if (index > -1) {
                                 $scope.connectors.splice(index, 1);
                             }
-                        }, function (data) {
+                        }, function (response) {
                             disabledButton();
-                            showError(data.Message || data.data.Message);
+                            showError(response.data.Message);
                         });
                 };
 
                 $scope.startAdd = function () {
                     $http.get("api/SendConnectors/Empty")
-                        .then(function (data) {
+                        .then(function (response) {
                             $scope.adding = true;
-                            data.data.__adding__ = true;
-                            data.data.Id = 'Add';
-                            data.data.RetryTimeDuration = moment.duration(data.data.RetryTime);
-                            $scope.connectors.push(data.data);
+                            response.data.__adding__ = true;
+                            response.data.Id = 'Add';
+                            response.data.RetryTimeDuration = moment.duration(response.data.RetryTime);
+                            $scope.connectors.push(response.data);
                             window.setTimeout(function () {
                                 $('#collapseAdd').addClass('in');
                                 $('#connectorFormAdd :input').first().focus();
                             }, 10);
-                        }, function (data) {
-                            showError(data.Message || data.data.Message);
+                        }, function (response) {
+                            showError(response.data.Message);
                         });
                 };
 
@@ -172,20 +169,20 @@
 
                     SendConnectorService
                         .add(connector)
-                        .then(function (data) {
+                        .then(function (response) {
                             disabledButton();
                             var index = $scope.connectors.indexOf(connector);
                             if (index > -1) {
-                                data.data.RetryTimeDuration = moment.duration(data.data.RetryTime);
-                                $scope.connectors[index] = data.data;
+                                response.data.RetryTimeDuration = moment.duration(response.data.RetryTime);
+                                $scope.connectors[index] = response.data;
                             }
                             window.setTimeout(function () {
-                                $('#collapse' + data.data.Id).addClass('in');
+                                $('#collapse' + response.data.Id).addClass('in');
                             }, 10);
                             $scope.adding = false;
-                        }, function (data) {
+                        }, function (response) {
                             disabledButton();
-                            showError(data.Message || data.data.Message);
+                            showError(response.data.Message);
                         });
                 };
 

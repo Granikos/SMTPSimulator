@@ -84,7 +84,8 @@
 
                 $scope.refreshGroups = function () {
                     GroupService.all()
-                        .success(function (groups) {
+                        .then(function (response) {
+                            var groups = response.data;
                             $scope.groups = groups;
                             $scope.groupsById = {};
                             if ($scope.columns.length > 3) {
@@ -96,9 +97,8 @@
                                 $scope.columns.push(getColumnDef(id, groups[j].Name));
                             }
                             $scope.refreshGridSizing();
-                        })
-                        .error(function (data) {
-                            showError(data.Message || data.data.Message);
+                        }, function (response) {
+                            showError(response.data.Message);
                         });
                 };
 
@@ -121,14 +121,14 @@
 
                 $scope.addGroup = function (name) {
                     $http.post('api/LocalGroups/' + name)
-                        .success(function (group) {
+                        .then(function (response) {
+                            var group = response.data;
                             $scope.groups.push(group);
                             $scope.groupsById[group.Id] = group;
                             $scope.columns.push(getColumnDef(group.Id, name));
                             $scope.refreshGridSizing();
-                        })
-                        .error(function (data) {
-                            showError(data.Message || data.data.Message);
+                        }, function (response) {
+                            showError(response.data.Message);
                         });
                 };
 
@@ -155,13 +155,12 @@
                         if ($scope.groups[off].Id === id)
                             break;
                     GroupService.delete(id)
-                        .success(function () {
+                        .then(function () {
                             $scope.groups.splice(off, 1);
                             $scope.columns.splice(off + 3, 1);
                             delete $scope.groupsById[id];
-                        })
-                        .error(function (data) {
-                            showError(data.Message || data.data.Message);
+                        }, function (response) {
+                            showError(response.data.Message);
                         });
                 };
 
@@ -195,8 +194,8 @@
 
                                     $scope.searchDomains = function (search) {
                                         return $http.get("api/LocalUsers/SearchDomains/" + search)
-                                            .then(function (data) {
-                                                return data.data;
+                                            .then(function (response) {
+                                                return response.data;
                                             });
                                     };
 
@@ -208,14 +207,14 @@
                         })
                         .result.then(function (domain) {
                             $http.get("api/LocalUsers/ByDomain/" + domain)
-                                .then(function (data) {
+                                .then(function (response) {
                                     var mbs = $scope.groupsById[id].UserIds;
                                     var temp = {};
                                     for (var i = 0; i < mbs.length; i++)
                                         temp[mbs[i]] = true;
-                                    for (var i = 0; i < data.data.length; i++)
-                                        if (!temp[data.data[i]])
-                                            mbs.push(data.data[i]);
+                                    for (var i = 0; i < response.data.length; i++)
+                                        if (!temp[response.data[i]])
+                                            mbs.push(response.data[i]);
                                     $scope.groupsById[id]._dirty = true;
                                 });
                         });
@@ -225,23 +224,22 @@
                     var group = $scope.groupsById[id];
 
                     GroupService.update(group)
-                        .then(function (data) {
+                        .then(function (response) {
                             var index = $scope.groups.indexOf(group);
                             if (index > -1) {
-                                $scope.groups[index] = data.data;
+                                $scope.groups[index] = response.data;
                             }
-                            $scope.groupsById[id] = data.data;
-                        }, function (data) {
-                            showError(data.Message || data.data.Message);
+                            $scope.groupsById[id] = response.data;
+                        }, function (response) {
+                            showError(response.data.Message);
                         });
                 };
 
                 $http.get("api/LocalUsers/Templates")
-                    .success(function (data) {
-                        $scope.templates = data;
-                    })
-                    .error(function (data) {
-                        showError(data.Message || data.data.Message);
+                    .then(function (response) {
+                        $scope.templates = response.data;
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
 
                 function doImport(file, overwrite) {
@@ -254,10 +252,10 @@
                     Upload.upload({
                         url: 'api/LocalUsers/Import' + (overwrite? 'WithOverwrite' : ''),
                         file: file
-                    }).success(function (data, status, headers, config) {
+                    }).then(function (response) {
                         $scope.importDone = true;
-                        $scope.importedUsers = data.ImportCount;
-                        $scope.overwrittenUsers = data.OverwrittenCount;
+                        $scope.importedUsers = response.data.ImportCount;
+                        $scope.overwrittenUsers = response.data.OverwrittenCount;
 
                         $scope.refresh();
                     });
@@ -307,14 +305,13 @@
                             template: template.Name,
                             domain: $scope.generation.domain
                         })
-                            .success(function (data) {
+                            .then(function () {
                                 $scope.generation.running = false;
                                 modal.close();
                                 $scope.refresh();
-                            })
-                            .error(function (data) {
+                            }, function () {
                                 $scope.generation.running = false;
-                                showError(data.Message || data.data.Message);
+                                showError(response.data.Message);
                             });
                     };
                 };
@@ -338,7 +335,7 @@
                 $scope.add = function (user) {
                     var p = LocalUserService.add(user);
 
-                    p.success(function () {
+                    p.then(function () {
                         $scope.refresh();
                     });
 
@@ -347,7 +344,7 @@
 
                 $scope.deleteSelected = function () {
                     angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
-                        LocalUserService.delete(data.Id).success(function () {
+                        LocalUserService.delete(data.Id).then(function () {
                             $scope.refresh();
                         });
                     });
@@ -358,9 +355,9 @@
                 $scope.refresh = function () {
                     setTimeout(function () {
                         LocalUserService.all(paginationOptions)
-                            .success(function (result) {
-                                $scope.gridOptions.totalItems = result.Total;
-                                $scope.users = result.Entities;
+                            .then(function (response) {
+                                $scope.gridOptions.totalItems = response.data.Total;
+                                $scope.users = response.data.Entities;
                                 if (!usersResized) {
                                     $scope.refreshGridSizing();
                                     usersResized = true;

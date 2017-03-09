@@ -18,30 +18,29 @@
                 };
 
                 $http.get("api/Logs/List")
-                    .success(function (data) {
-                        $scope.logs = data;
-                    })
-                    .error(function (data) {
-                        showError(data.Message || data.data.Message);
+                    .then(function (response) {
+                        $scope.logs = response.data;
+                    }, function (response) {
+                        showError(response.data.Message);
                     });
 
                 $scope.load = function () {
                     if (!$scope.logName) return;
                     $scope.loading = true;
                     $http.get("api/Logs/Get/" + $scope.logName)
-                        .success(function (data, status, headers) {
-                            var ct = headers('Content-Type');
+                        .then(function (response) {
+                            var ct = response.headers('Content-Type');
                             $scope.isCSV = ct === 'text/csv';
                             if ($scope.isCSV) {
                                 var style = window.getComputedStyle($('#csvGrid')[0], null);
                                 var fontSize = style.getPropertyValue('font-size');
                                 var fontFamily = style.getPropertyValue('font-family');
                                 var csvFields, match;
-                                if ((match = fieldsRegex.exec(data)) !== null) {
+                                if ((match = fieldsRegex.exec(response.data)) !== null) {
                                     var fields = match[1].split(/,/);
                                     csvFields = fields.map(function(f, i) { return { field: 'values['+i+']', name: f }; });
                                 }
-                                var csv = Papa.parse(data, { comments: '#', skipEmptyLines: true });
+                                var csv = Papa.parse(response.data, { comments: '#', skipEmptyLines: true });
                                 $scope.gridOptions.columnDefs = angular.copy(csvFields);
                                 $scope.gridOptions.data = angular.copy(csv.data.map(function (v) { return { values: v }; }));
                                 calculateColumnAutoWidths($scope.gridOptions.columnDefs, $scope.gridOptions.data, fontFamily, fontSize, true);
@@ -50,12 +49,11 @@
                                     $scope.refreshGrid = false;
                                 }, 0);
                             }
-                            $scope.log = data;
+                            $scope.log = response.data;
                             $scope.loading = false;
-                        })
-                        .error(function (data) {
+                        }, function (response) {
                             $scope.loading = false;
-                            showError(data.Message || data.data.Message);
+                            showError(response.data.Message);
                         });
                 }
 }
