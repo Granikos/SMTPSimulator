@@ -9,7 +9,7 @@ namespace Granikos.SMTPSimulator.Service.ConfigurationService.Models
     [Serializable]
     [XmlType(AnonymousType = true, Namespace = "http://tempuri.org/MailTemplateSchema.xsd")]
     [XmlRoot(Namespace = "http://tempuri.org/MailTemplateSchema.xsd", IsNullable = false)]
-    public class NikosTwoXml
+    public class SMTPSimulatorXml
     {
         [XmlElement("MailTemplate")]
         public MailTemplate MailTemplate { get; set; }

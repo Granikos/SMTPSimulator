@@ -6,7 +6,7 @@ using log4net.Config;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("NikosTwoService")]
+[assembly: AssemblyTitle("SMTPSimulatorService")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Granikos GmbH & Co. KG")]

@@ -27,7 +27,7 @@ using MailMessage = Granikos.SMTPSimulator.Service.ConfigurationService.Models.M
 
 namespace Granikos.SMTPSimulator.Service
 {
-    public partial class NikosTwoService : ServiceBase, ISMTPServerContainer, IMailQueueProvider
+    public partial class SMTPSimulatorService : ServiceBase, ISMTPServerContainer, IMailQueueProvider
     {
         private const int NumSenders = 4;
         // TODO: Use locks
@@ -51,9 +51,9 @@ namespace Granikos.SMTPSimulator.Service
         private readonly Dictionary<int,TimeTableGenerator> _generators = new Dictionary<int, TimeTableGenerator>();
         private readonly RetentionManager _retentionManager;
 
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(NikosTwoService));
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(SMTPSimulatorService));
 
-        public NikosTwoService()
+        public SMTPSimulatorService()
         {
             Logger.Info("The Nikos Two Service is starting...");
 
@@ -68,7 +68,7 @@ namespace Granikos.SMTPSimulator.Service
             if (!string.IsNullOrEmpty(pluginFolder))
             {
                 catalog = new AggregateCatalog(
-                    new AssemblyCatalog(typeof (NikosTwoService).Assembly),
+                    new AssemblyCatalog(typeof (SMTPSimulatorService).Assembly),
                     new DirectoryCatalog(AssemblyDirectory),
                     new DirectoryCatalog(pluginFolder)
                     );
@@ -76,7 +76,7 @@ namespace Granikos.SMTPSimulator.Service
             else
             {
                 catalog = new AggregateCatalog(
-                    new AssemblyCatalog(typeof (NikosTwoService).Assembly),
+                    new AssemblyCatalog(typeof (SMTPSimulatorService).Assembly),
                     new DirectoryCatalog(AssemblyDirectory)
                     );
             }
@@ -111,7 +111,7 @@ namespace Granikos.SMTPSimulator.Service
         {
             // TODO: Customizable folder name
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var dataDir = Path.Combine(appData, "NikosTwo");
+            var dataDir = Path.Combine(appData, "SMTPSimulator");
             if (!Directory.Exists(dataDir))
             {
                 Directory.CreateDirectory(dataDir);

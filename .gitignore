@@ -198,15 +198,15 @@ FakesAssemblies/
 # Visual Studio 6 workspace options file
 *.opt
 
-/Granikos.NikosTwo.WebClient/Content/dist
-/Granikos.NikosTwo.WebClient/Scripts/maps
-/Granikos.NikosTwo.WebClient/Scripts/*.min.js
-/Granikos.NikosTwo.WebClient/Scripts/lib
+/Granikos.SMTPSimulator.WebClient/Content/dist
+/Granikos.SMTPSimulator.WebClient/Scripts/maps
+/Granikos.SMTPSimulator.WebClient/Scripts/*.min.js
+/Granikos.SMTPSimulator.WebClient/Scripts/lib
 
 /WebDeploy
-/NikosTwoWebClient.*
-/Granikos.NikosTwo.Service/AppData
-/Granikos.NikosTwo.Service/Attachments
-/Granikos.NikosTwo.Setup/*.bak
+/SMTPSimulatorWebClient.*
+/Granikos.SMTPSimulator.Service/AppData
+/Granikos.SMTPSimulator.Service/Attachments
+/Granikos.SMTPSimulator.Setup/*.bak
 *.DotSettings
 *.bak

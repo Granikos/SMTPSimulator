@@ -16,7 +16,7 @@ namespace Granikos.SMTPSimulator.Service
             {
                 if (Environment.UserInteractive)
                 {
-                    var service = new NikosTwoService();
+                    var service = new SMTPSimulatorService();
                     service.TestStartupAndStop(args);
                 }
                 else
@@ -24,7 +24,7 @@ namespace Granikos.SMTPSimulator.Service
                     ServiceBase[] ServicesToRun;
                     ServicesToRun = new ServiceBase[]
                     {
-                        new NikosTwoService()
+                        new SMTPSimulatorService()
                     };
                     ServiceBase.Run(ServicesToRun);
                 }
