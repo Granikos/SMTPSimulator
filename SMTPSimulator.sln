@@ -1,0 +1,83 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.Service", "Granikos.SMTPSimulator.Service\Granikos.SMTPSimulator.Service.csproj", "{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1109925F-690B-4E73-99F8-DC1FCE96CA97} = {1109925F-690B-4E73-99F8-DC1FCE96CA97}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.SmtpServer", "Granikos.SMTPSimulator.SmtpServer\Granikos.SMTPSimulator.SmtpServer.csproj", "{1109925F-690B-4E73-99F8-DC1FCE96CA97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.Test", "Granikos.SMTPSimulator.Test\Granikos.SMTPSimulator.Test.csproj", "{EB600132-5484-4537-977A-86D5FDFD6CB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.WebClient", "Granikos.SMTPSimulator.WebClient\Granikos.SMTPSimulator.WebClient.csproj", "{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Hydra Setup.vdproj", "{042F26B5-6DBD-4E49-814D-6B2B6647606E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.SmtpClient", "Granikos.SMTPSimulator.SmtpClient\Granikos.SMTPSimulator.SmtpClient.csproj", "{E149BA1D-5095-4F46-BB16-A113757ADCC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.Core", "Granikos.SMTPSimulator.Core\Granikos.SMTPSimulator.Core.csproj", "{6C923248-1B40-4A27-80F7-DDEEB9F6D4D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.Service.Database", "Granikos.SMTPSimulator.Service.Database\Granikos.SMTPSimulator.Service.Database.csproj", "{A29DCD4F-B993-47FC-A095-563C62131ED9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.Service.Models", "Granikos.SMTPSimulator.Service.Models\Granikos.SMTPSimulator.Service.Models.csproj", "{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.Service.ConfigurationService", "Granikos.SMTPSimulator.Service.ConfigurationService\Granikos.SMTPSimulator.Service.ConfigurationService.csproj", "{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.ImapClient", "Granikos.SMTPSimulator.ImapClient\Granikos.SMTPSimulator.ImapClient.csproj", "{F6736892-FA11-453C-9A36-34E308DCA6A3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1109925F-690B-4E73-99F8-DC1FCE96CA97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1109925F-690B-4E73-99F8-DC1FCE96CA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1109925F-690B-4E73-99F8-DC1FCE96CA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1109925F-690B-4E73-99F8-DC1FCE96CA97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB600132-5484-4537-977A-86D5FDFD6CB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB600132-5484-4537-977A-86D5FDFD6CB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB600132-5484-4537-977A-86D5FDFD6CB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB600132-5484-4537-977A-86D5FDFD6CB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{042F26B5-6DBD-4E49-814D-6B2B6647606E}.Debug|Any CPU.ActiveCfg = Debug
+		{042F26B5-6DBD-4E49-814D-6B2B6647606E}.Release|Any CPU.ActiveCfg = Release
+		{E149BA1D-5095-4F46-BB16-A113757ADCC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E149BA1D-5095-4F46-BB16-A113757ADCC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E149BA1D-5095-4F46-BB16-A113757ADCC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E149BA1D-5095-4F46-BB16-A113757ADCC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C923248-1B40-4A27-80F7-DDEEB9F6D4D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C923248-1B40-4A27-80F7-DDEEB9F6D4D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C923248-1B40-4A27-80F7-DDEEB9F6D4D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C923248-1B40-4A27-80F7-DDEEB9F6D4D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A29DCD4F-B993-47FC-A095-563C62131ED9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A29DCD4F-B993-47FC-A095-563C62131ED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A29DCD4F-B993-47FC-A095-563C62131ED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A29DCD4F-B993-47FC-A095-563C62131ED9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BC25918-8DB6-44DB-8D08-ABB7E2A8A24E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6736892-FA11-453C-9A36-34E308DCA6A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6736892-FA11-453C-9A36-34E308DCA6A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6736892-FA11-453C-9A36-34E308DCA6A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6736892-FA11-453C-9A36-34E308DCA6A3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
