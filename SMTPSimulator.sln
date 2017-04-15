@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.WebClient", "Granikos.SMTPSimulator.WebClient\Granikos.SMTPSimulator.WebClient.csproj", "{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Hydra Setup.vdproj", "{042F26B5-6DBD-4E49-814D-6B2B6647606E}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\SMTPSimulator Setup.vdproj", "{042F26B5-6DBD-4E49-814D-6B2B6647606E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.SmtpClient", "Granikos.SMTPSimulator.SmtpClient\Granikos.SMTPSimulator.SmtpClient.csproj", "{E149BA1D-5095-4F46-BB16-A113757ADCC9}"
 EndProject
@@ -27,6 +27,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.Service.ConfigurationService", "Granikos.SMTPSimulator.Service.ConfigurationService\Granikos.SMTPSimulator.Service.ConfigurationService.csproj", "{9B5C4156-D332-48B5-9A3A-D57402CD7D2B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.ImapClient", "Granikos.SMTPSimulator.ImapClient\Granikos.SMTPSimulator.ImapClient.csproj", "{F6736892-FA11-453C-9A36-34E308DCA6A3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Icons", "Icons", "{6041292F-A161-49EF-9FA9-ABBF1D936323}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2017 Granikos GmbH & Co. KG
+Copyright (c) 2017 Granikos GmbH & Co. KG (http://www.granikos.eu)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

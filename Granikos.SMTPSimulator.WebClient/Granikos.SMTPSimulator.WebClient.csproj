@@ -317,7 +317,6 @@
     <Content Include="Content\dist\ui-grid.woff" />
     <Content Include="Granikos.SMTPSimulator.WebClient.licenseheader" />
     <Content Include="package.json" />
-    <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\UserTemplates\en.json" />
     <Content Include="Scripts\lib\angular-aria.js" />
     <Content Include="Scripts\lib\angular-chart.js" />
@@ -384,7 +383,9 @@
     <Content Include="Views\ExternalUsers\GroupCellTemplate.html" />
     <Content Include="Views\Timer\DynamicTypeDialog.html" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="Views\Login.html" />
