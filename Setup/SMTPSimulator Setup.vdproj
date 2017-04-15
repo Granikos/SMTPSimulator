@@ -3,7 +3,7 @@
 "VSVersion" = "3:800"
 "ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
-"ProjectName" = "8:Setup"
+"ProjectName" = "8:SMTPSimulator Setup"
 "LanguageId" = "3:1033"
 "CodePage" = "3:1252"
 "UILanguageId" = "3:1033"
@@ -1083,7 +1083,7 @@
         {
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_26C67CA6D6844A4CB2302CC913519711"
             {
-            "Name" = "8:Primary output from HydraService (Active)"
+            "Name" = "8:Primary output from SMTPService (Active)"
             "Condition" = "8:"
             "Object" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
             "FileType" = "3:2"
@@ -1097,7 +1097,7 @@
             }
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_83110AA3680140339F897733F8FAF476"
             {
-            "Name" = "8:Primary output from HydraService (Active)"
+            "Name" = "8:Primary output from SMTPService (Active)"
             "Condition" = "8:"
             "Object" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
             "FileType" = "3:2"
@@ -1446,7 +1446,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.SmtpServer, Version=0.1.6310.36684, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.SmtpServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_233A37EE188CB991DA4F978B71D35E09"
@@ -1756,7 +1756,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.Service.Models, Version=0.1.6310.36684, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.Service.Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_48C4FE3AA3BC84A540A1C488DD3A8DD4"
@@ -2624,7 +2624,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.Service.ConfigurationService, Version=0.1.6310.36685, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.Service.ConfigurationService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_C1A2F67161C5E317103B0A639D38222E"
@@ -2779,7 +2779,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.Service.Database, Version=0.1.6310.36684, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.Service.Database, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_CA3BE0CBA2A02DDC6D2DFDC04D08D41D"
@@ -2872,7 +2872,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.SmtpClient, Version=0.1.6310.36683, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.SmtpClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_CE56BAAE14275EC15F82666A8A9DD491"
