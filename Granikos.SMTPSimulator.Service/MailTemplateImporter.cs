@@ -20,8 +20,8 @@ namespace Granikos.SMTPSimulator.Service
         {
             using (var reader = new StreamReader(stream, Encoding.UTF8))
             {
-                var serializer = new XmlSerializer(typeof(NikosTwoXml));
-                var n2 = (NikosTwoXml)serializer.Deserialize(reader);
+                var serializer = new XmlSerializer(typeof(SMTPSimulatorXml));
+                var n2 = (SMTPSimulatorXml)serializer.Deserialize(reader);
 
                 return _mailTemplates.Add(n2.MailTemplate).ConvertTo<MailTemplate>();
             }

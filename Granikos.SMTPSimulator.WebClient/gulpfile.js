@@ -3,7 +3,7 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var del = require('del');
-var minifyCSS = require('gulp-minify-css');
+var cleanCss = require('gulp-clean-css');
 var copy = require('gulp-copy');
 var bower = require('gulp-bower');
 var sourcemaps = require('gulp-sourcemaps');
@@ -43,7 +43,7 @@ gulp.task('css', function () {
     return gulp.src('./Content/*.css')
      .pipe(concat('app.css'))
      .pipe(gulp.dest('./Content/dist'))
-     .pipe(minifyCSS())
+     .pipe(cleanCss())
      .pipe(concat('app.min.css'))
      .pipe(gulp.dest('./Content/dist'));
 });

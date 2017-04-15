@@ -6,22 +6,22 @@
   "devDependencies": {
     "bower": "^1.6.5",
     "del": "^2.0.2",
+    "graceful-fs": "^4.1.11",
     "gulp": "^3.9.0",
     "gulp-bower": "0.0.13",
+    "gulp-clean-css": "^3.0.3",
     "gulp-concat": "^2.6.0",
     "gulp-copy": "^1.0.0",
     "gulp-cssnano": "^2.1.1",
     "gulp-jshint": "^2.0.4",
-    "gulp-clean-css": "^3.0.3",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-sourcemaps": "^2.4.1",
     "gulp-uglify": "^2.1.0",
     "jshint": "^2.9.4",
     "main-bower-files": "^2.11.1",
-    "run-sequence": "^1.1.4",
-    "graceful-fs": "^4.1.11",
-    "minimatch": "^3.0.3"
+    "minimatch": "^3.0.3",
+    "run-sequence": "^1.1.4"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

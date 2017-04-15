@@ -5,7 +5,7 @@
     xmlns="http://tempuri.org/MailTemplateSchema.xsd"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
 >
-  <xs:element name="NikosTwo">
+  <xs:element name="SMTPSimulator">
     <xs:complexType>
       <xs:choice>
         <xs:element name="MailTemplate" type="MailTemplateType"/>

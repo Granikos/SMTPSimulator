@@ -154,7 +154,6 @@
     <Compile Include="CommandHandlers\MAILTest.cs" />
     <Compile Include="CommandHandlers\VRFYTest.cs" />
     <Compile Include="ResponseTest.cs" />
-    <Compile Include="Retention\RetentionManagerTest.cs" />
     <Compile Include="TransactionTest.cs" />
     <Compile Include="ValidationHelperTest.cs" />
   </ItemGroup>

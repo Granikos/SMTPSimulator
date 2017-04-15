@@ -226,7 +226,7 @@ namespace Granikos.SMTPSimulator.Service
         public IEnumerable<VersionInfo> GetVersionInfo()
         {
             return AppDomain.CurrentDomain.GetAssemblies()
-                .Where(a => a.FullName.StartsWith("Granikos.NikosTwo"))
+                .Where(a => a.FullName.StartsWith("Granikos.SMTPSimulator"))
                 .Select(a => new VersionInfo
                 {
                     Assembly = a.GetName().Name.Substring(18),
