@@ -381,6 +381,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_957E21CD18D64359A42574EF4EDAA1AF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_A25B5EDA94123004440720CFFAC0E355"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
@@ -2434,6 +2440,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_957E21CD18D64359A42574EF4EDAA1AF"
+            {
+            "SourcePath" = "8:..\\Icons\\SMTPSimulator.ico"
+            "TargetName" = "8:SMTPSimulator.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A25B5EDA94123004440720CFFAC0E355"
             {
             "AssemblyRegister" = "3:1"
@@ -3314,7 +3340,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:Installer for SMTPSimulator service."
         "ARPURLINFOABOUT" = "8:https://www.granikos.eu"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_957E21CD18D64359A42574EF4EDAA1AF"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
