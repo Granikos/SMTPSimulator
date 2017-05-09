@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.Service", "Granikos.SMTPSimulator.Service\Granikos.SMTPSimulator.Service.csproj", "{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.WebClient", "Granikos.SMTPSimulator.WebClient\Granikos.SMTPSimulator.WebClient.csproj", "{1D37CA4B-6C5E-486D-B3B6-226FECF8F2F0}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\SMTPSimulator Setup.vdproj", "{042F26B5-6DBD-4E49-814D-6B2B6647606E}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SMTPSimulator Setup", "Setup\SMTPSimulator Setup.vdproj", "{042F26B5-6DBD-4E49-814D-6B2B6647606E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.SmtpClient", "Granikos.SMTPSimulator.SmtpClient\Granikos.SMTPSimulator.SmtpClient.csproj", "{E149BA1D-5095-4F46-BB16-A113757ADCC9}"
 EndProject
@@ -29,6 +29,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.ImapClient", "Granikos.SMTPSimulator.ImapClient\Granikos.SMTPSimulator.ImapClient.csproj", "{F6736892-FA11-453C-9A36-34E308DCA6A3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Icons", "Icons", "{6041292F-A161-49EF-9FA9-ABBF1D936323}"
+	ProjectSection(SolutionItems) = preProject
+		Icons\SMTPSimulator.ico = Icons\SMTPSimulator.ico
+		Icons\SMTPSimulator.png = Icons\SMTPSimulator.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
