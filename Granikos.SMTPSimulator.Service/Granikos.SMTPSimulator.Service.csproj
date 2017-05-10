@@ -259,11 +259,11 @@
     <Compile Include="Providers\NamedUserTemplates.cs" />
     <Compile Include="Providers\TechnicalUserTemplates.cs" />
     <Compile Include="SMTPService.cs" />
-    <Compile Include="HydraService.cs">
+    <Compile Include="SMTPServiceBase.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="HydraService.Designer.cs">
-      <DependentUpon>HydraService.cs</DependentUpon>
+    <Compile Include="SMTPServiceBase.Designer.cs">
+      <DependentUpon>SMTPServiceBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

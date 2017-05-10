@@ -39,8 +39,8 @@
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.Description = "nikos two SMTP service";
-            this.serviceInstaller1.DisplayName = "Nikos Two Service";
+            this.serviceInstaller1.Description = "SMTPSimulator SMTP service";
+            this.serviceInstaller1.DisplayName = "SMTPSimulator Service";
             this.serviceInstaller1.ServiceName = "SMTPSimulatorService";
             this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             this.serviceInstaller1.AfterInstall += new System.Configuration.Install.InstallEventHandler(this.serviceInstaller1_AfterInstall);

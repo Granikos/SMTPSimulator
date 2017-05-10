@@ -76,7 +76,13 @@
         "Entry"
         {
         "MsmKey" = "8:_187D445ECA2C49FA582C2036B8CCBADA"
-        "OwnerKey" = "8:_CA3BE0CBA2A02DDC6D2DFDC04D08D41D"
+        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_187D445ECA2C49FA582C2036B8CCBADA"
+        "OwnerKey" = "8:_54177E4AF349047701CCB4D713ACBA34"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -93,13 +99,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_187D445ECA2C49FA582C2036B8CCBADA"
-        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_233A37EE188CB991DA4F978B71D35E09"
+        "MsmKey" = "8:_1B12CDC8DEE9EE9E7DCF7E682CDABD52"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -107,6 +107,42 @@
         {
         "MsmKey" = "8:_28CADC8D1D1AAB5A0414607A0B443F27"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_293C34B613B40F88F1960AC64975D88B"
+        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_293C34B613B40F88F1960AC64975D88B"
+        "OwnerKey" = "8:_5EABF5DBE919E517306664C431A1B887"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_293C34B613B40F88F1960AC64975D88B"
+        "OwnerKey" = "8:_A5D94D7584103033CFA9B8FB93E698B2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_293C34B613B40F88F1960AC64975D88B"
+        "OwnerKey" = "8:_54177E4AF349047701CCB4D713ACBA34"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_293C34B613B40F88F1960AC64975D88B"
+        "OwnerKey" = "8:_79343E8BD3D30A2A9238297DB597BD1E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_293C34B613B40F88F1960AC64975D88B"
+        "OwnerKey" = "8:_1B12CDC8DEE9EE9E7DCF7E682CDABD52"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -177,24 +213,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_48C4FE3AA3BC84A540A1C488DD3A8DD4"
-        "OwnerKey" = "8:_C1A2F67161C5E317103B0A639D38222E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_48C4FE3AA3BC84A540A1C488DD3A8DD4"
-        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_48C4FE3AA3BC84A540A1C488DD3A8DD4"
-        "OwnerKey" = "8:_CA3BE0CBA2A02DDC6D2DFDC04D08D41D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_4E95A44C8013538AE1541E507D7B0228"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
@@ -215,6 +233,12 @@
         {
         "MsmKey" = "8:_51EC13FCF620B01818B11948ACC090E1"
         "OwnerKey" = "8:_A25B5EDA94123004440720CFFAC0E355"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_54177E4AF349047701CCB4D713ACBA34"
+        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -261,6 +285,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_5EABF5DBE919E517306664C431A1B887"
+        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_626F4CCD8605C59C50BCAE16D6355760"
         "OwnerKey" = "8:_06E5E84A332ABF8E7946CF3A1CCAD905"
         "MsmSig" = "8:_UNDEFINED"
@@ -280,13 +310,13 @@
         "Entry"
         {
         "MsmKey" = "8:_66DD962BC48FA873D7FD698E95B736DB"
-        "OwnerKey" = "8:_233A37EE188CB991DA4F978B71D35E09"
+        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_66DD962BC48FA873D7FD698E95B736DB"
-        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
+        "OwnerKey" = "8:_5EABF5DBE919E517306664C431A1B887"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -328,12 +358,18 @@
         "Entry"
         {
         "MsmKey" = "8:_74CDC682DC0DF10001F3CEC389541E75"
-        "OwnerKey" = "8:_B69DB0872CD5008E63DD190E7B3B5D68"
+        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_74CDC682DC0DF10001F3CEC389541E75"
+        "OwnerKey" = "8:_293C34B613B40F88F1960AC64975D88B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7707442DCA4036FBE3EFEC93F59C2A09"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -345,8 +381,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7707442DCA4036FBE3EFEC93F59C2A09"
+        "MsmKey" = "8:_79343E8BD3D30A2A9238297DB597BD1E"
+        "OwnerKey" = "8:_1B12CDC8DEE9EE9E7DCF7E682CDABD52"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_79343E8BD3D30A2A9238297DB597BD1E"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_79343E8BD3D30A2A9238297DB597BD1E"
+        "OwnerKey" = "8:_54177E4AF349047701CCB4D713ACBA34"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -388,6 +436,12 @@
         "Entry"
         {
         "MsmKey" = "8:_A25B5EDA94123004440720CFFAC0E355"
+        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A5D94D7584103033CFA9B8FB93E698B2"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -441,49 +495,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_B69DB0872CD5008E63DD190E7B3B5D68"
-        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B69DB0872CD5008E63DD190E7B3B5D68"
-        "OwnerKey" = "8:_233A37EE188CB991DA4F978B71D35E09"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B69DB0872CD5008E63DD190E7B3B5D68"
-        "OwnerKey" = "8:_CE56BAAE14275EC15F82666A8A9DD491"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B69DB0872CD5008E63DD190E7B3B5D68"
-        "OwnerKey" = "8:_CA3BE0CBA2A02DDC6D2DFDC04D08D41D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B69DB0872CD5008E63DD190E7B3B5D68"
-        "OwnerKey" = "8:_48C4FE3AA3BC84A540A1C488DD3A8DD4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B69DB0872CD5008E63DD190E7B3B5D68"
-        "OwnerKey" = "8:_C1A2F67161C5E317103B0A639D38222E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_B9F79B460B7E9CD66B5AD04E073CDCFE"
-        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C1A2F67161C5E317103B0A639D38222E"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -519,12 +531,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_CA3BE0CBA2A02DDC6D2DFDC04D08D41D"
-        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_CAA19C1C40CB3985B99A857FD57E8B47"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
@@ -532,12 +538,6 @@
         "Entry"
         {
         "MsmKey" = "8:_CBFAEA071A6FE310FCCE8A89E4C65B86"
-        "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CE56BAAE14275EC15F82666A8A9DD491"
         "OwnerKey" = "8:_A82C604658C34A1EA7EA5B1A33B052B7"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -616,7 +616,49 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_5EABF5DBE919E517306664C431A1B887"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A5D94D7584103033CFA9B8FB93E698B2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_54177E4AF349047701CCB4D713ACBA34"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_1B12CDC8DEE9EE9E7DCF7E682CDABD52"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_79343E8BD3D30A2A9238297DB597BD1E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_293C34B613B40F88F1960AC64975D88B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_C27CCEDFDFA37909217945F8E7AEF9F9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_74CDC682DC0DF10001F3CEC389541E75"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -640,25 +682,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_187D445ECA2C49FA582C2036B8CCBADA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_28CADC8D1D1AAB5A0414607A0B443F27"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_06E5E84A332ABF8E7946CF3A1CCAD905"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_626F4CCD8605C59C50BCAE16D6355760"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_233A37EE188CB991DA4F978B71D35E09"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -676,43 +706,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CE56BAAE14275EC15F82666A8A9DD491"
+        "OwnerKey" = "8:_06E5E84A332ABF8E7946CF3A1CCAD905"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CA3BE0CBA2A02DDC6D2DFDC04D08D41D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_187D445ECA2C49FA582C2036B8CCBADA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C1A2F67161C5E317103B0A639D38222E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_48C4FE3AA3BC84A540A1C488DD3A8DD4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B69DB0872CD5008E63DD190E7B3B5D68"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_74CDC682DC0DF10001F3CEC389541E75"
+        "OwnerKey" = "8:_626F4CCD8605C59C50BCAE16D6355760"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1417,20 +1417,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_233A37EE188CB991DA4F978B71D35E09"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1B12CDC8DEE9EE9E7DCF7E682CDABD52"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.SmtpServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.Service.ConfigurationService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_233A37EE188CB991DA4F978B71D35E09"
+                    "_1B12CDC8DEE9EE9E7DCF7E682CDABD52"
                     {
-                    "Name" = "8:Granikos.SMTPSimulator.SmtpServer.dll"
+                    "Name" = "8:Granikos.SMTPSimulator.Service.ConfigurationService.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Granikos.SMTPSimulator.SmtpServer.dll"
+            "SourcePath" = "8:Granikos.SMTPSimulator.Service.ConfigurationService.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
@@ -1462,6 +1462,37 @@
                     }
                 }
             "SourcePath" = "8:CsvHelper.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_293C34B613B40F88F1960AC64975D88B"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_293C34B613B40F88F1960AC64975D88B"
+                    {
+                    "Name" = "8:Granikos.SMTPSimulator.Core.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Granikos.SMTPSimulator.Core.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
@@ -1758,37 +1789,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_48C4FE3AA3BC84A540A1C488DD3A8DD4"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.Service.Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_48C4FE3AA3BC84A540A1C488DD3A8DD4"
-                    {
-                    "Name" = "8:Granikos.SMTPSimulator.Service.Models.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Granikos.SMTPSimulator.Service.Models.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4E95A44C8013538AE1541E507D7B0228"
             {
             "AssemblyRegister" = "3:1"
@@ -1834,6 +1834,37 @@
                     }
                 }
             "SourcePath" = "8:System.Threading.Tasks.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_54177E4AF349047701CCB4D713ACBA34"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.Service.Database, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_54177E4AF349047701CCB4D713ACBA34"
+                    {
+                    "Name" = "8:Granikos.SMTPSimulator.Service.Database.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Granikos.SMTPSimulator.Service.Database.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
@@ -1989,6 +2020,37 @@
                     }
                 }
             "SourcePath" = "8:System.Text.Encoding.Extensions.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5EABF5DBE919E517306664C431A1B887"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.SmtpServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_5EABF5DBE919E517306664C431A1B887"
+                    {
+                    "Name" = "8:Granikos.SMTPSimulator.SmtpServer.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Granikos.SMTPSimulator.SmtpServer.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
@@ -2285,6 +2347,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_79343E8BD3D30A2A9238297DB597BD1E"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.Service.Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_79343E8BD3D30A2A9238297DB597BD1E"
+                    {
+                    "Name" = "8:Granikos.SMTPSimulator.Service.Models.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Granikos.SMTPSimulator.Service.Models.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_79B5A7AC68FD39FDA0982E766D4916C9"
             {
             "AssemblyRegister" = "3:1"
@@ -2491,6 +2584,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A5D94D7584103033CFA9B8FB93E698B2"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.SmtpClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_A5D94D7584103033CFA9B8FB93E698B2"
+                    {
+                    "Name" = "8:Granikos.SMTPSimulator.SmtpClient.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Granikos.SMTPSimulator.SmtpClient.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AA31F427A7C02CAE6841102622C33A06"
             {
             "AssemblyRegister" = "3:1"
@@ -2615,37 +2739,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B69DB0872CD5008E63DD190E7B3B5D68"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_B69DB0872CD5008E63DD190E7B3B5D68"
-                    {
-                    "Name" = "8:Granikos.SMTPSimulator.Core.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Granikos.SMTPSimulator.Core.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B9F79B460B7E9CD66B5AD04E073CDCFE"
             {
             "AssemblyRegister" = "3:1"
@@ -2660,37 +2753,6 @@
                     }
                 }
             "SourcePath" = "8:System.ComponentModel.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C1A2F67161C5E317103B0A639D38222E"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.Service.ConfigurationService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_C1A2F67161C5E317103B0A639D38222E"
-                    {
-                    "Name" = "8:Granikos.SMTPSimulator.Service.ConfigurationService.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Granikos.SMTPSimulator.Service.ConfigurationService.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
@@ -2832,37 +2894,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CA3BE0CBA2A02DDC6D2DFDC04D08D41D"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.Service.Database, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_CA3BE0CBA2A02DDC6D2DFDC04D08D41D"
-                    {
-                    "Name" = "8:Granikos.SMTPSimulator.Service.Database.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Granikos.SMTPSimulator.Service.Database.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CAA19C1C40CB3985B99A857FD57E8B47"
             {
             "AssemblyRegister" = "3:1"
@@ -2908,37 +2939,6 @@
                     }
                 }
             "SourcePath" = "8:System.Net.Primitives.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CE56BAAE14275EC15F82666A8A9DD491"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Granikos.SMTPSimulator.SmtpClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_CE56BAAE14275EC15F82666A8A9DD491"
-                    {
-                    "Name" = "8:Granikos.SMTPSimulator.SmtpClient.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Granikos.SMTPSimulator.SmtpClient.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
@@ -3322,8 +3322,8 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SMTPSimulator"
-        "ProductCode" = "8:{2CBCFFCD-9FFA-41FE-9E69-69462DC4BE3C}"
-        "PackageCode" = "8:{05799781-EF0E-4E26-A09A-FD5C64108C7F}"
+        "ProductCode" = "8:{B1504D07-CC98-48BB-AA95-3FADC1DDAD45}"
+        "PackageCode" = "8:{AEBBF2F0-7F95-49BF-A4B8-6135BB3F5BD1}"
         "UpgradeCode" = "8:{2D530948-25A6-4A8C-BA7E-CCE8069D5B3E}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -3872,7 +3872,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A82C604658C34A1EA7EA5B1A33B052B7"
             {
-            "SourcePath" = "8:..\\Granikos.SMTPSimulator.Service\\obj\\Debug\\Granikos.SMTPSimulator.Service.exe"
+            "SourcePath" = "8:..\\Granikos.SMTPSimulator.Service\\obj\\Release\\Granikos.SMTPSimulator.Service.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0FC3D0C6CF44457BAC34A902964A938F"
