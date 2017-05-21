@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Granikos.SMTPSimulator.Service.Retention
@@ -15,15 +14,15 @@ namespace Granikos.SMTPSimulator.Service.Retention
             get { return _worker.Config; }
             set
             {
-                Contract.Requires<ArgumentNullException>(value != null);
+                if (value == null) throw new ArgumentNullException();
                 _worker.Config = value;
             }
         }
 
         public RetentionWatcher(DirectoryRetentionConfig config)
         {
-            Contract.Requires<ArgumentNullException>(config != null);
-            Contract.Requires<ArgumentException>(Directory.Exists(config.Directory));
+            if (config == null) throw new ArgumentNullException();
+            if (!(Directory.Exists(config.Directory))) throw new ArgumentException();
 
             _watcher = new FileSystemWatcher(config.Directory);
 

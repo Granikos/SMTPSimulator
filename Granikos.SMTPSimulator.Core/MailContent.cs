@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -101,25 +100,25 @@ namespace Granikos.SMTPSimulator.Core
 
         public void AddHeader(string name, string value, Encoding encoding = null)
         {
-            Contract.Requires<ArgumentNullException>(name != null, "name");
-            Contract.Requires<ArgumentNullException>(value != null, "value");
+            if (name == null) throw new ArgumentNullException("name");
+            if (value == null) throw new ArgumentNullException("value");
 
             _additionalHeaders.Add(new MailHeader { Name = name, Value = value, Encoding = encoding });
         }
 
         public void AddAttachment(string name, string content, Encoding encoding, string type = null)
         {
-            Contract.Requires<ArgumentNullException>(name != null, "name");
-            Contract.Requires<ArgumentNullException>(content != null, "content");
-            Contract.Requires<ArgumentNullException>(encoding != null, "encoding");
+            if (name == null) throw new ArgumentNullException("name");
+            if (content == null) throw new ArgumentNullException("content");
+            if (encoding == null) throw new ArgumentNullException("encoding");
 
             AddAttachment(name, encoding.GetBytes(content), encoding, type);
         }
 
         public void AddAttachment(string name, byte[] data, Encoding encoding = null, string type = null)
         {
-            Contract.Requires<ArgumentNullException>(name != null, "name");
-            Contract.Requires<ArgumentNullException>(data != null, "data");
+            if (name == null) throw new ArgumentNullException("name");
+            if (data == null) throw new ArgumentNullException("data");
 
             if (type == null)
             {
@@ -131,7 +130,7 @@ namespace Granikos.SMTPSimulator.Core
 
         public void AddRecipient(MailAddress recipient)
         {
-            Contract.Requires<ArgumentNullException>(recipient != null, "recipient");
+            if (recipient == null) throw new ArgumentNullException("recipient");
 
             _to.Add(recipient);
         }
@@ -143,7 +142,7 @@ namespace Granikos.SMTPSimulator.Core
 
         public void AddCc(MailAddress recipient)
         {
-            Contract.Requires<ArgumentNullException>(recipient != null, "recipient");
+            if (recipient == null) throw new ArgumentNullException("recipient");
 
             _cc.Add(recipient);
         }
@@ -286,8 +285,8 @@ namespace Granikos.SMTPSimulator.Core
 
         private static string EncodeQuotedPrintableHeader(string input, Encoding encoding)
         {
-            Contract.Requires<ArgumentNullException>(input != null, "input");
-            Contract.Requires<ArgumentNullException>(encoding != null, "encoding");
+            if (input == null) throw new ArgumentNullException("input");
+            if (encoding == null) throw new ArgumentNullException("encoding");
 
             if (input.Length == 0) return input;
             if (IsAsciiString(input)) return input;

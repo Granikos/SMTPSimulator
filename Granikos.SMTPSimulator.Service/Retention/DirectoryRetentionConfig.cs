@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.Contracts;
 
 namespace Granikos.SMTPSimulator.Service.Retention
 {
@@ -18,8 +17,8 @@ namespace Granikos.SMTPSimulator.Service.Retention
             get { return _minFiles; }
             set
             {
-                Contract.Requires<ArgumentOutOfRangeException>(value >= 1);
-                Contract.Requires<ArgumentOutOfRangeException>(value <= MaxFiles);
+                if (!(value >= 1)) throw new ArgumentOutOfRangeException();
+                if (!(value <= MaxFiles)) throw new ArgumentOutOfRangeException();
 
                 _minFiles = value;
             }
@@ -30,7 +29,7 @@ namespace Granikos.SMTPSimulator.Service.Retention
             get { return _maxFiles; }
             set
             {
-                Contract.Requires<ArgumentOutOfRangeException>(value >= MinFiles);
+                if (!(value >= MinFiles)) throw new ArgumentOutOfRangeException();
 
                 _maxFiles = value;
             }
@@ -41,7 +40,7 @@ namespace Granikos.SMTPSimulator.Service.Retention
             get { return _maxSize; }
             set
             {
-                Contract.Requires<ArgumentOutOfRangeException>(value >= 1);
+                if (!(value >= 1)) throw new ArgumentOutOfRangeException();
 
                 _maxSize = value;
             }
@@ -52,7 +51,7 @@ namespace Granikos.SMTPSimulator.Service.Retention
             get { return _maxTime; }
             set
             {
-                Contract.Requires<ArgumentOutOfRangeException>(value >= MinTime);
+                if (!(value >= MinTime)) throw new ArgumentOutOfRangeException();
 
                 _maxTime = value;
             }
@@ -63,8 +62,8 @@ namespace Granikos.SMTPSimulator.Service.Retention
             get { return _minTime; }
             set
             {
-                Contract.Requires<ArgumentOutOfRangeException>(value >= TimeSpan.Zero);
-                Contract.Requires<ArgumentOutOfRangeException>(value <= MaxTime);
+                if (!(value >= TimeSpan.Zero)) throw new ArgumentOutOfRangeException();
+                if (!(value <= MaxTime)) throw new ArgumentOutOfRangeException();
 
                 _minTime = value;
             }

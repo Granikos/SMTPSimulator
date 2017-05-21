@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace Granikos.SMTPSimulator.Core
@@ -11,7 +10,7 @@ namespace Granikos.SMTPSimulator.Core
 
         public SMTPResponse(SMTPStatusCode code, params string[] args)
         {
-            Contract.Requires<ArgumentNullException>(args != null);
+            if (args == null) throw new ArgumentNullException();
 
             Code = code;
             Args = args;

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Diagnostics.Contracts;
 using System.Net;
 using Granikos.SMTPSimulator.Core.Logging;
 
@@ -28,7 +27,7 @@ namespace Granikos.SMTPSimulator.SmtpClient
             get { return _remoteEndpoint; }
             set
             {
-                Contract.Requires<ArgumentNullException>(value != null, "value");
+                if (value == null) throw new ArgumentNullException("value");
                 _remoteEndpoint = value;
             }
         }
@@ -38,7 +37,7 @@ namespace Granikos.SMTPSimulator.SmtpClient
             get { return _localEndpoint; }
             set
             {
-                Contract.Requires<ArgumentNullException>(value != null, "value");
+                if (value == null) throw new ArgumentNullException("value");
                 _localEndpoint = value;
             }
         }

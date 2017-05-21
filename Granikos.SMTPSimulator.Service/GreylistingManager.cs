@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Net;
 using log4net;
 
@@ -19,11 +18,10 @@ namespace Granikos.SMTPSimulator.Service
 
         public GreylistingManager(TimeSpan greylistTime, TimeSpan? greylistWindow = null)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(greylistTime >= TimeSpan.Zero,
-                "The greylisting time must be positive");
-            Contract.Requires<ArgumentOutOfRangeException>(
-                greylistWindow == null || greylistWindow.Value > TimeSpan.Zero,
-                "The greylisting window must be greater than zero");
+            if (greylistTime < TimeSpan.Zero)
+                throw new ArgumentOutOfRangeException("The greylisting time must be positive");
+            if (greylistWindow != null && greylistWindow.Value <= TimeSpan.Zero)
+                throw new ArgumentOutOfRangeException("The greylisting window must be greater than zero");
 
             _greylistTime = greylistTime;
             _greylistWindow = greylistWindow ?? TimeSpan.FromMinutes(15);
@@ -34,8 +32,8 @@ namespace Granikos.SMTPSimulator.Service
             get { return _greylistWindow; }
             set
             {
-                Contract.Requires<ArgumentOutOfRangeException>(value > TimeSpan.Zero,
-                    "The greylisting window must be greater than zero");
+                if (value <= TimeSpan.Zero)
+                    throw new ArgumentOutOfRangeException("The greylisting window must be greater than zero");
                 _greylistWindow = value;
             }
         }
@@ -45,8 +43,8 @@ namespace Granikos.SMTPSimulator.Service
             get { return _greylistTime; }
             set
             {
-                Contract.Requires<ArgumentOutOfRangeException>(value >= TimeSpan.Zero,
-                    "The greylisting time must be positive");
+                if (value < TimeSpan.Zero)
+                    throw new ArgumentOutOfRangeException("The greylisting time must be positive");
                 _greylistTime = value;
             }
         }

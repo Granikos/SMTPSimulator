@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
@@ -19,9 +18,9 @@ namespace Granikos.SMTPSimulator.ImapClient
 
         protected ImapClient(ISendSettings settings, string host, int port = 143)
         {
-            Contract.Requires<ArgumentNullException>(settings != null, "settings");
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(host), "host");
-            Contract.Requires<ArgumentOutOfRangeException>(port >= 0, "port");
+            if (settings == null) throw new ArgumentNullException("settings");
+            if (string.IsNullOrWhiteSpace(host)) throw new ArgumentNullException("host");
+            if (!(port >= 0)) throw new ArgumentOutOfRangeException("port");
 
             Settings = settings;
             _stream = new ImapStream(host, port)
@@ -53,9 +52,9 @@ namespace Granikos.SMTPSimulator.ImapClient
         public static ImapClient Create(ISendSettings settings, string host,
             int port = 143)
         {
-            Contract.Requires<ArgumentNullException>(settings != null, "settings");
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(host), "host");
-            Contract.Requires<ArgumentOutOfRangeException>(port >= 0, "port");
+            if (settings == null) throw new ArgumentNullException("settings");
+            if (string.IsNullOrWhiteSpace(host)) throw new ArgumentNullException("host");
+            if (!(port >= 0)) throw new ArgumentOutOfRangeException("port");
 
             var client = new ImapClient(settings, host, port);
 

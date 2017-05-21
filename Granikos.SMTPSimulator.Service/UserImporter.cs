@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,7 +17,7 @@ namespace Granikos.SMTPSimulator.Service
 
         public UserImporter(IDataProvider<IUser, int> users)
         {
-            Contract.Requires<ArgumentNullException>(users != null, "users");
+            if (users == null) throw new ArgumentNullException("users");
 
             _users = users;
         }

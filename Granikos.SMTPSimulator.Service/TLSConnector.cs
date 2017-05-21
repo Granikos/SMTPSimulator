@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
@@ -18,7 +17,7 @@ namespace Granikos.SMTPSimulator.Service
         {
             _logger = logger;
             _certProvider = certProvider;
-            Contract.Requires<ArgumentNullException>(settings != null);
+            if (settings == null) throw new ArgumentNullException();
             Settings = settings;
         }
 
@@ -36,14 +35,14 @@ namespace Granikos.SMTPSimulator.Service
 
         public SslStream GetSslStream(Stream stream)
         {
-            Contract.Requires<ArgumentNullException>(stream != null);
+            if (stream == null) throw new ArgumentNullException();
             return new SslStream(stream, false, UserCertificateValidationCallback, UserCertificateSelectionCallback,
                 Settings.EncryptionPolicy);
         }
 
         public async Task AuthenticateAsServerAsync(SslStream sslStream)
         {
-            Contract.Requires<ArgumentNullException>(sslStream != null);
+            if (sslStream == null) throw new ArgumentNullException();
             await
                 sslStream.AuthenticateAsServerAsync(GetCertificate(), Settings.AuthLevel != TLSAuthLevel.EncryptionOnly,
                     Settings.SslProtocols, Settings.ValidateCertificateRevocation);
@@ -51,14 +50,14 @@ namespace Granikos.SMTPSimulator.Service
 
         public void AuthenticateAsServer(SslStream sslStream)
         {
-            Contract.Requires<ArgumentNullException>(sslStream != null);
+            if (sslStream == null) throw new ArgumentNullException();
             sslStream.AuthenticateAsServer(GetCertificate(), Settings.AuthLevel != TLSAuthLevel.EncryptionOnly,
                 Settings.SslProtocols, Settings.ValidateCertificateRevocation);
         }
 
         public async Task AuthenticateAsClientAsync(SslStream sslStream)
         {
-            Contract.Requires<ArgumentNullException>(sslStream != null);
+            if (sslStream == null) throw new ArgumentNullException();
             await
                 sslStream.AuthenticateAsClientAsync(Settings.CertificateDomain, GetCertificateCollection(),
                     Settings.SslProtocols, Settings.ValidateCertificateRevocation);
@@ -66,7 +65,7 @@ namespace Granikos.SMTPSimulator.Service
 
         public void AuthenticateAsClient(SslStream sslStream)
         {
-            Contract.Requires<ArgumentNullException>(sslStream != null);
+            if (sslStream == null) throw new ArgumentNullException();
             sslStream.AuthenticateAsClient(Settings.CertificateDomain, GetCertificateCollection(), Settings.SslProtocols,
                 Settings.ValidateCertificateRevocation);
         }
@@ -153,7 +152,7 @@ namespace Granikos.SMTPSimulator.Service
 
         public void DisplaySecurityLevel(SslStream stream)
         {
-            Contract.Requires<ArgumentNullException>(stream != null);
+            if (stream == null) throw new ArgumentNullException();
             Log("Cipher: {0} strength {1}", stream.CipherAlgorithm, stream.CipherStrength);
             Log("Hash: {0} strength {1}", stream.HashAlgorithm, stream.HashStrength);
             Log("Key exchange: {0} strength {1}", stream.KeyExchangeAlgorithm, stream.KeyExchangeStrength);
@@ -162,7 +161,7 @@ namespace Granikos.SMTPSimulator.Service
 
         public void DisplaySecurityServices(SslStream stream)
         {
-            Contract.Requires<ArgumentNullException>(stream != null);
+            if (stream == null) throw new ArgumentNullException();
             Log("Is authenticated: {0} as server? {1}", stream.IsAuthenticated, stream.IsServer);
             Log("IsSigned: {0}", stream.IsSigned);
             Log("Is Encrypted: {0}", stream.IsEncrypted);
@@ -170,7 +169,7 @@ namespace Granikos.SMTPSimulator.Service
 
         public void DisplayCertificateInformation(SslStream stream)
         {
-            Contract.Requires<ArgumentNullException>(stream != null);
+            if (stream == null) throw new ArgumentNullException();
             Log("Certificate revocation list checked: {0}", stream.CheckCertRevocationStatus);
 
             var localCertificate = stream.LocalCertificate;

@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.Net;
 
 namespace Granikos.SMTPSimulator.Service.Models
@@ -12,9 +11,9 @@ namespace Granikos.SMTPSimulator.Service.Models
 
         public IPRange(IPAddress start, IPAddress end)
         {
-            Contract.Requires<ArgumentNullException>(start != null);
-            Contract.Requires<ArgumentNullException>(end != null);
-            Contract.Requires<ArgumentException>(start.AddressFamily == end.AddressFamily);
+            if (start == null) throw new ArgumentNullException();
+            if (end == null) throw new ArgumentNullException();
+            if (!(start.AddressFamily == end.AddressFamily)) throw new ArgumentException();
 
             Start = start;
             End = end;
@@ -25,8 +24,8 @@ namespace Granikos.SMTPSimulator.Service.Models
             get { return _start; }
             set
             {
-                Contract.Requires<ArgumentNullException>(value != null, "value");
-                Contract.Requires<ArgumentException>(value.AddressFamily == End.AddressFamily);
+                if (value == null) throw new ArgumentNullException("value");
+                if (!(value.AddressFamily == End.AddressFamily)) throw new ArgumentException();
 
                 _start = value;
             }
@@ -37,8 +36,8 @@ namespace Granikos.SMTPSimulator.Service.Models
             get { return _end; }
             set
             {
-                Contract.Requires<ArgumentNullException>(value != null, "value");
-                Contract.Requires<ArgumentException>(value.AddressFamily == Start.AddressFamily);
+                if (value == null) throw new ArgumentNullException("value");
+                if (!(value.AddressFamily == Start.AddressFamily)) throw new ArgumentException();
                 
                 _end = value;
             }

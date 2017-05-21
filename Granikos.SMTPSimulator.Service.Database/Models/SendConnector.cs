@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net;
 using System.Net.Security;
@@ -77,7 +76,7 @@ namespace Granikos.SMTPSimulator.Service.Database.Models
             get { return _retryTimeInternal; }
             set
             {
-                Contract.Requires<ArgumentException>(value > 0);
+                if (!(value > 0)) throw new ArgumentException();
                 _retryTimeInternal = value;
             }
         }
@@ -110,7 +109,7 @@ namespace Granikos.SMTPSimulator.Service.Database.Models
             }
             set
             {
-                Contract.Requires<ArgumentNullException>(value != null, "value");
+                if (value == null) throw new ArgumentNullException("value");
                 InternalDomains = value.Select(d => new Domain { DomainName = d}).ToList();
             }
         }

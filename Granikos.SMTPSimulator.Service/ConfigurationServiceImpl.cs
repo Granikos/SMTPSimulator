@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
@@ -77,9 +76,9 @@ namespace Granikos.SMTPSimulator.Service
 
         public ConfigurationServiceImpl(SMTPServer server, ISMTPServerContainer servers, IMailQueueProvider mailQueue)
         {
-            Contract.Requires<ArgumentNullException>(server != null, "server");
-            Contract.Requires<ArgumentNullException>(servers != null, "servers");
-            Contract.Requires<ArgumentNullException>(mailQueue != null, "mailQueue");
+            if (server == null) throw new ArgumentNullException("server");
+            if (servers == null) throw new ArgumentNullException("servers");
+            if (mailQueue == null) throw new ArgumentNullException("mailQueue");
 
             _servers = servers;
             _mailQueue = mailQueue;

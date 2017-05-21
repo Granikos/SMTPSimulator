@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using log4net;
@@ -20,8 +19,8 @@ namespace Granikos.SMTPSimulator.Service.Retention
 
         public RetentionWorker(DirectoryRetentionConfig config)
         {
-            Contract.Requires<ArgumentNullException>(config != null);
-            Contract.Requires<ArgumentException>(Directory.Exists(config.Directory));
+            if (config == null) throw new ArgumentNullException();
+            if (!(Directory.Exists(config.Directory))) throw new ArgumentException();
 
             _config = config;
         }
@@ -120,7 +119,7 @@ namespace Granikos.SMTPSimulator.Service.Retention
             get { return _config; }
             set
             {
-                Contract.Requires<ArgumentNullException>(value != null);
+                if (value == null) throw new ArgumentNullException();
                 _config = value;
             }
         }

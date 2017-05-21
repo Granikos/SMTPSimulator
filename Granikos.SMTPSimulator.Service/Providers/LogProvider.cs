@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel.Composition;
 using System.Configuration;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -36,11 +35,11 @@ namespace Granikos.SMTPSimulator.Service.Providers
 
         public void GetFile(Stream stream, string name)
         {
-            Contract.Requires<ArgumentNullException>(stream != null, "stream");
-            Contract.Requires<ArgumentException>(stream.CanWrite);
-            Contract.Requires<ArgumentNullException>(name != null, "name");
-            Contract.Requires<ArgumentException>(!Path.IsPathRooted(name));
-            Contract.Requires<ArgumentException>(!name.Contains(".."));
+            if (stream == null) throw new ArgumentNullException("stream");
+            if (!(stream.CanWrite)) throw new ArgumentException();
+            if (name == null) throw new ArgumentNullException("name");
+            if (Path.IsPathRooted(name)) throw new ArgumentException();
+            if (name.Contains("..")) throw new ArgumentException();
 
             var logFile = Path.Combine(LogFolder, name);
 

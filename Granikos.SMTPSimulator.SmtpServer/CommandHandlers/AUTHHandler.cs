@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using bbv.Common.EventBroker;
@@ -24,7 +23,7 @@ namespace Granikos.SMTPSimulator.SmtpServer.CommandHandlers
         [ImportingConstructor]
         public AUTHHandler([Import] IAuthMethodLoader loader)
         {
-            Contract.Requires<ArgumentNullException>(loader != null);
+            if (loader == null) throw new ArgumentNullException();
 
             foreach (var method in loader.GetModules())
             {
@@ -103,13 +102,13 @@ namespace Granikos.SMTPSimulator.SmtpServer.CommandHandlers
 
         protected static string Base64Encode(string str)
         {
-            Contract.Requires<ArgumentNullException>(str != null);
+            if (str == null) throw new ArgumentNullException();
             return Convert.ToBase64String(Encoding.ASCII.GetBytes(str));
         }
 
         protected static string Base64Decode(string str)
         {
-            Contract.Requires<ArgumentNullException>(str != null);
+            if (str == null) throw new ArgumentNullException();
             return Encoding.ASCII.GetString(Convert.FromBase64String(str));
         }
 
@@ -121,9 +120,9 @@ namespace Granikos.SMTPSimulator.SmtpServer.CommandHandlers
 
         public static SMTPResponse DataHandler(SMTPTransaction transaction, string reponse, IAuthMethod method)
         {
-            Contract.Requires<ArgumentNullException>(transaction != null);
-            Contract.Requires<ArgumentNullException>(reponse != null);
-            Contract.Requires<ArgumentNullException>(method != null);
+            if (transaction == null) throw new ArgumentNullException();
+            if (reponse == null) throw new ArgumentNullException();
+            if (method == null) throw new ArgumentNullException();
 
             if (reponse.Equals("*"))
             {

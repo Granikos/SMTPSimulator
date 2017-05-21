@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 
 namespace Granikos.SMTPSimulator.SmtpServer
 {
@@ -10,7 +9,7 @@ namespace Granikos.SMTPSimulator.SmtpServer
 
         public SMTPCommand(string command, string parameters = null)
         {
-            Contract.Requires<ArgumentNullException>(command != null);
+            if (command == null) throw new ArgumentNullException();
 
             Command = command.ToUpperInvariant();
             Parameters = parameters;

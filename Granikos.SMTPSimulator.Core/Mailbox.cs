@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 
 namespace Granikos.SMTPSimulator.Core
 {
@@ -12,8 +11,8 @@ namespace Granikos.SMTPSimulator.Core
 
         public Mailbox(string localPart, string domain, string name = null)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(localPart));
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(domain));
+            if (string.IsNullOrWhiteSpace(localPart)) throw new ArgumentNullException();
+            if (string.IsNullOrWhiteSpace(domain)) throw new ArgumentNullException();
 
             LocalPart = localPart;
             Domain = domain;

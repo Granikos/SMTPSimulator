@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
@@ -17,11 +16,11 @@ namespace Granikos.SMTPSimulator.Core
 
         public MailPath(string localPart, string domain, params string[] atDomains)
         {
-            Contract.Requires<ArgumentNullException>(localPart != null);
-            Contract.Requires<ArgumentNullException>(domain != null);
-            Contract.Requires<ArgumentNullException>(atDomains != null);
-            Contract.Requires<ArgumentException>(!string.IsNullOrEmpty(localPart));
-            Contract.Requires<ArgumentException>(!string.IsNullOrEmpty(domain));
+            if (localPart == null) throw new ArgumentNullException();
+            if (domain == null) throw new ArgumentNullException();
+            if (atDomains == null) throw new ArgumentNullException();
+            if (string.IsNullOrEmpty(localPart)) throw new ArgumentException();
+            if (string.IsNullOrEmpty(domain)) throw new ArgumentException();
 
             LocalPart = localPart;
             Domain = domain;
@@ -80,7 +79,7 @@ namespace Granikos.SMTPSimulator.Core
 
         public static MailPath FromString(string str)
         {
-            Contract.Requires<ArgumentNullException>(str != null);
+            if (str == null) throw new ArgumentNullException();
 
             var match = RegularExpressions.PathRegex.Match(str);
 
@@ -91,7 +90,7 @@ namespace Granikos.SMTPSimulator.Core
 
         public static MailPath FromMatch(Match match)
         {
-            Contract.Requires<ArgumentException>(match.Success);
+            if (!(match.Success)) throw new ArgumentException();
 
             var atDomains = match.Groups["AtDomains"].Value.Split(',')
                 .Where(d => !string.IsNullOrWhiteSpace(d))

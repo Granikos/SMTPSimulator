@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Net.Mail;
 using System.Text;
 
@@ -10,7 +9,7 @@ namespace Granikos.SMTPSimulator.Core
     {
         public static string ToSMTPString(this string str)
         {
-            Contract.Requires<ArgumentNullException>(str != null);
+            if (str == null) throw new ArgumentNullException();
             if (RegularExpressions.DotStringRegex.IsMatch(str)) return str;
 
             var sb = new StringBuilder(str.Length + 2);
@@ -34,7 +33,7 @@ namespace Granikos.SMTPSimulator.Core
         // No validation done!
         public static string FromSMTPString(this string str)
         {
-            Contract.Requires<ArgumentNullException>(str != null);
+            if (str == null) throw new ArgumentNullException();
             if (!str.StartsWith("\"")) return str;
 
             var sb = new StringBuilder(str.Length - 2);

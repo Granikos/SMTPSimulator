@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Text;
 using Granikos.SMTPSimulator.Core;
 
@@ -19,8 +18,8 @@ namespace Granikos.SMTPSimulator.SmtpServer
 
         public SMTPTransaction(SMTPServer server, IReceiveSettings settings)
         {
-            Contract.Requires<ArgumentNullException>(server != null);
-            Contract.Requires<ArgumentNullException>(settings != null);
+            if (server == null) throw new ArgumentNullException();
+            if (settings == null) throw new ArgumentNullException();
 
             _settings = settings;
             Server = server;
@@ -55,7 +54,7 @@ namespace Granikos.SMTPSimulator.SmtpServer
 
         public IList<T> GetListProperty<T>(string name, bool permanent = false)
         {
-            Contract.Requires<ArgumentNullException>(name != null);
+            if (name == null) throw new ArgumentNullException();
 
             var property = GetProperty<IList<T>>(name);
 
@@ -103,8 +102,8 @@ namespace Granikos.SMTPSimulator.SmtpServer
         public void StartDataMode(Func<string, StringBuilder, bool> dataLineHandler,
             Func<string, SMTPResponse> dataHandler)
         {
-            Contract.Requires<ArgumentNullException>(dataLineHandler != null);
-            Contract.Requires<ArgumentNullException>(dataHandler != null);
+            if (dataLineHandler == null) throw new ArgumentNullException();
+            if (dataHandler == null) throw new ArgumentNullException();
 
             _dataLineHandler = dataLineHandler;
             _dataHandler = dataHandler;
@@ -132,7 +131,7 @@ namespace Granikos.SMTPSimulator.SmtpServer
 
         public SMTPResponse ExecuteCommand(SMTPCommand command)
         {
-            Contract.Requires<ArgumentNullException>(command != null);
+            if (command == null) throw new ArgumentNullException();
 
             var handler = Server.GetHandler(command.Command);
 

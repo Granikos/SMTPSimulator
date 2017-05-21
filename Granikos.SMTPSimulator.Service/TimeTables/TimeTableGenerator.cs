@@ -4,7 +4,6 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Configuration;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -60,9 +59,9 @@ namespace Granikos.SMTPSimulator.Service.TimeTables
 
         public TimeTableGenerator(ITimeTable timeTable, DelayedQueue<SendableMail> queue, CompositionContainer container)
         {
-            Contract.Requires<ArgumentNullException>(timeTable != null, "timeTable");
-            Contract.Requires<ArgumentNullException>(queue != null, "queue");
-            Contract.Requires<ArgumentNullException>(container != null, "container");
+            if (timeTable == null) throw new ArgumentNullException("timeTable");
+            if (queue == null) throw new ArgumentNullException("queue");
+            if (container == null) throw new ArgumentNullException("container");
 
             _timeTable = timeTable;
             _queue = queue;

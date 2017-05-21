@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Net;
 using System.Text.RegularExpressions;
 
@@ -12,13 +11,13 @@ namespace Granikos.SMTPSimulator.Core
 
         public static bool IsValidDomainName(this string domain)
         {
-            Contract.Requires<ArgumentNullException>(domain != null);
+            if (domain == null) throw new ArgumentNullException();
             return DomainRegex.IsMatch(domain);
         }
 
         public static bool IsValidAddressLiteral(this string address)
         {
-            Contract.Requires<ArgumentNullException>(address != null);
+            if (address == null) throw new ArgumentNullException();
             IPAddress ip;
             if (address.StartsWith("IPv6:"))
             {
@@ -36,7 +35,7 @@ namespace Granikos.SMTPSimulator.Core
 
         public static bool IsValidDomain(this string domain)
         {
-            Contract.Requires<ArgumentNullException>(domain != null);
+            if (domain == null) throw new ArgumentNullException();
             if (IsValidDomainName(domain)) return true;
 
             if (domain.StartsWith("[") && domain.EndsWith("]"))

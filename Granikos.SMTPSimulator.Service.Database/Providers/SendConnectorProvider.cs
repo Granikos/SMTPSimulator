@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel.Composition;
 using System.Data.Entity;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using Granikos.SMTPSimulator.Service.Database.Models;
 using Granikos.SMTPSimulator.Service.Models;
@@ -26,7 +25,7 @@ namespace Granikos.SMTPSimulator.Service.Database.Providers
 
             set
             {
-                Contract.Requires<ArgumentException>(Get(value) != null);
+                if (Get(value) == null) throw new ArgumentException();
 
                 var newDefault = Database.SendConnectors.Find(value);
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
@@ -22,9 +21,9 @@ namespace Granikos.SMTPSimulator.SmtpClient
 
         protected SMTPClient(ISendSettings settings, string host, int port = 25)
         {
-            Contract.Requires<ArgumentNullException>(settings != null, "settings");
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(host), "host");
-            Contract.Requires<ArgumentOutOfRangeException>(port >= 0, "port");
+            if (settings == null) throw new ArgumentNullException("settings");
+            if (string.IsNullOrWhiteSpace(host)) throw new ArgumentNullException("host");
+            if (!(port >= 0)) throw new ArgumentOutOfRangeException("port");
 
             Settings = settings;
             _stream = new SmtpStream(host, port)
@@ -56,10 +55,10 @@ namespace Granikos.SMTPSimulator.SmtpClient
         public static SMTPClient Create(CompositionContainer container, ISendSettings settings, string host,
             int port = 25)
         {
-            Contract.Requires<ArgumentNullException>(container != null, "container");
-            Contract.Requires<ArgumentNullException>(settings != null, "settings");
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(host), "host");
-            Contract.Requires<ArgumentOutOfRangeException>(port >= 0, "port");
+            if (container == null) throw new ArgumentNullException("container");
+            if (settings == null) throw new ArgumentNullException("settings");
+            if (string.IsNullOrWhiteSpace(host)) throw new ArgumentNullException("host");
+            if (!(port >= 0)) throw new ArgumentOutOfRangeException("port");
 
             var client = new SMTPClient(settings, host, port);
 
@@ -278,7 +277,7 @@ namespace Granikos.SMTPSimulator.SmtpClient
 
         protected static string Base64Encode(string str)
         {
-            Contract.Requires<ArgumentNullException>(str != null);
+            if (str == null) throw new ArgumentNullException();
             return Convert.ToBase64String(Encoding.ASCII.GetBytes(str));
         }
 

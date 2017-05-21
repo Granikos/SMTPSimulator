@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.Contracts;
 
 namespace Granikos.SMTPSimulator.Service.PriorityQueue
 {
@@ -9,7 +8,7 @@ namespace Granikos.SMTPSimulator.Service.PriorityQueue
 
         public DelayedQueue(int maxItems)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(maxItems > 0, "maxItems");
+            if (!(maxItems > 0)) throw new ArgumentOutOfRangeException("maxItems");
             _queue = new HeapPriorityQueue<DateTime, QueueItem>(maxItems);
         }
 

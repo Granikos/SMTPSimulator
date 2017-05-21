@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition.Primitives;
-using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace Granikos.SMTPSimulator.SmtpServer
@@ -23,8 +22,6 @@ namespace Granikos.SMTPSimulator.SmtpServer
 
         public IEnumerable<Tuple<string, T>> GetModules()
         {
-            Contract.Ensures(Contract.Result<IEnumerable<Tuple<string, T>>>() != null);
-
             var container = new CompositionContainer(_catalog);
             container.ComposeExportedValue(_catalog);
 

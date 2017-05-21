@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.Contracts;
 using Granikos.SMTPSimulator.Service.Models;
 using Granikos.SMTPSimulator.Service.Models.Providers;
 
@@ -12,7 +11,7 @@ namespace Granikos.SMTPSimulator.Service
 
         public UserGenerator(IDataProvider<IUser, int> users, IUserTemplate template)
         {
-            Contract.Requires<ArgumentNullException>(users != null, "users");
+            if (users == null) throw new ArgumentNullException("users");
 
             _users = users;
             _template = template;

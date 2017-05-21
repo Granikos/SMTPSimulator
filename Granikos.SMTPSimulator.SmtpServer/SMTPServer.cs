@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net;
 using bbv.Common.EventBroker;
@@ -42,7 +41,7 @@ namespace Granikos.SMTPSimulator.SmtpServer
 
         public IList<T> GetListProperty<T>(string name)
         {
-            Contract.Requires<ArgumentNullException>(name != null);
+            if (name == null) throw new ArgumentNullException();
             object obj;
             _properties.TryGetValue(name, out obj);
 
@@ -111,7 +110,7 @@ namespace Granikos.SMTPSimulator.SmtpServer
 
         public ICommandHandler GetHandler(string command)
         {
-            Contract.Requires<ArgumentNullException>(command != null);
+            if (command == null) throw new ArgumentNullException();
             ICommandHandler handler;
             _handlers.TryGetValue(command, out handler);
             return handler;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Data.Entity.SqlServer;
 using System.Data.Linq.SqlClient;
-using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using Granikos.SMTPSimulator.Service.Database.Models;

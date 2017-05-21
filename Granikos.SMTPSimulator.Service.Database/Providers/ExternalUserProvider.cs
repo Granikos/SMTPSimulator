@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Data.Linq.SqlClient;
-using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -73,8 +72,6 @@ namespace Granikos.SMTPSimulator.Service.Database.Providers
 
         private void RefreshDomains()
         {
-            Contract.Ensures(_domainCounts != null);
-
             var domainCounts = All()
                 .Select(u => u.Mailbox.Split('@')[1])
                 .GroupBy(d => d, StringComparer.OrdinalIgnoreCase)
