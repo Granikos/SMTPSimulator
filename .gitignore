@@ -163,6 +163,7 @@ ClientBin/
 *.dbproj.schemaview
 *.pfx
 *.publishsettings
+*.licenseheader
 node_modules/
 bower_components/
 
