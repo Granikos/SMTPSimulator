@@ -263,10 +263,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\SMTPSimulatorWebClient.mdf" />
-    <Content Include="App_Data\SMTPSimulatorWebClient_log.ldf">
-      <DependentUpon>SMTPSimulatorWebClient.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\dist\angular-chart.css" />
     <Content Include="Content\dist\angular.rangeSlider.css" />
     <Content Include="Content\dist\bootstrap-dialog.css" />
@@ -384,6 +380,7 @@
     <Content Include="Views\Timer\DynamicTypeDialog.html" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
