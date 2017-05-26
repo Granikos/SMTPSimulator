@@ -1,3 +1,4 @@
+/// <binding />
 /// <vs BeforeBuild='default' Clean='clean' />
 var gulp = require('gulp');
 var concat = require('gulp-concat');
