@@ -1,5 +1,5 @@
 {
-  "name": "SMTPSimulator",
+  "name": "smtpsimulator",
   "version": "1.0.0",
   "description": "",
   "main": "gulpfile.js",
@@ -7,7 +7,7 @@
     "bower": "^1.6.5",
     "del": "^2.0.2",
     "graceful-fs": "^4.1.11",
-    "gulp": "^3.9.0",
+    "gulp": "^3.9.1",
     "gulp-bower": "0.0.13",
     "gulp-clean-css": "^3.0.3",
     "gulp-concat": "^2.6.0",
