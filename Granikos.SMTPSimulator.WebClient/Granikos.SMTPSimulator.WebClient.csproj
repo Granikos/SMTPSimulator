@@ -263,7 +263,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\dist\angular-chart.css" />
     <Content Include="Content\dist\angular.rangeSlider.css" />
     <Content Include="Content\dist\bootstrap-dialog.css" />
     <Content Include="Content\dist\bootstrap-theme.css" />
