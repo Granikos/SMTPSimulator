@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('SMTPSimulator', ['ngRoute', 'ui.bootstrap', 'ui-rangeSlider', 'Server', 'LocalUsers', 'ExternalUsers', 'Send', 'Receive', 'Timer', 'Mail', 'Logging', 'Register', 'Login', 'Attachment', 'enumFlag', 'checklist-model', 'ui.select', 'xeditable', 'MailTemplates', 'Certificate'])
+    angular.module('SMTPSimulator', ['ngRoute', 'ui.bootstrap', 'ui-rangeSlider', 'Server', 'LocalUsers', 'ExternalUsers', 'Send', 'Receive', 'Timer', 'Mail', 'Logging', 'Attachment', 'enumFlag', 'checklist-model', 'ui.select', 'xeditable', 'MailTemplates', 'Certificate'])
         .config([
             '$routeProvider', '$httpProvider', '$locationProvider', function($routeProvider, $httpProvider, $locationProvider) {
                 $locationProvider.hashPrefix('!').html5Mode(true);
@@ -49,21 +49,7 @@
                         templateUrl: 'Views/Logging/Index.html',
                         controller: 'LoggingController'
                     })
-                    .when('/login/', {
-                        templateUrl: '/Views/Login.html',
-                        controller: 'LoginController'
-                    })
-                    .when('/logout/', {
-                        template: '',
-                        controller: 'LogoutController'
-                    })
-                    .when('/register/', {
-                        templateUrl: '/Views/Register.html',
-                        controller: 'RegisterController'
-                    })
                     .otherwise({ redirectTo: '/Server' });
-
-                $httpProvider.interceptors.push('AuthHttpResponseInterceptor');
 
                 $httpProvider.defaults.transformResponse.push(function (responseData) {
                     convertDateStringsToDates(responseData);
@@ -76,12 +62,6 @@
                 $rootScope.auth = {};
                 editableOptions.theme = 'bs3';
 
-                $http.get('/api/Account').then(
-                    function (response) {
-                        if (response.data) $rootScope.auth.user = response.data;
-                    }
-                );
-
                 $rootScope.$on('$locationChangeSuccess', function() {
                     var url = $location.url();
                     $('nav a:not(.navbar-brand)').each(function(i, el) {
@@ -93,7 +73,6 @@
         ])
         .controller('LandingPageController', [
             '$scope', function($scope) {
-                $scope.test = 'Fubar';
             }
         ])
         .directive('validateCell', ['uiGridEditConstants', function(uiGridEditConstants) {

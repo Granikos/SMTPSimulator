@@ -13,8 +13,6 @@ namespace Granikos.SMTPSimulator.WebClient
     {
         protected void Application_Start()
         {
-            AppDomain.CurrentDomain.SetData("DataDirectory", Server.MapPath("~/App_Data/"));
-
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

@@ -47,12 +47,6 @@
                 </li>
                 <li><a href="/Logging/">Logging</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li ng-show="auth.user"><a href="/logout/">Logout</a></li>
-                <li ng-show="!auth.user"><a href="/login/">Login</a></li>
-                <li ng-show="!auth.user"><a href="/register/">Register</a></li>
-            </ul>
-            <p class="navbar-text navbar-right" ng-show="auth.user">Signed in as {{auth.user}}</p>
         </div>
     </nav>
     <h1>{{pageTitle}} <small class="text-muted">{{pageSubtitle}}</small></h1>
