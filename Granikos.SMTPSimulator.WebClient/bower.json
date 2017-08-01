@@ -71,5 +71,8 @@
         "ui-grid.woff"
       ]
     }
+  },
+  "resolutions": {
+    "angular": "~1.x"
   }
 }
