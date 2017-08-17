@@ -249,7 +249,7 @@ namespace Granikos.SMTPSimulator.Service
                 .Where(a => a.FullName.StartsWith("Granikos.SMTPSimulator"))
                 .Select(a => new VersionInfo
                 {
-                    Assembly = a.GetName().Name.Substring(18),
+                    Assembly = a.GetName().Name.Split('.').Last(),
                     BuildDate = a.GetBuildDate(),
                     Version = a.GetName().Version
                 });

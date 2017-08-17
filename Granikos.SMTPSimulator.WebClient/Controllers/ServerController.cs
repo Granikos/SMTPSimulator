@@ -44,7 +44,7 @@ namespace Granikos.SMTPSimulator.WebClient.Controllers
             return versions.Concat(new[]
             { new VersionInfo
                 {
-                    Assembly = assembly.GetName().Name.Substring(18),
+                    Assembly = assembly.GetName().Name.Split('.').Last(),
                     Version = assembly.GetName().Version,
                     BuildDate = assembly.GetBuildDate()
                 }
