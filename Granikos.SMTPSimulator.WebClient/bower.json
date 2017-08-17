@@ -15,7 +15,7 @@
   ],
   "dependencies": {
     "angular": "1.5.8",
-    "angular-aria": "1.6.5",
+    "angular-aria": "1.5.8",
     "angular-bootstrap": "2.5.0",
     "angular-chart.js": "1.1.1",
     "angular-enum-flag-directive": "https://github.com/jvdvleuten/angular-enum-flag-directive",
@@ -24,7 +24,7 @@
     "angular-multi-slider": "0.1.4",
     "angular-multirange-slider": "1.1.1",
     "angular-rangeslider": "0.0.14",
-    "angular-route": "1.6.4",
+    "angular-route": "1.5.8",
     "angular-ui": "0.4.0",
     "angular-ui-grid": "4.0.4",
     "angular-ui-select": "0.19.8",

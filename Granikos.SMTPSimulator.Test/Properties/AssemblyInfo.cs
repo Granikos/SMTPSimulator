@@ -16,5 +16,5 @@ using Xunit;
 
 [assembly: Guid("ac0345ac-f8d6-4b08-8175-a6318610b699")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("0.9.0.0")]
+[assembly: AssemblyFileVersion("0.9.0.0")]
