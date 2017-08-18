@@ -6,6 +6,19 @@ The SMTP Simulator service helps to test any SMTP based MTA (e.g. Exchange Serve
 
 This is even more helpful when testing in a closed lab environment without any connection to an external MTA.
 
+The SMTP Simulator is controlled using a web based interface.
+
+![SMTP Simulator Web Interface](https://github.com/Granikos/SMTPSimulator/blob/master/Images/SMTPSimulator-Homepage.png)
+
+# Components
+(in alphabetical order)
+
+## Core
+
+## ImapCLient
+
+
+
 # Requirements
 The deployment itself is currently a partial manual deployment. I am looking for some to volunteer to have this fully automated.
 
