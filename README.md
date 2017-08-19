@@ -10,14 +10,54 @@ The SMTP Simulator is controlled using a web based interface.
 
 ![SMTP Simulator Web Interface](https://github.com/Granikos/SMTPSimulator/blob/master/Images/SMTPSimulator-Homepage.png)
 
-# Components
+# Solution Components
 (in alphabetical order)
 
 ## Core
 
-## ImapCLient
+Defines core functions and properties for all other components.
 
+## ImapClient
 
+IMAP4 client to connect to email servers. 
+
+## Service
+
+The Windows service for hosting the *SMTP Simulator* service. The service relies on configurations handled by the *WebClient* component. 
+
+## Service.ConfigurationService
+
+Configuration web service implementation used by WebClient component. 
+
+## Service.Database
+
+Database interface for storing SMTP service configuration data
+
+## Service.Models
+
+Object definitions used by the SMTP service
+
+## SmtpClient
+
+SMTP client component providing send connector functionality to connect to other MTAs
+
+## SmtpServer
+
+SMTP server component providing receive connector functionality
+
+## Test
+
+Component providing tests and fakes
+
+## WebClient
+
+The web interface to manage alls configurations of the SMTPSimulator service
+
+## Setup
+
+Visual Studio Setup project, requires *Microsoft Studio 2017 Installer Projects* extension.
+
+This component is supposed to be replaced by a proper installer configuration.
 
 # Requirements
 The deployment itself is currently a partial manual deployment. I am looking for some to volunteer to have this fully automated.
