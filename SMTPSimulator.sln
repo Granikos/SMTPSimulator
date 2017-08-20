@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Granikos.SMTPSimulator.Service", "Granikos.SMTPSimulator.Service\Granikos.SMTPSimulator.Service.csproj", "{4606E839-7049-4EF3-B6E2-EF0EA0FEA065}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -85,5 +85,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7C60A86-E7EA-4977-8DBB-7D44B7F8DC98}
 	EndGlobalSection
 EndGlobal
