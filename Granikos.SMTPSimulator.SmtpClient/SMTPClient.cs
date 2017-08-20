@@ -20,7 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 using System;
-using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using System.Net;
@@ -28,7 +27,6 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Granikos.SMTPSimulator.Core;
 using Granikos.SMTPSimulator.Core.Logging;
-using Granikos.SMTPSimulator.Core;
 
 namespace Granikos.SMTPSimulator.SmtpClient
 {
@@ -66,7 +64,7 @@ namespace Granikos.SMTPSimulator.SmtpClient
 
         public string ClientName
         {
-            get { return _clientName ?? Dns.GetHostByName("LocalHost").HostName; }
+            get { return _clientName ?? Dns.GetHostEntry("LocalHost").HostName; }
             set { _clientName = value; }
         }
 

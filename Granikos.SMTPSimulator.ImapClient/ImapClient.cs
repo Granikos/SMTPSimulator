@@ -63,7 +63,7 @@ namespace Granikos.SMTPSimulator.ImapClient
 
         public string ClientName
         {
-            get { return _clientName ?? Dns.GetHostByName("LocalHost").HostName; }
+            get { return _clientName ?? Dns.GetHostEntry("LocalHost").HostName; }
             set { _clientName = value; }
         }
 
