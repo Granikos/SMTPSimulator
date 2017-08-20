@@ -12,7 +12,15 @@ The SMTP Simulator is controlled using a web based interface.
 
 # Functionality
 
-* 
+The main component of the SMTP Simulator is a Windows service which acts as 
+
+* SMTP Server for sending mail messages, either manually triggered or based on timer settings 
+* SMTP Client for accepting SMTP connections from external MTAs 
+
+The overall configuration is performend using a web interface which interacts with the Windows service using a web service interface on TCP port _9001_.
+
+[SMTP Simulator Service Overview](https://github.com/Granikos/SMTPSimulator/blob/master/Images/SMTPSimulator-Overview.png)
+
 
 # Solution Components
 (in alphabetical order)
