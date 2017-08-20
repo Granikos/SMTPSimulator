@@ -19,8 +19,7 @@ The main component of the SMTP Simulator is a Windows service which acts as
 
 The overall configuration is performend using a web interface which interacts with the Windows service using a web service interface on TCP port _9001_.
 
-[SMTP Simulator Service Overview](https://github.com/Granikos/SMTPSimulator/blob/master/Images/SMTPSimulator-Overview.png)
-
+![SMTP Simulator Service Overview](https://github.com/Granikos/SMTPSimulator/blob/master/Images/SMTPSimulator-Overview.png)
 
 # Solution Components
 (in alphabetical order)
