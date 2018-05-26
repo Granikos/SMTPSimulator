@@ -10,7 +10,7 @@ The SMTP Simulator is controlled using a web based interface.
 
 ![SMTP Simulator Web Interface](https://github.com/Granikos/SMTPSimulator/blob/master/Images/SMTPSimulator-Homepage.png)
 
-# Functionality
+## Functionality
 
 The main component of the SMTP Simulator is a Windows service which acts as 
 
@@ -21,59 +21,62 @@ The overall configuration is performend using a web interface which interacts wi
 
 ![SMTP Simulator Service Overview](https://github.com/Granikos/SMTPSimulator/blob/master/Images/SMTPSimulator-Overview.png)
 
-# Solution Components
+## Solution Components
+
 (in alphabetical order)
 
-## Core
+### Core
 
 * Defines core functions and properties for all other components.
 
-## ImapClient
+### ImapClient
 
 * IMAP4 client to connect to email servers. 
 
-## Service
+### Service
 
 * The Windows service for hosting the *SMTP Simulator* service
 * The service relies on configurations handled by the *WebClient* component 
 
-## Service.ConfigurationService
+### Service.ConfigurationService
 
 * Configuration web service implementation used by WebClient component. 
 
-## Service.Database
+### Service.Database
 
 * Database interface for storing SMTP service configuration data
 
-## Service.Models
+### Service.Models
 
 * Object definitions used by the SMTP service
 
-## SmtpClient
+### SmtpClient
 
 * SMTP client component providing send connector functionality to connect to other MTAs
 
-## SmtpServer
+### SmtpServer
 
 * SMTP server component providing receive connector functionality
 
-## Test
+### Test
 
 * Component providing tests and fakes
 
-## WebClient
+### WebClient
 
 * The web interface to manage alls configurations of the SMTPSimulator service
 
-## Setup
+### Setup
 
 * Visual Studio Setup project, requires *Microsoft Studio 2017 Installer Projects* extension
 * This component is supposed to be replaced by a proper installer configuration.
 
-# Requirements
+## Requirements
+
 The deployment itself is currently a partial manual deployment. I am looking for some to volunteer to have this fully automated.
 
-## Manual installs
+### Manual installs
+
 * The installer for the Windows service requires the [Microsoft Visual Studio 2017 Installer Projects](https://marketplace.visualstudio.com/items?ItemName=VisualStudioProductTeam.MicrosoftVisualStudio2017InstallerProjects) extension for Visual Studio 2017.
 * For getting and bundling the frontend dependencies, [NPM](https://nodejs.org/en/) is required.
   The project also uses [bower](https://bower.io/) and [gulp](http://gulpjs.com/) which are installed via NPM.
@@ -88,7 +91,7 @@ The deployment itself is currently a partial manual deployment. I am looking for
 * To run the unit tests you will need the *Enterprise Edition* of Visual Studio, because the tests use
   [Microsoft Fakes](https://msdn.microsoft.com/en-us/library/hh549175.aspx).
 
-# Work to do
+## Work to do
 
 This project still requires attention and there is more to be done.
 
